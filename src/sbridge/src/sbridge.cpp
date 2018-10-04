@@ -55,7 +55,7 @@ void sbridge::cmdHandler(const geometry_msgs::Twist::ConstPtr& message) {
     double right = (message->angular.z);
     
     // Set max values
-    float max_turn_rate = 4.5; // radians per second
+    float max_turn_rate = 1.5; // radians per second (original: 4.5)
     float max_linear_velocity = 0.65; //  meters per second
 
     // Temperary Variables to store the velocity values
