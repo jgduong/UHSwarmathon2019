@@ -676,18 +676,23 @@ void transformMapCentertoOdom()
   mapPose.header.stamp = ros::Time::now();
   
   mapPose.header.frame_id = publishedName + "/map";
+	//centerLocationMap is data from the GPS
+	//mapPose is a time-stamped Position (location+orientation), that has its orientation data set by the GPS data
+	//mapPose has its position set by the GPS data of the center location of the map
   mapPose.pose.orientation = tf::createQuaternionMsgFromRollPitchYaw(0, 0, centerLocationMap.theta);
   mapPose.pose.position.x = centerLocationMap.x;
   mapPose.pose.position.y = centerLocationMap.y;
   geometry_msgs::PoseStamped odomPose;
   string x = "";
   
+	//this entire transform may be skippable, if we just use the same data type
+	//geometry_msgs::pose2d instead of geometry_msgs::posestamped
   try
   { //attempt to get the transform of the center point in map frame to odom frame.
     tfListener->waitForTransform(publishedName + "/map", publishedName + "/odom", ros::Time::now(), ros::Duration(1.0));
     tfListener->transformPose(publishedName + "/odom", mapPose, odomPose);
   }
-  
+  	//now the Po
   catch(tf::TransformException& ex) {  //bad transform
     ROS_INFO("Received an exception trying to transform a point from \"map\" to \"odom\": %s", ex.what());
     x = "Exception thrown " + (string)ex.what();
@@ -709,11 +714,13 @@ void transformMapCentertoOdom()
   float ydiff = centerLocationMapRef.y - centerLocationOdom.y;	//get difference in Y values
   
   float diff = hypot(xdiff, ydiff);	//get total difference
-  
+  //INSTEAD of adjusting where we tell the robot's odometer (shaft encoder) where the center is,
+  //perhaps we can immediately adjust the current location based on the error? (seems more difficult, but could be more accur8)
   if (diff > drift_tolerance)	//If the difference is greater than tolerance, adjust the rovers perceived idea of where the center is. Used to decrease ODOM drift and keep rover accuracy for longer periods of time
   {
     centerLocationOdom.x += xdiff/diff;	//adjust X
     centerLocationOdom.y += ydiff/diff;	//adjust Y
+	  //may want to attempt to find the error in theta
   }
   
   //cout << "center x diff : " << centerLocationMapRef.x - centerLocationOdom.x << " center y diff : " << centerLocationMapRef.y - centerLocationOdom.y << endl;
