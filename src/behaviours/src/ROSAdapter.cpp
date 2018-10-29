@@ -165,6 +165,7 @@ void sigintEventHandler(int signal);
 
 //Callback handlers
 void joyCmdHandler(const sensor_msgs::Joy::ConstPtr& message);				//for joystick control
+//what is so special about modeHandler, such that it can set the mode of the robot? where does it receive the UInt8 message from?
 void modeHandler(const std_msgs::UInt8::ConstPtr& message);				//for detecting which mode the robot needs to be in
 void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& tagInfo);	//receives and stores April Tag Data using the TAG class
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message);			//receives and stores ODOM information
@@ -290,14 +291,16 @@ void behaviourStateMachine(const ros::TimerEvent&)
       centerMap.x = currentLocationMap.x + (1.3 * cos(currentLocationMap.theta));
       centerMap.y = currentLocationMap.y + (1.3 * sin(currentLocationMap.theta));
       centerMap.theta = centerLocationMap.theta;
-      logicController.SetCenterLocationMap(centerMap);
+      logicController.SetCenterLocationMap(centerMap);		//this function does literally nothing
       
       centerLocationMap.x = centerMap.x;
       centerLocationMap.y = centerMap.y;
       
       centerLocationOdom.x = centerOdom.x;
       centerLocationOdom.y = centerOdom.y;
-      
+      //NOTE FROM JORDAN: perhaps, when we have multiple robots, we can estimate the "offset" from the center of the base.
+	// I say this because, part of initialization is setting the center location of each robot
+	    // if we had multiple offsets that were calculated each time we "Subscribed" and received a waypoint from another robot based on its signature, this would help tremendously
       startTime = getROSTimeInMilliSecs();
     }
 
