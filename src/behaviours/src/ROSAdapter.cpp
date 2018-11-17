@@ -141,12 +141,14 @@ void setupPublishers( ros::NodeHandle &ros_handle, string published_name )
     state_machine_publish = ros_handle.advertise<std_msgs::String>((published_name + "/state_machine"), 1, true);
     finger_angle_publish = ros_handle.advertise<std_msgs::Float32>((published_name + "/fingerAngle/cmd"), 1, true);
     wrist_angle_publish = ros_handle.advertise<std_msgs::Float32>((published_name + "/wristAngle/cmd"), 1, true);
-    info_log_publisher = ros_handle.advertise<std_msgs::String>("/infoLog", 1, true);*/
+    */
+    info_log_publisher = ros_handle.advertise<std_msgs::String>("/infoLog", 1, true);
+/*
     drive_control_publish = ros_handle.advertise<geometry_msgs::Twist>((published_name + "/driveControl"), 10);
-  /*  heartbeat_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/behaviour/heartbeat"), 1, true);
+    heartbeat_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/behaviour/heartbeat"), 1, true);
     rover_info_timer_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/infoTimer"), 1, true);
-    rover_info_publisher = ros_handle.advertise<swarmie_msgs::InfoMessage>(("roverInfo"), 6, true);*/
-
+    rover_info_publisher = ros_handle.advertise<swarmie_msgs::InfoMessage>(("roverInfo"), 6, true);
+*/
     roverName = published_name;
 }
 
@@ -215,7 +217,8 @@ void setupTimerCallbacks( ros::NodeHandle &ros_handle )
     /*publish_status_timer = ros_handle.createTimer(ros::Duration(status_publish_interval), publishStatusTimerEventHandler);
     state_machine_timer = ros_handle.createTimer(ros::Duration(state_machines_loop), runStateMachines);
     publish_heartbeat_timer = ros_handle.createTimer(ros::Duration(heartbeat_publish_interval), publishHeartBeatTimerEventHandler);
-    publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);*/
+    */
+    publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);
 }
 
 /******************
@@ -315,8 +318,9 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
     timerStartTime = time(0);
 
 
-    /*swarmie_msgs::InfoMessage infoMsg;
+    swarmie_msgs::InfoMessage infoMsg;
     infoMsg.name = roverName;
+    /*
     infoMsg.x = inputs.odom_accel_gps.x;
     infoMsg.y = inputs.odom_accel_gps.y;
     infoMsg.sonar_left = inputs.us_left;
@@ -325,9 +329,10 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
     infoMsg.state = logic_machine.getCurrentIdentifier();
     infoMsg.number_of_cubes = TagUtilities::numberOfTags(&inputs.tags, 0);
     infoMsg.number_of_base_tags = TagUtilities::numberOfTags(&inputs.tags, 256);
+    */
     rover_info_publisher.publish(infoMsg);
 
-    inputs.rover_name = published_name;*/
+    inputs.rover_name = published_name;
 
     ros::spin();
 
