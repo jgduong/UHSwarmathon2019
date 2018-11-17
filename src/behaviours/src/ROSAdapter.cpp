@@ -352,6 +352,11 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
 
 void check_the_state(const ros::TimerEvent&)
 {
+	//check to see if this periodic function is running
+	std_msgs::String msg;
+ 	msg.data = "Checking State...";
+  	infoLogPublisher.publish(msg);
+	
 	if (current_state == 0)
 	{
 		std::cout << "waiting\n";
