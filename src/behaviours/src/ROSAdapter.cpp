@@ -318,8 +318,8 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
     timerStartTime = time(0);
 
 
-    swarmie_msgs::InfoMessage infoMsg;
-    infoMsg.name = roverName;
+    //swarmie_msgs::InfoMessage infoMsg;
+    //infoMsg.name = roverName;
     /*
     infoMsg.x = inputs.odom_accel_gps.x;
     infoMsg.y = inputs.odom_accel_gps.y;
@@ -330,9 +330,9 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
     infoMsg.number_of_cubes = TagUtilities::numberOfTags(&inputs.tags, 0);
     infoMsg.number_of_base_tags = TagUtilities::numberOfTags(&inputs.tags, 256);
     */
-    rover_info_publisher.publish(infoMsg);
+    //rover_info_publisher.publish(infoMsg);
 
-    inputs.rover_name = published_name;
+    //inputs.rover_name = published_name;
 
     ros::spin();
 
