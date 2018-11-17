@@ -399,7 +399,7 @@ void toggle_movement(const ros::TimerEvent&)
 void publishHeartBeatTimerEventHandler(const ros::TimerEvent&) {
   std_msgs::String msg;
   msg.data = "";
-  heartbeatPublisher.publish(msg);
+  heartbeat_publisher.publish(msg);
 }
 
 
