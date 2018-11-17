@@ -144,8 +144,8 @@ void setupPublishers( ros::NodeHandle &ros_handle, string published_name )
     */
     info_log_publisher = ros_handle.advertise<std_msgs::String>("/infoLog", 1, true);
     drive_control_publish = ros_handle.advertise<geometry_msgs::Twist>((published_name + "/driveControl"), 10);
-	/*
     heartbeat_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/behaviour/heartbeat"), 1, true);
+	/*
     rover_info_timer_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/infoTimer"), 1, true);
     rover_info_publisher = ros_handle.advertise<swarmie_msgs::InfoMessage>(("roverInfo"), 6, true);
 */
@@ -216,8 +216,9 @@ void setupTimerCallbacks( ros::NodeHandle &ros_handle )
 {
     /*publish_status_timer = ros_handle.createTimer(ros::Duration(status_publish_interval), publishStatusTimerEventHandler);
     state_machine_timer = ros_handle.createTimer(ros::Duration(state_machines_loop), runStateMachines);
-    publish_heartbeat_timer = ros_handle.createTimer(ros::Duration(heartbeat_publish_interval), publishHeartBeatTimerEventHandler);
     */
+    publish_heartbeat_timer = ros_handle.createTimer(ros::Duration(heartbeat_publish_interval), publishHeartBeatTimerEventHandler);
+    
     //publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);
 }
 
@@ -393,6 +394,12 @@ void toggle_movement(const ros::TimerEvent&)
 	else {
 		current_state = 1;
 	}
+}
+
+void publishHeartBeatTimerEventHandler(const ros::TimerEvent&) {
+  std_msgs::String msg;
+  msg.data = "";
+  heartbeatPublisher.publish(msg);
 }
 
 
