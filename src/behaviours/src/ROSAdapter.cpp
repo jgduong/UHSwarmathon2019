@@ -22,7 +22,7 @@
 #include <apriltags_ros/AprilTagDetectionArray.h>
 #include <std_msgs/Float32MultiArray.h>
 #include "swarmie_msgs/Waypoint.h"
-#include "swarmie_msgs/InfoMessage.h"
+//#include "swarmie_msgs/InfoMessage.h"
 
 // Include Controllers
 #include <vector>
@@ -32,8 +32,8 @@
 
 /****************
  * New Includes *
- ****************/
-#include "state_machine/StateMachine.h"
+ 8****************/
+/*include "state_machine/StateMachine.h"
 #include "waypoints/SimpleWaypoint.h"
 #include "logic/LogicMachine.h"
 #include "logic/SearchState.h"
@@ -47,7 +47,7 @@
 #include "Gripper.h"
 #include "MotorController.h"
 #include "TagUtilities.h"
-
+*/
 // To handle shutdown signals so the node quits
 // properly in response to "rosnode kill"
 #include <ros/ros.h>
@@ -69,7 +69,7 @@ void humanTime();
 
 // Behaviours Logic Functions
 void sendDriveCommand(double linearVel, double angularVel);
-void sendGripperPosition( Gripper::Position pos );
+//void sendGripperPosition( Gripper::Position pos );
 
 int currentMode = 0;
 const float state_machines_loop = 0.1; // time between state machines function call
@@ -172,7 +172,7 @@ void odomAndAccelHandler(const nav_msgs::Odometry::ConstPtr& message);
 void odomAccelAndGPSHandler(const nav_msgs::Odometry::ConstPtr& message);
 void manualWaypointHandler(const swarmie_msgs::Waypoint& message);
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight);
-void roverInfoHandler(const swarmie_msgs::InfoMessage& message);
+//void roverInfoHandler(const swarmie_msgs::InfoMessage& message);
 
 void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
 {
@@ -384,7 +384,6 @@ void toggle_movement(const ros::TimerEvent&)
 		current_state = 1;
 	}
 }
-
 
 
 
