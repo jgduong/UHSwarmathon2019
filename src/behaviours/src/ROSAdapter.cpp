@@ -218,7 +218,7 @@ void setupTimerCallbacks( ros::NodeHandle &ros_handle )
     state_machine_timer = ros_handle.createTimer(ros::Duration(state_machines_loop), runStateMachines);
     publish_heartbeat_timer = ros_handle.createTimer(ros::Duration(heartbeat_publish_interval), publishHeartBeatTimerEventHandler);
     */
-    publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);
+    //publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);
 }
 
 /******************
@@ -291,7 +291,7 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
     // Register the SIGINT event handler so the node can shutdown properly
     //signal(SIGINT, sigintEventHandler);
 
-   // setupSubscribers( ros_handle, published_name );
+    setupSubscribers( ros_handle, published_name );
 
     //Sonar Stuff
     /*message_filters::Subscriber<sensor_msgs::Range> sonar_left_subscriber(ros_handle, (published_name + "/sonarLeft"), 10);
@@ -301,10 +301,10 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
     message_filters::Synchronizer<sonarSyncPolicy> sonarSync(sonarSyncPolicy(10), sonar_left_subscriber, sonar_center_subscriber, sonar_right_subscriber);
     sonarSync.registerCallback(boost::bind(&sonarHandler, _1, _2, _3));
 
-
+    */
     setupPublishers( ros_handle, published_name );
-    setupTimerCallbacks( ros_handle );
-    setupLogicMachine();*/
+    //setupTimerCallbacks( ros_handle );
+    //setupLogicMachine();
 
     //TBD How to wrap this section up
     std_msgs::String msg;
@@ -360,7 +360,7 @@ void check_the_state(const ros::TimerEvent&)
 	//check to see if this periodic function is running
 	std_msgs::String msg;
  	msg.data = "Checking State...";
-  	infoLogPublisher.publish(msg);
+  	info_log_publisher.publish(msg);
 	
 	if (current_state == 0)
 	{
