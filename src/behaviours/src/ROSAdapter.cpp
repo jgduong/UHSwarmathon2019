@@ -304,7 +304,7 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
 
     */
     setupPublishers( ros_handle, published_name );
-    //setupTimerCallbacks( ros_handle );
+    setupTimerCallbacks( ros_handle );
     //setupLogicMachine();
 
     //TBD How to wrap this section up
