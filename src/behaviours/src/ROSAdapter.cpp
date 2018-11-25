@@ -422,7 +422,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
   msg.data = to_string(sonarCenter->range);
   info_log_publisher.publish(msg);
 	
-  if (sonarCenter->range <= 0.5 || sonarLeft->range <= 0.5 || sonarRight->range >= 0.5) {
+  if (sonarCenter->range <= 0.5 || sonarLeft->range <= 0.5 || sonarRight->range <= 0.5) {
 	current_state = 2;  
   }
   else {
