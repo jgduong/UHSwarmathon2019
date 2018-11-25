@@ -79,7 +79,7 @@ private:
   std::string msg;
 };
 
-
+LogicController logicController;
 /************************
  * Global Alphabet Soup *
  ************************/
