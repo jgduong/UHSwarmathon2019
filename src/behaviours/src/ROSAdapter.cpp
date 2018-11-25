@@ -1,4 +1,5 @@
 #include <ros/ros.h>
+#include <string>
 
 // ROS libraries
 #include <angles/angles.h>
@@ -406,13 +407,18 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
   std_msgs::String msg;
   msg.data = "sonarLeft: ";
   info_log_publisher.publish(msg);
-  info_log_publisher.publish(sonarLeft->range);
+  	msg.data = to_string(sonarLeft->range);
+  info_log_publisher.publish(msg);
+	
   msg.data = "sonarRight: ";
   info_log_publisher.publish(msg);
-  info_log_publisher.publish(sonarRight->range);
+	msg.data = to_string(sonarRight->range);
+  info_log_publisher.publish(msg);
+	
    msg.data = "sonarCenter: ";
   info_log_publisher.publish(msg);
-  info_log_publisher.publish(sonarCenter);
+	msg.data = to_string(sonarCenter->range);
+  info_log_publisher.publish(msg);
   //logicController.SetSonarData(sonarLeft->range, sonarCenter->range, sonarRight->range);
   
 }
