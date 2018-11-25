@@ -163,6 +163,7 @@ ros::Subscriber raw_odom_subscriber;
 ros::Subscriber odometry_subscriber;
 ros::Subscriber map_subscriber;
 ros::Subscriber rover_info_subscriber;
+ros::Subscriber virtualFenceSubscriber; //receives data for vitrual boundaries
 
 /******************************************
  * ROS Callback Functions for Subscribers *
@@ -175,6 +176,7 @@ void odomAndAccelHandler(const nav_msgs::Odometry::ConstPtr& message);
 void odomAccelAndGPSHandler(const nav_msgs::Odometry::ConstPtr& message);
 void manualWaypointHandler(const swarmie_msgs::Waypoint& message);
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight);
+void virtualFenceHandler(const std_msgs::Float32MultiArray& message); //Used to set an invisible boundary for robots to keep them from traveling outside specific bounds
 //void roverInfoHandler(const swarmie_msgs::InfoMessage& message);
 
 void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
@@ -186,6 +188,7 @@ void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
     odometry_subscriber = ros_handle.subscribe((published_name + "/odom/filtered"), 10, odomAndAccelHandler);
     map_subscriber = ros_handle.subscribe((published_name + "/odom/ekf"), 10, odomAccelAndGPSHandler);
     rover_info_subscriber = ros_handle.subscribe("/roverInfo", 10, roverInfoHandler);*/
+    virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
 
 }
 
@@ -432,6 +435,54 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
   //logicController.SetSonarData(sonarLeft->range, sonarCenter->range, sonarRight->range);
   
 }
+
+// Allows a virtual fence to be defined and enabled or disabled through ROS
+void virtualFenceHandler(const std_msgs::Float32MultiArray& message) 
+{
+  // Read data from the message array
+  // The first element is an integer indicating the shape type
+  // 0 = Disable the virtual fence
+  // 1 = circle
+  // 2 = rectangle
+  int shape_type = static_cast<int>(message.data[0]); // Shape type
+  
+  if (shape_type == 0)
+  {
+    logicController.setVirtualFenceOff();
+  }
+  else
+  {
+    // Elements 2 and 3 are the x and y coordinates of the range center
+    Point center;
+    center.x = message.data[1]; // Range center x
+    center.y = message.data[2]; // Range center y
+    
+    // If the shape type is "circle" then element 4 is the radius, if rectangle then width
+    switch ( shape_type )
+    {
+    case 1: // Circle
+    {
+      if ( message.data.size() != 4 ) throw ROSAdapterRangeShapeInvalidTypeException("Wrong number of parameters for circle shape type in ROSAdapter.cpp:virtualFenceHandler()");
+      float radius = message.data[3]; 
+      logicController.setVirtualFenceOn( new RangeCircle(center, radius) );
+      break;
+    }
+    case 2: // Rectangle 
+    {
+      if ( message.data.size() != 5 ) throw ROSAdapterRangeShapeInvalidTypeException("Wrong number of parameters for rectangle shape type in ROSAdapter.cpp:virtualFenceHandler()");
+      float width = message.data[3]; 
+      float height = message.data[4]; 
+      logicController.setVirtualFenceOn( new RangeRectangle(center, width, height) );
+      break;
+    }
+    default:
+    { // Unknown shape type specified
+      throw ROSAdapterRangeShapeInvalidTypeException("Unknown Shape type in ROSAdapter.cpp:virtualFenceHandler()");
+    }
+    }
+  }
+}
+
 
 
 
