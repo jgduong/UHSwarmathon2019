@@ -176,7 +176,7 @@ void odomAndAccelHandler(const nav_msgs::Odometry::ConstPtr& message);
 void odomAccelAndGPSHandler(const nav_msgs::Odometry::ConstPtr& message);
 void manualWaypointHandler(const swarmie_msgs::Waypoint& message);
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight);
-//void virtualFenceHandler(const std_msgs::Float32MultiArray& message); //Used to set an invisible boundary for robots to keep them from traveling outside specific bounds
+void virtualFenceHandler(const std_msgs::Float32MultiArray& message); //Used to set an invisible boundary for robots to keep them from traveling outside specific bounds
 //void roverInfoHandler(const swarmie_msgs::InfoMessage& message);
 
 void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
@@ -189,7 +189,7 @@ void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
     map_subscriber = ros_handle.subscribe((published_name + "/odom/ekf"), 10, odomAccelAndGPSHandler);
     */
     //rover_info_subscriber = ros_handle.subscribe("/roverInfo", 10, roverInfoHandler);
-    //virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
+    virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
 
 }
 
@@ -437,7 +437,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
   
 }
 
-/*
+
 // Allows a virtual fence to be defined and enabled or disabled through ROS
 void virtualFenceHandler(const std_msgs::Float32MultiArray& message) 
 {
@@ -484,7 +484,7 @@ void virtualFenceHandler(const std_msgs::Float32MultiArray& message)
     }
   }
 }
-*/
+
 
 
 
