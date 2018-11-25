@@ -59,6 +59,26 @@
 using namespace std;
 
 
+// Define Exceptions
+// Define an exception to be thrown if the user tries to create
+// a RangeShape using invalid dimensions
+class ROSAdapterRangeShapeInvalidTypeException : public std::exception {
+public:
+  ROSAdapterRangeShapeInvalidTypeException(std::string msg) {
+    this->msg = msg;
+  }
+  
+  virtual const char* what() const throw()
+  {
+    std::string message = "Invalid RangeShape type provided: " + msg;
+    return message.c_str();
+  }
+  
+private:
+  std::string msg;
+};
+
+
 /************************
  * Global Alphabet Soup *
  ************************/
