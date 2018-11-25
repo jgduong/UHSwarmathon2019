@@ -54,6 +54,8 @@
 #include <ros/ros.h>
 #include <signal.h>
 
+#include <exception> // For exception handling
+
 using namespace std;
 
 
