@@ -338,7 +338,7 @@ check_state_timer = ros_handle.createTimer(ros::Duration(state_interval), check_
     */
     //rover_info_publisher.publish(infoMsg);
 
-    inputs.rover_name = published_name;
+    //inputs.rover_name = published_name;
 
     ros::spin();
 
