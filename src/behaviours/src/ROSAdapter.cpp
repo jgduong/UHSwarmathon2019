@@ -295,14 +295,14 @@ state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
     setupSubscribers( ros_handle, published_name );
 
     //Sonar Stuff
-    /*message_filters::Subscriber<sensor_msgs::Range> sonar_left_subscriber(ros_handle, (published_name + "/sonarLeft"), 10);
+    message_filters::Subscriber<sensor_msgs::Range> sonar_left_subscriber(ros_handle, (published_name + "/sonarLeft"), 10);
     message_filters::Subscriber<sensor_msgs::Range> sonar_center_subscriber(ros_handle, (published_name + "/sonarCenter"), 10);
     message_filters::Subscriber<sensor_msgs::Range> sonar_right_subscriber(ros_handle, (published_name + "/sonarRight"), 10);
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Range, sensor_msgs::Range, sensor_msgs::Range> sonarSyncPolicy;
     message_filters::Synchronizer<sonarSyncPolicy> sonarSync(sonarSyncPolicy(10), sonar_left_subscriber, sonar_center_subscriber, sonar_right_subscriber);
     sonarSync.registerCallback(boost::bind(&sonarHandler, _1, _2, _3));
 
-    */
+    
     setupPublishers( ros_handle, published_name );
     setupTimerCallbacks( ros_handle );
     //setupLogicMachine();
@@ -400,6 +400,21 @@ void publishHeartBeatTimerEventHandler(const ros::TimerEvent&) {
   std_msgs::String msg;
   msg.data = "";
   heartbeat_publisher.publish(msg);
+}
+
+void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight) {
+  std_msgs::String msg;
+  msg.data = "sonarLeft: ";
+  info_log_publisher.publish(msg);
+  info_log_publisher.publish(sonarLeft->range);
+  msg.data = "sonarRight: ";
+  info_log_publisher.publish(msg);
+  info_log_publisher.publish(sonarRight->range);
+   msg.data = "sonarCenter: ";
+  info_log_publisher.publish(msg);
+  info_log_publisher.publish(sonarCenter);
+  //logicController.SetSonarData(sonarLeft->range, sonarCenter->range, sonarRight->range);
+  
 }
 
 
