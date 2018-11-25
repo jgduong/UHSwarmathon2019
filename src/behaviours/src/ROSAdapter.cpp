@@ -209,7 +209,7 @@ ros::Timer publish_info_timer;
 void runStateMachines(const ros::TimerEvent&);
 void publishStatusTimerEventHandler(const ros::TimerEvent& event);
 void publishHeartBeatTimerEventHandler(const ros::TimerEvent& event);
-void publishRoverInfoTimerEventHandler(const ros::TimerEvent& event);
+//void publishRoverInfoTimerEventHandler(const ros::TimerEvent& event);
 
 void check_the_state(const ros::TimerEvent&);
 
@@ -224,7 +224,7 @@ void setupTimerCallbacks( ros::NodeHandle &ros_handle )
     */
     publish_heartbeat_timer = ros_handle.createTimer(ros::Duration(heartbeat_publish_interval), publishHeartBeatTimerEventHandler);
     
-    publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);
+    //publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);
 }
 
 /******************
