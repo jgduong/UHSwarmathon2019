@@ -146,10 +146,10 @@ void setupPublishers( ros::NodeHandle &ros_handle, string published_name )
     info_log_publisher = ros_handle.advertise<std_msgs::String>("/infoLog", 1, true);
     drive_control_publish = ros_handle.advertise<geometry_msgs::Twist>((published_name + "/driveControl"), 10);
     heartbeat_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/behaviour/heartbeat"), 1, true);
-	/*
+	
     rover_info_timer_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/infoTimer"), 1, true);
     rover_info_publisher = ros_handle.advertise<swarmie_msgs::InfoMessage>(("roverInfo"), 6, true);
-*/
+
     roverName = published_name;
 }
 
@@ -187,7 +187,8 @@ void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
     raw_odom_subscriber = ros_handle.subscribe((published_name + "/odom/"), 10, odomHandler);
     odometry_subscriber = ros_handle.subscribe((published_name + "/odom/filtered"), 10, odomAndAccelHandler);
     map_subscriber = ros_handle.subscribe((published_name + "/odom/ekf"), 10, odomAccelAndGPSHandler);
-    rover_info_subscriber = ros_handle.subscribe("/roverInfo", 10, roverInfoHandler);*/
+    */
+    rover_info_subscriber = ros_handle.subscribe("/roverInfo", 10, roverInfoHandler);
     virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
 
 }
@@ -223,7 +224,7 @@ void setupTimerCallbacks( ros::NodeHandle &ros_handle )
     */
     publish_heartbeat_timer = ros_handle.createTimer(ros::Duration(heartbeat_publish_interval), publishHeartBeatTimerEventHandler);
     
-    //publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);
+    publish_info_timer = ros_handle.createTimer(ros::Duration(info_publish_interval), publishRoverInfoTimerEventHandler);
 }
 
 /******************
@@ -312,8 +313,8 @@ check_state_timer = ros_handle.createTimer(ros::Duration(state_interval), check_
     //setupLogicMachine();
 
     //TBD How to wrap this section up
-    std_msgs::String msg;
-    msg.data = "Log Started";
+    //std_msgs::String msg;
+    //msg.data = "Log Started";
     //info_log_publisher.publish(msg);
 
     stringstream ss;
@@ -323,8 +324,8 @@ check_state_timer = ros_handle.createTimer(ros::Duration(state_interval), check_
     timerStartTime = time(0);
 
 
-    //swarmie_msgs::InfoMessage infoMsg;
-    //infoMsg.name = roverName;
+    swarmie_msgs::InfoMessage infoMsg;
+    infoMsg.name = roverName;
     /*
     infoMsg.x = inputs.odom_accel_gps.x;
     infoMsg.y = inputs.odom_accel_gps.y;
@@ -337,7 +338,7 @@ check_state_timer = ros_handle.createTimer(ros::Duration(state_interval), check_
     */
     //rover_info_publisher.publish(infoMsg);
 
-    //inputs.rover_name = published_name;
+    inputs.rover_name = published_name;
 
     ros::spin();
 
