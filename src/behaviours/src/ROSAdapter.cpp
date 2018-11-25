@@ -464,7 +464,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
   
 }
 
-
+/*
 // Allows a virtual fence to be defined and enabled or disabled through ROS
 void virtualFenceHandler(const std_msgs::Float32MultiArray& message) 
 {
@@ -511,7 +511,7 @@ void virtualFenceHandler(const std_msgs::Float32MultiArray& message)
     }
   }
 }
-
+*/
 
 
 
