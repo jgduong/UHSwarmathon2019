@@ -389,7 +389,7 @@ void toggle_movement(const ros::TimerEvent&)
 {
 	if (current_state == 1)
 	{
-		current_state = 2;
+		current_state = 1;
 	}
 	else {
 		current_state = 1;
