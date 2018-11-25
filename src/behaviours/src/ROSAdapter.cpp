@@ -405,6 +405,7 @@ void publishHeartBeatTimerEventHandler(const ros::TimerEvent&) {
 
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight) {
   std_msgs::String msg;
+	/*
   msg.data = "sonarLeft: ";
   info_log_publisher.publish(msg);
   	msg.data = to_string(sonarLeft->range);
@@ -414,11 +415,12 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
   info_log_publisher.publish(msg);
 	msg.data = to_string(sonarRight->range);
   info_log_publisher.publish(msg);
-	
+*/	
    msg.data = "sonarCenter: ";
   info_log_publisher.publish(msg);
-	msg.data = to_string(sonarCenter->range);
+  msg.data = to_string(sonarCenter->range);
   info_log_publisher.publish(msg);
+  
   //logicController.SetSonarData(sonarLeft->range, sonarCenter->range, sonarRight->range);
   
 }
