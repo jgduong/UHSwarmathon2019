@@ -27,6 +27,7 @@
 
 // Include Controllers
 #include <vector>
+#include "LogicController.h"
 
 #include "Point.h"
 #include "Tag.h"
@@ -211,7 +212,7 @@ void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
     map_subscriber = ros_handle.subscribe((published_name + "/odom/ekf"), 10, odomAccelAndGPSHandler);
     */
     //rover_info_subscriber = ros_handle.subscribe("/roverInfo", 10, roverInfoHandler);
-    virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
+    virtualFenceSubscriber = ros_handle.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
 
 }
 
