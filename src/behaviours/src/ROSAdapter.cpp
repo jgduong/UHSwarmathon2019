@@ -380,7 +380,7 @@ void check_the_state(const ros::TimerEvent&)
 	{
 		//turn right
 		geometry_msgs::Twist vel;
-		vel.linear.x = 0;
+		vel.linear.x = -200;
 		vel.angular.z = 200;
 		
 		drive_control_publish.publish(vel);
