@@ -288,7 +288,7 @@ ros::Timer state_switch_timer;
 
 check_state_timer = ros_handle.createTimer(ros::Duration(state_interval), check_the_state);
 
-state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
+//state_switch_timer = ros_handle.createTimer(ros::Duration(2), toggle_movement);
 
     // Register the SIGINT event handler so the node can shutdown properly
     //signal(SIGINT, sigintEventHandler);
@@ -369,7 +369,7 @@ void check_the_state(const ros::TimerEvent&)
 		std::cout << "waiting\n";
 	}
 	if (current_state == 1)
-	{
+	{	//straight
 		geometry_msgs::Twist vel;
 		vel.linear.x = 200;
 		//vel.angular.z = 200;
@@ -378,14 +378,15 @@ void check_the_state(const ros::TimerEvent&)
 	}
 	if (current_state == 2)
 	{
+		//turn right
 		geometry_msgs::Twist vel;
-		//vel.linear.x = 200;
+		vel.linear.x = 0;
 		vel.angular.z = 200;
 		
 		drive_control_publish.publish(vel);
 	}
 }
-
+/*
 void toggle_movement(const ros::TimerEvent&)
 {
 	if (current_state == 1)
@@ -396,7 +397,7 @@ void toggle_movement(const ros::TimerEvent&)
 		current_state = 1;
 	}
 }
-
+*/
 void publishHeartBeatTimerEventHandler(const ros::TimerEvent&) {
   std_msgs::String msg;
   msg.data = "";
@@ -420,6 +421,13 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
   info_log_publisher.publish(msg);
   msg.data = to_string(sonarCenter->range);
   info_log_publisher.publish(msg);
+	
+  if (sonarCenter->range <= 0.5) {
+	current_state = 2;  
+  }
+  else {
+	  current_state = 1;
+  }
   
   //logicController.SetSonarData(sonarLeft->range, sonarCenter->range, sonarRight->range);
   
