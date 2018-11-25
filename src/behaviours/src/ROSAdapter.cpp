@@ -59,7 +59,7 @@
 
 using namespace std;
 
-
+/*
 // Define Exceptions
 // Define an exception to be thrown if the user tries to create
 // a RangeShape using invalid dimensions
@@ -74,7 +74,8 @@ public:
     std::string message = "Invalid RangeShape type provided: " + msg;
     return message.c_str();
   }
-  
+*/
+
 private:
   std::string msg;
 };
@@ -141,6 +142,7 @@ enum states current_state = waiting;*/
 
 int current_state = 0;
 
+
 /****************************
  * END ALPHABET GLOBAL SOUP *
  ****************************/
@@ -186,7 +188,7 @@ ros::Subscriber raw_odom_subscriber;
 ros::Subscriber odometry_subscriber;
 ros::Subscriber map_subscriber;
 ros::Subscriber rover_info_subscriber;
-ros::Subscriber virtualFenceSubscriber; //receives data for vitrual boundaries
+//ros::Subscriber virtualFenceSubscriber; //receives data for vitrual boundaries
 
 /******************************************
  * ROS Callback Functions for Subscribers *
@@ -199,7 +201,7 @@ void odomAndAccelHandler(const nav_msgs::Odometry::ConstPtr& message);
 void odomAccelAndGPSHandler(const nav_msgs::Odometry::ConstPtr& message);
 void manualWaypointHandler(const swarmie_msgs::Waypoint& message);
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight);
-void virtualFenceHandler(const std_msgs::Float32MultiArray& message); //Used to set an invisible boundary for robots to keep them from traveling outside specific bounds
+//void virtualFenceHandler(const std_msgs::Float32MultiArray& message); //Used to set an invisible boundary for robots to keep them from traveling outside specific bounds
 //void roverInfoHandler(const swarmie_msgs::InfoMessage& message);
 
 void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
@@ -212,7 +214,7 @@ void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
     map_subscriber = ros_handle.subscribe((published_name + "/odom/ekf"), 10, odomAccelAndGPSHandler);
     */
     //rover_info_subscriber = ros_handle.subscribe("/roverInfo", 10, roverInfoHandler);
-    virtualFenceSubscriber = ros_handle.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
+    //virtualFenceSubscriber = ros_handle.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
 
 }
 
@@ -397,6 +399,7 @@ void check_the_state(const ros::TimerEvent&)
 	}
 	if (current_state == 1)
 	{	//straight
+		cout << "Current state is 1" << endl;
 		geometry_msgs::Twist vel;
 		vel.linear.x = 200;
 		//vel.angular.z = 200;
@@ -405,6 +408,7 @@ void check_the_state(const ros::TimerEvent&)
 	}
 	if (current_state == 2)
 	{
+		cout << "Current state is 2" << endl;
 		//turn right
 		geometry_msgs::Twist vel;
 		vel.linear.x = -200;
