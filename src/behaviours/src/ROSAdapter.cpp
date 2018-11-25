@@ -74,11 +74,11 @@ public:
     std::string message = "Invalid RangeShape type provided: " + msg;
     return message.c_str();
   }
-*/
+
 
 private:
   std::string msg;
-};
+};*/
 
 LogicController logicController;
 /************************
