@@ -23,7 +23,7 @@
 #include <apriltags_ros/AprilTagDetectionArray.h>
 #include <std_msgs/Float32MultiArray.h>
 #include "swarmie_msgs/Waypoint.h"
-#include "swarmie_msgs/InfoMessage.h"
+//#include "swarmie_msgs/InfoMessage.h"
 
 // Include Controllers
 #include <vector>
@@ -133,8 +133,8 @@ ros::Publisher wrist_angle_publish;
 ros::Publisher info_log_publisher;
 ros::Publisher drive_control_publish;
 ros::Publisher heartbeat_publisher;
-ros::Publisher rover_info_publisher;
-ros::Publisher rover_info_timer_publisher;
+//ros::Publisher rover_info_publisher;
+//ros::Publisher rover_info_timer_publisher;
 
 void setupPublishers( ros::NodeHandle &ros_handle, string published_name )
 {
@@ -147,8 +147,8 @@ void setupPublishers( ros::NodeHandle &ros_handle, string published_name )
     drive_control_publish = ros_handle.advertise<geometry_msgs::Twist>((published_name + "/driveControl"), 10);
     heartbeat_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/behaviour/heartbeat"), 1, true);
 	
-    rover_info_timer_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/infoTimer"), 1, true);
-    rover_info_publisher = ros_handle.advertise<swarmie_msgs::InfoMessage>(("roverInfo"), 6, true);
+    //rover_info_timer_publisher = ros_handle.advertise<std_msgs::String>((published_name + "/infoTimer"), 1, true);
+    //rover_info_publisher = ros_handle.advertise<swarmie_msgs::InfoMessage>(("roverInfo"), 6, true);
 
     roverName = published_name;
 }
@@ -188,7 +188,7 @@ void setupSubscribers( ros::NodeHandle &ros_handle, string published_name )
     odometry_subscriber = ros_handle.subscribe((published_name + "/odom/filtered"), 10, odomAndAccelHandler);
     map_subscriber = ros_handle.subscribe((published_name + "/odom/ekf"), 10, odomAccelAndGPSHandler);
     */
-    rover_info_subscriber = ros_handle.subscribe("/roverInfo", 10, roverInfoHandler);
+    //rover_info_subscriber = ros_handle.subscribe("/roverInfo", 10, roverInfoHandler);
     //virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler); //receives data for vitrual boundaries
 
 }
@@ -324,8 +324,8 @@ check_state_timer = ros_handle.createTimer(ros::Duration(state_interval), check_
     timerStartTime = time(0);
 
 
-    swarmie_msgs::InfoMessage infoMsg;
-    infoMsg.name = roverName;
+    //swarmie_msgs::InfoMessage infoMsg;
+    //infoMsg.name = roverName;
     /*
     infoMsg.x = inputs.odom_accel_gps.x;
     infoMsg.y = inputs.odom_accel_gps.y;
