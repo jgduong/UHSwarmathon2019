@@ -229,6 +229,7 @@ rotateBool = false;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
+	cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
 	
 	if (rotateBool)
@@ -245,17 +246,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      else {
 		    sendDriveCommand(30.0, -30.0);
 	      }
-		
-	      ninetyRotate =currentLocationOdom.theta;
 	}
 	
 	if (!initialized)
   	{
-
+		cout << "not initialized detected... " << endl;
     	if (timerTimeElapsed > startDelayInSeconds)
     	{
-
-	      // initialization has run
+	
+	      cout << "initialization has run..." << endl;
 	      initialized = true;
 	      
 	      float startingTheta = currentLocationOdom.theta;
