@@ -39,6 +39,25 @@
 #include <exception> // For exception handling
 
 using namespace std;
+// Define Exceptions
+// Define an exception to be thrown if the user tries to create
+// a RangeShape using invalid dimensions
+class ROSAdapterRangeShapeInvalidTypeException : public std::exception {
+public:
+  ROSAdapterRangeShapeInvalidTypeException(std::string msg) {
+    this->msg = msg;
+  }
+  
+  virtual const char* what() const throw()
+  {
+    std::string message = "Invalid RangeShape type provided: " + msg;
+    return message.c_str();
+  }
+  
+private:
+  std::string msg;
+};
+
 
 // Numeric Variables for rover positioning
 geometry_msgs::Pose2D currentLocationOdom;		//current location using ODOM
@@ -91,6 +110,9 @@ ros::Timer stateMachineTimer;
 ros::Timer publish_status_timer;
 ros::Timer publish_heartbeat_timer;
 
+void sendDriveCommand(double left, double right);
+void humanTime();
+void transformMapCentertoOdom();
 // records time for delays in sequenced actions, 1 second resolution.
 time_t timerStartTime;
 
@@ -98,6 +120,9 @@ time_t timerStartTime;
 // average its location.
 unsigned int startDelayInSeconds = 30;
 float timerTimeElapsed = 0;
+
+int currentMode = 0;
+const float waypointTolerance = 0.1;
 
 //Transforms
 tf::TransformListener *tfListener;
@@ -120,6 +145,11 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 
 // Converts the time passed as reported by ROS (which takes Gazebo simulation rate into account) into milliseconds as an integer.
 long int getROSTimeInMilliSecs();
+
+geometry_msgs::Twist velocity;
+char host[128];		//rovers hostname
+string publishedName;	//published hostname
+char prev_state_machine[128];
 
 int main(int argc, char **argv) {
   
@@ -184,13 +214,13 @@ int main(int argc, char **argv) {
   ss << "Rover start delay set to " << startDelayInSeconds << " seconds";
   msg.data = ss.str();
   infoLogPublisher.publish(msg);
-
+	/*
 	if(currentMode != 2 && currentMode != 3)
 	  {
 	    // ensure the logic controller starts in the correct mode.
 	    logicController.SetModeManual();
 	  }
-	
+	*/
 	  timerStartTime = time(0);
 	  
 	  ros::spin();
@@ -215,8 +245,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      
 	      
 	      
-	      centerLocationOdom.x = currentLocation.x;
-	      centerLocationOdom.y = currentLocation.y;
+	      centerLocationOdom.x = currentLocationOdom.x;
+	      centerLocationOdom.y = currentLocationOdom.y;
 	      //centerLocationOdom.theta = currentLocation.theta;
 	      //SET the centerOdom location by passing that variable here
 	      
@@ -224,7 +254,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      centerLocationMap.y = currentLocationMap.y;
 		  //SET the centerMap location by passing that variable here		
 	      
-	      startTime = getROSTimeInMilliSecs();
+	      //startTime = getROSTimeInMilliSecs();
 	      
 	      
 	      //Rotate to starting position...
@@ -234,8 +264,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      while (ninetyRotate < 90.0)
 	      {
 	      	ninetyRotate += abs(currentLocationOdom.theta - prevTheta);
-	      	prevTheta = currentLocationOdom.theta
-		  }
+	      	prevTheta = currentLocationOdom.theta;
+		}
 		  sendDriveCommand(0, 0);
 	      
     	}
@@ -322,7 +352,7 @@ void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
 }
 
 // Allows a virtual fence to be defined and enabled or disabled through ROS
-void virtualFenceHandler(const std_msgs::Float32MultiArray& message) 
+/*void virtualFenceHandler(const std_msgs::Float32MultiArray& message) 
 {
   // Read data from the message array
   // The first element is an integer indicating the shape type
@@ -366,7 +396,7 @@ void virtualFenceHandler(const std_msgs::Float32MultiArray& message)
     }
     }
   }
-}
+}*/
 
 void mapHandler(const nav_msgs::Odometry::ConstPtr& message)
 {
@@ -482,7 +512,7 @@ void transformMapCentertoOdom()
   
   float diff = hypot(xdiff, ydiff);	//get total difference
   
-  if (diff > drift_tolerance)	//If the difference is greater than tolerance, adjust the rovers perceived idea of where the center is. Used to decrease ODOM drift and keep rover accuracy for longer periods of time
+  if (diff > 0.1)	//If the difference is greater than tolerance, adjust the rovers perceived idea of where the center is. Used to decrease ODOM drift and keep rover accuracy for longer periods of time
   {
     centerLocationOdom.x += xdiff/diff;	//adjust X
     centerLocationOdom.y += ydiff/diff;	//adjust Y
@@ -492,7 +522,9 @@ void transformMapCentertoOdom()
   //cout << hypot(centerLocationMapRef.x - centerLocationOdom.x, centerLocationMapRef.y - centerLocationOdom.y) << endl;
           
 }
-
+float startTime = 0;
+float minutesTime = 0;
+float hoursTime = 0;
 void humanTime() 
 {
   
