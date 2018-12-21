@@ -236,7 +236,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
     	{
 
 	      // initialization has run
-	      initialized = true;
+	      //initialized = true;
 	      
 	      
 	      
@@ -255,16 +255,21 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      
 	      
 	      //Rotate to starting position...
-	      float ninetyRotate = 0.0;
-	      float prevTheta = currentLocationOdom.theta;
-	      sendDriveCommand(0, -30);
-	      while (ninetyRotate < 90.0)
+	      float ninetyRotate = currentLocationOdom.theta;
+	      float startingTheta = currentLocationOdom.theta;
+		
+	      if (abs(ninetyRotate - startingTheta) >= 90.0)
 	      {
-	      	ninetyRotate += abs(currentLocationOdom.theta - prevTheta);
-	      	prevTheta = currentLocationOdom.theta;
-		}
-		  sendDriveCommand(0, 0);
-	      
+		    sendDriveCommand(0.0, 0.0);
+		     
+	      }
+	      else {
+		    sendDriveCommand(0, 30.0);
+	      }
+		
+	      ninetyRotate =currentLocationOdom.theta;
+	      sendDriveCommand(0, -30);
+
     	}
     	else
     	{
