@@ -80,8 +80,6 @@ geometry_msgs::Twist velocity;
 float linearVelocity = 0;	//forward speed, POSITIVE = forward, NEGATIVE = backward
 float angularVelocity = 0;	//turning speed, POSITIVE = left, NEGATIVE = right
 
-string publishedName;
-
 // Publishers
 ros::Publisher stateMachinePublish;		//publishes state machine status
 ros::Publisher status_publisher;		//publishes rover status
@@ -314,7 +312,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	      tags.push_back(loc);
 	    }
 	    
-	    logicController.SetAprilTags(tags);
+	    //logicController.SetAprilTags(tags);
 	}
 }
 
