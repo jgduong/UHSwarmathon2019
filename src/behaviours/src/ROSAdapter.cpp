@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
 	  return EXIT_SUCCESS;
 }
 
-rotateBool = false;
+bool rotateBool = false;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
