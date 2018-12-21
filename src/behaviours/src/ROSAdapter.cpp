@@ -253,36 +253,32 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (!initialized)
   	{
 		cout << "not initialized detected... " << endl;
-    	if (timerTimeElapsed > startDelayInSeconds)
-    	{
-	
-	      cout << "initialization has run..." << endl;
-	      initialized = true;
-	      
-	      startingTheta = currentLocationOdom.theta;
-	      
-	      cout << "startingTheta is: " << startingTheta << endl;
-	      
-	      centerLocationOdom.x = currentLocationOdom.x;
-	      centerLocationOdom.y = currentLocationOdom.y;
-	      //centerLocationOdom.theta = currentLocation.theta;
-	      //SET the centerOdom location by passing that variable here
-	      
-	      centerLocationMap.x = currentLocationMap.x;
-	      centerLocationMap.y = currentLocationMap.y;
-		  //SET the centerMap location by passing that variable here		
-	      
-	      //startTime = getROSTimeInMilliSecs();
-		rotateBool = true;
-	}
-	      
+    		if (timerTimeElapsed > startDelayInSeconds)
+		{
 
+		      cout << "initialization has run..." << endl;
+		      initialized = true;
 
-    	}
-    	else
-    	{
-      		return;
-    	}
+		      startingTheta = currentLocationOdom.theta;
+
+		      cout << "startingTheta is: " << startingTheta << endl;
+
+		      centerLocationOdom.x = currentLocationOdom.x;
+		      centerLocationOdom.y = currentLocationOdom.y;
+		      //centerLocationOdom.theta = currentLocation.theta;
+		      //SET the centerOdom location by passing that variable here
+
+		      centerLocationMap.x = currentLocationMap.x;
+		      centerLocationMap.y = currentLocationMap.y;
+			  //SET the centerMap location by passing that variable here		
+
+		      //startTime = getROSTimeInMilliSecs();
+			rotateBool = true;
+		}
+    		else
+    		{
+      			return;
+    		}
   	}
 	  
 	humanTime();
