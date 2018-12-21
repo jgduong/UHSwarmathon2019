@@ -240,7 +240,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      ninetyRotate = currentLocationOdom.theta;
 	      cout << "Current theta is: " << currentLocationOdom.theta << endl;
 		
-	      if (abs(ninetyRotate - startingTheta) >= 90.0)
+	      if (abs(ninetyRotate - startingTheta) >= 1.5)
 	      {
 		    sendDriveCommand(0.0, 0.0);
 		     rotateBool = false;
