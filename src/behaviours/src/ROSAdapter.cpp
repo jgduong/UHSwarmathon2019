@@ -226,6 +226,8 @@ int main(int argc, char **argv) {
 }
 
 bool rotateBool = false;
+float startingTheta = 0.0;
+float ninetyRotate = 0.0;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -235,7 +237,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (rotateBool)
 	{
 		//Rotate to starting position...
-	      float ninetyRotate = currentLocationOdom.theta;
+	      ninetyRotate = currentLocationOdom.theta;
 	      cout << "Current theta is: " << currentLocationOdom.theta << endl;
 		
 	      if (abs(ninetyRotate - startingTheta) >= 90.0)
@@ -257,7 +259,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      cout << "initialization has run..." << endl;
 	      initialized = true;
 	      
-	      float startingTheta = currentLocationOdom.theta;
+	      startingTheta = currentLocationOdom.theta;
 	      
 	      cout << "startingTheta is: " << startingTheta << endl;
 	      
