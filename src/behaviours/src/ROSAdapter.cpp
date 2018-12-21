@@ -225,6 +225,7 @@ int main(int argc, char **argv) {
 	  return EXIT_SUCCESS;
 }
 
+bool mapTesting = false;
 bool rotateBool = false;
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
@@ -233,6 +234,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 {
 	cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
+	
+	if (mapTesting)
+	{
+		sendDriveCommand(50.0, 50.0);
+		cout << "The current GPS location of " << host << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
+	}
 	
 	if (rotateBool)
 	{
@@ -244,6 +251,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      {
 		    sendDriveCommand(0.0, 0.0);
 		     rotateBool = false;
+		      mapTesting = true;
 	      }
 	      else {
 		    sendDriveCommand(-30.0, 30.0);
