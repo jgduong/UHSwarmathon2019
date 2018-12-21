@@ -244,7 +244,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		     rotateBool = false;
 	      }
 	      else {
-		    sendDriveCommand(30.0, -30.0);
+		    sendDriveCommand(0.0, 0.0);
 	      }
 	}
 	
