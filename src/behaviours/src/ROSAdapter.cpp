@@ -246,7 +246,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		     rotateBool = false;
 	      }
 	      else {
-		    sendDriveCommand(0.0, 0.0);
+		    sendDriveCommand(30.0, -30.0);
 	      }
 	}
 	
@@ -286,7 +286,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 }
 
-void sendDriveCommand(double left, double right)
+void sendDriveCommand(double left, double rght)
 {
 	velocity.linear.x = left,
     velocity.angular.z = right;
