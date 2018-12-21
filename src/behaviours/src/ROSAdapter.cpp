@@ -91,6 +91,7 @@ ros::Publisher heartbeatPublisher;		//publishes ROSAdapters status via its "hear
 // Publishes swarmie_msgs::Waypoint messages on "/<robot>/waypooints"
 // to indicate when waypoints have been reached.
 ros::Publisher waypointFeedbackPublisher;	//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
+ros::Publisher robotnames;			//testing
 
 // Subscribers
 ros::Subscriber joySubscriber;			//receives joystick information
@@ -102,6 +103,7 @@ ros::Subscriber virtualFenceSubscriber;		//receives data for vitrual boundaries
 // manualWaypointSubscriber listens on "/<robot>/waypoints/cmd" for
 // swarmie_msgs::Waypoint messages.
 ros::Subscriber manualWaypointSubscriber; 	//receives manual waypoints given from GUI
+ros::Subscriber nameSubscriber;			//testing
 
 // Timers
 ros::Timer stateMachineTimer;
@@ -141,6 +143,8 @@ void publishStatusTimerEventHandler(const ros::TimerEvent& event);			//Publishes
 void publishHeartBeatTimerEventHandler(const ros::TimerEvent& event);			
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight);	//handles ultrasound data and stores data
 
+void nameHandler(const std_msgs::UInt8::ConstPtr& message);				//testing
+
 // Converts the time passed as reported by ROS (which takes Gazebo simulation rate into account) into milliseconds as an integer.
 long int getROSTimeInMilliSecs();
 
@@ -175,6 +179,7 @@ int main(int argc, char **argv) {
   targetSubscriber = mNH.subscribe((publishedName + "/targets"), 10, targetHandler);					//receives tag data
   odometrySubscriber = mNH.subscribe((publishedName + "/odom/filtered"), 10, odometryHandler);				//receives ODOM data
   mapSubscriber = mNH.subscribe((publishedName + "/odom/ekf"), 10, mapHandler);						//receives GPS data
+  nameSubscriber = mNH.subscribe(("/swarmies"), 10, nameHandler);
   //virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler);					//receives data for vitrual boundaries
   manualWaypointSubscriber = mNH.subscribe((publishedName + "/waypoints/cmd"), 10, manualWaypointHandler);		//receives manual waypoints given from GUI
   message_filters::Subscriber<sensor_msgs::Range> sonarLeftSubscriber(mNH, (publishedName + "/sonarLeft"), 10);
@@ -190,6 +195,7 @@ int main(int argc, char **argv) {
   driveControlPublish = mNH.advertise<geometry_msgs::Twist>((publishedName + "/driveControl"), 10);			//publishes motor commands to the motors
   heartbeatPublisher = mNH.advertise<std_msgs::String>((publishedName + "/behaviour/heartbeat"), 1, true);		//publishes ROSAdapters status via its "heartbeat"
   waypointFeedbackPublisher = mNH.advertise<swarmie_msgs::Waypoint>((publishedName + "/waypoints"), 1, true);		//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
+  robotnames = mNH.advertise<std_msgs::String>(("/swarmies"), 10, true);
 
   //timers
   publish_status_timer = mNH.createTimer(ros::Duration(1), publishStatusTimerEventHandler);
@@ -366,6 +372,11 @@ void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
     //SET velocity data readable everywhere(?)
 }
 
+void nameHandler(const std_msgs::UInt8::ConstPtr& message)
+{
+	
+}	
+
 // Allows a virtual fence to be defined and enabled or disabled through ROS
 /*void virtualFenceHandler(const std_msgs::Float32MultiArray& message) 
 {
@@ -442,6 +453,9 @@ void publishStatusTimerEventHandler(const ros::TimerEvent&)
   std_msgs::String msg;
   msg.data = "UH";		//change this with team name
   status_publisher.publish(msg);
+
+  msg.data = publishedName;
+  robotnames.publish(msg);
 }
 
 void manualWaypointHandler(const swarmie_msgs::Waypoint& message)
@@ -564,21 +578,3 @@ void humanTime()
   
   //cout << "System has been Running for :: " << hoursTime << " : hours " << minutesTime << " : minutes " << timeDiff << "." << frac << " : seconds" << endl; //you can remove or comment this out it just gives indication something is happening to the log file
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
