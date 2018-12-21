@@ -146,7 +146,6 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 // Converts the time passed as reported by ROS (which takes Gazebo simulation rate into account) into milliseconds as an integer.
 long int getROSTimeInMilliSecs();
 
-geometry_msgs::Twist velocity;
 char host[128];		//rovers hostname
 string publishedName;	//published hostname
 char prev_state_machine[128];
