@@ -225,9 +225,29 @@ int main(int argc, char **argv) {
 	  return EXIT_SUCCESS;
 }
 
+rotateBool = false;
+
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	timerTimeElapsed = time(0) - timerStartTime;
+	
+	if (rotateBool)
+	{
+		//Rotate to starting position...
+	      float ninetyRotate = currentLocationOdom.theta;
+	      cout << "Current theta is: " << currentLocationOdom.theta << endl;
+		
+	      if (abs(ninetyRotate - startingTheta) >= 90.0)
+	      {
+		    sendDriveCommand(0.0, 0.0);
+		     rotateBool = false;
+	      }
+	      else {
+		    sendDriveCommand(30.0, -30.0);
+	      }
+		
+	      ninetyRotate =currentLocationOdom.theta;
+	}
 	
 	if (!initialized)
   	{
@@ -236,11 +256,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
     	{
 
 	      // initialization has run
-	      //initialized = true;
+	      initialized = true;
 	      
+	      float startingTheta = currentLocationOdom.theta;
 	      
-	      
-	      
+	      cout << "startingTheta is: " << startingTheta << endl;
 	      
 	      centerLocationOdom.x = currentLocationOdom.x;
 	      centerLocationOdom.y = currentLocationOdom.y;
@@ -252,23 +272,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		  //SET the centerMap location by passing that variable here		
 	      
 	      //startTime = getROSTimeInMilliSecs();
+		rotateBool = true;
+	}
 	      
-	      
-	      //Rotate to starting position...
-	      float ninetyRotate = currentLocationOdom.theta;
-	      float startingTheta = currentLocationOdom.theta;
-		
-	      if (abs(ninetyRotate - startingTheta) >= 90.0)
-	      {
-		    sendDriveCommand(0.0, 0.0);
-		     
-	      }
-	      else {
-		    sendDriveCommand(0, 30.0);
-	      }
-		
-	      ninetyRotate =currentLocationOdom.theta;
-	      sendDriveCommand(0, -30);
+
 
     	}
     	else
