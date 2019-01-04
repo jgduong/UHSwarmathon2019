@@ -1,4 +1,7 @@
 #include <ros/ros.h>
+#include <math.h>
+#include <unordered_map>
+#include <set>
 
 // ROS libraries
 #include <angles/angles.h>
@@ -92,6 +95,7 @@ ros::Publisher heartbeatPublisher;		//publishes ROSAdapters status via its "hear
 // to indicate when waypoints have been reached.
 ros::Publisher waypointFeedbackPublisher;	//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
 ros::Publisher robotnames;			//publishes name of robot to /swarmies
+ros::Publisher visitedLocationsPublisher;
 
 // Subscribers
 ros::Subscriber joySubscriber;			//receives joystick information
@@ -104,6 +108,7 @@ ros::Subscriber virtualFenceSubscriber;		//receives data for vitrual boundaries
 // swarmie_msgs::Waypoint messages.
 ros::Subscriber manualWaypointSubscriber; 	//receives manual waypoints given from GUI
 ros::Subscriber nameSubscriber;			//testing
+ros::Subsrciber visitedLocationsSubscriber;
 
 // Timers
 ros::Timer stateMachineTimer;
@@ -153,6 +158,7 @@ string publishedName;	//published hostname
 char prev_state_machine[128];
 
 vector <string> names;
+unordered_map<float, set<float>> visitedLocations;	//hashtable to store visited locations
 
 int main(int argc, char **argv) {
   
@@ -184,12 +190,14 @@ int main(int argc, char **argv) {
 
   nameSubscriber = mNH.subscribe(("/swarmies"), 10, nameHandler);							//syncs a list of names
 
+	
   //virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler);					//receives data for vitrual boundaries
   manualWaypointSubscriber = mNH.subscribe((publishedName + "/waypoints/cmd"), 10, manualWaypointHandler);		//receives manual waypoints given from GUI
   message_filters::Subscriber<sensor_msgs::Range> sonarLeftSubscriber(mNH, (publishedName + "/sonarLeft"), 10);
   message_filters::Subscriber<sensor_msgs::Range> sonarCenterSubscriber(mNH, (publishedName + "/sonarCenter"), 10);
   message_filters::Subscriber<sensor_msgs::Range> sonarRightSubscriber(mNH, (publishedName + "/sonarRight"), 10);
-
+  visitedLocationSubscriber = mNH.subscribe<std_msgs::Float32MultiArray>((publishedName + "/visitedLocation"), 10, visitedLocationsHandler);
+	
   //publishers
   status_publisher = mNH.advertise<std_msgs::String>((publishedName + "/status"), 1, true);				//publishes rover status
   stateMachinePublish = mNH.advertise<std_msgs::String>((publishedName + "/state_machine"), 1, true);			//publishes state machine status
@@ -199,7 +207,8 @@ int main(int argc, char **argv) {
   driveControlPublish = mNH.advertise<geometry_msgs::Twist>((publishedName + "/driveControl"), 10);			//publishes motor commands to the motors
   heartbeatPublisher = mNH.advertise<std_msgs::String>((publishedName + "/behaviour/heartbeat"), 1, true);		//publishes ROSAdapters status via its "heartbeat"
   waypointFeedbackPublisher = mNH.advertise<swarmie_msgs::Waypoint>((publishedName + "/waypoints"), 1, true);		//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
-
+  visitedLocationPublisher = mNH.advertise<std_msgs::Float32MultiArray>((publishedName + "/visitedLocation"), 10, true);
+	
   robotnames = mNH.advertise<std_msgs::String>(("/swarmies"), 10, true);						//publishes robotnames to /swarmies
 
   //timers
@@ -250,8 +259,26 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	{
 		sendDriveCommand(50.0, 50.0);
 		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
-		cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
-}
+		//cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
+
+		float myCoordinate[2];
+		myCoordinate[0] = roundf((currentLocationOdom.x)*10)/10;
+		myCoordinate[1] = roundf((currentLocationOdom.y)*10)/10;
+		
+		visitedLocations[myCoordinate[0]].insert(myCoordinate[1]);
+		visitedLocationsPublisher.publish(myCoordinate);
+		
+		cout << "searching for " << myCoordinate[0] << ", " << myCoordinate[1] << "... ";
+		if(visitedLocations.find(myCoordinate[0]) != visitedLocations.end()) {
+			if (visitedLocations[myCoordinate[0]].find(myCoordinate[1]) != myCoordinate[0].end()) {
+				cout << "Location exists in hashmap" << endl;	
+			}
+			else { cout << "This y location has not been visited for the specified x location" << endl; }
+		}
+		else {
+			cout << "Location does not exist" << endl;
+		}
+	}
 	
 	if (rotateBool)
 	{
@@ -395,7 +422,21 @@ void nameHandler(const std_msgs::String::ConstPtr& msg)
         cout << names[i] << "\n";
         cout << "Size of vector is: " << names.size() << endl;
 	
-}	
+}
+
+void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& msg) {
+	std_msgs::Float32MultiArray myCoordinate[2];
+	
+	myCoordinate[0] = roundf((currentLocationOdom.x)*10)/10;
+	myCoordinate[1] = roundf((currentLocationOdom.y)*10)/10
+	
+	//std_msgs::Float32MultiArray receivedCoordinate[2];
+	float x = msg->data[0];
+	float y = msg->data[1];
+	visitedLocations[x].insert(y);
+	//visitedLocations[myCoordinate[0]].insert(myCoordinate[1]);
+	//visitedLocationsPublisher.publish(myCoordinate);
+}
 
 // Allows a virtual fence to be defined and enabled or disabled through ROS
 /*void virtualFenceHandler(const std_msgs::Float32MultiArray& message) 
