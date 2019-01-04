@@ -271,7 +271,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		cout << "searching for " << myCoordinate[0] << ", " << myCoordinate[1] << "... ";
 		if(visitedLocations.find(myCoordinate[0]) != visitedLocations.end()) {
-			if (visitedLocations[myCoordinate[0]].find(myCoordinate[1]) != myCoordinate[0].end()) {
+			if (visitedLocations[myCoordinate[0]].find(myCoordinate[1]) != visitedLocations[myCoordinate[0]].end()) {
 				cout << "Location exists in hashmap" << endl;	
 			}
 			else { cout << "This y location has not been visited for the specified x location" << endl; }
