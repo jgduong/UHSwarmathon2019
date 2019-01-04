@@ -262,16 +262,16 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
 		//cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
 
-		float myCoordinate[2];
-		myCoordinate[0] = roundf((currentLocationOdom.x)*10)/10;
-		myCoordinate[1] = roundf((currentLocationOdom.y)*10)/10;
+		std_msgs::Float32MultiArray myCoordinate[2];
+		myCoordinate->data[0] = roundf((currentLocationOdom.x)*10)/10;
+		myCoordinate->data[1] = roundf((currentLocationOdom.y)*10)/10;
 		
-		visitedLocations[myCoordinate[0]].insert(myCoordinate[1]);
+		visitedLocations[myCoordinate->data[0]].insert(myCoordinate->data[1]);
 		visitedLocationsPublisher.publish(myCoordinate);
 		
-		cout << "searching for " << myCoordinate[0] << ", " << myCoordinate[1] << "... ";
-		if(visitedLocations.find(myCoordinate[0]) != visitedLocations.end()) {
-			if (visitedLocations[myCoordinate[0]].find(myCoordinate[1]) != visitedLocations[myCoordinate[0]].end()) {
+		cout << "searching for " << myCoordinate->data[0] << ", " << myCoordinate->data[1] << "... ";
+		if(visitedLocations.find(myCoordinate->data[0]) != visitedLocations.end()) {
+			if (visitedLocations[myCoordinate->data[0]].find(myCoordinate->data[1]) != visitedLocations[myCoordinate->data[0]].end()) {
 				cout << "Location exists in hashmap" << endl;	
 			}
 			else { cout << "This y location has not been visited for the specified x location" << endl; }
