@@ -264,14 +264,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		std_msgs::Float32MultiArray myCoordinate;
 		myCoordinate.data[0] = roundf((currentLocationOdom.x)*10)/10;
-		myCoordinate->data[1] = roundf((currentLocationOdom.y)*10)/10;
+		myCoordinate.data[1] = roundf((currentLocationOdom.y)*10)/10;
 		
-		visitedLocations[myCoordinate->data[0]].insert(myCoordinate->data[1]);
+		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
 		visitedLocationsPublisher.publish(myCoordinate);
 		
-		cout << "searching for " << myCoordinate->data[0] << ", " << myCoordinate->data[1] << "... ";
-		if(visitedLocations.find(myCoordinate->data[0]) != visitedLocations.end()) {
-			if (visitedLocations[myCoordinate->data[0]].find(myCoordinate->data[1]) != visitedLocations[myCoordinate->data[0]].end()) {
+		cout << "searching for " << myCoordinate.data[0] << ", " << myCoordinate.data[1] << "... ";
+		if(visitedLocations.find(myCoordinate.data[0]) != visitedLocations.end()) {
+			if (visitedLocations[myCoordinate.data[0]].find(myCoordinate.data[1]) != visitedLocations[myCoordinate.data[0]].end()) {
 				cout << "Location exists in hashmap" << endl;	
 			}
 			else { cout << "This y location has not been visited for the specified x location" << endl; }
@@ -428,8 +428,8 @@ void nameHandler(const std_msgs::String::ConstPtr& msg)
 void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& msg) {
 	
 	//std_msgs::Float32MultiArray receivedCoordinate[2];
-	float x = msg->data[0];
-	float y = msg->data[1];
+	float x = msg.data[0];
+	float y = msg.data[1];
 	visitedLocations[x].insert(y);
 	//visitedLocations[myCoordinate[0]].insert(myCoordinate[1]);
 	//visitedLocationsPublisher.publish(myCoordinate);
