@@ -429,7 +429,7 @@ void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& msg) {
 	std_msgs::Float32MultiArray myCoordinate[2];
 	
 	myCoordinate[0] = roundf((currentLocationOdom.x)*10)/10;
-	myCoordinate[1] = roundf((currentLocationOdom.y)*10)/10
+	myCoordinate[1] = roundf((currentLocationOdom.y)*10)/10;
 	
 	//std_msgs::Float32MultiArray receivedCoordinate[2];
 	float x = msg->data[0];
