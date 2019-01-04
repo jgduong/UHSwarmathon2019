@@ -91,7 +91,7 @@ ros::Publisher heartbeatPublisher;		//publishes ROSAdapters status via its "hear
 // Publishes swarmie_msgs::Waypoint messages on "/<robot>/waypooints"
 // to indicate when waypoints have been reached.
 ros::Publisher waypointFeedbackPublisher;	//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
-ros::Publisher robotnames;			//testing
+ros::Publisher robotnames;			//publishes name of robot to /swarmies
 
 // Subscribers
 ros::Subscriber joySubscriber;			//receives joystick information
@@ -143,7 +143,7 @@ void publishStatusTimerEventHandler(const ros::TimerEvent& event);			//Publishes
 void publishHeartBeatTimerEventHandler(const ros::TimerEvent& event);			
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight);	//handles ultrasound data and stores data
 
-void nameHandler(const std_msgs::UInt8::ConstPtr& message);				//testing
+void nameHandler(const std_msgs::String::ConstPtr& message);				//subscriber to sync names of robots together
 
 // Converts the time passed as reported by ROS (which takes Gazebo simulation rate into account) into milliseconds as an integer.
 long int getROSTimeInMilliSecs();
@@ -151,6 +151,8 @@ long int getROSTimeInMilliSecs();
 char host[128];		//rovers hostname
 string publishedName;	//published hostname
 char prev_state_machine[128];
+
+vector <string> names;
 
 int main(int argc, char **argv) {
   
@@ -179,7 +181,9 @@ int main(int argc, char **argv) {
   targetSubscriber = mNH.subscribe((publishedName + "/targets"), 10, targetHandler);					//receives tag data
   odometrySubscriber = mNH.subscribe((publishedName + "/odom/filtered"), 10, odometryHandler);				//receives ODOM data
   mapSubscriber = mNH.subscribe((publishedName + "/odom/ekf"), 10, mapHandler);						//receives GPS data
-  nameSubscriber = mNH.subscribe(("/swarmies"), 10, nameHandler);
+
+  nameSubscriber = mNH.subscribe(("/swarmies"), 10, nameHandler);							//syncs a list of names
+
   //virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler);					//receives data for vitrual boundaries
   manualWaypointSubscriber = mNH.subscribe((publishedName + "/waypoints/cmd"), 10, manualWaypointHandler);		//receives manual waypoints given from GUI
   message_filters::Subscriber<sensor_msgs::Range> sonarLeftSubscriber(mNH, (publishedName + "/sonarLeft"), 10);
@@ -195,7 +199,8 @@ int main(int argc, char **argv) {
   driveControlPublish = mNH.advertise<geometry_msgs::Twist>((publishedName + "/driveControl"), 10);			//publishes motor commands to the motors
   heartbeatPublisher = mNH.advertise<std_msgs::String>((publishedName + "/behaviour/heartbeat"), 1, true);		//publishes ROSAdapters status via its "heartbeat"
   waypointFeedbackPublisher = mNH.advertise<swarmie_msgs::Waypoint>((publishedName + "/waypoints"), 1, true);		//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
-  robotnames = mNH.advertise<std_msgs::String>(("/swarmies"), 10, true);
+
+  robotnames = mNH.advertise<std_msgs::String>(("/swarmies"), 10, true);						//publishes robotnames to /swarmies
 
   //timers
   publish_status_timer = mNH.createTimer(ros::Duration(1), publishStatusTimerEventHandler);
@@ -238,7 +243,7 @@ float ninetyRotate = 0.0;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
-	cout << "an instance of behaviorStateMachine has run... " << endl;
+	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
 	
 	if (mapTesting)
@@ -246,13 +251,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		sendDriveCommand(50.0, 50.0);
 		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
 		cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
-	}
+}
 	
 	if (rotateBool)
 	{
 		//Rotate to starting position...
 	      ninetyRotate = currentLocationOdom.theta;
-	      cout << publishedName << " current theta is: " << currentLocationOdom.theta << endl;
+	      cout << "Current theta is: " << currentLocationOdom.theta << endl;
 		
 	      if (abs(ninetyRotate - startingTheta) >= 1.5)
 	      {
@@ -371,9 +376,24 @@ void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
     //SET position data readable everywhere(?)
     //SET velocity data readable everywhere(?)
 }
-
-void nameHandler(const std_msgs::UInt8::ConstPtr& message)
+	//this just syncs a vector among all robots
+void nameHandler(const std_msgs::String::ConstPtr& msg)
 {
+	cout << "nameHandeler called, message is: " << endl;
+	cout << msg->data.c_str() << endl << endl;
+
+	if (std::find(names.begin(), names.end(), msg->data.c_str() ) != names.end())
+	{
+	 //if duplicate published, do nothing
+	}
+	else { //add published string to list
+		names.push_back(msg->data.c_str());
+	}
+
+	// print current size of vector
+	for (int i=0; i<names.size(); i++)     
+        cout << names[i] << "\n";
+        cout << "Size of vector is: " << names.size() << endl;
 	
 }	
 
@@ -474,6 +494,8 @@ void publishHeartBeatTimerEventHandler(const ros::TimerEvent&)
   std_msgs::String msg;
   msg.data = "";
   heartbeatPublisher.publish(msg);
+  //names.push_back("msg");
+  //cout << "Size of vector is: " << names.size() << endl;
 }
 
 long int getROSTimeInMilliSecs()
