@@ -108,7 +108,7 @@ ros::Subscriber virtualFenceSubscriber;		//receives data for vitrual boundaries
 // swarmie_msgs::Waypoint messages.
 ros::Subscriber manualWaypointSubscriber; 	//receives manual waypoints given from GUI
 ros::Subscriber nameSubscriber;			//testing
-ros::Subsrciber visitedLocationsSubscriber;
+ros::Subscriber visitedLocationsSubscriber;
 
 // Timers
 ros::Timer stateMachineTimer;
