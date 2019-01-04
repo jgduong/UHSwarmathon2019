@@ -428,8 +428,8 @@ void nameHandler(const std_msgs::String::ConstPtr& msg)
 void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& msg) {
 	
 	//std_msgs::Float32MultiArray receivedCoordinate[2];
-	float x = msg.data[0];
-	float y = msg.data[1];
+	float x = msg->data[0];
+	float y = msg->data[1];
 	visitedLocations[x].insert(y);
 	//visitedLocations[myCoordinate[0]].insert(myCoordinate[1]);
 	//visitedLocationsPublisher.publish(myCoordinate);
