@@ -196,7 +196,7 @@ int main(int argc, char **argv) {
   message_filters::Subscriber<sensor_msgs::Range> sonarLeftSubscriber(mNH, (publishedName + "/sonarLeft"), 10);
   message_filters::Subscriber<sensor_msgs::Range> sonarCenterSubscriber(mNH, (publishedName + "/sonarCenter"), 10);
   message_filters::Subscriber<sensor_msgs::Range> sonarRightSubscriber(mNH, (publishedName + "/sonarRight"), 10);
-  visitedLocationSubscriber = mNH.subscribe<std_msgs::Float32MultiArray>((publishedName + "/visitedLocation"), 10, visitedLocationsHandler);
+  visitedLocationsSubscriber = mNH.subscribe<std_msgs::Float32MultiArray>(("/visitedLocation"), 10, visitedLocationsHandler);
 	
   //publishers
   status_publisher = mNH.advertise<std_msgs::String>((publishedName + "/status"), 1, true);				//publishes rover status
@@ -207,7 +207,7 @@ int main(int argc, char **argv) {
   driveControlPublish = mNH.advertise<geometry_msgs::Twist>((publishedName + "/driveControl"), 10);			//publishes motor commands to the motors
   heartbeatPublisher = mNH.advertise<std_msgs::String>((publishedName + "/behaviour/heartbeat"), 1, true);		//publishes ROSAdapters status via its "heartbeat"
   waypointFeedbackPublisher = mNH.advertise<swarmie_msgs::Waypoint>((publishedName + "/waypoints"), 1, true);		//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
-  visitedLocationPublisher = mNH.advertise<std_msgs::Float32MultiArray>((publishedName + "/visitedLocation"), 10, true);
+  visitedLocationsPublisher = mNH.advertise<std_msgs::Float32MultiArray>(("/visitedLocation"), 10, true);
 	
   robotnames = mNH.advertise<std_msgs::String>(("/swarmies"), 10, true);						//publishes robotnames to /swarmies
 
