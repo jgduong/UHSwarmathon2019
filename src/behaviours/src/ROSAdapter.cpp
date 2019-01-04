@@ -262,7 +262,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
 		//cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
 
-		std_msgs::Float32MultiArray myCoordinate[2];
+		std_msgs::Float32MultiArray myCoordinate;
 		myCoordinate->data[0] = roundf((currentLocationOdom.x)*10)/10;
 		myCoordinate->data[1] = roundf((currentLocationOdom.y)*10)/10;
 		
