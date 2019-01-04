@@ -149,6 +149,7 @@ void publishHeartBeatTimerEventHandler(const ros::TimerEvent& event);
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight);	//handles ultrasound data and stores data
 
 void nameHandler(const std_msgs::String::ConstPtr& message);				//subscriber to sync names of robots together
+void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& message);
 
 // Converts the time passed as reported by ROS (which takes Gazebo simulation rate into account) into milliseconds as an integer.
 long int getROSTimeInMilliSecs();
