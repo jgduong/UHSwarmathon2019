@@ -244,15 +244,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (mapTesting)
 	{
 		sendDriveCommand(50.0, 50.0);
-		//cout << "The current GPS location of " << host << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
-		cout << "The current ODOM location of " << host << " is x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
+		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
+		cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
 	}
 	
 	if (rotateBool)
 	{
 		//Rotate to starting position...
 	      ninetyRotate = currentLocationOdom.theta;
-	      cout << "Current theta is: " << currentLocationOdom.theta << endl;
+	      cout << publishedName << " current theta is: " << currentLocationOdom.theta << endl;
 		
 	      if (abs(ninetyRotate - startingTheta) >= 1.5)
 	      {
