@@ -24,6 +24,7 @@
 #include <nav_msgs/Odometry.h>
 #include <apriltags_ros/AprilTagDetectionArray.h>
 #include <std_msgs/Float32MultiArray.h>
+#include <std_msgs/MultiArrayDimension.h>
 #include "swarmie_msgs/Waypoint.h"
 
 // Include Controllers
@@ -258,18 +259,32 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (mapTesting)
 	{
-		sendDriveCommand(50.0, 50.0);
+		//cout << "in mapTesting loop" << endl;
+		sendDriveCommand(30.0, 30.0);
+		//cout << "sendDriveCommand done" << endl;
 		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
 		//cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
 
 		std_msgs::Float32MultiArray myCoordinate;
-		myCoordinate.data[0] = roundf((currentLocationOdom.x)*10)/10;
-		myCoordinate.data[1] = roundf((currentLocationOdom.y)*10)/10;
-		
+		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		myCoordinate.layout.dim[0].size = 2;
+		myCoordinate.layout.dim[0].stride = 1;
+		myCoordinate.layout.dim[0].label = "poop";
+
+		//cout << "float32multiarray has been instantiated...\n";
+		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		//myCoordinate.data[0] = roundf((currentLocationOdom.x)*10)/10;
+		//myCoordinate.data[1] = roundf((currentLocationOdom.y)*10)/10;
+		//cout << "the float32multiarray's info has been normalized...\n";		
 		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+		//cout << "insert something something" << endl;
 		visitedLocationsPublisher.publish(myCoordinate);
+
+		//cout << "the float32multiarray has been published\n";
 		
 		cout << "searching for " << myCoordinate.data[0] << ", " << myCoordinate.data[1] << "... ";
+		
 		if(visitedLocations.find(myCoordinate.data[0]) != visitedLocations.end()) {
 			if (visitedLocations[myCoordinate.data[0]].find(myCoordinate.data[1]) != visitedLocations[myCoordinate.data[0]].end()) {
 				cout << "Location exists in hashmap" << endl;	
@@ -291,7 +306,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      {
 		    sendDriveCommand(0.0, 0.0);
 		     rotateBool = false;
-		      mapTesting = true;
+		     mapTesting = true;
+		     cout << "done rotating" << endl;
 	      }
 	      else {
 		    sendDriveCommand(-30.0, 30.0);
