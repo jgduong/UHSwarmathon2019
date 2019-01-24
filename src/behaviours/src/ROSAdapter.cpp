@@ -311,17 +311,18 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				Position2Y = currentLocationOdom.y;
 			}*/
 			float displacement = sqrt(((currentLocationOdom.x - Position1X)*(currentLocationOdom.x - Position1X)) + ((currentLocationOdom.y - Position1Y)*(currentLocationOdom.y - Position1Y)));
-			if (displacement >= 0.5)
+			if (displacement >= 0.6)
 			{
 				step = 2;
 				Position2X = currentLocationOdom.x;
 				Position2Y = currentLocationOdom.y;
+				startingTheta = currentLocationOdom.theta;
 			}
 		}
 		else if (step == 2)
 		{
 			cout << "rotating 90 degrees right..." << endl;
-			startingTheta = currentLocationOdom.theta;
+			
 			ninetyRotate = currentLocationOdom.theta;
 			
 			if (abs(ninetyRotate - startingTheta) >= 1.5)
@@ -367,17 +368,18 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position2X)*(currentLocationOdom.x - Position2X)) + ((currentLocationOdom.y - Position2Y)*(currentLocationOdom.y - Position2Y)));
-			if (displacement >= 0.5)
+			if (displacement >= 1.0)
 			{
 				step = 4;
 				Position3X = currentLocationOdom.x;
 				Position3Y = currentLocationOdom.y;
+				startingTheta = currentLocationOdom.theta;
 			}
 		}
 		else if (step == 4)
 		{
 			cout << "rotating 90 degrees right..." << endl;
-			startingTheta = currentLocationOdom.theta;
+
 			ninetyRotate = currentLocationOdom.theta;
 			
 			if (abs(ninetyRotate - startingTheta) >= 1.5)
@@ -422,17 +424,18 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position3X)*(currentLocationOdom.x - Position3X)) + ((currentLocationOdom.y - Position3Y)*(currentLocationOdom.y - Position3Y)));
-			if (displacement >= 0.5)
+			if (displacement >= 1.0)
 			{
 				step = 6;
 				Position4X = currentLocationOdom.x;
 				Position4Y = currentLocationOdom.y;
+				startingTheta = currentLocationOdom.theta;
 			}
 		}
 		else if (step == 6)
 		{
 			cout << "rotating 90 degrees right..." << endl;
-			startingTheta = currentLocationOdom.theta;
+	
 			ninetyRotate = currentLocationOdom.theta;
 			
 			if (abs(ninetyRotate - startingTheta) >= 1.5)
@@ -477,17 +480,18 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position4X)*(currentLocationOdom.x - Position4X)) + ((currentLocationOdom.y - Position4Y)*(currentLocationOdom.y - Position4Y)));
-			if (displacement >= 0.5)
+			if (displacement >= 1.0)
 			{
 				step = 8;
 				Position5X = currentLocationOdom.x;
 				Position5Y = currentLocationOdom.y;
+				startingTheta = currentLocationOdom.theta;
 			}
 		}
 		else if (step == 8)
 		{
 			cout << "rotating 90 degrees right..." << endl;
-			startingTheta = currentLocationOdom.theta;
+
 			ninetyRotate = currentLocationOdom.theta;
 			
 			if (abs(ninetyRotate - startingTheta) >= 1.5)
@@ -532,16 +536,17 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position5Y)*(currentLocationOdom.y - Position5Y)));
-			if (displacement >= 0.5)
+			if (displacement >= 0.6)
 			{
 				step = 10;
+				startingTheta = currentLocationOdom.theta;
 
 			}
 		}
 		else if (step == 10)
 		{
 			cout << "rotating 90 degrees left..." << endl;
-			startingTheta = currentLocationOdom.theta;
+
 			ninetyRotate = currentLocationOdom.theta;
 			
 			if (abs(ninetyRotate - startingTheta) >= 1.5)
