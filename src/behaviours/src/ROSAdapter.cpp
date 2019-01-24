@@ -562,9 +562,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "rotating 90 degrees left..." << endl;
 
 			ninetyRotate = currentLocationOdom.theta;
-			if (NinetyRotate <= -3.1)
+			if (ninetyRotate <= -3.1)
 			{
-				NinetyRotate = 3.12;
+				ninetyRotate = 3.12;
 			}
 			if (abs(ninetyRotate - startingTheta) >= 1.5)
 		      {
