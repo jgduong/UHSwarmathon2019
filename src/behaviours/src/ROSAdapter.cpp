@@ -440,6 +440,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position3X)*(currentLocationOdom.x - Position3X)) + ((currentLocationOdom.y - Position3Y)*(currentLocationOdom.y - Position3Y)));
+			cout << "current position from Odom is: " << currentLocationOdom.x << ", " << currentLocationOdom.y << endl;
+			cout << "the saved previous position (3X AND 3Y) = " << Position3X << ", " << Position3Y << endl;
 			cout << "third step, displacement is: " << displacement << endl;
 			if (displacement >= 2.0)
 			{
