@@ -247,6 +247,7 @@ int main(int argc, char **argv) {
 	  return EXIT_SUCCESS;
 }
 
+bool initialMove = false;
 bool mapTesting = false;
 bool rotateBool = false;
 float startingTheta = 0.0;
@@ -256,6 +257,131 @@ void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
+	
+	if (initialMove)
+	{
+		float startingTheta = currentLocationOdom.theta;
+		ninetyRotate = currentLocationOdom.theta;
+		
+		cout << "First step of driving..." << endl;
+		sendDriveCommand(30.0, 30.0);
+		
+		std_msgs::Float32MultiArray myCoordinate;
+		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		myCoordinate.layout.dim[0].size = 2;
+		myCoordinate.layout.dim[0].stride = 1;
+		myCoordinate.layout.dim[0].label = "poop";
+		
+		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		
+		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+
+		visitedLocationsPublisher.publish(myCoordinate);
+		ros::Duration(5).sleep();
+		cout << "rotating 90 degrees right..." << endl;
+		while (abs(ninetyRotate - startingTheta) >= 1.5)
+		{
+			sendDriveCommand(30.0, -30.0);
+			ninetyRotate = currentLocationOdom.theta;
+		}
+		
+		cout << "Second step of driving..." << endl;
+		sendDriveCommand(30.0, 30.0);
+		
+		std_msgs::Float32MultiArray myCoordinate;
+		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		myCoordinate.layout.dim[0].size = 2;
+		myCoordinate.layout.dim[0].stride = 1;
+		myCoordinate.layout.dim[0].label = "poop";
+		
+		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		
+		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+
+		visitedLocationsPublisher.publish(myCoordinate);
+		ros::Duration(10).sleep();
+		cout << "rotating 90 degrees right..." << endl;
+		while (abs(ninetyRotate - startingTheta) >= 1.5)
+		{
+			sendDriveCommand(30.0, -30.0);
+			ninetyRotate = currentLocationOdom.theta;
+		}
+		
+		cout << "Third step of driving..." << endl;
+		sendDriveCommand(30.0, 30.0);
+		
+		std_msgs::Float32MultiArray myCoordinate;
+		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		myCoordinate.layout.dim[0].size = 2;
+		myCoordinate.layout.dim[0].stride = 1;
+		myCoordinate.layout.dim[0].label = "poop";
+		
+		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		
+		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+
+		visitedLocationsPublisher.publish(myCoordinate);
+		ros::Duration(10).sleep();
+		cout << "rotating 90 degrees right..." << endl;
+		while (abs(ninetyRotate - startingTheta) >= 1.5)
+		{
+			sendDriveCommand(30.0, -30.0);
+			ninetyRotate = currentLocationOdom.theta;
+		}
+		
+		cout << "Fourth step of driving..." << endl;
+		sendDriveCommand(30.0, 30.0);
+		
+		std_msgs::Float32MultiArray myCoordinate;
+		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		myCoordinate.layout.dim[0].size = 2;
+		myCoordinate.layout.dim[0].stride = 1;
+		myCoordinate.layout.dim[0].label = "poop";
+		
+		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		
+		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+
+		visitedLocationsPublisher.publish(myCoordinate);
+		ros::Duration(10).sleep();
+		cout << "rotating 90 degrees right..." << endl;
+		while (abs(ninetyRotate - startingTheta) >= 1.5)
+		{
+			sendDriveCommand(30.0, -30.0);
+			ninetyRotate = currentLocationOdom.theta;
+		}
+		
+		cout << "Fifth/Last step of driving..." << endl;
+		sendDriveCommand(30.0, 30.0);
+		
+		std_msgs::Float32MultiArray myCoordinate;
+		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		myCoordinate.layout.dim[0].size = 2;
+		myCoordinate.layout.dim[0].stride = 1;
+		myCoordinate.layout.dim[0].label = "poop";
+		
+		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		
+		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+
+		visitedLocationsPublisher.publish(myCoordinate);
+		ros::Duration(5).sleep();
+		cout << "rotating 90 degrees left..." << endl;
+		while (abs(ninetyRotate - startingTheta) >= 1.5)
+		{
+			sendDriveCommand(-30.0, 30.0);
+			ninetyRotate = currentLocationOdom.theta;
+		}
+		
+		sendDriveCommand(0.0, 0.0);
+		
+	}
+	
 	
 	if (mapTesting)
 	{
@@ -329,11 +455,26 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      ninetyRotate = currentLocationOdom.theta;
 	      cout << "Current theta is: " << currentLocationOdom.theta << endl;
 		
+	      std_msgs::Float32MultiArray myCoordinate;
+		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		myCoordinate.layout.dim[0].size = 2;
+		myCoordinate.layout.dim[0].stride = 1;
+		myCoordinate.layout.dim[0].label = "poop";
+		
+		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		
+		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+
+		visitedLocationsPublisher.publish(myCoordinate);
+	
+		
 	      if (abs(ninetyRotate - startingTheta) >= 1.5)
 	      {
 		    sendDriveCommand(0.0, 0.0);
 		     rotateBool = false;
-		     mapTesting = true;
+		     initialMove = true;
+		     //mapTesting = true;
 		     cout << "done rotating" << endl;
 	      }
 	      else {
