@@ -570,7 +570,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position5Y)*(currentLocationOdom.y - Position5Y)));
-			if (displacement >= 1.0)
+			if (displacement >= 1.5)
 			{
 				step = 10;
 				startingTheta = currentLocationOdom.theta;
