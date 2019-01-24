@@ -253,6 +253,10 @@ bool rotateBool = false;
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
 
+int step = 0;
+float initialPositionTrackerX = 0.0;
+float initialPositionTrackerY = 0.0;
+
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
@@ -263,158 +267,295 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		float startingTheta = currentLocationOdom.theta;
 		ninetyRotate = currentLocationOdom.theta;
 		
-		cout << "First step of driving..." << endl;
-		sendDriveCommand(30.0, 30.0);
+		float Position1X = 0.0;
+		float Position2X = 0.0;
+		float Position3X = 0.0;
+		float Position4X = 0.0;
+		float Position5X = 0.0;
 		
-		std_msgs::Float32MultiArray initialPop;
-		initialPop.layout.dim.push_back(std_msgs::MultiArrayDimension());
-		initialPop.layout.dim[0].size = 2;
-		initialPop.layout.dim[0].stride = 1;
-		initialPop.layout.dim[0].label = "poop";
-		
-		initialPop.data.push_back(roundf((currentLocationOdom.x)*10)/10);
-		initialPop.data.push_back(roundf((currentLocationOdom.y)*10)/10);
-		
-		visitedLocations[initialPop.data[0]].insert(initialPop.data[1]);
+		float Position1Y = 0.0;
+		float Position2Y = 0.0;
+		float Position3Y = 0.0;
+		float Position4Y = 0.0;
+		float Position5Y = 0.0;
 
-		visitedLocationsPublisher.publish(initialPop);
-		
-		//ros::Duration(5).sleep();
-		//float currentTime = timerTimeElapsed;
-		int x = 0;
-		while (x < 500000)
+		if (step == 1)
 		{
-			x++;
-		}
-		
-		cout << "rotating 90 degrees right..." << endl;
-		startingTheta = currentLocationOdom.theta;
-		ninetyRotate = currentLocationOdom.theta;
-		while (abs(ninetyRotate - startingTheta) >= 1.5)
-		{
-			sendDriveCommand(30.0, -30.0);
-			ninetyRotate = currentLocationOdom.theta;
-		}
-		
-		cout << "Second step of driving..." << endl;
-		sendDriveCommand(30.0, 30.0);
-		
-		std_msgs::Float32MultiArray initialPopb;
-		initialPopb.layout.dim.push_back(std_msgs::MultiArrayDimension());
-		initialPopb.layout.dim[0].size = 2;
-		initialPopb.layout.dim[0].stride = 1;
-		initialPopb.layout.dim[0].label = "poopb";
-		
-		initialPopb.data.push_back(roundf((currentLocationOdom.x)*10)/10);
-		initialPopb.data.push_back(roundf((currentLocationOdom.y)*10)/10);
-		
-		visitedLocations[initialPopb.data[0]].insert(initialPopb.data[1]);
+			cout << "First step of driving..." << endl;
+			sendDriveCommand(30.0, 30.0);
+			Position1X = initialPositionTrackerX;
+			Position1Y = initialPositionTrackerY;
 
-		visitedLocationsPublisher.publish(initialPopb);
-		ros::Duration(10).sleep();
-		cout << "rotating 90 degrees right..." << endl;
-		startingTheta = currentLocationOdom.theta;
-		ninetyRotate = currentLocationOdom.theta;
-		while (abs(ninetyRotate - startingTheta) >= 1.5)
-		{
-			sendDriveCommand(30.0, -30.0);
-			ninetyRotate = currentLocationOdom.theta;
-		}
-		
-		cout << "Third step of driving..." << endl;
-		sendDriveCommand(30.0, 30.0);
-		
-		std_msgs::Float32MultiArray initialPopc;
-		initialPopc.layout.dim.push_back(std_msgs::MultiArrayDimension());
-		initialPopc.layout.dim[0].size = 2;
-		initialPopc.layout.dim[0].stride = 1;
-		initialPopc.layout.dim[0].label = "poopc";
-		
-		initialPopc.data.push_back(roundf((currentLocationOdom.x)*10)/10);
-		initialPopc.data.push_back(roundf((currentLocationOdom.y)*10)/10);
-		
-		visitedLocations[initialPopc.data[0]].insert(initialPopc.data[1]);
+			std_msgs::Float32MultiArray initialPop;
+			initialPop.layout.dim.push_back(std_msgs::MultiArrayDimension());
+			initialPop.layout.dim[0].size = 2;
+			initialPop.layout.dim[0].stride = 1;
+			initialPop.layout.dim[0].label = "poop";
 
-		visitedLocationsPublisher.publish(initialPopc);
-		//ros::Duration(10).sleep();
-		
-		x = 0;
-		while (x < 1000000)
-		{
-			x++;
-		}
-		
-		cout << "rotating 90 degrees right..." << endl;
-		startingTheta = currentLocationOdom.theta;
-		ninetyRotate = currentLocationOdom.theta;
-		while (abs(ninetyRotate - startingTheta) >= 1.5)
-		{
-			sendDriveCommand(30.0, -30.0);
-			ninetyRotate = currentLocationOdom.theta;
-		}
-		
-		cout << "Fourth step of driving..." << endl;
-		sendDriveCommand(30.0, 30.0);
-		
-		std_msgs::Float32MultiArray initialPopd;
-		initialPopd.layout.dim.push_back(std_msgs::MultiArrayDimension());
-		initialPopd.layout.dim[0].size = 2;
-		initialPopd.layout.dim[0].stride = 1;
-		initialPopd.layout.dim[0].label = "poopd";
-		
-		initialPopd.data.push_back(roundf((currentLocationOdom.x)*10)/10);
-		initialPopd.data.push_back(roundf((currentLocationOdom.y)*10)/10);
-		
-		visitedLocations[initialPopd.data[0]].insert(initialPopd.data[1]);
+			initialPop.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+			initialPop.data.push_back(roundf((currentLocationOdom.y)*10)/10);
 
-		visitedLocationsPublisher.publish(initialPopd);
-		//ros::Duration(10).sleep();
-		
-		x = 0;
-		while (x < 1000000)
-		{
-			x++;
-		}
-		
-		cout << "rotating 90 degrees right..." << endl;
-		startingTheta = currentLocationOdom.theta;
-		ninetyRotate = currentLocationOdom.theta;
-		while (abs(ninetyRotate - startingTheta) >= 1.5)
-		{
-			sendDriveCommand(30.0, -30.0);
-			ninetyRotate = currentLocationOdom.theta;
-		}
-		
-		cout << "Fifth/Last step of driving..." << endl;
-		sendDriveCommand(30.0, 30.0);
-		
-		std_msgs::Float32MultiArray initialPope;
-		initialPope.layout.dim.push_back(std_msgs::MultiArrayDimension());
-		initialPope.layout.dim[0].size = 2;
-		initialPope.layout.dim[0].stride = 1;
-		initialPope.layout.dim[0].label = "poope";
-		
-		initialPope.data.push_back(roundf((currentLocationOdom.x)*10)/10);
-		initialPope.data.push_back(roundf((currentLocationOdom.y)*10)/10);
-		
-		visitedLocations[initialPope.data[0]].insert(initialPope.data[1]);
+			visitedLocations[initialPop.data[0]].insert(initialPop.data[1]);
 
-		visitedLocationsPublisher.publish(initialPope);
-		//ros::Duration(5).sleep();
-		x = 0;
-		while (x < 500000)
+			visitedLocationsPublisher.publish(initialPop);
+			/*if (abs(currentLocationOdom.x - Position1X > 0.5))
+			{
+				step = 2;
+				Position2X = currentLocationOdom.x;
+				Position2Y = currentLocationOdom.y;
+			}
+			if (abs(currentLocationOdom.y - Position1Y > 0.5))
+			{
+				step = 2;
+				Position2X = currentLocationOdom.x;
+				Position2Y = currentLocationOdom.y;
+			}*/
+			float displacement = ((currentLocationOdom.x - Position1X)*(currentLocationOdom.x - Position1X)) + ((currentLocationOdom.y - Position1Y)*(currentLocationOdom.y - Position1Y));
+			if (diplacement >= 0.5)
+			{
+				step = 2;
+				Position2X = currentLocationOdom.x;
+				Position2Y = currentLocationOdom.y;
+			}
+		}
+		else if (step == 2)
 		{
-			x++;
+			cout << "rotating 90 degrees right..." << endl;
+			startingTheta = currentLocationOdom.theta;
+			ninetyRotate = currentLocationOdom.theta;
+			
+			if (abs(ninetyRotate - startingTheta) >= 1.5)
+		      {
+			    sendDriveCommand(0.0, 0.0); 
+			     cout << "done rotating" << endl;
+			    step = 3;
+			    
+		      }
+		      else {
+			    sendDriveCommand(30.0, -30.0);
+		      }
+			
+		}
+		else if (step == 3)
+		{
+			cout << "Second step of driving..." << endl;
+			sendDriveCommand(30.0, 30.0);
+
+			std_msgs::Float32MultiArray initialPopb;
+			initialPopb.layout.dim.push_back(std_msgs::MultiArrayDimension());
+			initialPopb.layout.dim[0].size = 2;
+			initialPopb.layout.dim[0].stride = 1;
+			initialPopb.layout.dim[0].label = "poopb";
+
+			initialPopb.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+			initialPopb.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+
+			visitedLocations[initialPopb.data[0]].insert(initialPopb.data[1]);
+
+			visitedLocationsPublisher.publish(initialPopb);
+			/*if (abs(currentLocationOdom.x - Position2X > 0.5))
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}
+			if (abs(currentLocationOdom.y - Position2Y > 0.5))
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}*/
+			
+			float displacement = ((currentLocationOdom.x - Position2X)*(currentLocationOdom.x - Position2X)) + ((currentLocationOdom.y - Position2Y)*(currentLocationOdom.y - Position2Y));
+			if (diplacement >= 0.5)
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}
+		}
+		else if (step == 4)
+		{
+			cout << "rotating 90 degrees right..." << endl;
+			startingTheta = currentLocationOdom.theta;
+			ninetyRotate = currentLocationOdom.theta;
+			
+			if (abs(ninetyRotate - startingTheta) >= 1.5)
+		      {
+			    sendDriveCommand(0.0, 0.0); 
+			     cout << "done rotating" << endl;
+			    step = 5;
+			    
+		      }
+		      else {
+			    sendDriveCommand(30.0, -30.0);
+		      }
+		}
+		else if (step == 5)
+		{
+			cout << "Third step of driving..." << endl;
+			sendDriveCommand(30.0, 30.0);
+
+			std_msgs::Float32MultiArray initialPopc;
+			initialPopc.layout.dim.push_back(std_msgs::MultiArrayDimension());
+			initialPopc.layout.dim[0].size = 2;
+			initialPopc.layout.dim[0].stride = 1;
+			initialPopc.layout.dim[0].label = "poopc";
+
+			initialPopc.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+			initialPopc.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+
+			visitedLocations[initialPopc.data[0]].insert(initialPopc.data[1]);
+
+			visitedLocationsPublisher.publish(initialPopc);
+			/*if (abs(currentLocationOdom.x - Position2X > 0.5))
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}
+			if (abs(currentLocationOdom.y - Position2Y > 0.5))
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}*/
+			
+			float displacement = ((currentLocationOdom.x - Position3X)*(currentLocationOdom.x - Position3X)) + ((currentLocationOdom.y - Position3Y)*(currentLocationOdom.y - Position3Y));
+			if (diplacement >= 0.5)
+			{
+				step = 6;
+				Position4X = currentLocationOdom.x;
+				Position4Y = currentLocationOdom.y;
+			}
+		}
+		else if (step == 6)
+		{
+			cout << "rotating 90 degrees right..." << endl;
+			startingTheta = currentLocationOdom.theta;
+			ninetyRotate = currentLocationOdom.theta;
+			
+			if (abs(ninetyRotate - startingTheta) >= 1.5)
+		      {
+			    sendDriveCommand(0.0, 0.0); 
+			     cout << "done rotating" << endl;
+			    step = 7;
+			    
+		      }
+		      else {
+			    sendDriveCommand(30.0, -30.0);
+		      }
+		}
+		else if (step == 7)
+		{
+			cout << "Fourth step of driving..." << endl;
+			sendDriveCommand(30.0, 30.0);
+
+			std_msgs::Float32MultiArray initialPopd;
+			initialPopd.layout.dim.push_back(std_msgs::MultiArrayDimension());
+			initialPopd.layout.dim[0].size = 2;
+			initialPopd.layout.dim[0].stride = 1;
+			initialPopd.layout.dim[0].label = "poopd";
+
+			initialPopd.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+			initialPopd.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+
+			visitedLocations[initialPopd.data[0]].insert(initialPopd.data[1]);
+
+			visitedLocationsPublisher.publish(initialPopd);
+			/*if (abs(currentLocationOdom.x - Position2X > 0.5))
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}
+			if (abs(currentLocationOdom.y - Position2Y > 0.5))
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}*/
+			
+			float displacement = ((currentLocationOdom.x - Position4X)*(currentLocationOdom.x - Position4X)) + ((currentLocationOdom.y - Position4Y)*(currentLocationOdom.y - Position4Y));
+			if (diplacement >= 0.5)
+			{
+				step = 8;
+				Position5X = currentLocationOdom.x;
+				Position5Y = currentLocationOdom.y;
+			}
+		}
+		else if (step == 8)
+		{
+			cout << "rotating 90 degrees right..." << endl;
+			startingTheta = currentLocationOdom.theta;
+			ninetyRotate = currentLocationOdom.theta;
+			
+			if (abs(ninetyRotate - startingTheta) >= 1.5)
+		      {
+			    sendDriveCommand(0.0, 0.0); 
+			     cout << "done rotating" << endl;
+			    step = 9;
+			    
+		      }
+		      else {
+			    sendDriveCommand(30.0, -30.0);
+		      }
+		}
+		else if (step == 9)
+		{
+			cout << "Fifth and last step of driving..." << endl;
+			sendDriveCommand(30.0, 30.0);
+
+			std_msgs::Float32MultiArray initialPope;
+			initialPope.layout.dim.push_back(std_msgs::MultiArrayDimension());
+			initialPope.layout.dim[0].size = 2;
+			initialPope.layout.dim[0].stride = 1;
+			initialPope.layout.dim[0].label = "poope";
+
+			initialPope.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+			initialPope.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+
+			visitedLocations[initialPope.data[0]].insert(initialPope.data[1]);
+
+			visitedLocationsPublisher.publish(initialPope);
+			/*if (abs(currentLocationOdom.x - Position2X > 0.5))
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}
+			if (abs(currentLocationOdom.y - Position2Y > 0.5))
+			{
+				step = 4;
+				Position3X = currentLocationOdom.x;
+				Position3Y = currentLocationOdom.y;
+			}*/
+			
+			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position45)*(currentLocationOdom.y - Position5Y)));
+			if (diplacement >= 0.5)
+			{
+				step = 10;
+
+			}
+		}
+		else if (step == 10)
+		{
+			cout << "rotating 90 degrees left..." << endl;
+			startingTheta = currentLocationOdom.theta;
+			ninetyRotate = currentLocationOdom.theta;
+			
+			if (abs(ninetyRotate - startingTheta) >= 1.5)
+		      {
+			    sendDriveCommand(0.0, 0.0); 
+			     cout << "done rotating" << endl;
+			    step = 9;
+			    
+		      }
+		      else {
+			    sendDriveCommand(-30.0, 30.0);
+		      }
 		}
 		
-		cout << "rotating 90 degrees left..." << endl;
-		startingTheta = currentLocationOdom.theta;
-		ninetyRotate = currentLocationOdom.theta;
-		while (abs(ninetyRotate - startingTheta) >= 1.5)
-		{
-			sendDriveCommand(-30.0, 30.0);
-			ninetyRotate = currentLocationOdom.theta;
-		}
 		
 		sendDriveCommand(0.0, 0.0);
 		initialMove = false;
@@ -513,6 +654,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		     rotateBool = false;
 		     initialMove = true;
 		     //mapTesting = true;
+		      step = 1;
+			initialPositionTrackerX = currentLocationOdom.x;
+			initialPositionTrackerY = currentLocationOdom.y;
 		     cout << "done rotating" << endl;
 	      }
 	      else {
