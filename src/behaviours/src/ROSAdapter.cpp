@@ -310,8 +310,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				Position2X = currentLocationOdom.x;
 				Position2Y = currentLocationOdom.y;
 			}*/
-			float displacement = ((currentLocationOdom.x - Position1X)*(currentLocationOdom.x - Position1X)) + ((currentLocationOdom.y - Position1Y)*(currentLocationOdom.y - Position1Y));
-			if (diplacement >= 0.5)
+			float displacement = sqrt(((currentLocationOdom.x - Position1X)*(currentLocationOdom.x - Position1X)) + ((currentLocationOdom.y - Position1Y)*(currentLocationOdom.y - Position1Y)));
+			if (displacement >= 0.5)
 			{
 				step = 2;
 				Position2X = currentLocationOdom.x;
@@ -366,8 +366,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				Position3Y = currentLocationOdom.y;
 			}*/
 			
-			float displacement = ((currentLocationOdom.x - Position2X)*(currentLocationOdom.x - Position2X)) + ((currentLocationOdom.y - Position2Y)*(currentLocationOdom.y - Position2Y));
-			if (diplacement >= 0.5)
+			float displacement = sqrt(((currentLocationOdom.x - Position2X)*(currentLocationOdom.x - Position2X)) + ((currentLocationOdom.y - Position2Y)*(currentLocationOdom.y - Position2Y)));
+			if (displacement >= 0.5)
 			{
 				step = 4;
 				Position3X = currentLocationOdom.x;
@@ -421,8 +421,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				Position3Y = currentLocationOdom.y;
 			}*/
 			
-			float displacement = ((currentLocationOdom.x - Position3X)*(currentLocationOdom.x - Position3X)) + ((currentLocationOdom.y - Position3Y)*(currentLocationOdom.y - Position3Y));
-			if (diplacement >= 0.5)
+			float displacement = sqrt(((currentLocationOdom.x - Position3X)*(currentLocationOdom.x - Position3X)) + ((currentLocationOdom.y - Position3Y)*(currentLocationOdom.y - Position3Y)));
+			if (displacement >= 0.5)
 			{
 				step = 6;
 				Position4X = currentLocationOdom.x;
@@ -476,8 +476,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				Position3Y = currentLocationOdom.y;
 			}*/
 			
-			float displacement = ((currentLocationOdom.x - Position4X)*(currentLocationOdom.x - Position4X)) + ((currentLocationOdom.y - Position4Y)*(currentLocationOdom.y - Position4Y));
-			if (diplacement >= 0.5)
+			float displacement = sqrt(((currentLocationOdom.x - Position4X)*(currentLocationOdom.x - Position4X)) + ((currentLocationOdom.y - Position4Y)*(currentLocationOdom.y - Position4Y)));
+			if (displacement >= 0.5)
 			{
 				step = 8;
 				Position5X = currentLocationOdom.x;
@@ -532,7 +532,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position45)*(currentLocationOdom.y - Position5Y)));
-			if (diplacement >= 0.5)
+			if (displacement >= 0.5)
 			{
 				step = 10;
 
