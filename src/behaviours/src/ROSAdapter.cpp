@@ -260,7 +260,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (mapTesting)
 	{
 		//cout << "in mapTesting loop" << endl;
-		sendDriveCommand(30.0, 0.0);
+		//sendDriveCommand(30.0, 30.0);
 		//cout << "sendDriveCommand done" << endl;
 		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
 		//cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
@@ -294,6 +294,30 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else {
 			cout << "Location does not exist" << endl;
 		}*/
+		//CALCULATE X,Y TO CHECK
+		td_msgs::Float32MultiArray checkCoord;
+		checkCoord.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		checkCoord.layout.dim[0].size = 2;
+		checkCoord.layout.dim[0].stride = 1;
+		checkCoord.layout.dim[0].label = "check";
+		float hypot = sqrt((currentLocationOdom.x * currentLocationOdom.x)+(currentLocationOdom.y * currentLocationOdom.y));
+		//SUBTRACT a small constant from hypotenuse
+		hypot = hypot - 0.2;
+		//CALCULATE new x,y
+		checkCoord.data.push_back(roundf((0.2*cos(currentLocationOdom.theta))*10)/10);
+		checkCoord.data.push_back(roundf((0.2*sin(currentLocationOdom.theta))*10)/10);
+		if(visitedLocations.find(checkCoord.data[0]) != visitedLocations.end()) {
+			if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) != visitedLocations[checkCoord.data[0]].end()) {
+				cout << "location on the right has been visited" << endl;
+				sendDriveCommand(30.0, 30.0);
+			}
+			else { cout << "This y location has not been visited for the specified x location" << endl; }
+		}
+		else {
+			cout << "Location on the right has not been visited" << endl;
+			sendDriveCommand(30.0, -30.0);
+		}
+		
 	}
 	
 	if (rotateBool)
