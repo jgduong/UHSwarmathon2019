@@ -264,7 +264,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (initialMove)
 	{
-		float startingTheta = currentLocationOdom.theta;
+		//float startingTheta = currentLocationOdom.theta;
 		ninetyRotate = currentLocationOdom.theta;
 		
 		float Position1X = 0.0;
