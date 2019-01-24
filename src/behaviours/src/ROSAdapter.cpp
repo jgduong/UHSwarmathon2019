@@ -407,7 +407,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		
 		sendDriveCommand(0.0, 0.0);
-		
+		initialMove = false;
 	}
 	
 	
