@@ -260,7 +260,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (mapTesting)
 	{
 		//cout << "in mapTesting loop" << endl;
-		sendDriveCommand(30.0, 30.0);
+		sendDriveCommand(30.0, 0.0);
 		//cout << "sendDriveCommand done" << endl;
 		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
 		//cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
@@ -283,9 +283,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		//cout << "the float32multiarray has been published\n";
 		
-		cout << "searching for " << myCoordinate.data[0] << ", " << myCoordinate.data[1] << "... ";
+		//cout << "searching for " << myCoordinate.data[0] << ", " << myCoordinate.data[1] << "... ";
 		
-		if(visitedLocations.find(myCoordinate.data[0]) != visitedLocations.end()) {
+		/*if(visitedLocations.find(myCoordinate.data[0]) != visitedLocations.end()) {
 			if (visitedLocations[myCoordinate.data[0]].find(myCoordinate.data[1]) != visitedLocations[myCoordinate.data[0]].end()) {
 				cout << "Location exists in hashmap" << endl;	
 			}
@@ -293,7 +293,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else {
 			cout << "Location does not exist" << endl;
-		}
+		}*/
 	}
 	
 	if (rotateBool)
