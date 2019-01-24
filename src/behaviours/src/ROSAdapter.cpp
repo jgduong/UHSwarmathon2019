@@ -311,11 +311,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				cout << "location on the right has been visited" << endl;
 				sendDriveCommand(30.0, 30.0);
 			}
-			else { cout << "This y location has not been visited for the specified x location" << endl; }
+			else { 
+				cout << "This y location has not been visited for the specified x location" << endl; 
+				sendDriveCommand(30.0, 0.0);
+			}
 		}
 		else {
 			cout << "Location on the right has not been visited" << endl;
-			sendDriveCommand(30.0, -30.0);
+			sendDriveCommand(30.0, 0.0);
 		}
 		
 	}
