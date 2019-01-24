@@ -282,12 +282,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//ros::Duration(5).sleep();
 		//float currentTime = timerTimeElapsed;
 		int x = 0;
-		while (x < 5000)
+		while (x < 500000)
 		{
 			x++;
 		}
 		
 		cout << "rotating 90 degrees right..." << endl;
+		startingTheta = currentLocationOdom.theta;
+		ninetyRotate = currentLocationOdom.theta;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
 			sendDriveCommand(30.0, -30.0);
@@ -311,6 +313,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		visitedLocationsPublisher.publish(initialPopb);
 		ros::Duration(10).sleep();
 		cout << "rotating 90 degrees right..." << endl;
+		startingTheta = currentLocationOdom.theta;
+		ninetyRotate = currentLocationOdom.theta;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
 			sendDriveCommand(30.0, -30.0);
@@ -335,12 +339,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//ros::Duration(10).sleep();
 		
 		x = 0;
-		while (x < 10000)
+		while (x < 1000000)
 		{
 			x++;
 		}
 		
 		cout << "rotating 90 degrees right..." << endl;
+		startingTheta = currentLocationOdom.theta;
+		ninetyRotate = currentLocationOdom.theta;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
 			sendDriveCommand(30.0, -30.0);
@@ -365,12 +371,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//ros::Duration(10).sleep();
 		
 		x = 0;
-		while (x < 10000)
+		while (x < 1000000)
 		{
 			x++;
 		}
 		
 		cout << "rotating 90 degrees right..." << endl;
+		startingTheta = currentLocationOdom.theta;
+		ninetyRotate = currentLocationOdom.theta;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
 			sendDriveCommand(30.0, -30.0);
@@ -394,12 +402,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		visitedLocationsPublisher.publish(initialPope);
 		//ros::Duration(5).sleep();
 		x = 0;
-		while (x < 5000)
+		while (x < 500000)
 		{
 			x++;
 		}
 		
 		cout << "rotating 90 degrees left..." << endl;
+		startingTheta = currentLocationOdom.theta;
+		ninetyRotate = currentLocationOdom.theta;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
 			sendDriveCommand(-30.0, 30.0);
