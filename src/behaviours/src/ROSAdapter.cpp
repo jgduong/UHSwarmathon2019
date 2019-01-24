@@ -321,9 +321,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else if (step == 2)
 		{
-			cout << "rotating 90 degrees right..." << endl;
+			cout << "step 2: rotating 90 degrees right..." << endl;
 			
 			ninetyRotate = currentLocationOdom.theta;
+			
+			cout << "startingTheta is: " << startingTheta << ", and ninetyRotate is: " << ninetyRotate << endl;
 			
 			if (abs(ninetyRotate - startingTheta) >= 1.5)
 		      {
