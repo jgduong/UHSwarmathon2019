@@ -693,7 +693,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		visitedLocationsPublisher.publish(myCoordinate);
 	
-		
+		if (startingTheta <= -3.1)
+		{
+			startingTheta = 3.12;
+		}
+		if (ninetyRotate <= -3.1)
+		{
+			ninetyRotate = 3.12;
+		}
 	      if (abs(ninetyRotate - startingTheta) >= 1.5)
 	      {
 		    sendDriveCommand(0.0, 0.0);
