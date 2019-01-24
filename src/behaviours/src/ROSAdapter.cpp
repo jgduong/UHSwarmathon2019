@@ -318,8 +318,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		initialPopc.layout.dim[0].stride = 1;
 		initialPopc.layout.dim[0].label = "poopc";
 		
-		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
-		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		initialPopc.data.push_back(roundf((currentLocationOdom.x)*10)/10);
+		initialPopc.data.push_back(roundf((currentLocationOdom.y)*10)/10);
 		
 		visitedLocations[initialPopc.data[0]].insert(initialPopc.data[1]);
 
