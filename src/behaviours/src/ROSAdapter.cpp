@@ -295,7 +295,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "Location does not exist" << endl;
 		}*/
 		//CALCULATE X,Y TO CHECK
-		td_msgs::Float32MultiArray checkCoord;
+		std_msgs::Float32MultiArray checkCoord;
 		checkCoord.layout.dim.push_back(std_msgs::MultiArrayDimension());
 		checkCoord.layout.dim[0].size = 2;
 		checkCoord.layout.dim[0].stride = 1;
@@ -304,8 +304,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//SUBTRACT a small constant from hypotenuse
 		hypot = hypot - 0.2;
 		//CALCULATE new x,y
-		checkCoord.data.push_back(roundf((0.2*cos(currentLocationOdom.theta))*10)/10);
-		checkCoord.data.push_back(roundf((0.2*sin(currentLocationOdom.theta))*10)/10);
+		checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*10)/10);
+		checkCoord.data.push_back(roundf((hypot*sin(currentLocationOdom.theta))*10)/10);
 		if(visitedLocations.find(checkCoord.data[0]) != visitedLocations.end()) {
 			if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) != visitedLocations[checkCoord.data[0]].end()) {
 				cout << "location on the right has been visited" << endl;
