@@ -548,7 +548,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		      {
 			    sendDriveCommand(0.0, 0.0); 
 			     cout << "done rotating" << endl;
-			    step = 9;
+			sendDriveCommand(0.0, 0.0);
+			initialMove = false;
 			    
 		      }
 		      else {
@@ -557,8 +558,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		
 		
-		sendDriveCommand(0.0, 0.0);
-		initialMove = false;
+		
 	}
 	
 	
@@ -879,7 +879,7 @@ void publishStatusTimerEventHandler(const ros::TimerEvent&)
   status_publisher.publish(msg);
 
   msg.data = publishedName;
-  robotnames.publish(msg);
+  //robotnames.publish(msg);
 }
 
 void manualWaypointHandler(const swarmie_msgs::Waypoint& message)
