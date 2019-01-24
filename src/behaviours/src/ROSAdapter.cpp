@@ -278,7 +278,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		visitedLocations[initialPop.data[0]].insert(initialPop.data[1]);
 
 		visitedLocationsPublisher.publish(initialPop);
-		ros::Duration(5).sleep();
+		
+		//ros::Duration(5).sleep();
+		//float currentTime = timerTimeElapsed;
+		int x = 0;
+		while (x < 5000)
+		{
+			x++;
+		}
+		
 		cout << "rotating 90 degrees right..." << endl;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
@@ -324,7 +332,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		visitedLocations[initialPopc.data[0]].insert(initialPopc.data[1]);
 
 		visitedLocationsPublisher.publish(initialPopc);
-		ros::Duration(10).sleep();
+		//ros::Duration(10).sleep();
+		
+		x = 0;
+		while (x < 10000)
+		{
+			x++;
+		}
+		
 		cout << "rotating 90 degrees right..." << endl;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
@@ -347,7 +362,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		visitedLocations[initialPopd.data[0]].insert(initialPopd.data[1]);
 
 		visitedLocationsPublisher.publish(initialPopd);
-		ros::Duration(10).sleep();
+		//ros::Duration(10).sleep();
+		
+		x = 0;
+		while (x < 10000)
+		{
+			x++;
+		}
+		
 		cout << "rotating 90 degrees right..." << endl;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
@@ -370,7 +392,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		visitedLocations[initialPope.data[0]].insert(initialPope.data[1]);
 
 		visitedLocationsPublisher.publish(initialPope);
-		ros::Duration(5).sleep();
+		//ros::Duration(5).sleep();
+		x = 0;
+		while (x < 5000)
+		{
+			x++;
+		}
+		
 		cout << "rotating 90 degrees left..." << endl;
 		while (abs(ninetyRotate - startingTheta) >= 1.5)
 		{
