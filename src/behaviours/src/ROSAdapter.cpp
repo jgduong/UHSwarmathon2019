@@ -531,7 +531,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				Position3Y = currentLocationOdom.y;
 			}*/
 			
-			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position45)*(currentLocationOdom.y - Position5Y)));
+			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position5Y)*(currentLocationOdom.y - Position5Y)));
 			if (displacement >= 0.5)
 			{
 				step = 10;
