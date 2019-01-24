@@ -256,6 +256,17 @@ float ninetyRotate = 0.0;
 int step = 0;
 float initialPositionTrackerX = 0.0;
 float initialPositionTrackerY = 0.0;
+float Position1X = 0.0;
+float Position2X = 0.0;
+float Position3X = 0.0;
+float Position4X = 0.0;
+float Position5X = 0.0;
+		
+float Position1Y = 0.0;
+float Position2Y = 0.0;
+float Position3Y = 0.0;
+float Position4Y = 0.0;
+float Position5Y = 0.0;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -267,17 +278,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//float startingTheta = currentLocationOdom.theta;
 		ninetyRotate = currentLocationOdom.theta;
 		
-		float Position1X = 0.0;
-		float Position2X = 0.0;
-		float Position3X = 0.0;
-		float Position4X = 0.0;
-		float Position5X = 0.0;
 		
-		float Position1Y = 0.0;
-		float Position2Y = 0.0;
-		float Position3Y = 0.0;
-		float Position4Y = 0.0;
-		float Position5Y = 0.0;
 
 		if (step == 1)
 		{
@@ -377,7 +378,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position2X)*(currentLocationOdom.x - Position2X)) + ((currentLocationOdom.y - Position2Y)*(currentLocationOdom.y - Position2Y)));
-			if (displacement >= 2.0)
+			if (displacement >= 2.5)
 			{
 				step = 4;
 				Position3X = currentLocationOdom.x;
@@ -443,7 +444,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "current position from Odom is: " << currentLocationOdom.x << ", " << currentLocationOdom.y << endl;
 			cout << "the saved previous position (3X AND 3Y) = " << Position3X << ", " << Position3Y << endl;
 			cout << "third step, displacement is: " << displacement << endl;
-			if (displacement >= 2.0)
+			if (displacement >= 2.5)
 			{
 				step = 6;
 				Position4X = currentLocationOdom.x;
@@ -506,7 +507,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position4X)*(currentLocationOdom.x - Position4X)) + ((currentLocationOdom.y - Position4Y)*(currentLocationOdom.y - Position4Y)));
-			if (displacement >= 2.0)
+			if (displacement >= 2.5)
 			{
 				step = 8;
 				Position5X = currentLocationOdom.x;
