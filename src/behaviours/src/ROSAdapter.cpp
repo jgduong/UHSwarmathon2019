@@ -326,7 +326,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float turnSize = -1.571;
 			bool exceedMag = false;
 
-			ninetyRotate = currentLocationOdom.theta
+			ninetyRotate = currentLocationOdom.theta;
 			if (abs(startingTheta + turnSize) >= 3.142)
 			{
 				exceedMag = true;
@@ -338,7 +338,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				if (startingTheta >= 0)  //THIS CHECK MIGHT BE USELESS AND WASTING TIME
 				{
 					desiredTheta = -3.142 + (startingTheta + turnSize);
-					if (currentOdom.theta >= desiredTheta && currentOdom.theta < 0.0)
+					if (currentLocationOdom.theta >= desiredTheta && currentLocationOdom.theta < 0.0)
 					{
 						sendDriveCommand(0.0, 0.0);
 						cout << "done rotating" << endl;
@@ -351,7 +351,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				else
 				{
 					desiredTheta = 3.142 + (startingTheta - turnSize);
-					if (currentOdom.theta <= desiredTheta && currentOdom.theta > 0.0)
+					if (currentLocationOdom.theta <= desiredTheta && currentLocationOdom.theta > 0.0)
 					{
 						sendDriveCommand(0.0, 0.0);
 						cout << "done rotating" << endl;
