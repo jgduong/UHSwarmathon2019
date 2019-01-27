@@ -624,7 +624,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			
 		}
-		}
 		else if (step == 9)
 		{
 			cout << "Fifth and last step of driving..." << endl;
