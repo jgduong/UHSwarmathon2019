@@ -710,10 +710,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			
 		}
-		}
-		
-		
-		
+
 	}
 	
 	
