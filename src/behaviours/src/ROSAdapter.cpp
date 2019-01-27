@@ -712,8 +712,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 
 	}
-	
-	
 	if (mapTesting)
 	{
 		//cout << "in mapTesting loop" << endl;
