@@ -538,8 +538,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				    sendDriveCommand(30.0, -30.0);
 			      }
 			}
-			
-		}
 		}
 		else if (step == 7)
 		{
