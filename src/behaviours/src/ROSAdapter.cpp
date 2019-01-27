@@ -451,7 +451,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			
 		}
-		}
 		else if (step == 5)
 		{
 			cout << "Third step of driving..." << endl;
@@ -710,7 +709,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			
 		}
-
+	}
 	
 	if (mapTesting)
 	{
