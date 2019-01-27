@@ -331,7 +331,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				exceedMag = true;
 			}
-			
+			cout << "exceed magnitude value is " << exceedMag << endl;
 			if (exceedMag)
 			{
 				float desiredTheta = 0.0;
@@ -346,6 +346,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					}
 					else {
 						sendDriveCommand(30.0, -30.0);
+						cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 					}
 				}
 				else
@@ -359,6 +360,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					}
 					else {
 						sendDriveCommand(30.0, -30.0);
+						cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 					}
 				}
 				
