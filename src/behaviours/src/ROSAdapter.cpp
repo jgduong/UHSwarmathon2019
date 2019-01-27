@@ -323,28 +323,60 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else if (step == 2)
 		{
 			cout << "step 2: rotating 90 degrees right..." << endl;
-			
-			ninetyRotate = currentLocationOdom.theta;
-			
-			cout << "startingTheta is: " << startingTheta << ", and ninetyRotate is: " << ninetyRotate << endl;
-			if (startingTheta <= -3.1)
+			float turnSize = -1.571;
+			bool exceedMag = false;
+
+			ninetyRotate = currentLocationOdom.theta
+			if (abs(startingTheta + turnSize) >= 3.142)
 			{
-				startingTheta = 3.12;
+				exceedMag = true;
 			}
-			if (ninetyRotate <= -3.1)
+			
+			if (exceedMag)
 			{
-				ninetyRotate = 3.12;
+				float desiredTheta = 0.0;
+				if (startingTheta >= 0)  //THIS CHECK MIGHT BE USELESS AND WASTING TIME
+				{
+					desiredTheta = -3.142 + (startingTheta + turnSize);
+					if (currentOdom.theta >= desiredTheta && currentOdom.theta < 0.0)
+					{
+						sendDriveCommand(0.0, 0.0);
+						cout << "done rotating" << endl;
+						step = 3;
+					}
+					else {
+						sendDriveCommand(30.0, -30.0);
+					}
+				}
+				else
+				{
+					desiredTheta = 3.142 + (startingTheta - turnSize);
+					if (currentOdom.theta <= desiredTheta && currentOdom.theta > 0.0)
+					{
+						sendDriveCommand(0.0, 0.0);
+						cout << "done rotating" << endl;
+						step = 3;
+					}
+					else {
+						sendDriveCommand(30.0, -30.0);
+					}
+				}
+				
+				
 			}
-			if (abs(ninetyRotate - startingTheta) >= 1.5)
-		      {
-			    sendDriveCommand(0.0, 0.0); 
-			     cout << "done rotating" << endl;
-			    step = 3;
-			    
-		      }
-		      else {
-			    sendDriveCommand(30.0, -30.0);
-		      }
+			else
+			{
+			      if (abs(ninetyRotate - startingTheta) >= 1.571)
+			      {
+				    sendDriveCommand(0.0, 0.0); 
+				     cout << "done rotating" << endl;
+				    step = 3;
+
+			      }
+			      else {
+				    sendDriveCommand(30.0, -30.0);
+			      }
+			}
 			
 		}
 		else if (step == 3)
