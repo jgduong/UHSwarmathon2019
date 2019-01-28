@@ -255,6 +255,7 @@ bool GPSCenter = false;
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
 float GPSInitCount = 0.0;
+geometry_msgs::Point temp;
 
 int step = 0;
 float initialPositionTrackerX = 0.0;
@@ -828,7 +829,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	      }*/
 		cout << "step 2: rotating 90 degrees left..." << endl;
 		
-		geometry_msgs::Point temp;
+		geometry_msgs::Point tempLocal;
 		
 			float turnSize = 1.5;
 			bool exceedMag = false;
@@ -853,8 +854,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				      step = 1;
 					initialPositionTrackerX = currentLocationOdom.x;
 					initialPositionTrackerY = currentLocationOdom.y;
-					temp.x = (temp.x)/GPSInitCount;
-				      temp.y = (temp.y)/GPSInitCount;
+					temp.x = (tempLocal.x)/GPSInitCount;
+				      temp.y = (tempLocal.y)/GPSInitCount;
 				      robotLocationGPS.publish(temp);
 					
 				     cout << "done rotating" << endl;
@@ -862,8 +863,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				else {
 					sendDriveCommand(-30.0, 30.0);
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
-					temp.x += currentLocationMap.x;
-					temp.y += currentLocationMap.y;
+					tempLocal.x += currentLocationMap.x;
+					tempLocal.y += currentLocationMap.y;
 					GPSInitCount += 1.0;
 				}
 				
@@ -883,16 +884,16 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					initialPositionTrackerX = currentLocationOdom.x;
 					initialPositionTrackerY = currentLocationOdom.y;
 				      
-				      temp.x = (temp.x)/GPSInitCount;
-				      temp.y = (temp.y)/GPSInitCount;
+				      temp.x = (tempLocal.x)/GPSInitCount;
+				      temp.y = (tempLocal.y)/GPSInitCount;
 				      robotLocationGPS.publish(temp);
 				     cout << "done rotating" << endl;
 
 			      }
 			      else {
 				    sendDriveCommand(-30.0, 30.0);
-				      temp.x += currentLocationMap.x;
-					temp.y += currentLocationMap.y;
+				      tempLocal.x += currentLocationMap.x;
+					tempLocal.y += currentLocationMap.y;
 					GPSInitCount += 0.0;
 			      }
 			}
