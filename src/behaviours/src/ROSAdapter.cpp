@@ -32,7 +32,7 @@
 #include "LogicController.h"
 #include <vector>
 
-#include "Point.h"
+//#include "Point.h"
 #include "Tag.h"
 
 // To handle shutdown signals so the node quits
@@ -994,7 +994,7 @@ void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
 void nameHandler(const geometry_msgs::Point::ConstPtr& msg)
 {
 	cout << "nameHandeler called, starting location GPS is: " << endl;
-	cout << "x: " << msg->data.x << ", y: " << msg->data.y << endl;
+	cout << "x: " << msg->x << ", y: " << msg->y << endl;
 
 	startingLocationGPS.push_back(msg->data);
 
