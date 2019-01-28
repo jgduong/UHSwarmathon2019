@@ -29,7 +29,7 @@
 #include "swarmie_msgs/Waypoint.h"
 
 // Include Controllers
-#include "LogicController.h"
+//#include "LogicController.h"
 #include <vector>
 
 //#include "Point.h"
@@ -1143,7 +1143,7 @@ long int getROSTimeInMilliSecs()
   
 }
 
-Point updateCenterLocation()			//PROBABLY not needed
+geometry_msgs::Point updateCenterLocation()			//PROBABLY not needed
 {
   transformMapCentertoOdom();
   
