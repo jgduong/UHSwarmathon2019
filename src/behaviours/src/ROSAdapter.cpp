@@ -212,7 +212,7 @@ int main(int argc, char **argv) {
   waypointFeedbackPublisher = mNH.advertise<swarmie_msgs::Waypoint>((publishedName + "/waypoints"), 1, true);		//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
   visitedLocationsPublisher = mNH.advertise<std_msgs::Float32MultiArray>(("/visitedLocation"), 10, true);
 	
-  robotLocationGPS = mNH.advertise<Point>(("/swarmies"), 10, true);						//publishes robotnames to /swarmies
+  robotLocationGPS = mNH.advertise<geometry_msgs::Point>(("/swarmies"), 10, true);						//publishes robotnames to /swarmies
 
   //timers
   publish_status_timer = mNH.createTimer(ros::Duration(1), publishStatusTimerEventHandler);
