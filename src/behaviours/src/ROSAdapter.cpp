@@ -994,9 +994,9 @@ void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
 void nameHandler(const geometry_msgs::Point::ConstPtr& msg)
 {
 	cout << "nameHandeler called, starting location GPS is: " << endl;
-	//cout << "x: " << msg->data.x << ", y: " << msg->data.y << endl;
+	cout << "x: " << msg.data.x << ", y: " << msg.data.y << endl;
 
-	startingLocationGPS.push_back(msg->data);
+	startingLocationGPS.push_back(msg.data);
 
 	// print current size of vector
 	for (int i=0; i< startingLocationGPS.size(); i++)     
