@@ -95,7 +95,7 @@ ros::Publisher heartbeatPublisher;		//publishes ROSAdapters status via its "hear
 // Publishes swarmie_msgs::Waypoint messages on "/<robot>/waypooints"
 // to indicate when waypoints have been reached.
 ros::Publisher waypointFeedbackPublisher;	//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
-ros::Publisher robotGPSLocations;			//publishes name of robot to /swarmies
+ros::Publisher robotLocationGPS;			//publishes name of robot to /swarmies
 ros::Publisher visitedLocationsPublisher;
 
 // Subscribers
