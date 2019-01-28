@@ -32,7 +32,7 @@
 //#include "LogicController.h"
 #include <vector>
 
-//#include "Point.h"
+#include "Point.h"
 #include "Tag.h"
 
 // To handle shutdown signals so the node quits
@@ -1143,7 +1143,7 @@ long int getROSTimeInMilliSecs()
   
 }
 
-geometry_msgs::Point updateCenterLocation()			//PROBABLY not needed
+Point updateCenterLocation()			//PROBABLY not needed
 {
   transformMapCentertoOdom();
   
