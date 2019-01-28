@@ -21,6 +21,7 @@
 #include <sensor_msgs/Range.h>
 #include <geometry_msgs/Pose2D.h>
 #include <geometry_msgs/Twist.h>
+#include <geomerry_msgs/Point.h>
 #include <nav_msgs/Odometry.h>
 #include <apriltags_ros/AprilTagDetectionArray.h>
 #include <std_msgs/Float32MultiArray.h>
@@ -149,7 +150,7 @@ void publishStatusTimerEventHandler(const ros::TimerEvent& event);			//Publishes
 void publishHeartBeatTimerEventHandler(const ros::TimerEvent& event);			
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight);	//handles ultrasound data and stores data
 
-void nameHandler(const Point::ConstPtr& message);				//subscriber to sync names of robots together
+void nameHandler(const geometry_msgs::Point::ConstPtr& message);				//subscriber to sync names of robots together
 void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& message);
 
 // Converts the time passed as reported by ROS (which takes Gazebo simulation rate into account) into milliseconds as an integer.
@@ -990,13 +991,13 @@ void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
     //SET velocity data readable everywhere(?)
 }
 	//this just syncs a vector among all robots
-void nameHandler(const Point::ConstPtr& msg)
+void nameHandler(const geometry_msgs::Point::ConstPtr& msg)
 {
 	cout << "nameHandeler called, starting location GPS is: " << endl;
-	cout << "x: " << msg.x << ", y: " << msg.y << endl;
+	cout << "x: " << msg->data.x << ", y: " << msg->data.y << endl;
 	
 	else { //add published string to list
-		startingLocationGPS.push_back(msg);
+		startingLocationGPS.push_back(msg->data);
 	}
 
 	// print current size of vector
