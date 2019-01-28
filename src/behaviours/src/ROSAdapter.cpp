@@ -993,10 +993,10 @@ void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
 void nameHandler(const std_msgs::String::ConstPtr& msg)
 {
 	cout << "nameHandeler called, starting location GPS is: " << endl;
-	cout << "x: " << msg->data.x << ", y: " << msg->data.y << endl;
+	cout << "x: " << msg.x << ", y: " << msg.y << endl;
 	
 	else { //add published string to list
-		startingLocationGPS.push_back(msg->data);
+		startingLocationGPS.push_back(msg);
 	}
 
 	// print current size of vector
