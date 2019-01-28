@@ -160,7 +160,7 @@ char host[128];		//rovers hostname
 string publishedName;	//published hostname
 char prev_state_machine[128];
 
-vector <Point> startingLocationGPS;
+vector <geometry_msgs::Point> startingLocationGPS;
 unordered_map<float, set<float>> visitedLocations;	//hashtable to store visited locations
 
 int main(int argc, char **argv) {
