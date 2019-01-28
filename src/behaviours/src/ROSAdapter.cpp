@@ -996,7 +996,7 @@ void nameHandler(const geometry_msgs::Point::ConstPtr& msg)
 	cout << "nameHandeler called, starting location GPS is: " << endl;
 	cout << "x: " << msg->x << ", y: " << msg->y << endl;
 
-	startingLocationGPS.push_back(msg);
+	startingLocationGPS.push_back(*msg);
 
 	// print current size of vector
 	for (int i=0; i< startingLocationGPS.size(); i++)     
