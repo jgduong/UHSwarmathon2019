@@ -254,6 +254,7 @@ bool rotateBool = false;
 bool GPSCenter = false;
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
+float GPSInitCount = 0.0;
 
 int step = 0;
 float initialPositionTrackerX = 0.0;
@@ -828,7 +829,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		cout << "step 2: rotating 90 degrees left..." << endl;
 		
 		geometry_msgs::Point temp;
-		static int count = 0;
+		
 			float turnSize = 1.5;
 			bool exceedMag = false;
 
@@ -852,8 +853,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				      step = 1;
 					initialPositionTrackerX = currentLocationOdom.x;
 					initialPositionTrackerY = currentLocationOdom.y;
-					temp.x = (temp.x)/count;
-				      temp.y = (temp.y)/count;
+					temp.x = (temp.x)/GPSInitCount;
+				      temp.y = (temp.y)/GPSInitCount;
 				      robotLocationGPS.publish(temp);
 					
 				     cout << "done rotating" << endl;
@@ -863,7 +864,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 					temp.x += currentLocationMap.x;
 					temp.y += currentLocationMap.y;
-					count++;
+					GPSInitCount += 1.0;
 				}
 				
 				
@@ -882,8 +883,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					initialPositionTrackerX = currentLocationOdom.x;
 					initialPositionTrackerY = currentLocationOdom.y;
 				      
-				      temp.x = (temp.x)/count;
-				      temp.y = (temp.y)/count;
+				      temp.x = (temp.x)/GPSInitCount;
+				      temp.y = (temp.y)/GPSInitCount;
 				      robotLocationGPS.publish(temp);
 				     cout << "done rotating" << endl;
 
@@ -892,7 +893,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				    sendDriveCommand(-30.0, 30.0);
 				      temp.x += currentLocationMap.x;
 					temp.y += currentLocationMap.y;
-					count++;
+					GPSInitCount += 0.0;
 			      }
 			}
 	}
