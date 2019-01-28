@@ -1,6 +1,6 @@
 #ifndef LOGICCONTROLLER_H
 #define LOGICCONTROLLER_H
-
+/*
 #include "Controller.h"
 #include "PickUpController.h"
 #include "DropOffController.h"
@@ -9,12 +9,12 @@
 #include "DriveController.h"
 #include "RangeController.h"
 #include "ManualWaypointController.h"
-
+*/
 #include <vector>
 #include <queue>
 
 using namespace std;
-
+/*
 // This struct contains a controller object and ties it to a priority value as
 // well as providing functionality to compare priorities with the < operator.
 struct PrioritizedController {
@@ -134,5 +134,5 @@ private:
 
   long int current_time = 0;
 };
-
+*/
 #endif // LOGICCONTROLLER_H
