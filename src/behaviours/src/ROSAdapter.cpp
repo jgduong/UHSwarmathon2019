@@ -828,7 +828,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		cout << "step 2: rotating 90 degrees left..." << endl;
 		
 		geometry_msgs::Point temp;
-		int count = 0;
+		static int count = 0;
 			float turnSize = 1.5;
 			bool exceedMag = false;
 
