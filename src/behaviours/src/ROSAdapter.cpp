@@ -254,8 +254,6 @@ bool rotateBool = false;
 bool GPSCenter = false;
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
-float GPSInitCount = 0.0;
-geometry_msgs::Point temp;
 
 int step = 0;
 float initialPositionTrackerX = 0.0;
@@ -854,18 +852,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				      step = 1;
 					initialPositionTrackerX = currentLocationOdom.x;
 					initialPositionTrackerY = currentLocationOdom.y;
-					temp.x = (tempLocal.x)/GPSInitCount;
-				      temp.y = (tempLocal.y)/GPSInitCount;
-				      robotLocationGPS.publish(temp);
 					
 				     cout << "done rotating" << endl;
 				}
 				else {
 					sendDriveCommand(-30.0, 30.0);
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
-					tempLocal.x += currentLocationMap.x;
-					tempLocal.y += currentLocationMap.y;
-					GPSInitCount += 1.0;
 				}
 				
 				
@@ -883,18 +875,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				      step = 1;
 					initialPositionTrackerX = currentLocationOdom.x;
 					initialPositionTrackerY = currentLocationOdom.y;
-				      
-				      temp.x = (tempLocal.x)/GPSInitCount;
-				      temp.y = (tempLocal.y)/GPSInitCount;
-				      robotLocationGPS.publish(temp);
 				     cout << "done rotating" << endl;
 
 			      }
 			      else {
 				    sendDriveCommand(-30.0, 30.0);
-				      tempLocal.x += currentLocationMap.x;
-					tempLocal.y += currentLocationMap.y;
-					GPSInitCount += 0.0;
 			      }
 			}
 	}
@@ -919,10 +904,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		      centerLocationMap.x = currentLocationMap.x;
 		      centerLocationMap.y = currentLocationMap.y;
-			//geometry_msgs::Point temp;
-			//temp.x = currentLocationMap.x;
-			//temp.y = currentLocationMap.y;
-			//robotLocationGPS.publish(temp);
+			geometry_msgs::Point temp;
+			temp.x = currentLocationMap.x;
+			temp.y = currentLocationMap.y;
+			robotLocationGPS.publish(temp);
 			  //SET the centerMap location by passing that variable here		
 
 		      //startTime = getROSTimeInMilliSecs();
