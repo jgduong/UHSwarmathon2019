@@ -95,7 +95,7 @@ ros::Publisher heartbeatPublisher;		//publishes ROSAdapters status via its "hear
 // Publishes swarmie_msgs::Waypoint messages on "/<robot>/waypooints"
 // to indicate when waypoints have been reached.
 ros::Publisher waypointFeedbackPublisher;	//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
-ros::Publisher robotnames;			//publishes name of robot to /swarmies
+ros::Publisher robotGPSLocations;			//publishes name of robot to /swarmies
 ros::Publisher visitedLocationsPublisher;
 
 // Subscribers
@@ -159,7 +159,7 @@ char host[128];		//rovers hostname
 string publishedName;	//published hostname
 char prev_state_machine[128];
 
-vector <string> names;
+vector <Point> startingLocationGPS;
 unordered_map<float, set<float>> visitedLocations;	//hashtable to store visited locations
 
 int main(int argc, char **argv) {
@@ -211,7 +211,7 @@ int main(int argc, char **argv) {
   waypointFeedbackPublisher = mNH.advertise<swarmie_msgs::Waypoint>((publishedName + "/waypoints"), 1, true);		//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
   visitedLocationsPublisher = mNH.advertise<std_msgs::Float32MultiArray>(("/visitedLocation"), 10, true);
 	
-  robotnames = mNH.advertise<std_msgs::String>(("/swarmies"), 10, true);						//publishes robotnames to /swarmies
+  robotLocationGPS = mNH.advertise<Point>(("/swarmies"), 10, true);						//publishes robotnames to /swarmies
 
   //timers
   publish_status_timer = mNH.createTimer(ros::Duration(1), publishStatusTimerEventHandler);
@@ -250,6 +250,7 @@ int main(int argc, char **argv) {
 bool initialMove = false;
 bool mapTesting = false;
 bool rotateBool = false;
+bool GPSCenter = false;
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
 
@@ -272,6 +273,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
+	
+	if (GPSCenter)
+	{
+		
+	}
 	
 	if (initialMove)
 	{
@@ -858,7 +864,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			      {
 				   sendDriveCommand(0.0, 0.0);
 					rotateBool = false;
-				    	 initialMove = true;
+				    	 //initialMove = true;
+				      GPSCenter = true;
 				     //mapTesting = true;
 				      step = 1;
 					initialPositionTrackerX = currentLocationOdom.x;
@@ -892,6 +899,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		      centerLocationMap.x = currentLocationMap.x;
 		      centerLocationMap.y = currentLocationMap.y;
+			Point temp;
+			temp.x = currentLocationMap.x;
+			temp.y = currentLocationMap.y;
+			robotLocationGPS.publish(temp);
 			  //SET the centerMap location by passing that variable here		
 
 		      //startTime = getROSTimeInMilliSecs();
@@ -981,21 +992,17 @@ void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
 	//this just syncs a vector among all robots
 void nameHandler(const std_msgs::String::ConstPtr& msg)
 {
-	cout << "nameHandeler called, message is: " << endl;
-	cout << msg->data.c_str() << endl << endl;
-
-	if (std::find(names.begin(), names.end(), msg->data.c_str() ) != names.end())
-	{
-	 //if duplicate published, do nothing
-	}
+	cout << "nameHandeler called, starting location GPS is: " << endl;
+	cout << "x: " << msg->data.x << ", y: " << msg->data.y << endl;
+	
 	else { //add published string to list
-		names.push_back(msg->data.c_str());
+		startingLocationGPS.push_back(msg->data);
 	}
 
 	// print current size of vector
-	for (int i=0; i<names.size(); i++)     
-        cout << names[i] << "\n";
-        cout << "Size of vector is: " << names.size() << endl;
+	for (int i=0; i< startingLocationGPS.size(); i++)     
+        cout << startingLocationGPS[i].x << ", " << startingLocationGPS[i].y << endl;
+        cout << "Size of vector is: " << startingLocationGPS.size() << endl;
 	
 }
 
