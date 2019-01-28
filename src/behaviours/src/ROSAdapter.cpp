@@ -900,7 +900,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		      centerLocationMap.x = currentLocationMap.x;
 		      centerLocationMap.y = currentLocationMap.y;
-			Point temp;
+			geometry_msgs::Point temp;
 			temp.x = currentLocationMap.x;
 			temp.y = currentLocationMap.y;
 			robotLocationGPS.publish(temp);
@@ -996,7 +996,7 @@ void nameHandler(const geometry_msgs::Point::ConstPtr& msg)
 	cout << "nameHandeler called, starting location GPS is: " << endl;
 	cout << "x: " << msg->x << ", y: " << msg->y << endl;
 
-	startingLocationGPS.push_back(msg->data);
+	startingLocationGPS.push_back(msg);
 
 	// print current size of vector
 	for (int i=0; i< startingLocationGPS.size(); i++)     
