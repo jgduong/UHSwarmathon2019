@@ -861,8 +861,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				else {
 					sendDriveCommand(-30.0, 30.0);
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
-					temp.x += currentLocation.x;
-					temp.y += currentLocation.y;
+					temp.x += currentLocationMap.x;
+					temp.y += currentLocationMap.y;
 					count++;
 				}
 				
@@ -890,8 +890,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			      }
 			      else {
 				    sendDriveCommand(-30.0, 30.0);
-				      temp.x += currentLocation.x;
-					temp.y += currentLocation.y;
+				      temp.x += currentLocationMap.x;
+					temp.y += currentLocationMap.y;
 					count++;
 			      }
 			}
