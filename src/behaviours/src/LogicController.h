@@ -56,8 +56,9 @@ public:
   void SetMapVelocityData(float linearVelocity, float angularVelocity);
   void SetCenterLocationOdom(Point centerLocationOdom);
   void SetCenterLocationMap(Point centerLocationMap);
+  void gotRecruitmentMessage(Point p);
 
-
+  int getCollisionCalls();
   // Passthrough for providing new waypoints to the
   // ManualWaypointController.
   void AddManualWaypoint(Point wpt, int waypoint_id);
