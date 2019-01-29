@@ -859,7 +859,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		frontCheckCoord.data.push_back(roundf((currentLocationOdom.y + centerOffsetY + 0.2*sin(currentLocationOdom.theta))*10)/10);
 		if (visitedLocations.find(frontCheckCoord.data[0]) != visitedLocations.end())
 		{
-			if (visitedLocations[frontCheckCoord.data[0].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
+			if (visitedLocations[frontCheckCoord.data[0]].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
 			{
 				cout << "location in front has been visited" << endl;
 				sendDriveCommand(-30.0, 30.0);
