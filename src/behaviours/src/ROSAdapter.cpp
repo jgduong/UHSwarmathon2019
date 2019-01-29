@@ -395,18 +395,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			visitedLocations[initialPopb.data[0]].insert(initialPopb.data[1]);
 
 			visitedLocationsPublisher.publish(initialPopb);
-			/*if (abs(currentLocationOdom.x - Position2X > 0.5))
-			{
-				step = 4;
-				Position3X = currentLocationOdom.x;
-				Position3Y = currentLocationOdom.y;
-			}
-			if (abs(currentLocationOdom.y - Position2Y > 0.5))
-			{
-				step = 4;
-				Position3X = currentLocationOdom.x;
-				Position3Y = currentLocationOdom.y;
-			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position2X)*(currentLocationOdom.x - Position2X)) + ((currentLocationOdom.y - Position2Y)*(currentLocationOdom.y - Position2Y)));
 			if (displacement >= 2.5)
@@ -416,6 +404,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				Position3Y = currentLocationOdom.y;
 				startingTheta = currentLocationOdom.theta;
 			}
+			cout << "global coordinate is: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
+			cout << "displacement is: " << displacement << endl;
 		}
 		else if (step == 4)
 		{
