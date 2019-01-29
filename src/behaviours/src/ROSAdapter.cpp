@@ -861,10 +861,30 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 			if (visitedLocations[frontCheckCoord.data[0]].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
 			{
-				cout << "location in front has been visited" << endl;
+				cout << "location in front: " << frontCheckCoord.data[0] << ", " << frontCheckCoord.data[1] << " HAS been visited" << endl;
 				sendDriveCommand(-30.0, 30.0);
 			}
-			else if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
+			else
+			{
+				if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
+				{
+					if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
+					{
+						cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+						sendDriveCommand(50.0, 0.0);
+					}
+					else
+					{
+						sendDriveCommand(50.0, 50.0);
+					}
+				}
+				else
+				{
+					sendDriveCommand(50.0, 50.0);
+				}
+			}
+
+			/*else if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
 			{
 				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) != visitedLocations[checkCoord.data[0]].end()) {
 					cout << "location on the right has been visited" << endl;
@@ -880,10 +900,26 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				cout << "This y location has not been visited for the specified x location in front" << endl;
 				sendDriveCommand(50.0, 50.0);
 			}
-		}
+		}*/
 		else {
 			cout << "Location on the front has not been visited, x or y" << endl;
-			sendDriveCommand(50.0, 50.0);
+			if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
+			{
+				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
+				{
+					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+					sendDriveCommand(50.0, 0.0);
+				}
+				else
+				{
+					sendDriveCommand(50.0, 50.0);
+				}
+			}
+			else
+			{
+				sendDriveCommand(50.0, 50.0);
+			}
+			
 		}
 		
 	}
