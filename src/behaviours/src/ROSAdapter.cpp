@@ -726,7 +726,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "Moving into place to being spiral search..." << endl;
 			sendDriveCommand(30.0, 30.0);
 
-			std_msgs::Float32MultiArray initialPope;
+			std_msgs::Float32MultiArray initialPopf;
 			initialPopf.layout.dim.push_back(std_msgs::MultiArrayDimension());
 			initialPopf.layout.dim[0].size = 2;
 			initialPopf.layout.dim[0].stride = 1;
