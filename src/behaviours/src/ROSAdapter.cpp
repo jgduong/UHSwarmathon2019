@@ -740,7 +740,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position6X)*(currentLocationOdom.x - Position6X)) + ((currentLocationOdom.y - Position6Y)*(currentLocationOdom.y - Position6Y)));
-			if (displacement >= 0.25)
+			if (displacement >= 0.3)
 			{
 				step = 12;
 				startingTheta = currentLocationOdom.theta;
@@ -862,25 +862,27 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			if (visitedLocations[frontCheckCoord.data[0]].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
 			{
 				cout << "location in front: " << frontCheckCoord.data[0] << ", " << frontCheckCoord.data[1] << " HAS been visited" << endl;
-				sendDriveCommand(-30.0, 30.0);
+				sendDriveCommand(-50.0, 50.0);
 			}
 			else
 			{
-				if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
+				if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
+				{	//right is unvisited
+					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+					sendDriveCommand(100.0, -50.0);
+				}
+				else
 				{
 					if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
 					{
 						cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-						sendDriveCommand(50.0, 0.0);
+						sendDriveCommand(100.0, -50.0);
 					}
 					else
 					{
-						sendDriveCommand(50.0, 50.0);
+						sendDriveCommand(100.0, 100.0);
 					}
-				}
-				else
-				{
-					sendDriveCommand(50.0, 50.0);
+					
 				}
 			}
 
@@ -903,21 +905,23 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else {
 			cout << "Location on the front has not been visited, x or y" << endl;
-			if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
+			if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
+			{	//right is unvisited
+				cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+				sendDriveCommand(100.0, -50.0);
+			}
+			else
 			{
 				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
 				{
 					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-					sendDriveCommand(50.0, 0.0);
+					sendDriveCommand(100.0, -50.0);
 				}
 				else
 				{
-					sendDriveCommand(50.0, 50.0);
+					sendDriveCommand(100.0, 100.0);
 				}
-			}
-			else
-			{
-				sendDriveCommand(50.0, 50.0);
+				
 			}
 			
 		}
