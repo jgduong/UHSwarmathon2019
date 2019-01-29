@@ -1099,14 +1099,14 @@ void spiralSearch(const ros::TimerEvent&)
 				if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
 				{	//right is unvisited
 					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-					sendDriveCommand(100.0, -50.0);
+					sendDriveCommand(100.0, 10.0);
 				}
 				else
 				{
 					if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
 					{
 						cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-						sendDriveCommand(100.0, -50.0);
+						sendDriveCommand(100.0, 10.0);
 					}
 					else
 					{
@@ -1138,14 +1138,14 @@ void spiralSearch(const ros::TimerEvent&)
 			if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
 			{	//right is unvisited
 				cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-				sendDriveCommand(100.0, -50.0);
+				sendDriveCommand(100.0, 10.0);
 			}
 			else
 			{
 				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
 				{
 					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-					sendDriveCommand(100.0, -50.0);
+					sendDriveCommand(100.0, 10.0);
 				}
 				else
 				{
