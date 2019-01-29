@@ -120,6 +120,7 @@ ros::Timer publish_heartbeat_timer;
 void sendDriveCommand(double left, double right);
 void humanTime();
 void transformMapCentertoOdom();
+float normalizedValue(float x);
 // records time for delays in sequenced actions, 1 second resolution.
 time_t timerStartTime;
 
@@ -304,10 +305,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			initialPop.layout.dim[0].size = 2;
 			initialPop.layout.dim[0].stride = 1;
 			initialPop.layout.dim[0].label = "poop";
-
-			initialPop.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*10)/10);
-			initialPop.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*10)/10);
-
+			//UPDATED FROM 10 TO 25
+			initialPop.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			initialPop.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+			//initialPop.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*25)/25);
+			//initialPop.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*25)/25);
+			
 			visitedLocations[initialPop.data[0]].insert(initialPop.data[1]);
 
 			visitedLocationsPublisher.publish(initialPop);
@@ -391,9 +394,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			initialPopb.layout.dim[0].size = 2;
 			initialPopb.layout.dim[0].stride = 1;
 			initialPopb.layout.dim[0].label = "poopb";
-
-			initialPopb.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*10)/10);
-			initialPopb.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*10)/10);
+			//UPDATED FROM 10 TO 25
+			initialPopb.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			initialPopb.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+			//initialPopb.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*25)/25);
+			//initialPopb.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*25)/25);
 
 			visitedLocations[initialPopb.data[0]].insert(initialPopb.data[1]);
 
@@ -467,9 +472,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			initialPopc.layout.dim[0].size = 2;
 			initialPopc.layout.dim[0].stride = 1;
 			initialPopc.layout.dim[0].label = "poopc";
-
-			initialPopc.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*10)/10);
-			initialPopc.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*10)/10);
+			//UPDATED FROM 10 TO 25
+			initialPopc.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			initialPopc.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+			//initialPopc.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*25)/25);
+			//initialPopc.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*25)/25);
 
 			visitedLocations[initialPopc.data[0]].insert(initialPopc.data[1]);
 
@@ -555,9 +562,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			initialPopd.layout.dim[0].size = 2;
 			initialPopd.layout.dim[0].stride = 1;
 			initialPopd.layout.dim[0].label = "poopd";
-
-			initialPopd.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*10)/10);
-			initialPopd.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*10)/10);
+			//UPDATED FROM 10 TO 25
+			initialPopd.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			initialPopd.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+			//initialPopd.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*25)/25);
+		//	initialPopd.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*25)/25);
 
 			visitedLocations[initialPopd.data[0]].insert(initialPopd.data[1]);
 
@@ -641,9 +650,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			initialPope.layout.dim[0].size = 2;
 			initialPope.layout.dim[0].stride = 1;
 			initialPope.layout.dim[0].label = "poope";
-
-			initialPope.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*10)/10);
-			initialPope.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*10)/10);
+			//UPDATED FROM 10 TO 25
+			initialPope.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			initialPope.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+			//initialPope.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*25)/25);
+			//initialPope.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*25)/25);
 
 			visitedLocations[initialPope.data[0]].insert(initialPope.data[1]);
 
@@ -730,9 +741,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			initialPopf.layout.dim[0].size = 2;
 			initialPopf.layout.dim[0].stride = 1;
 			initialPopf.layout.dim[0].label = "poopf";
-
-			initialPopf.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*10)/10);
-			initialPopf.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*10)/10);
+			//UPDATED FROM 10 TO 25
+			initialPop.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			initialPop.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+			//initialPopf.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*25)/25);
+			//initialPopf.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*25)/25);
 
 			visitedLocations[initialPopf.data[0]].insert(initialPopf.data[1]);
 
@@ -813,8 +826,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		myCoordinate.layout.dim[0].label = "fart";
 
 		//cout << "float32multiarray has been instantiated...\n";
-		myCoordinate.data.push_back(roundf((currentLocationOdom.x + centerOffsetX)*10)/10);
-		myCoordinate.data.push_back(roundf((currentLocationOdom.y + centerOffsetY)*10)/10);
+		//UPDATED FROM 10 TO 25
+		myCoordinate.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+		myCoordinate.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
 		//myCoordinate.data[0] = roundf((currentLocationOdom.x)*10)/10;
 		//myCoordinate.data[1] = roundf((currentLocationOdom.y)*10)/10;
 		//cout << "the float32multiarray's info has been normalized...\n";		
@@ -852,11 +866,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//SUBTRACT a small constant from hypotenuse
 		hypot = hypot - 0.2;
 		//CALCULATE new x,y
-		checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*10)/10);
-		checkCoord.data.push_back(roundf((hypot*sin(currentLocationOdom.theta))*10)/10);
+		//UPDATED FROM 10 TO 25
+		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
+		checkCoord.data.push_back(normalizedValue(hypot*cos(currentLocationOdom.theta)));
+		checkCoord.data.push_back(normalizedValue(hypot*sin(currentLocationOdom.theta)));
 		
-		frontCheckCoord.data.push_back(roundf((currentLocationOdom.x + centerOffsetX + 0.2*cos(currentLocationOdom.theta))*10)/10);
-		frontCheckCoord.data.push_back(roundf((currentLocationOdom.y + centerOffsetY + 0.2*sin(currentLocationOdom.theta))*10)/10);
+		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))));
+		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))))
+		//frontCheckCoord.data.push_back(roundf((currentLocationOdom.x + centerOffsetX + 0.2*cos(currentLocationOdom.theta))*10)/10);
 		if (visitedLocations.find(frontCheckCoord.data[0]) != visitedLocations.end())
 		{
 			if (visitedLocations[frontCheckCoord.data[0]].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
@@ -940,8 +957,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		myCoordinate.layout.dim[0].stride = 1;
 		myCoordinate.layout.dim[0].label = "poop";
 		
-		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
-		myCoordinate.data.push_back(roundf((currentLocationOdom.y)*10)/10);
+		myCoordinate.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+		myCoordinate.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
 		
 		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
 
@@ -1431,4 +1448,21 @@ void humanTime()
   }
   
   //cout << "System has been Running for :: " << hoursTime << " : hours " << minutesTime << " : minutes " << timeDiff << "." << frac << " : seconds" << endl; //you can remove or comment this out it just gives indication something is happening to the log file
+}
+
+float normalizedValue(float x)
+{
+	float temp = x * 100;
+	temp = round(temp);
+	
+	if ((temp % 25) > 13)
+	{
+		int n = (temp/25) + 1;
+		return n*0.25;
+	}
+	else
+	{
+		int n = (temp/25);
+		return n*0.25;
+	}
 }
