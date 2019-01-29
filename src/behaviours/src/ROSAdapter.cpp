@@ -937,7 +937,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			bool exceedMag = false;
 
 			ninetyRotate = currentLocationOdom.theta;
-			if (abs(startingTheta + turnSize) >= 3.142)
+			if (abs(startingTheta + turnSize) >= 3.14159)
 			{
 				exceedMag = true;
 			}
