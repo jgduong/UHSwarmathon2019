@@ -695,7 +695,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					sendDriveCommand(0.0, 0.0);
 					cout << "done rotating" << endl;
 					step = 11;
-					initialMove = false;
+					//initialMove = false;
 				}
 				else {
 					sendDriveCommand(-30.0, 30.0);
@@ -721,6 +721,81 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			
 		}
+		else if (step == 11)
+		{
+			cout << "Moving into place to being spiral search..." << endl;
+			sendDriveCommand(30.0, 30.0);
+
+			std_msgs::Float32MultiArray initialPope;
+			initialPopf.layout.dim.push_back(std_msgs::MultiArrayDimension());
+			initialPopf.layout.dim[0].size = 2;
+			initialPopf.layout.dim[0].stride = 1;
+			initialPopf.layout.dim[0].label = "poopf";
+
+			initialPopf.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*10)/10);
+			initialPopf.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*10)/10);
+
+			visitedLocations[initialPopf.data[0]].insert(initialPopf.data[1]);
+
+			visitedLocationsPublisher.publish(initialPopf);
+			
+			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position5Y)*(currentLocationOdom.y - Position5Y)));
+			if (displacement >= 1.0)
+			{
+				step = 12;
+				startingTheta = currentLocationOdom.theta;
+
+			}
+		}
+		else if (step == 12)
+		{
+			cout << "rotating right to begin spiral search..." << endl;
+			float turnSize = -1.5;
+			bool exceedMag = false;
+
+			ninetyRotate = currentLocationOdom.theta;
+			if (abs(startingTheta + turnSize) >= 3.142)
+			{
+				exceedMag = true;
+			}
+			cout << "exceed magnitude value is " << exceedMag << endl;
+			if (exceedMag)
+			{
+				float desiredTheta = 0.0;
+
+				desiredTheta = 3.142 + (startingTheta - turnSize);
+				if (currentLocationOdom.theta <= desiredTheta && currentLocationOdom.theta > 0.0)
+				{
+					sendDriveCommand(0.0, 0.0);
+					cout << "done rotating" << endl;
+					step = 13;
+					initialMove = false;
+					mapTesting = true;
+				}
+				else {
+					sendDriveCommand(30.0, -30.0);
+					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
+				}
+				
+				
+				
+			}
+			else
+			{
+			      if (abs(ninetyRotate - startingTheta) >= 1.5)
+			      {
+				    sendDriveCommand(0.0, 0.0); 
+				     cout << "done rotating" << endl;
+				    step = 13;
+				      initialMove = false;
+				      mapTesting = true;
+
+			      }
+			      else {
+				    sendDriveCommand(30.0, -30.0);
+			      }
+			}
+		}
 	}
 	
 	if (mapTesting)
@@ -735,7 +810,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
 		myCoordinate.layout.dim[0].size = 2;
 		myCoordinate.layout.dim[0].stride = 1;
-		myCoordinate.layout.dim[0].label = "poop";
+		myCoordinate.layout.dim[0].label = "fart";
 
 		//cout << "float32multiarray has been instantiated...\n";
 		myCoordinate.data.push_back(roundf((currentLocationOdom.x)*10)/10);
@@ -762,6 +837,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}*/
 		//CALCULATE X,Y TO CHECK
 		std_msgs::Float32MultiArray checkCoord;
+		std_msgs::Float32MultiArray frontCheckCoord;
+		
+		frontCheckCoord.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		frontCheckCoord.layout.dim[0].size = 2;
+		frontCheckCoord.layout.dim[0].stride = 1;
+		frontCheckCoord.layout.dim[0].label = "front";
+		
 		checkCoord.layout.dim.push_back(std_msgs::MultiArrayDimension());
 		checkCoord.layout.dim[0].size = 2;
 		checkCoord.layout.dim[0].stride = 1;
@@ -772,16 +854,19 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//CALCULATE new x,y
 		checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*10)/10);
 		checkCoord.data.push_back(roundf((hypot*sin(currentLocationOdom.theta))*10)/10);
-		if(visitedLocations.find(checkCoord.data[0]) != visitedLocations.end()) {
-			if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) != visitedLocations[checkCoord.data[0]].end()) {
-				cout << "location on the right has been visited" << endl;
-				sendDriveCommand(30.0, 30.0);
+		//if (f)
+		//{
+			if(visitedLocations.find(checkCoord.data[0]) != visitedLocations.end()) {
+				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) != visitedLocations[checkCoord.data[0]].end()) {
+					cout << "location on the right has been visited" << endl;
+					sendDriveCommand(30.0, 30.0);
+				}
+				else { 
+					cout << "This y location has not been visited for the specified x location" << endl; 
+					sendDriveCommand(30.0, 0.0);
+				}
 			}
-			else { 
-				cout << "This y location has not been visited for the specified x location" << endl; 
-				sendDriveCommand(30.0, 0.0);
-			}
-		}
+		//}
 		else {
 			cout << "Location on the right has not been visited" << endl;
 			sendDriveCommand(30.0, 0.0);
