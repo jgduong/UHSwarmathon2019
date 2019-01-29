@@ -949,7 +949,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerOffsetY = -1.207*sin(3.142/4);
 				cout << "current location is: " << currentLocationOdom.x - 1.207*cos(3.142/4) << ", " << currentLocationOdom.y + 1.207*sin(3.142/4) << endl;
 			}
-			else if((currentLocationOdom.theta >= 2.85) || (currentLocationOdom.theta <= -2.85)
+			else if((currentLocationOdom.theta >= 2.85) || (currentLocationOdom.theta <= -2.85))
 			{
 				centerLocationOdom.x = currentLocationOdom.x + 1.0;
 				centerLocationOdom.y = currentLocationOdom.y;
