@@ -294,7 +294,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		if (step == 1)
 		{
-			cout << "First step of driving..." << endl;
+			//cout << "First step of driving..." << endl;
 			sendDriveCommand(30.0, 30.0);
 			Position1X = initialPositionTrackerX;
 			Position1Y = initialPositionTrackerY;
@@ -331,8 +331,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				Position2Y = currentLocationOdom.y;
 				startingTheta = currentLocationOdom.theta;
 			}
+			cout << "the point: " << initialPop.data[0] << ", " << initialPop.data[1] << " has been inserted/published..." << endl;
 			
-			cout << "global coordinate is: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
+			//cout << "global coordinate is: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		}
 		else if (step == 2)
 		{
@@ -382,7 +383,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else if (step == 3)
 		{
-			cout << "Second step of driving..." << endl;
+			//cout << "Second step of driving..." << endl;
 			sendDriveCommand(30.0, 30.0);
 
 			std_msgs::Float32MultiArray initialPopb;
@@ -397,16 +398,17 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			visitedLocations[initialPopb.data[0]].insert(initialPopb.data[1]);
 
 			visitedLocationsPublisher.publish(initialPopb);
+			cout << "the point: " << initialPopb.data[0] << ", " << initialPopb.data[1] << " has been inserted/published..." << endl;
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position2X)*(currentLocationOdom.x - Position2X)) + ((currentLocationOdom.y - Position2Y)*(currentLocationOdom.y - Position2Y)));
-			if (displacement >= 2.5)
+			if (displacement >= 2.2)
 			{
 				step = 4;
 				Position3X = currentLocationOdom.x;
 				Position3Y = currentLocationOdom.y;
 				startingTheta = currentLocationOdom.theta;
 			}
-			cout << "global coordinate is: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
+			//cout << "global coordinate is: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 			cout << "displacement is: " << displacement << endl;
 		}
 		else if (step == 4)
@@ -457,7 +459,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else if (step == 5)
 		{
-			cout << "Third step of driving..." << endl;
+			//cout << "Third step of driving..." << endl;
 			sendDriveCommand(30.0, 30.0);
 
 			std_msgs::Float32MultiArray initialPopc;
@@ -472,6 +474,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			visitedLocations[initialPopc.data[0]].insert(initialPopc.data[1]);
 
 			visitedLocationsPublisher.publish(initialPopc);
+			cout << "the point: " << initialPopc.data[0] << ", " << initialPopc.data[1] << " has been inserted/published..." << endl;
 			/*if (abs(currentLocationOdom.x - Position2X > 0.5))
 			{
 				step = 4;
@@ -486,10 +489,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position3X)*(currentLocationOdom.x - Position3X)) + ((currentLocationOdom.y - Position3Y)*(currentLocationOdom.y - Position3Y)));
-			cout << "current position from Odom is: " << currentLocationOdom.x << ", " << currentLocationOdom.y << endl;
-			cout << "the saved previous position (3X AND 3Y) = " << Position3X << ", " << Position3Y << endl;
-			cout << "third step, displacement is: " << displacement << endl;
-			if (displacement >= 2.5)
+			//cout << "current position from Odom is: " << currentLocationOdom.x << ", " << currentLocationOdom.y << endl;
+			//cout << "the saved previous position (3X AND 3Y) = " << Position3X << ", " << Position3Y << endl;
+			//cout << "third step, displacement is: " << displacement << endl;
+			if (displacement >= 2.2)
 			{
 				step = 6;
 				Position4X = currentLocationOdom.x;
@@ -544,7 +547,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else if (step == 7)
 		{
-			cout << "Fourth step of driving..." << endl;
+			//cout << "Fourth step of driving..." << endl;
 			sendDriveCommand(30.0, 30.0);
 
 			std_msgs::Float32MultiArray initialPopd;
@@ -559,6 +562,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			visitedLocations[initialPopd.data[0]].insert(initialPopd.data[1]);
 
 			visitedLocationsPublisher.publish(initialPopd);
+			cout << "the point: " << initialPopd.data[0] << ", " << initialPopd.data[1] << " has been inserted/published..." << endl;
 			/*if (abs(currentLocationOdom.x - Position2X > 0.5))
 			{
 				step = 4;
@@ -573,7 +577,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position4X)*(currentLocationOdom.x - Position4X)) + ((currentLocationOdom.y - Position4Y)*(currentLocationOdom.y - Position4Y)));
-			if (displacement >= 2.5)
+			if (displacement >= 2.2)
 			{
 				step = 8;
 				Position5X = currentLocationOdom.x;
@@ -629,7 +633,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else if (step == 9)
 		{
-			cout << "Fifth and last step of driving..." << endl;
+			//cout << "Fifth and last step of driving..." << endl;
 			sendDriveCommand(30.0, 30.0);
 
 			std_msgs::Float32MultiArray initialPope;
@@ -644,6 +648,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			visitedLocations[initialPope.data[0]].insert(initialPope.data[1]);
 
 			visitedLocationsPublisher.publish(initialPope);
+			cout << "the point: " << initialPope.data[0] << ", " << initialPope.data[1] << " has been inserted/published..." << endl;
 			/*if (abs(currentLocationOdom.x - Position2X > 0.5))
 			{
 				step = 4;
@@ -658,7 +663,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}*/
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position5Y)*(currentLocationOdom.y - Position5Y)));
-			if (displacement >= 1.5)
+			if (displacement >= 1.4)
 			{
 				step = 10;
 				startingTheta = currentLocationOdom.theta;
@@ -717,7 +722,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else if (step == 11)
 		{
-			cout << "Moving into place to being spiral search..." << endl;
+			cout << "Moving into place to begin spiral search..." << endl;
 			sendDriveCommand(30.0, 30.0);
 
 			std_msgs::Float32MultiArray initialPopf;
@@ -732,6 +737,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			visitedLocations[initialPopf.data[0]].insert(initialPopf.data[1]);
 
 			visitedLocationsPublisher.publish(initialPopf);
+			cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position6X)*(currentLocationOdom.x - Position6X)) + ((currentLocationOdom.y - Position6Y)*(currentLocationOdom.y - Position6Y)));
 			if (displacement >= 0.25)
