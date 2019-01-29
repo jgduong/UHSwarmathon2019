@@ -742,8 +742,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			initialPopf.layout.dim[0].stride = 1;
 			initialPopf.layout.dim[0].label = "poopf";
 			//UPDATED FROM 10 TO 25
-			initialPop.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
-			initialPop.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+			initialPopf.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			initialPopf.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
 			//initialPopf.data.push_back(roundf((currentLocationOdom.x+centerOffsetX)*25)/25);
 			//initialPopf.data.push_back(roundf((currentLocationOdom.y+centerOffsetY)*25)/25);
 
@@ -872,7 +872,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		checkCoord.data.push_back(normalizedValue(hypot*sin(currentLocationOdom.theta)));
 		
 		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))));
-		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))))
+		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))));
 		//frontCheckCoord.data.push_back(roundf((currentLocationOdom.x + centerOffsetX + 0.2*cos(currentLocationOdom.theta))*10)/10);
 		if (visitedLocations.find(frontCheckCoord.data[0]) != visitedLocations.end())
 		{
