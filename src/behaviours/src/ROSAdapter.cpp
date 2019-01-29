@@ -266,12 +266,14 @@ float Position2X = 0.0;
 float Position3X = 0.0;
 float Position4X = 0.0;
 float Position5X = 0.0;
+float Position6X = 0.0;
 		
 float Position1Y = 0.0;
 float Position2Y = 0.0;
 float Position3Y = 0.0;
 float Position4Y = 0.0;
 float Position5Y = 0.0;
+float Position6Y = 0.0;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -660,6 +662,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				step = 10;
 				startingTheta = currentLocationOdom.theta;
+				Position6X = currentLocationOdom.x;
+				Position6Y = currentLocationOdom.y;
 
 			}
 		}
@@ -702,7 +706,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				    sendDriveCommand(0.0, 0.0); 
 				     cout << "done rotating" << endl;
 				    step = 11;
-				      initialMove = false;
+				      //initialMove = false;
 
 			      }
 			      else {
@@ -729,8 +733,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 			visitedLocationsPublisher.publish(initialPopf);
 			
-			float displacement = sqrt(((currentLocationOdom.x - Position5X)*(currentLocationOdom.x - Position5X)) + ((currentLocationOdom.y - Position5Y)*(currentLocationOdom.y - Position5Y)));
-			if (displacement >= 1.0)
+			float displacement = sqrt(((currentLocationOdom.x - Position6X)*(currentLocationOdom.x - Position6X)) + ((currentLocationOdom.y - Position6Y)*(currentLocationOdom.y - Position6Y)));
+			if (displacement >= 0.25)
 			{
 				step = 12;
 				startingTheta = currentLocationOdom.theta;
