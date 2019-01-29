@@ -117,6 +117,8 @@ ros::Timer stateMachineTimer;
 ros::Timer publish_status_timer;
 ros::Timer publish_heartbeat_timer;
 
+ros::Timer mapTestingTimer;
+
 void sendDriveCommand(double left, double right);
 void humanTime();
 void transformMapCentertoOdom();
@@ -153,6 +155,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 
 void nameHandler(const geometry_msgs::Point::ConstPtr& message);				//subscriber to sync names of robots together
 void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& message);
+void spiralSearch(const ros::TimerEvent&);
 
 // Converts the time passed as reported by ROS (which takes Gazebo simulation rate into account) into milliseconds as an integer.
 long int getROSTimeInMilliSecs();
@@ -218,6 +221,7 @@ int main(int argc, char **argv) {
   //timers
   publish_status_timer = mNH.createTimer(ros::Duration(1), publishStatusTimerEventHandler);
   stateMachineTimer = mNH.createTimer(ros::Duration(0.1), behaviourStateMachine);
+  mapTestingTimer = mNH.createTimer(ros::Duration(0.5), spiralSearch);
   
   publish_heartbeat_timer = mNH.createTimer(ros::Duration(2), publishHeartBeatTimerEventHandler);
   
@@ -811,139 +815,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 	}
 	
-	if (mapTesting)
-	{
-		//cout << "in mapTesting loop" << endl;
-		//sendDriveCommand(30.0, 30.0);
-		//cout << "sendDriveCommand done" << endl;
-		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
-		//cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
-
-		std_msgs::Float32MultiArray myCoordinate;
-		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
-		myCoordinate.layout.dim[0].size = 2;
-		myCoordinate.layout.dim[0].stride = 1;
-		myCoordinate.layout.dim[0].label = "fart";
-
-		//cout << "float32multiarray has been instantiated...\n";
-		//UPDATED FROM 10 TO 25
-		myCoordinate.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
-		myCoordinate.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
-		//myCoordinate.data[0] = roundf((currentLocationOdom.x)*10)/10;
-		//myCoordinate.data[1] = roundf((currentLocationOdom.y)*10)/10;
-		//cout << "the float32multiarray's info has been normalized...\n";		
-		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
-		//cout << "insert something something" << endl;
-		visitedLocationsPublisher.publish(myCoordinate);
-
-		//cout << "the float32multiarray has been published\n";
-		
-		//cout << "searching for " << myCoordinate.data[0] << ", " << myCoordinate.data[1] << "... ";
-		
-		/*if(visitedLocations.find(myCoordinate.data[0]) != visitedLocations.end()) {
-			if (visitedLocations[myCoordinate.data[0]].find(myCoordinate.data[1]) != visitedLocations[myCoordinate.data[0]].end()) {
-				cout << "Location exists in hashmap" << endl;	
-			}
-			else { cout << "This y location has not been visited for the specified x location" << endl; }
-		}
-		else {
-			cout << "Location does not exist" << endl;
-		}*/
-		//CALCULATE X,Y TO CHECK
-		std_msgs::Float32MultiArray checkCoord;
-		std_msgs::Float32MultiArray frontCheckCoord;
-		
-		frontCheckCoord.layout.dim.push_back(std_msgs::MultiArrayDimension());
-		frontCheckCoord.layout.dim[0].size = 2;
-		frontCheckCoord.layout.dim[0].stride = 1;
-		frontCheckCoord.layout.dim[0].label = "front";
-		
-		checkCoord.layout.dim.push_back(std_msgs::MultiArrayDimension());
-		checkCoord.layout.dim[0].size = 2;
-		checkCoord.layout.dim[0].stride = 1;
-		checkCoord.layout.dim[0].label = "check";
-		float hypot = sqrt(((currentLocationOdom.x + centerOffsetX) * (currentLocationOdom.x + centerOffsetX))+((currentLocationOdom.y + centerOffsetY) * (currentLocationOdom.y + centerOffsetY)));
-		//SUBTRACT a small constant from hypotenuse
-		hypot = hypot - 0.2;
-		//CALCULATE new x,y
-		//UPDATED FROM 10 TO 25
-		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
-		checkCoord.data.push_back(normalizedValue(hypot*cos(currentLocationOdom.theta)));
-		checkCoord.data.push_back(normalizedValue(hypot*sin(currentLocationOdom.theta)));
-		
-		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))));
-		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))));
-		//frontCheckCoord.data.push_back(roundf((currentLocationOdom.x + centerOffsetX + 0.2*cos(currentLocationOdom.theta))*10)/10);
-		if (visitedLocations.find(frontCheckCoord.data[0]) != visitedLocations.end())
-		{
-			if (visitedLocations[frontCheckCoord.data[0]].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
-			{
-				cout << "location in front: " << frontCheckCoord.data[0] << ", " << frontCheckCoord.data[1] << " HAS been visited" << endl;
-				sendDriveCommand(-50.0, 50.0);
-			}
-			else
-			{
-				if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
-				{	//right is unvisited
-					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-					sendDriveCommand(100.0, -50.0);
-				}
-				else
-				{
-					if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
-					{
-						cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-						sendDriveCommand(100.0, -50.0);
-					}
-					else
-					{
-						sendDriveCommand(100.0, 100.0);
-					}
-					
-				}
-			}
-
-			/*else if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
-			{
-				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) != visitedLocations[checkCoord.data[0]].end()) {
-					cout << "location on the right has been visited" << endl;
-					sendDriveCommand(50.0, 50.0);
-				}
-				else { 
-					cout << "This y location has not been visited for the specified x location towards center" << endl; 
-					sendDriveCommand(50.0, 0.0);
-				}
-			}
-			else
-			{
-				cout << "This y location has not been visited for the specified x location in front" << endl;
-				sendDriveCommand(50.0, 50.0);
-			}*/
-		}
-		else {
-			cout << "Location on the front has not been visited, x or y" << endl;
-			if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
-			{	//right is unvisited
-				cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-				sendDriveCommand(100.0, -50.0);
-			}
-			else
-			{
-				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
-				{
-					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-					sendDriveCommand(100.0, -50.0);
-				}
-				else
-				{
-					sendDriveCommand(100.0, 100.0);
-				}
-				
-			}
-			
-		}
-		
-	}
 	
 	if (rotateBool)
 	{
@@ -1149,6 +1020,143 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	humanTime();
 	
 		
+}
+
+void spiralSearch(const ros::TimerEvent&)
+{
+	if (mapTesting)
+	{
+		//cout << "in mapTesting loop" << endl;
+		//sendDriveCommand(30.0, 30.0);
+		//cout << "sendDriveCommand done" << endl;
+		//cout << "GPS of " << publishedName << " is x = " << currentLocationMap.x << ", y = " << currentLocationMap.y << ", theta = " << currentLocationMap.theta << endl;
+		//cout << publishedName << " is at x = " << currentLocationOdom.x << ", y = " << currentLocationOdom.y << ", theta = " << currentLocationOdom.theta << endl;
+
+		std_msgs::Float32MultiArray myCoordinate;
+		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		myCoordinate.layout.dim[0].size = 2;
+		myCoordinate.layout.dim[0].stride = 1;
+		myCoordinate.layout.dim[0].label = "fart";
+
+		//cout << "float32multiarray has been instantiated...\n";
+		//UPDATED FROM 10 TO 25
+		myCoordinate.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+		myCoordinate.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+		//myCoordinate.data[0] = roundf((currentLocationOdom.x)*10)/10;
+		//myCoordinate.data[1] = roundf((currentLocationOdom.y)*10)/10;
+		//cout << "the float32multiarray's info has been normalized...\n";		
+		visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+		//cout << "insert something something" << endl;
+		visitedLocationsPublisher.publish(myCoordinate);
+
+		//cout << "the float32multiarray has been published\n";
+		
+		//cout << "searching for " << myCoordinate.data[0] << ", " << myCoordinate.data[1] << "... ";
+		
+		/*if(visitedLocations.find(myCoordinate.data[0]) != visitedLocations.end()) {
+			if (visitedLocations[myCoordinate.data[0]].find(myCoordinate.data[1]) != visitedLocations[myCoordinate.data[0]].end()) {
+				cout << "Location exists in hashmap" << endl;	
+			}
+			else { cout << "This y location has not been visited for the specified x location" << endl; }
+		}
+		else {
+			cout << "Location does not exist" << endl;
+		}*/
+		//CALCULATE X,Y TO CHECK
+		std_msgs::Float32MultiArray checkCoord;
+		std_msgs::Float32MultiArray frontCheckCoord;
+		
+		frontCheckCoord.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		frontCheckCoord.layout.dim[0].size = 2;
+		frontCheckCoord.layout.dim[0].stride = 1;
+		frontCheckCoord.layout.dim[0].label = "front";
+		
+		checkCoord.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		checkCoord.layout.dim[0].size = 2;
+		checkCoord.layout.dim[0].stride = 1;
+		checkCoord.layout.dim[0].label = "check";
+		float hypot = sqrt(((currentLocationOdom.x + centerOffsetX) * (currentLocationOdom.x + centerOffsetX))+((currentLocationOdom.y + centerOffsetY) * (currentLocationOdom.y + centerOffsetY)));
+		//SUBTRACT a small constant from hypotenuse
+		hypot = hypot - 0.2;
+		//CALCULATE new x,y
+		//UPDATED FROM 10 TO 25
+		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
+		checkCoord.data.push_back(normalizedValue(hypot*cos(currentLocationOdom.theta)));
+		checkCoord.data.push_back(normalizedValue(hypot*sin(currentLocationOdom.theta)));
+		
+		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))));
+		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))));
+		//frontCheckCoord.data.push_back(roundf((currentLocationOdom.x + centerOffsetX + 0.2*cos(currentLocationOdom.theta))*10)/10);
+		if (visitedLocations.find(frontCheckCoord.data[0]) != visitedLocations.end())
+		{
+			if (visitedLocations[frontCheckCoord.data[0]].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
+			{
+				cout << "location in front: " << frontCheckCoord.data[0] << ", " << frontCheckCoord.data[1] << " HAS been visited" << endl;
+				sendDriveCommand(-50.0, 50.0);
+			}
+			else
+			{
+				if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
+				{	//right is unvisited
+					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+					sendDriveCommand(100.0, -50.0);
+				}
+				else
+				{
+					if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
+					{
+						cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+						sendDriveCommand(100.0, -50.0);
+					}
+					else
+					{
+						sendDriveCommand(100.0, 100.0);
+					}
+					
+				}
+			}
+
+			/*else if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
+			{
+				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) != visitedLocations[checkCoord.data[0]].end()) {
+					cout << "location on the right has been visited" << endl;
+					sendDriveCommand(50.0, 50.0);
+				}
+				else { 
+					cout << "This y location has not been visited for the specified x location towards center" << endl; 
+					sendDriveCommand(50.0, 0.0);
+				}
+			}
+			else
+			{
+				cout << "This y location has not been visited for the specified x location in front" << endl;
+				sendDriveCommand(50.0, 50.0);
+			}*/
+		}
+		else {
+			cout << "Location on the front has not been visited, x or y" << endl;
+			if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
+			{	//right is unvisited
+				cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+				sendDriveCommand(100.0, -50.0);
+			}
+			else
+			{
+				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
+				{
+					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+					sendDriveCommand(100.0, -50.0);
+				}
+				else
+				{
+					sendDriveCommand(100.0, 100.0);
+				}
+				
+			}
+			
+		}
+		
+	}
 }
 
 void sendDriveCommand(double left, double right)
