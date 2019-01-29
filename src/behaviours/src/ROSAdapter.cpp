@@ -899,8 +899,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				cout << "This y location has not been visited for the specified x location in front" << endl;
 				sendDriveCommand(50.0, 50.0);
-			}
-		}*/
+			}*/
+		}
 		else {
 			cout << "Location on the front has not been visited, x or y" << endl;
 			if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
