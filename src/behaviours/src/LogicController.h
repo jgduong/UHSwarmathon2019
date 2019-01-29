@@ -1,3 +1,4 @@
+/*
 #ifndef LOGICCONTROLLER_H
 #define LOGICCONTROLLER_H
 
@@ -9,7 +10,7 @@
 #include "DriveController.h"
 #include "RangeController.h"
 #include "ManualWaypointController.h"
-
+*/
 #include <vector>
 #include <queue>
 
@@ -33,6 +34,83 @@ struct PrioritizedController {
   }
 };
 
+std::vector<PrioritizedController> prioritizedControllers;
+priority_queue<PrioritizedController> control_queue;
+
+class LogicController {
+  private:
+   enum ProcessState {
+    INIT,
+    SPIRAL_SEARCH,
+    PICK_UP_CUBE,
+    DROP_OFF_CUBE,
+    DRIVE_TO_WAYPOINT
+  };
+  
+  public: 
+  
+  void switch() {
+    case 0:  //Init
+      prioritizedControllers = {
+      PrioritizedController{-1, (Controller*)(&searchController)},
+      PrioritizedController{15, (Controller*)(&obstacleController)},
+      PrioritizedController{-1, (Controller*)(&pickUpController)},
+      PrioritizedController{10, (Controller*)(&range_controller)},
+      PrioritizedController{1, (Controller*)(&dropOffController)},
+      PrioritizedController{-1, (Controller*)(&manualWaypointController)}
+      };
+      break;
+    case 1: 
+    //spiral search
+      prioritizedControllers = {
+        PrioritizedController{0, (Controller*)(&searchController)},
+        PrioritizedController{10, (Controller*)(&obstacleController)},
+        PrioritizedController{15, (Controller*)(&pickUpController)},
+        PrioritizedController{5, (Controller*)(&range_controller)},
+        PrioritizedController{-1, (Controller*)(&dropOffController)},
+        PrioritizedController{-1, (Controller*)(&manualWaypointController)}
+       }; 
+        break;
+    case 2 :
+      //pickup
+      prioritizedControllers = {
+        PrioritizedController{-1, (Controller*)(&searchController)},
+        PrioritizedController{15, (Controller*)(&obstacleController)},
+        PrioritizedController{-1, (Controller*)(&pickUpController)},
+        PrioritizedController{10, (Controller*)(&range_controller)},
+        PrioritizedController{1, (Controller*)(&dropOffController)},
+        PrioritizedController{-1, (Controller*)(&manualWaypointController)}
+     };
+      break;
+    case 3: 
+      //dropoff
+      prioritizedControllers = {
+        PrioritizedController{-1, (Controller*)(&searchController)},
+        PrioritizedController{-1, (Controller*)(&obstacleController)},
+        PrioritizedController{-1, (Controller*)(&pickUpController)},
+        PrioritizedController{10, (Controller*)(&range_controller)},
+        PrioritizedController{1, (Controller*)(&dropOffController)},
+        PrioritizedController{-1, (Controller*)(&manualWaypointController)}
+      };
+      break;
+    case 4: 
+      //waypoint
+      prioritizedControllers = {
+        PrioritizedController{-1, (Controller*)(&searchController)},
+        PrioritizedController{-1, (Controller*)(&obstacleController)},
+        PrioritizedController{-1, (Controller*)(&pickUpController)},
+        PrioritizedController{-1, (Controller*)(&range_controller)},
+        PrioritizedController{-1, (Controller*)(&dropOffController)},
+        PrioritizedController{5,  (Controller*)(&manualWaypointController)}
+      };
+      
+  }
+  
+  
+}
+
+
+/*
 class LogicController : virtual Controller
 {
 public:
@@ -136,3 +214,4 @@ private:
 };
 
 #endif // LOGICCONTROLLER_H
+*/
