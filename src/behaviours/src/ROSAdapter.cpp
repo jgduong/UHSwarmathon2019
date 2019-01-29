@@ -919,67 +919,67 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			//TEMPORARY TESTING FOR CENTER OFFSET
 			if ((currentLocationOdom.theta >= -0.15 && currentLocationOdom.theta <= 0) || (currentLocationOdom.theta<= 0.15 && currentLocationOdom.theta >= 0))
 			{
-				centerLocationOdom.x = currentLocationOdom.x - 0.5;
+				centerLocationOdom.x = currentLocationOdom.x - 1.0;
 				centerLocationOdom.y = currentLocationOdom.y;
-				centerOffsetX = -0.5;
+				centerOffsetX = -1.0;
 				centerOffsetY = 0.0;
-				cout << "current location is: " << currentLocationOdom.x + 0.5 << ", " << currentLocationOdom.y << endl;
+				cout << "current location is: " << currentLocationOdom.x + 1.0 << ", " << currentLocationOdom.y << endl;
 			}
 			else if(currentLocationOdom.theta >= 0.6 && currentLocationOdom.theta<= 0.9)
 			{
-				centerLocationOdom.x = currentLocationOdom.x - 0.5;
-				centerLocationOdom.y = currentLocationOdom.y - 0.5;
-				centerOffsetX = -0.5;
-				centerOffsetY = -0.5;
-				cout << "current location is: " << currentLocationOdom.x + 0.5 << ", " << currentLocationOdom.y + 0.5 << endl;
+				centerLocationOdom.x = currentLocationOdom.x - 1.207*cos(3.142/4);
+				centerLocationOdom.y = currentLocationOdom.y - 1.207*sin(3.142/4);
+				centerOffsetX = -1.207*cos(3.142/4);
+				centerOffsetY = -1.207*sin(3.142/4);
+				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) << ", " << currentLocationOdom.y + 1.207*sin(3.142/4) << endl;
 			}
 			else if(currentLocationOdom.theta >= 1.35 && currentLocationOdom.theta<= 1.65)
 			{
 				centerLocationOdom.x = currentLocationOdom.x;
-				centerLocationOdom.y = currentLocationOdom.y - 0.5;
+				centerLocationOdom.y = currentLocationOdom.y - 1.0;
 				centerOffsetX = 0.0;
-				centerOffsetY = -0.5;
-				cout << "current location is: " << currentLocationOdom.x << ", " << currentLocationOdom.y + 0.5 << endl;
+				centerOffsetY = -1.0;
+				cout << "current location is: " << currentLocationOdom.x << ", " << currentLocationOdom.y + 1.0 << endl;
 			}
 			else if(currentLocationOdom.theta >= 2.1 && currentLocationOdom.theta<= 2.4)
 			{
-				centerLocationOdom.x = currentLocationOdom.x + 0.5;
-				centerLocationOdom.y = currentLocationOdom.y - 0.5;
-				centerOffsetX = 0.5;
-				centerOffsetY = -0.5;
-				cout << "current location is: " << currentLocationOdom.x - 0.5 << ", " << currentLocationOdom.y + 0.5 << endl;
+				centerLocationOdom.x = currentLocationOdom.x + 1.207*cos(3.142/4);
+				centerLocationOdom.y = currentLocationOdom.y - 1.207*sin(3.142/4);
+				centerOffsetX = 1.207*cos(3.142/4);
+				centerOffsetY = -1.207*sin(3.142/4);
+				cout << "current location is: " << currentLocationOdom.x - 1.207*cos(3.142/4) << ", " << currentLocationOdom.y + 1.207*sin(3.142/4) << endl;
 			}
 			else if((currentLocationOdom.theta >= 2.85 && currentLocationOdom.theta <= 3.13) || (currentLocationOdom.theta <= -2.85 && currentLocationOdom.theta >= -3.13))
 			{
-				centerLocationOdom.x = currentLocationOdom.x + 0.5;
+				centerLocationOdom.x = currentLocationOdom.x + 1.0;
 				centerLocationOdom.y = currentLocationOdom.y;
-				centerOffsetX = +0.5;
+				centerOffsetX = 1.0;
 				centerOffsetY = 0.0;
-				cout << "current location is: " << currentLocationOdom.x - 0.5 << ", " << currentLocationOdom.y << endl;
+				cout << "current location is: " << currentLocationOdom.x - 1.0 << ", " << currentLocationOdom.y << endl;
 			}
 			else if(currentLocationOdom.theta >= -2.4 && currentLocationOdom.theta <= -2.1)
 			{
-				centerLocationOdom.x = currentLocationOdom.x + 0.5;
-				centerLocationOdom.y = currentLocationOdom.y + 0.5;
-				centerOffsetX = 0.5;
-				centerOffsetY = 0.5;
-				cout << "current location is: " << currentLocationOdom.x - 0.5 << ", " << currentLocationOdom.y - 0.5 << endl;
+				centerLocationOdom.x = currentLocationOdom.x + 1.207*cos(3.142/4);
+				centerLocationOdom.y = currentLocationOdom.y + 1.207*sin(3.142/4);
+				centerOffsetX = 1.207*cos(3.142/4);
+				centerOffsetY = 1.207*sin(3.142/4);
+				cout << "current location is: " << currentLocationOdom.x - 1.207*cos(3.142/4) << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) << endl;
 			}
 			else if(currentLocationOdom.theta >= -1.65 && currentLocationOdom.theta <= -1.35)
 			{
 				centerLocationOdom.x = currentLocationOdom.x;
-				centerLocationOdom.y = currentLocationOdom.y + 0.5;
+				centerLocationOdom.y = currentLocationOdom.y + 1.0;
 				centerOffsetX = 0.0;
-				centerOffsetY = 0.5;
-				cout << "current location is: " << currentLocationOdom.x << ", " << currentLocationOdom.y - 0.5 << endl;
+				centerOffsetY = 1.0;
+				cout << "current location is: " << currentLocationOdom.x << ", " << currentLocationOdom.y - 1.0 << endl;
 			}
 			else if(currentLocationOdom.theta >= -0.9 && currentLocationOdom.theta<= -0.6)
 			{
-				centerLocationOdom.x = currentLocationOdom.x - 0.5;
-				centerLocationOdom.y = currentLocationOdom.y + 0.5;
-				centerOffsetX = -0.5;
-				centerOffsetY = 0.5;
-				cout << "current location is: " << currentLocationOdom.x + 0.5 << ", " << currentLocationOdom.y - 0.5 << endl;
+				centerLocationOdom.x = currentLocationOdom.x - 1.207*cos(3.142/4);
+				centerLocationOdom.y = currentLocationOdom.y + 1.207*sin(3.142/4);
+				centerOffsetX = -1.207*cos(3.142/4);
+				centerOffsetY = 1.207*sin(3.142/4);
+				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) << endl;
 			}
 			
 			rotateBool = true;
