@@ -319,6 +319,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//rotateBool = true;
 		initialMove = true;
 		step = 10;
+		
+		startingTheta = currentLocationOdom.theta;
+		Position6X = currentLocationOdom.x;
+		Position6Y = currentLocationOdom.y;
 	}
 	
 	if (initialMove)
