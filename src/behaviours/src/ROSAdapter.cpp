@@ -257,6 +257,8 @@ bool initialMove = false;
 bool mapTesting = false;
 bool rotateBool = false;
 bool GPSCenter = false;
+bool hardcodedPop = false;
+
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
 
@@ -288,6 +290,32 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (GPSCenter)
 	{
 		
+	}
+	
+	if (hardcodedPop)
+	{
+		std_msgs::Float32MultiArray initialPop;
+		initialPop.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		initialPop.layout.dim[0].size = 2;
+		initialPop.layout.dim[0].stride = 1;
+		initialPop.layout.dim[0].label = "initialize";
+		//UPDATED FROM 10 TO 25
+		initialPop.data.push_back(x);
+		initialPop.data.push_back(y);
+		
+		float x = -1.25;
+		float y = -1.25;
+		for (x = -1.50; x != 1.75; x+=0.25)
+		{
+			for (y = -1.50; y != 1.75; y += 0.25)
+			{
+				visitedLocations[initialPop.data[0]].insert(initialPop.data[1]);
+				visitedLocationsPublisher.publish(initialPop);
+				initialPop.data.clear();
+			}
+		}
+		hardcodedPop = false;
+		mapTesting = true;
 	}
 	
 	if (initialMove)
@@ -879,9 +907,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				{
 					sendDriveCommand(0.0, 0.0);
 					rotateBool = false;
-				    	 initialMove = true;
-				     //mapTesting = true;
-				      step = 1;
+					hardcodedPop = true;
+				    	 //initialMove = true;
+				      //step = 1;
 					initialPositionTrackerX = currentLocationOdom.x;
 					initialPositionTrackerY = currentLocationOdom.y;
 					
@@ -901,10 +929,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			      {
 				   sendDriveCommand(0.0, 0.0);
 					rotateBool = false;
-				    	 initialMove = true;
-				      GPSCenter = true;
-				     //mapTesting = true;
-				      step = 1;
+				      	hardcodedPop = true;
+				    	 //initialMove = true;
+				      //GPSCenter = true;
+				      //step = 1;
 					initialPositionTrackerX = currentLocationOdom.x;
 					initialPositionTrackerY = currentLocationOdom.y;
 				     cout << "done rotating" << endl;
