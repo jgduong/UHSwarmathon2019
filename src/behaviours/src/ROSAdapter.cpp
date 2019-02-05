@@ -298,10 +298,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		initialPop.layout.dim.push_back(std_msgs::MultiArrayDimension());
 		initialPop.layout.dim[0].size = 2;
 		initialPop.layout.dim[0].stride = 1;
-		initialPop.layout.dim[0].label = "initialize";
-		//UPDATED FROM 10 TO 25
-		initialPop.data.push_back(x);
-		initialPop.data.push_back(y);
+		initialPop.layout.dim[0].label = "initialize";	
 		
 		float x = -1.25;
 		float y = -1.25;
@@ -309,6 +306,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 			for (y = -1.50; y != 1.75; y += 0.25)
 			{
+				initialPop.data.push_back(x);
+				initialPop.data.push_back(y);
+				
 				visitedLocations[initialPop.data[0]].insert(initialPop.data[1]);
 				visitedLocationsPublisher.publish(initialPop);
 				initialPop.data.clear();
