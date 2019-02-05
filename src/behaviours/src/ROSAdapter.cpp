@@ -318,7 +318,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//mapTesting = true;
 		//rotateBool = true;
 		initialMove = true;
-		step = 11;
+		step = 10;
 	}
 	
 	if (initialMove)
@@ -769,57 +769,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else if (step == 11)
 		{
 			//NEW BLOK FOR INITAL POP IDEA
-			cout << "step 2: rotating 90 degrees left..." << endl;
-		
-		geometry_msgs::Point tempLocal;
-		
-			float turnSize = 1.5;
-			bool exceedMag = false;
-
-			ninetyRotate = currentLocationOdom.theta;
-			if (abs(startingTheta + turnSize) >= 3.14159)
-			{
-				exceedMag = true;
-			}
-			cout << "exceed magnitude value is " << exceedMag << endl;
-			if (exceedMag)
-			{
-				float desiredTheta = 0.0;
-
-				desiredTheta = -3.142 + (startingTheta - turnSize);
-				if (currentLocationOdom.theta >= desiredTheta && currentLocationOdom.theta < 0.0)
-				{
-					sendDriveCommand(0.0, 0.0);
-
-					initialPositionTrackerX = currentLocationOdom.x;
-					initialPositionTrackerY = currentLocationOdom.y;
-					
-				     cout << "done rotating" << endl;
-				}
-				else {
-					sendDriveCommand(-30.0, 30.0);
-					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
-				}
-				
-				
-				
-			}
-			else
-			{
-			      if (abs(ninetyRotate - startingTheta) >= 1.5)
-			      {
-				   sendDriveCommand(0.0, 0.0);
-
-					initialPositionTrackerX = currentLocationOdom.x;
-					initialPositionTrackerY = currentLocationOdom.y;
-				     cout << "done rotating" << endl;
-
-			      }
-			      else {
-				    sendDriveCommand(-30.0, 30.0);
-			      }
-			}
-			
 			
 			
 			cout << "Moving into place to begin spiral search..." << endl;
