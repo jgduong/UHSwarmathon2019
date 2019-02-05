@@ -315,7 +315,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 		}
 		hardcodedPop = false;
-		mapTesting = true;
+		//mapTesting = true;
+		//rotateBool = true;
+		initialMove = true;
+		step = 11;
 	}
 	
 	if (initialMove)
