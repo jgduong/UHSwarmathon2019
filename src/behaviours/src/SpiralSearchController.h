@@ -17,6 +17,13 @@ public:
   void SetResultData(Result result) {this->result = result;}
   void SetVelocityData(float linearVelocity,float angularVelocity);
   void SetCurrentLocation(Point currentLocation) {this->currentLocation = currentLocation;}   
+  void SetPositionData(Point currentLocation);
+  void SetMapPositionData(Point currentLocation);
+  void SetVelocityData(float linearVelocity, float angularVelocity);
+  void SetAprilTags(vector<Tag> tags);
+  void SetSonarData(float left, float center, float right);
+  void SetCenterLocationOdom(Point centerLocationOdom);
+  void SetCurrentTimeInMilliSecs( long int time );
   
   private:
   Result result;
