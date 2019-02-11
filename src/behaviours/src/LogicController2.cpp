@@ -424,7 +424,7 @@ void LogicController2::SetModeManual()
     logicState = LOGIC_STATE_INTERRUPT;
     processState = PROCESS_STATE_MANUAL;
     ProcessData();
-    control_queue = priority_queue<PrioritizedController>();
-    driveController.Reset();
+    control_queue = priority_queue<PrioritizedController2>();
+    spiralSearchController.Reset();
   }
 }
