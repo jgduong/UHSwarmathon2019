@@ -1125,11 +1125,11 @@ void spiralSearch(const ros::TimerEvent&)
 		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
 		//checkCoord.data.push_back(normalizedValue(hypot*cos(currentLocationOdom.theta)));
 		//checkCoord.data.push_back(normalizedValue(hypot*sin(currentLocationOdom.theta)));
+		//PREVIOUSLY 0.25 r, now 0.5
+		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.5*cos(currentLocationOdom.theta))));
+		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.5*sin(currentLocationOdom.theta))));
 		
-		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))));
-		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))));
-		
-		cout << "checking location in FRONT: " << normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))) << ", " << normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))) << endl;
+		cout << "checking location in FRONT: " << normalizedValue((currentLocationOdom.x + centerOffsetX + 0.5*cos(currentLocationOdom.theta))) << ", " << normalizedValue((currentLocationOdom.y + centerOffsetY + 0.5*sin(currentLocationOdom.theta))) << endl;
 		cout << "checking location on RIGHT: " << normalizedValue(centerOffsetX + currentLocationOdom.x + 0.25*cos(newTheta)) << ", " << normalizedValue(centerOffsetY + currentLocationOdom.y + 0.25*sin(newTheta)) << endl;
 		//frontCheckCoord.data.push_back(roundf((currentLocationOdom.x + centerOffsetX + 0.2*cos(currentLocationOdom.theta))*10)/10);
 		if (visitedLocations.find(frontCheckCoord.data[0]) != visitedLocations.end())
