@@ -17,7 +17,7 @@ public:
   void SetResultData(Result result) {this->result = result;}
   void SetVelocityData(float linearVelocity,float angularVelocity);
   void SetCurrentLocation(Point currentLocation) {this->currentLocation = currentLocation;}   
-  void SetPositionData(Point currentLocation);
+  void SetCurrentLocation(Point currentLocation);
   void SetMapPositionData(Point currentLocation);
   void SetVelocityData(float linearVelocity, float angularVelocity);
   void SetAprilTags(vector<Tag> tags);
