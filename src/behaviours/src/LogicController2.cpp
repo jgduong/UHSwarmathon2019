@@ -7,7 +7,7 @@ LogicController2::LogicController2() {
 
   ProcessData();
 
-  control_queue = priority_queue<PrioritizedController>();
+  control_queue = priority_queue<PrioritizedController2>();
 
 }
 
@@ -215,4 +215,216 @@ Result LogicController2::DoWork()
 
   // Give the ROSAdapter the final decision on how it should drive.
   return result;
+}
+
+
+void LogicController2::ProcessData()
+{
+
+  // This controller priority is used when searching.
+  if (processState == PROCESS_STATE_SEARCHING)
+  {
+    prioritizedControllers2 = {
+      PrioritizedController2{10, (Controller*)(&spiralSearchController)},
+    };
+  }
+
+  // This priority is used when returning a target to the center collection zone.
+  else if (processState  == PROCESS_STATE_TARGET_PICKEDUP)
+  {
+    prioritizedControllers2 = {
+    PrioritizedController2{10, (Controller*)(&spiralSearchController)},
+    };
+  }
+
+  // This priority is used when returning a target to the center collection zone.
+  else if (processState  == PROCESS_STATE_DROP_OFF)
+  {
+    prioritizedControllers2 = {
+      PrioritizedController2{10, (Controller*)(&spiralSearchController)},
+    };
+  }
+
+  // Under manual control ONLY the manual waypoint controller is active.
+  else if (processState == PROCESS_STATE_MANUAL) {
+    prioritizedControllers2 = {
+      PrioritizedController2{10, (Controller*)(&spiralSearchController)},
+    };
+  }
+}
+
+bool LogicController2::ShouldInterrupt()
+{
+  ProcessData();
+
+  // The logic controller is the top level controller and will never have to
+  // interrupt. It is only the lower level controllers that may need to interupt.
+  return false;
+}
+
+bool LogicController2::HasWork()
+{
+  // The LogicController class is a special case. It will never have work to
+  // do because it is always handling the work of the other controllers.
+  return false;
+}
+
+// This function will deal with inter-controller communication. Communication
+// that needs to occur between specific low level controllers is done here.
+//
+// The type of communication may or may not depend on the processState.
+//
+//                       /<----> ControllerA
+// LogicController <---->|                  \__ inter-controller communication
+//                       |                  /
+//                       \<----> ControllerB
+void LogicController2::controllerInterconnect()
+{
+/*
+  if (processState == PROCESS_STATE_SEARCHING)
+  {
+
+    // Obstacle controller needs to know if the center ultrasound should be ignored.
+    if(pickUpController.GetIgnoreCenter())
+    {
+      obstacleController.setIgnoreCenterSonar();
+    }
+
+    // Pickup controller anounces it has picked up a target.
+    if(pickUpController.GetTargetHeld())
+    {
+      dropOffController.SetTargetPickedUp();
+      obstacleController.setTargetHeld();
+      searchController.SetSuccesfullPickup();
+    }
+  }
+
+  // Ask if drop off has released the target from the gripper yet.
+  if (!dropOffController.HasTarget())
+  {
+    obstacleController.setTargetHeldClear();
+  }
+
+  // Obstacle controller is running and driveController needs to clear its waypoints.
+  if(obstacleController.getShouldClearWaypoints())
+  {
+    driveController.Reset();
+  }
+*/
+}
+
+void LogicController2::SetPositionData(Point currentLocation)
+{
+  spiralSearchController.setCurrentLocation(currentLocation);
+  /*
+  searchController.SetCurrentLocation(currentLocation);
+  dropOffController.SetCurrentLocation(currentLocation);
+  obstacleController.setCurrentLocation(currentLocation);
+  driveController.SetCurrentLocation(currentLocation);
+  */
+
+  manualWaypointController.SetCurrentLocation(currentLocation);
+  
+}
+
+
+
+// Recieves position in the world frame with global data (GPS).
+void LogicController::SetMapPositionData(Point currentLocation)
+{
+  range_controller.setCurrentLocation(currentLocation);
+}
+
+
+void LogicController2::SetVelocityData(float linearVelocity, float angularVelocity)
+{
+  spiralSearchController.SetVelocityData(linearVelocity,angularVelocity);
+}
+
+void LogicController2::SetMapVelocityData(float linearVelocity, float angularVelocity)
+{
+}
+
+void LogicController2::SetAprilTags(vector<Tag> tags)
+{
+  spiralSearchController.SetTagData(tags);
+  /*
+  pickUpController.SetTagData(tags);
+  obstacleController.setTagData(tags);
+  dropOffController.SetTargetData(tags);
+  */
+}
+
+void LogicController2::SetSonarData(float left, float center, float right)
+{
+  // The pickUpController only needs the center data in order to tell if
+  // an april tag cube has been picked up correctly.
+  
+  spiralSearchController.setSonarData(center)
+  //pickUpController.SetSonarData(center);
+
+  //obstacleController.setSonarData(left,center,right);
+}
+
+void LogicController2::SetCenterLocationOdom(Point centerLocationOdom)
+{
+  spiralSearchController.SetCenterLocation(centerLocationOdom);
+  //searchController.SetCenterLocation(centerLocationOdom);
+  //dropOffController.SetCenterLocation(centerLocationOdom);
+}
+
+void LogicController2::AddManualWaypoint(Point manualWaypoint, int waypoint_id)
+{
+  //manualWaypointController.AddManualWaypoint(manualWaypoint, waypoint_id);
+}
+
+void LogicController2::RemoveManualWaypoint(int waypoint_id)
+{
+  //manualWaypointController.RemoveManualWaypoint(waypoint_id);
+}
+
+/*
+std::vector<int> LogicController::GetClearedWaypoints()
+{
+  return manualWaypointController.ReachedWaypoints();
+}
+*/
+
+void LogicController2::setVirtualFenceOn( RangeShape* range )
+{
+  range_controller.setRangeShape(range);
+  range_controller.setEnabled(true);
+}
+
+void LogicController2::setVirtualFenceOff()
+{
+  range_controller.setEnabled(false);
+}
+
+void LogicController::SetCurrentTimeInMilliSecs( long int time )
+{
+  current_time = time;
+  spiralSearchController.SetCurrentTimeInMilliSecs(time);
+  //dropOffController.SetCurrentTimeInMilliSecs( time );
+  //pickUpController.SetCurrentTimeInMilliSecs( time );
+  //obstacleController.setCurrentTimeInMilliSecs( time );
+}
+
+void LogicController2::SetModeAuto() {
+  if(processState == PROCESS_STATE_MANUAL) {
+    // only do something if we are in manual mode
+    this->Reset();
+    manualWaypointController.Reset();
+  }
+}
+
+void LogicController2::SetModeManual()
+{
+  if(processState != PROCESS_STATE_MANUAL) {
+    logicState = LOGIC_STATE_INTERRUPT;
+    processState = PROCESS_STATE_MANUAL;
+    ProcessData();
+    control_queue = priority_queue<PrioritizedController>();
+    driveController.Reset();
+  }
 }
