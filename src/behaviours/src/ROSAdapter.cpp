@@ -221,7 +221,7 @@ int main(int argc, char **argv) {
   //timers
   publish_status_timer = mNH.createTimer(ros::Duration(1), publishStatusTimerEventHandler);
   stateMachineTimer = mNH.createTimer(ros::Duration(0.1), behaviourStateMachine);
-  mapTestingTimer = mNH.createTimer(ros::Duration(0.25), spiralSearch);
+  mapTestingTimer = mNH.createTimer(ros::Duration(0.05), spiralSearch);
   
   publish_heartbeat_timer = mNH.createTimer(ros::Duration(2), publishHeartBeatTimerEventHandler);
   
@@ -1118,8 +1118,8 @@ void spiralSearch(const ros::TimerEvent&)
 		//hypot = hypot - 0.2;
 		//NEW METHOD, vector addition
 		float newTheta = currentLocationOdom.theta - 1.53;
-		checkCoord.data.push_back(normalizedValue(currentLocationOdom.x + 0.25*cos(newTheta)));
-		checkCoord.data.push_back(normalizedValue(currentLocationOdom.y + 0.25*sin(newTheta)));
+		checkCoord.data.push_back(normalizedValue(centerOffsetX + currentLocationOdom.x + 0.25*cos(newTheta)));
+		checkCoord.data.push_back(normalizedValue(centerOffsetY + currentLocationOdom.y + 0.25*sin(newTheta)));
 		//CALCULATE new x,y
 		//UPDATED FROM 10 TO 25
 		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
@@ -1128,6 +1128,9 @@ void spiralSearch(const ros::TimerEvent&)
 		
 		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))));
 		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))));
+		
+		cout << "checking location in FRONT: " << normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))) << ", " << normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))) << endl);
+		cout << "checking location on RIGHT: " << normalizedValue(centerOffsetX + currentLocationOdom.x + 0.25*cos(newTheta)) << ", " << normalizedValue(centerOffsetY + currentLocationOdom.y + 0.25*sin(newTheta)) << endl;
 		//frontCheckCoord.data.push_back(roundf((currentLocationOdom.x + centerOffsetX + 0.2*cos(currentLocationOdom.theta))*10)/10);
 		if (visitedLocations.find(frontCheckCoord.data[0]) != visitedLocations.end())
 		{
