@@ -3,6 +3,8 @@
 
 #include "Controller.h"
 #include "SpiralSearchController.h"
+#include "RangeController.h"
+#include "ManualWaypointController.h"
 
 #include <vector>
 #include <queue>
@@ -115,6 +117,8 @@ private:
   ProcessState processState;
 
   SpiralSearchController spiralSearchController;
+  RangeController range_controller;
+  ManualWaypointController manualWaypointController;
 
   std::vector<PrioritizedController> prioritizedControllers2;
   priority_queue<PrioritizedController2> control_queue;
