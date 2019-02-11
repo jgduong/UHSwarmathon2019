@@ -126,3 +126,61 @@ void SpiralSearchController::ProcessData()
 
   }
 }
+  
+void SetCurrentLocation(Point currentLocation) {
+    this->currentLocation = currentLocation;
+}
+
+void SetVelocityData(float linearVelocity, float angularVelocity){
+  this->linearVelocity = linearVelocity;
+  this->angularVelocity = angularVelocity;
+}
+  
+void SetAprilTags(vector<Tag> tags) {
+  tag_boundary_seen = false;
+  collection_zone_seen = false;
+  count_left_collection_zone_tags = 0;
+  count_right_collection_zone_tags = 0;
+
+  // give Boundary tag type precedence, even if holding a target
+  for (int i = 0; i < tags.size(); i++) {
+    if (tags[i].getID() == 1) {
+      tag_boundary_seen = true;
+      timeSinceTags = current_time;
+      return; // we don't check anything else if we're at a boundary
+    }
+  }
+
+  // this loop is to get the number of center tags
+  if (!targetHeld) {
+    for (int i = 0; i < tags.size(); i++) {
+      if (tags[i].getID() == 256) {
+        collection_zone_seen = checkForCollectionZoneTags( tags[i] );
+        timeSinceTags = current_time;
+      }
+    }
+}  
+}
+/*  
+void SetSonarData(float left, float center, float right) {
+  left = sonarleft;
+  right = sonarright;
+  center = sonarcenter;
+  ProcessData();
+}
+*/
+void SetCenterLocationO(Point centerLocationOdom) {
+  float diffX = this->centerLocation.x - centerLocation.x;
+  float diffY = this->centerLocation.y - centerLocation.y;
+  this->centerLocation = centerLocation;
+  
+  if (!result.wpts.waypoints.empty())
+  {
+  result.wpts.waypoints.back().x -= diffX;
+  result.wpts.waypoints.back().y -= diffY;
+  }
+}
+  
+void SetCurrentTimeInMilliSecs( long int time ) {
+ current_time = time; 
+}
