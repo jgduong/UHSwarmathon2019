@@ -221,7 +221,7 @@ int main(int argc, char **argv) {
   //timers
   publish_status_timer = mNH.createTimer(ros::Duration(1), publishStatusTimerEventHandler);
   stateMachineTimer = mNH.createTimer(ros::Duration(0.1), behaviourStateMachine);
-  mapTestingTimer = mNH.createTimer(ros::Duration(0.5), spiralSearch);
+  mapTestingTimer = mNH.createTimer(ros::Duration(0.25), spiralSearch);
   
   publish_heartbeat_timer = mNH.createTimer(ros::Duration(2), publishHeartBeatTimerEventHandler);
   
@@ -795,7 +795,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position6X)*(currentLocationOdom.x - Position6X)) + ((currentLocationOdom.y - Position6Y)*(currentLocationOdom.y - Position6Y)));
-			if (displacement >= 0.5)
+			if (displacement >= 0.75)
 			{
 				step = 12;
 				startingTheta = currentLocationOdom.theta;
@@ -1113,14 +1113,18 @@ void spiralSearch(const ros::TimerEvent&)
 		checkCoord.layout.dim[0].size = 2;
 		checkCoord.layout.dim[0].stride = 1;
 		checkCoord.layout.dim[0].label = "check";
-		float hypot = sqrt(((currentLocationOdom.x + centerOffsetX) * (currentLocationOdom.x + centerOffsetX))+((currentLocationOdom.y + centerOffsetY) * (currentLocationOdom.y + centerOffsetY)));
+		//float hypot = sqrt(((currentLocationOdom.x + centerOffsetX) * (currentLocationOdom.x + centerOffsetX))+((currentLocationOdom.y + centerOffsetY) * (currentLocationOdom.y + centerOffsetY)));
 		//SUBTRACT a small constant from hypotenuse
-		hypot = hypot - 0.2;
+		//hypot = hypot - 0.2;
+		//NEW METHOD, vector addition
+		float newTheta = currentLocationOdom.theta - 1.53;
+		checkCoord.data.push_back(normalizedValue(currentLocationOdom.x + 0.25*cos(newTheta)));
+		checkCoord.data.push_back(normalizedValue(currentLocationOdom.y + 0.25*sin(newTheta)));
 		//CALCULATE new x,y
 		//UPDATED FROM 10 TO 25
 		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
-		checkCoord.data.push_back(normalizedValue(hypot*cos(currentLocationOdom.theta)));
-		checkCoord.data.push_back(normalizedValue(hypot*sin(currentLocationOdom.theta)));
+		//checkCoord.data.push_back(normalizedValue(hypot*cos(currentLocationOdom.theta)));
+		//checkCoord.data.push_back(normalizedValue(hypot*sin(currentLocationOdom.theta)));
 		
 		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.25*cos(currentLocationOdom.theta))));
 		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.25*sin(currentLocationOdom.theta))));
