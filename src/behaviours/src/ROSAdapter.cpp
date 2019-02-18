@@ -1155,7 +1155,7 @@ void spiralSearch(const ros::TimerEvent&)
 			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + m*0.25*cos(currentLocationOdom.theta));
 			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + m*0.25*sin(currentLocationOdom.theta));
 			
-			if (isVisited(newX, newY))
+			if (isVisited(normalizedValue(newX), normalizedValue(newY)))
 			{
 				break;
 				maxFrontError = false;
@@ -1185,7 +1185,7 @@ void spiralSearch(const ros::TimerEvent&)
 			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + n*0.25*cos(currentLocationOdom.theta - 1.571));
 			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + n*0.25*sin(currentLocationOdom.theta - 1.571));
 			
-			if (isVisited(newX, newY))
+			if (isVisited(normalizedValue(newX), normalizedValue(newY)))
 			{
 				break;
 				maxRightError = false;
