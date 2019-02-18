@@ -183,6 +183,11 @@ bool isVisited(float x, float y) {
 	}
 }
 
+float calcDistance(float curX, float curY, float goalX, float goalY) {
+	float dist = sqrt( (goalX - curX)*(goalX - curX) + (goalY - curY)*(goalY - curY) )	
+	return dist;
+}
+
 int main(int argc, char **argv) {
   
   gethostname(host, sizeof (host));
