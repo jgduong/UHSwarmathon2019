@@ -1199,9 +1199,11 @@ void spiralSearch(const ros::TimerEvent&)
 		{
 			float xWall = normalizedValue(newX);
 			float yWall = normalizedValue(newY);
+			cout << "RightError calculated with currentLocation and xWall,yWall = " << xWall << ", " << yWall << endl;
 			RightError = sqrt((xWall - currentLocationOdom.x)*(xWall - currentLocationOdom.x) + (yWall - currentLocationOdom.y)*(yWall - currentLocationOdom.y));
 		}
 		else {
+			cout << "max RightError" << endl;
 			RightError = 1;
 		}
 		//RightError = RightError - 0.25;
