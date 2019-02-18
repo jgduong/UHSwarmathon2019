@@ -1205,6 +1205,7 @@ void spiralSearch(const ros::TimerEvent&)
 		}
 		RightError = RightError - 0.25;
 		cout << "RightError is: " << RightError << ", desired is 0.25" << endl;
+		cout << "CurrentLocation X,Y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		 
 		//CALCULATE new x,y
 		//UPDATED FROM 10 TO 25
@@ -1215,28 +1216,28 @@ void spiralSearch(const ros::TimerEvent&)
 		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.x + centerOffsetX + 0.5*cos(currentLocationOdom.theta))));
 		frontCheckCoord.data.push_back(normalizedValue((currentLocationOdom.y + centerOffsetY + 0.5*sin(currentLocationOdom.theta))));
 		
-		cout << "checking location in FRONT: " << normalizedValue((currentLocationOdom.x + centerOffsetX + 0.5*cos(currentLocationOdom.theta))) << ", " << normalizedValue((currentLocationOdom.y + centerOffsetY + 0.5*sin(currentLocationOdom.theta))) << endl;
-		cout << "checking location on RIGHT: " << normalizedValue(centerOffsetX + currentLocationOdom.x + 0.25*cos(newTheta)) << ", " << normalizedValue(centerOffsetY + currentLocationOdom.y + 0.25*sin(newTheta)) << endl;
+		//cout << "checking location in FRONT: " << normalizedValue((currentLocationOdom.x + centerOffsetX + 0.5*cos(currentLocationOdom.theta))) << ", " << normalizedValue((currentLocationOdom.y + centerOffsetY + 0.5*sin(currentLocationOdom.theta))) << endl;
+		//cout << "checking location on RIGHT: " << normalizedValue(centerOffsetX + currentLocationOdom.x + 0.25*cos(newTheta)) << ", " << normalizedValue(centerOffsetY + currentLocationOdom.y + 0.25*sin(newTheta)) << endl;
 		//frontCheckCoord.data.push_back(roundf((currentLocationOdom.x + centerOffsetX + 0.2*cos(currentLocationOdom.theta))*10)/10);
 		if (visitedLocations.find(frontCheckCoord.data[0]) != visitedLocations.end())
 		{
 			if (visitedLocations[frontCheckCoord.data[0]].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
 			{
-				cout << "location in front: " << frontCheckCoord.data[0] << ", " << frontCheckCoord.data[1] << " HAS been visited" << endl;
+				//cout << "location in front: " << frontCheckCoord.data[0] << ", " << frontCheckCoord.data[1] << " HAS been visited" << endl;
 				sendDriveCommand(-50.0, 50.0);
 			}
 			else
 			{
 				if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
 				{	//right is unvisited
-					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+					//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
 					sendDriveCommand(100.0, -50.0);
 				}
 				else
 				{
 					if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
 					{
-						cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+						//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
 						sendDriveCommand(100.0,-50.0);
 					}
 					else
@@ -1268,14 +1269,14 @@ void spiralSearch(const ros::TimerEvent&)
 			cout << "Location on the front has not been visited, x or y" << endl;
 			if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
 			{	//right is unvisited
-				cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+				//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
 				sendDriveCommand(100.0, -50.0);
 			}
 			else
 			{
 				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
 				{
-					cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
+					//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
 					sendDriveCommand(100.0, -50.0);
 				}
 				else
