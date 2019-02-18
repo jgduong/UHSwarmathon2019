@@ -1148,10 +1148,12 @@ void spiralSearch(const ros::TimerEvent&)
 		bool maxFrontError = false;
 		float FrontError;
 		int m = 0;
+		float newX;
+		float newY;
 		for (m = 1; m <= 4; m++)
 		{
-			float newX = normalizedValue(currentLocationOdom.x + centerOffsetX + m*0.25*cos(currentLocationOdom.theta));
-			float newY = normalizedValue(currentLocationOdom.y + centerOffsetY + m*0.25*sin(currentLocationOdom.theta));
+			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + m*0.25*cos(currentLocationOdom.theta));
+			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + m*0.25*sin(currentLocationOdom.theta));
 			
 			if (isVisited(newX, newY))
 			{
@@ -1174,14 +1176,14 @@ void spiralSearch(const ros::TimerEvent&)
 		FrontError;
 		cout << "FrontError is: " << FrontError << endl;
 
-
+	
 		bool maxRightError = false;
 		float RightError;
 		int n = 0;
 		for (n = 1; n <= 4; n++)
 		{
-			float newX = normalizedValue(currentLocationOdom.x + centerOffsetX + n*0.25*cos(currentLocationOdom.theta - 1.571));
-			float newY = normalizedValue(currentLocationOdom.y + centerOffsetY + n*0.25*sin(currentLocationOdom.theta - 1.571));
+			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + n*0.25*cos(currentLocationOdom.theta - 1.571));
+			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + n*0.25*sin(currentLocationOdom.theta - 1.571));
 			
 			if (isVisited(newX, newY))
 			{
