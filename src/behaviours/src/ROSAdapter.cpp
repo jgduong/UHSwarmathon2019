@@ -1147,13 +1147,13 @@ void spiralSearch(const ros::TimerEvent&)
 		//NEWEST METHOD CALCULATING ERROR
 		bool maxFrontError = false;
 		float FrontError;
-		int n = 0;
-		for (n = 1; n <= 4; n++)
+		int m = 0;
+		for (m = 1; m <= 4; m++)
 		{
-			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + n*0.25*cos(currentLocationOdom.theta));
-			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + n*0.25*sin(currentLocationOdom.theta));
+			float newX = normalizedValue(currentLocationOdom.x + centerOffsetX + m*0.25*cos(currentLocationOdom.theta));
+			float newY = normalizedValue(currentLocationOdom.y + centerOffsetY + m*0.25*sin(currentLocationOdom.theta));
 			
-			if (IsVisited(newX, newY))
+			if (isVisited(newX, newY))
 			{
 				break;
 				maxFrontError = false;
@@ -1166,7 +1166,7 @@ void spiralSearch(const ros::TimerEvent&)
 		{
 			float xWall = normalizedValue(newX);
 			float yWall = normalizedValue(newY);
-			FrontError = sqrt((xWall - currentLocationOdom.x)*(xWall - currentLocationOdom.x) + (yWall - currentLocationOdom.y)*(yWall - currentLocationOdom.y))
+			FrontError = sqrt((xWall - currentLocationOdom.x)*(xWall - currentLocationOdom.x) + (yWall - currentLocationOdom.y)*(yWall - currentLocationOdom.y));
 		}
 		else {
 			FrontError = 1;
@@ -1180,10 +1180,10 @@ void spiralSearch(const ros::TimerEvent&)
 		int n = 0;
 		for (n = 1; n <= 4; n++)
 		{
-			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + n*0.25*cos(currentLocationOdom.theta - 1.571));
-			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + n*0.25*sin(currentLocationOdom.theta - 1.571));
+			float newX = normalizedValue(currentLocationOdom.x + centerOffsetX + n*0.25*cos(currentLocationOdom.theta - 1.571));
+			float newY = normalizedValue(currentLocationOdom.y + centerOffsetY + n*0.25*sin(currentLocationOdom.theta - 1.571));
 			
-			if (IsVisited(newX, newY))
+			if (isVisited(newX, newY))
 			{
 				break;
 				maxRightError = false;
@@ -1196,7 +1196,7 @@ void spiralSearch(const ros::TimerEvent&)
 		{
 			float xWall = normalizedValue(newX);
 			float yWall = normalizedValue(newY);
-			RightError = sqrt((xWall - currentLocationOdom.x)*(xWall - currentLocationOdom.x) + (yWall - currentLocationOdom.y)*(yWall - currentLocationOdom.y))
+			RightError = sqrt((xWall - currentLocationOdom.x)*(xWall - currentLocationOdom.x) + (yWall - currentLocationOdom.y)*(yWall - currentLocationOdom.y));
 		}
 		else {
 			RightError = 1;
