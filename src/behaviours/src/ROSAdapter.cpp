@@ -1150,7 +1150,7 @@ void spiralSearch(const ros::TimerEvent&)
 		int m = 0;
 		float newX;
 		float newY;
-		for (m = 1; m <= 4; m++)
+		for (m = 1; m <= 8; m++)
 		{
 			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + m*0.25*cos(currentLocationOdom.theta));
 			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + m*0.25*sin(currentLocationOdom.theta));
@@ -1160,7 +1160,7 @@ void spiralSearch(const ros::TimerEvent&)
 				break;
 				maxFrontError = false;
 			}
-			else {
+			else if (m == 8){
 				maxFrontError = true;
 			}
 		}
@@ -1171,9 +1171,8 @@ void spiralSearch(const ros::TimerEvent&)
 			FrontError = sqrt((xWall - currentLocationOdom.x)*(xWall - currentLocationOdom.x) + (yWall - currentLocationOdom.y)*(yWall - currentLocationOdom.y));
 		}
 		else {
-			FrontError = 1;
+			FrontError = 2;
 		}
-		FrontError;
 		cout << "FrontError is: " << FrontError << endl;
 
 	
@@ -1191,7 +1190,7 @@ void spiralSearch(const ros::TimerEvent&)
 				maxRightError = false;
 				break;
 			}
-			else {
+			else if (n == 4) {
 				maxRightError = true;
 				cout << "Right vector max distance after checking: " << normalizedValue(newX) << ", " << normalizedValue(newY) << endl;
 			}
