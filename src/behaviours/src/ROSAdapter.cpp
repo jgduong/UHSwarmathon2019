@@ -1187,11 +1187,13 @@ void spiralSearch(const ros::TimerEvent&)
 			
 			if (isVisited(normalizedValue(newX), normalizedValue(newY)))
 			{
-				break;
+				cout << "Right vector ended at n = " << n << "after checking: " << normalizedValue(newX) << ", " << normalizedValue(newY) << endl;
 				maxRightError = false;
+				break;
 			}
 			else {
 				maxRightError = true;
+				cout << "Right vector max distance after checking: " << normalizedValue(newX) << ", " << normalizedValue(newY) << endl;
 			}
 		}
 		if (!maxRightError)
@@ -1203,7 +1205,7 @@ void spiralSearch(const ros::TimerEvent&)
 		else {
 			RightError = 1;
 		}
-		RightError = RightError - 0.25;
+		//RightError = RightError - 0.25;
 		cout << "RightError is: " << RightError << ", desired is 0.25" << endl;
 		cout << "CurrentLocation X,Y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		 
