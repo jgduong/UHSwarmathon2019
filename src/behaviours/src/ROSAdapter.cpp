@@ -184,7 +184,7 @@ bool isVisited(float x, float y) {
 }
 
 float calcDistance(float curX, float curY, float goalX, float goalY) {
-	float dist = sqrt( (goalX - curX)*(goalX - curX) + (goalY - curY)*(goalY - curY) )	
+	float dist = sqrt( (goalX - curX)*(goalX - curX) + (goalY - curY)*(goalY - curY) );
 	return dist;
 }
 
@@ -1142,6 +1142,68 @@ void spiralSearch(const ros::TimerEvent&)
 		float newTheta = currentLocationOdom.theta - 1.53;
 		checkCoord.data.push_back(normalizedValue(centerOffsetX + currentLocationOdom.x + 0.25*cos(newTheta)));
 		checkCoord.data.push_back(normalizedValue(centerOffsetY + currentLocationOdom.y + 0.25*sin(newTheta)));
+
+
+		//NEWEST METHOD CALCULATING ERROR
+		bool maxFrontError = false;
+		float FrontError;
+		int n = 0;
+		for (n = 1; n <= 4; n++)
+		{
+			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + n*0.25*cos(currentLocationOdom.theta));
+			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + n*0.25*sin(currentLocationOdom.theta));
+			
+			if (IsVisited(newX, newY))
+			{
+				break;
+				maxFrontError = false;
+			}
+			else {
+				maxFrontError = true;
+			}
+		}
+		if (!maxFrontError)
+		{
+			float xWall = normalizedValue(newX);
+			float yWall = normalizedValue(newY);
+			FrontError = sqrt((xWall - currentLocationOdom.x)*(xWall - currentLocationOdom.x) + (yWall - currentLocationOdom.y)*(yWall - currentLocationOdom.y))
+		}
+		else {
+			FrontError = 1;
+		}
+		FrontError;
+		cout << "FrontError is: " << FrontError << endl;
+
+
+		bool maxRightError = false;
+		float RightError;
+		int n = 0;
+		for (n = 1; n <= 4; n++)
+		{
+			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + n*0.25*cos(currentLocationOdom.theta - 1.571));
+			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + n*0.25*sin(currentLocationOdom.theta - 1.571));
+			
+			if (IsVisited(newX, newY))
+			{
+				break;
+				maxRightError = false;
+			}
+			else {
+				maxRightError = true;
+			}
+		}
+		if (!maxRightError)
+		{
+			float xWall = normalizedValue(newX);
+			float yWall = normalizedValue(newY);
+			RightError = sqrt((xWall - currentLocationOdom.x)*(xWall - currentLocationOdom.x) + (yWall - currentLocationOdom.y)*(yWall - currentLocationOdom.y))
+		}
+		else {
+			RightError = 1;
+		}
+		RightError = RightError - 0.25;
+		cout << "RightError is: " << RightError << ", desired is 0.25" << endl;
+		 
 		//CALCULATE new x,y
 		//UPDATED FROM 10 TO 25
 		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
