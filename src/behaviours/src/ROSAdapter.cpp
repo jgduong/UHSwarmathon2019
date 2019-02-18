@@ -1142,7 +1142,9 @@ void spiralSearch(const ros::TimerEvent&)
 		float newTheta = currentLocationOdom.theta - 1.53;
 		checkCoord.data.push_back(normalizedValue(centerOffsetX + currentLocationOdom.x + 0.25*cos(newTheta)));
 		checkCoord.data.push_back(normalizedValue(centerOffsetY + currentLocationOdom.y + 0.25*sin(newTheta)));
-
+		
+		float leftDrive = 0.0;
+		float rightDrive = 0.0;
 
 		//NEWEST METHOD CALCULATING ERROR
 		bool maxFrontError = false;
@@ -1174,6 +1176,10 @@ void spiralSearch(const ros::TimerEvent&)
 			FrontError = 2;
 		}
 		cout << "FrontError is: " << FrontError << endl;
+		leftDrive = 100*FrontError - 100;
+		rightDrive = 100;
+		
+		sendDriveCommand(leftDrive, rightDrive);
 
 	
 		bool maxRightError = false;
@@ -1210,6 +1216,20 @@ void spiralSearch(const ros::TimerEvent&)
 		cout << "RightError is: " << RightError << ", desired is 0.25" << endl;
 		cout << "CurrentLocation X,Y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		 
+		if (!maxFrontError)
+		{
+			if (RightError < 0)
+			{
+				//leftDrive = 100 + RightError*200;
+				leftDrive = leftDrive  RightError*200;
+				sendDriveCommand(leftDrive, rightDrive);
+			}
+			else {
+				//rightDrive = 100 - (100*RightError);
+				rightDrive = rightDrive - (100*RightError);
+				sendDriveCommand(leftDrive, rightDrive);
+			}
+		}
 		//CALCULATE new x,y
 		//UPDATED FROM 10 TO 25
 		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
@@ -1227,64 +1247,47 @@ void spiralSearch(const ros::TimerEvent&)
 			if (visitedLocations[frontCheckCoord.data[0]].find(frontCheckCoord.data[1]) != visitedLocations[frontCheckCoord.data[0]].end())
 			{
 				//cout << "location in front: " << frontCheckCoord.data[0] << ", " << frontCheckCoord.data[1] << " HAS been visited" << endl;
-				sendDriveCommand(-50.0, 50.0);
+				//sendDriveCommand(-50.0, 50.0);
 			}
 			else
 			{
 				if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
 				{	//right is unvisited
 					//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-					sendDriveCommand(100.0, -50.0);
+					//sendDriveCommand(100.0, -50.0);
 				}
 				else
 				{
 					if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
 					{
 						//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-						sendDriveCommand(100.0,-50.0);
+						//sendDriveCommand(100.0,-50.0);
 					}
 					else
 					{
-						sendDriveCommand(100.0, 100.0);
+						//sendDriveCommand(100.0, 100.0);
 					}
 					
 				}
 			}
-
-			/*else if (visitedLocations.find(checkCoord.data[0]) != visitedLocations.end())
-			{
-				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) != visitedLocations[checkCoord.data[0]].end()) {
-					cout << "location on the right has been visited" << endl;
-					sendDriveCommand(50.0, 50.0);
-				}
-				else { 
-					cout << "This y location has not been visited for the specified x location towards center" << endl; 
-					sendDriveCommand(50.0, 0.0);
-				}
-			}
-			else
-			{
-				cout << "This y location has not been visited for the specified x location in front" << endl;
-				sendDriveCommand(50.0, 50.0);
-			}*/
 		}
 		else {
 			cout << "Location on the front has not been visited, x or y" << endl;
 			if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
 			{	//right is unvisited
 				//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-				sendDriveCommand(100.0, -50.0);
+				//sendDriveCommand(100.0, -50.0);
 			}
 			else
 			{
 				if (visitedLocations[checkCoord.data[0]].find(checkCoord.data[1]) == visitedLocations[checkCoord.data[0]].end())
 				{
 					//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
-					sendDriveCommand(100.0, -50.0);
+					//sendDriveCommand(100.0, -50.0);
 				}
 				else
 				{
-					sendDriveCommand(100.0, 100.0);
+					//sendDriveCommand(100.0, 100.0);
 				}
 				
 			}
