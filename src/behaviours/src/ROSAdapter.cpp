@@ -167,6 +167,22 @@ char prev_state_machine[128];
 vector <geometry_msgs::Point> startingLocationGPS;
 unordered_map<float, set<float>> visitedLocations;	//hashtable to store visited locations
 
+bool isVisited(float x, float y) {
+	if (visitedLocations.find(x) != visitedLocations.end()) {
+		//x location exists in hashmap, check y coordinate
+		if (visitedLocations[x].find(y) != visitedLocations[x].end()) {
+			//y location also exists, so this coordinate has been visited
+			return true;
+		}
+		else {
+			return false;	
+		}
+	}
+	else {
+		return false;
+	}
+}
+
 int main(int argc, char **argv) {
   
   gethostname(host, sizeof (host));
