@@ -1215,7 +1215,7 @@ void spiralSearch(const ros::TimerEvent&)
 		//RightError = RightError - 0.25;
 		cout << "RightError is: " << RightError << ", desired is 0.25" << endl;
 		cout << "CurrentLocation X,Y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
-		 
+		RightError = RightError - 0.25;
 		if (!maxFrontError)
 		{
 			if (RightError < 0)
