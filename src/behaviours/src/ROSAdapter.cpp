@@ -1215,7 +1215,7 @@ void spiralSearch(const ros::TimerEvent&)
 		cout << "RightError is: " << RightError << ", desired is 0.25" << endl;
 		cout << "CurrentLocation X,Y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		RightError = RightError - 0.25;
-		if (!maxFrontError)
+		if (maxFrontError)
 		{
 			if (RightError < 0)
 			{
@@ -1271,7 +1271,6 @@ void spiralSearch(const ros::TimerEvent&)
 			}
 		}
 		else {
-			cout << "Location on the front has not been visited, x or y" << endl;
 			if (visitedLocations.find(checkCoord.data[0]) == visitedLocations.end())
 			{	//right is unvisited
 				//cout << "Location on right: " << checkCoord.data[0] << ", " << checkCoord.data[1] << " has NOT been visited" << endl;
