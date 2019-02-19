@@ -1233,8 +1233,8 @@ void spiralSearch(const ros::TimerEvent&)
 				//leftDrive = 100 + RightError*200;
 				leftDrive = leftDrive + RightError*200;
 			}
-			//THIS ENTIRE ELSE IF BLOCK IS UNTESTED
-			else if (RightError <= 0.75) {
+			//THIS ENTIRE ELSE IF BLOCK IS (barely)TESTED
+			else if (RightError <= 0.25) {
 				//rightDrive = 100 - (100*RightError);
 				//rightDrive = -50;
 				leftDrive = (200*RightError)+50;
