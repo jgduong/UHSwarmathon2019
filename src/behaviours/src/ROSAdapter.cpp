@@ -1222,9 +1222,13 @@ void spiralSearch(const ros::TimerEvent&)
 				//leftDrive = 100 + RightError*200;
 				leftDrive = leftDrive + RightError*200;
 			}
+			/*else if (RightError == 0.75) {
+				//rightDrive = 100 - (100*RightError);
+				rightDrive = -50;
+			}*/
 			else {
 				//rightDrive = 100 - (100*RightError);
-				rightDrive = rightDrive - (100*RightError);
+				rightDrive = rightDrive - (200*RightError);
 			}
 		}
 		cout << "sending drive commands: " << leftDrive << ", " << rightDrive << endl;
