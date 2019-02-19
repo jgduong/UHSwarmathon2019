@@ -816,7 +816,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position6X)*(currentLocationOdom.x - Position6X)) + ((currentLocationOdom.y - Position6Y)*(currentLocationOdom.y - Position6Y)));
-			if (displacement >= 0.75)
+			if (displacement >= 0.65)
 			{
 				step = 12;
 				startingTheta = currentLocationOdom.theta;
@@ -1233,9 +1233,12 @@ void spiralSearch(const ros::TimerEvent&)
 				//leftDrive = 100 + RightError*200;
 				leftDrive = leftDrive + RightError*200;
 			}
-			/*else if (RightError == 0.75) {
+			//THIS ENTIRE ELSE IF BLOCK IS UNTESTED
+			else if (RightError <= 0.75) {
 				//rightDrive = 100 - (100*RightError);
-				rightDrive = -50;
+				//rightDrive = -50;
+				leftDrive = (200*RightError)+50;
+				rightDrive = 100;
 			}*/
 			else {
 				//rightDrive = 100 - (100*RightError);
