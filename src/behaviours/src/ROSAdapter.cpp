@@ -1176,9 +1176,20 @@ void spiralSearch(const ros::TimerEvent&)
 			FrontError = 2;
 		}
 		cout << "FrontError is: " << FrontError << endl;
-		leftDrive = 100*FrontError - 100;
-		rightDrive = 100;
-		
+		if (FrontError <= 0.25)
+		{
+			leftDrive = -100;
+			rightDrive = 100;
+		}
+		else if (FrontError <= 0.5)
+		{
+			leftDrive = FrontError*100 - 125;
+			rightDrive = 100;
+		}
+		else {
+			leftDrive = 100*FrontError - 75;
+			rightDrive = 100;
+		}
 
 	
 		bool maxRightError = false;
