@@ -1187,7 +1187,7 @@ void spiralSearch(const ros::TimerEvent&)
 			rightDrive = 100;
 		}
 		else {
-			leftDrive = 100*FrontError - 75;
+			leftDrive = 100*FrontError - 100;
 			rightDrive = 100;
 		}
 
