@@ -1179,7 +1179,6 @@ void spiralSearch(const ros::TimerEvent&)
 		leftDrive = 100*FrontError - 100;
 		rightDrive = 100;
 		
-		sendDriveCommand(leftDrive, rightDrive);
 
 	
 		bool maxRightError = false;
@@ -1222,14 +1221,14 @@ void spiralSearch(const ros::TimerEvent&)
 			{
 				//leftDrive = 100 + RightError*200;
 				leftDrive = leftDrive + RightError*200;
-				sendDriveCommand(leftDrive, rightDrive);
 			}
 			else {
 				//rightDrive = 100 - (100*RightError);
 				rightDrive = rightDrive - (100*RightError);
-				sendDriveCommand(leftDrive, rightDrive);
 			}
 		}
+		cout << "sending drive commands: " << leftDrive << ", " << rightDrive << endl;
+		sendDriveCommand(leftDrive, rightDrive);
 		//CALCULATE new x,y
 		//UPDATED FROM 10 TO 25
 		//checkCoord.data.push_back(roundf((hypot*cos(currentLocationOdom.theta))*25)/25);
