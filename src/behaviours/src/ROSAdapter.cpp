@@ -1230,8 +1230,8 @@ void spiralSearch(const ros::TimerEvent&)
 		{
 			if (RightError < 0)
 			{
-				//leftDrive = 100 + RightError*200;
-				leftDrive = leftDrive + RightError*200;
+				leftDrive = 100 + RightError*200;
+				//leftDrive = leftDrive + RightError*200;
 			}
 			//THIS ENTIRE ELSE IF BLOCK IS (barely)TESTED
 			else if (RightError <= 0.25) {
@@ -1241,8 +1241,8 @@ void spiralSearch(const ros::TimerEvent&)
 				rightDrive = 100;
 			}
 			else {
-				//rightDrive = 100 - (100*RightError);
-				rightDrive = rightDrive - (200*RightError);
+				rightDrive = 100 - (200*RightError);
+				//rightDrive = rightDrive - (200*RightError);
 			}
 		}
 		cout << "sending drive commands: " << leftDrive << ", " << rightDrive << endl;
