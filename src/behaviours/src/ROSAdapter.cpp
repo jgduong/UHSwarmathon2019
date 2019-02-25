@@ -1152,7 +1152,7 @@ void spiralSearch(const ros::TimerEvent&)
 		int m = 0;
 		float newX;
 		float newY;
-		for (m = 1; m <= 8; m++)
+		for (m = 2; m <= 8; m++)
 		{
 			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + m*0.25*cos(currentLocationOdom.theta));
 			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + m*0.25*sin(currentLocationOdom.theta));
