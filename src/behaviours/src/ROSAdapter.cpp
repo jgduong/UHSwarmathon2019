@@ -1159,8 +1159,9 @@ void spiralSearch(const ros::TimerEvent&)
 			
 			if (isVisited(normalizedValue(newX), normalizedValue(newY)))
 			{
-				break;
+				cout << "Front vector ended at m = " << m << "after checking: " << normalizedValue(newX) << ", " << normalizedValue(newY) << endl;
 				maxFrontError = false;
+				break;
 			}
 			else if (m == 8){
 				maxFrontError = true;
