@@ -311,6 +311,8 @@ bool rotateBool = false;
 bool GPSCenter = false;
 bool hardcodedPop = false;
 
+bool aprilTagDetected = false;
+
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
 
@@ -339,7 +341,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
 	
-	if (GPSCenter)
+	if (aprilTagDetected)
 	{
 		
 	}
@@ -1380,6 +1382,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
+		
 	}
 }
 
