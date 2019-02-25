@@ -1156,10 +1156,10 @@ void spiralSearch(const ros::TimerEvent&)
 		{
 			newX = normalizedValue(currentLocationOdom.x + centerOffsetX + m*0.25*cos(currentLocationOdom.theta));
 			newY = normalizedValue(currentLocationOdom.y + centerOffsetY + m*0.25*sin(currentLocationOdom.theta));
-			
+			cout << "current x, y" << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 			if (isVisited(normalizedValue(newX), normalizedValue(newY)))
 			{
-				cout << "Front vector ended at m = " << m << "after checking: " << normalizedValue(newX) << ", " << normalizedValue(newY) << endl;
+				cout << "Front vector ended at m = " << m << "after checking: " << newX << ", " << newY << endl;
 				maxFrontError = false;
 				break;
 			}
