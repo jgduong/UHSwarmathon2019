@@ -110,6 +110,7 @@ bool initialized = false;
 vector <string> names;
 geometry_msgs::Twist velocity;
 vector<Tag> tags;
+int tagIndex = -1;
 
 float linearVelocity = 0;	//forward speed, POSITIVE = forward, NEGATIVE = backward
 float angularVelocity = 0;	//turning speed, POSITIVE = left, NEGATIVE = right
@@ -346,6 +347,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	{
 		mapTesting = false;
 		sendDriveCommand(0.0, 0.0);
+		
+		tuple<float, float, float> pos = Tag::tags[tagIndex].getPosition();
+		float r = get<0>(pos);
+		float p = get<1>(pos);
+		float y = get<2>(pos);
+		
+		cout << "roll, pitch, y of aprilTag: " << r << ", " << p << ", " << y << endl;
 	}
 	
 	if (hardcodedPop)
@@ -1381,10 +1389,15 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 								    tagPose.pose.orientation.z,
 								    tagPose.pose.orientation.w ) );
 	      tags.push_back(loc);
+		    
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		aprilTagDetected = true;
+		if (mapTesting)
+		{
+			aprilTagDetected = true;
+			tagIndex++;
+		}
 	}
 }
 
