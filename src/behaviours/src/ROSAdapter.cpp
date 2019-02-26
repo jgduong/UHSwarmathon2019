@@ -348,12 +348,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		mapTesting = false;
 		sendDriveCommand(0.0, 0.0);
 		
-		tuple<float, float, float> pos = tags[tagIndex].getPosition();
-		float r = get<0>(pos);
-		float p = get<1>(pos);
-		float y = get<2>(pos);
+		//tuple<float, float, float> pos = tags[tagIndex].getPosition();
+		//float r = get<0>(pos);
+		//float p = get<1>(pos);
+		//float y = get<2>(pos);
+		float x = tags[tagIndex].getPositionX();
+		float y = tags[tagIndex].getPositionY();
+		float z = tags[tagIndex].getPositionZ();
 		
-		cout << "roll, pitch, y of aprilTag: " << r << ", " << p << ", " << y << endl;
+		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
 	}
 	
 	if (hardcodedPop)
