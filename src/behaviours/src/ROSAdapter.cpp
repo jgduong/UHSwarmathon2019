@@ -344,7 +344,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (aprilTagDetected)
 	{
-		if ()
+		mapTesting = false;
+		sendDriveCommand(0.0, 0.0);
 	}
 	
 	if (hardcodedPop)
@@ -1383,7 +1384,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		
+		aprilTagDetected = true;
 	}
 }
 
