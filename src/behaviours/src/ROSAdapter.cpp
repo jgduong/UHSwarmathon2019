@@ -109,6 +109,7 @@ bool initialized = false;
 
 vector <string> names;
 geometry_msgs::Twist velocity;
+vector<Tag> tags;
 
 float linearVelocity = 0;	//forward speed, POSITIVE = forward, NEGATIVE = backward
 float angularVelocity = 0;	//turning speed, POSITIVE = left, NEGATIVE = right
@@ -343,7 +344,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (aprilTagDetected)
 	{
-		
+		if ()
 	}
 	
 	if (hardcodedPop)
@@ -1359,7 +1360,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 {
 	if (message->detections.size() > 0) 
 	{
-	    vector<Tag> tags;
+	    //vector<Tag> tags;
 	
 	    for (int i = 0; i < message->detections.size(); i++) 
 		{
