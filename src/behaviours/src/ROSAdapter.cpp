@@ -352,9 +352,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//float r = get<0>(pos);
 		//float p = get<1>(pos);
 		//float y = get<2>(pos);
-		float x = tags[tagIndex].getPositionX();
-		float y = tags[tagIndex].getPositionY();
-		float z = tags[tagIndex].getPositionZ();
+		float x = tags.back().getPositionX();
+		float y = tags.back().getPositionY();
+		float z = tags.back().getPositionZ();
 		
 		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
 	}
