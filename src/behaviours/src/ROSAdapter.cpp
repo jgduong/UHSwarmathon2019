@@ -348,7 +348,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		mapTesting = false;
 		sendDriveCommand(0.0, 0.0);
 		
-		tuple<float, float, float> pos = Tag::tags[tagIndex].getPosition();
+		tuple<float, float, float> pos = tags[tagIndex].getPosition();
 		float r = get<0>(pos);
 		float p = get<1>(pos);
 		float y = get<2>(pos);
