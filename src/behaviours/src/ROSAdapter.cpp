@@ -314,6 +314,7 @@ bool GPSCenter = false;
 bool hardcodedPop = false;
 
 bool aprilTagDetected = false;
+bool aprilTagAcquireSequence = false;
 
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
@@ -343,6 +344,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
 	
+	if (aprilTagAcquireSequence)
+	{
+		result.fingerAngle = M_PI_2;
+		result.wristAngle = 1.25;
+		sendDriveCommand(10.0, 10.0);
+	}
+	
 	if (aprilTagDetected)
 	{
 		mapTesting = false;
@@ -370,6 +378,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 			cout << "centered on cube" << endl;
 			sendDriveCommand(0.0, 0.0);
+			aprilTagAcquireSequence = true;
+			aprilTagDetected = false;
 		}
 	}
 	
