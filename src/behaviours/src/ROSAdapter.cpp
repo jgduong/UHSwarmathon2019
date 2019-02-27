@@ -489,11 +489,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
 		
-		if ( x > 0.01 )
+		if ( x > 0.005 )
 		{
 			sendDriveCommand(10.0, -10.0);
 		}
-		else if ( x < -0.01 )
+		else if ( x < -0.005 )
 		{
 			sendDriveCommand(-10.0, 10.0);
 		}
