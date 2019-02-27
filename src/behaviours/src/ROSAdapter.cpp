@@ -344,6 +344,8 @@ float Position6Y = 0.0;
 float zDistanceToCube = 0.0;
 float tagPickupTimer = 0.0;
 int quadrant = 0;
+float homeTheta = 0.0;
+float initialThetaBeforeHome = 0.0
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -352,6 +354,46 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (rotateToHome)
 	{
+		//cout << "step 6: rotating 90 degrees right..." << endl;
+		float turnSize = homeTheta - initialThetaBeforeHome;
+		//float turnSize = -1.5;
+		bool exceedMag = false;
+		ninetyRotate = currentLocationOdom.theta;
+		if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
+		{
+			exceedMag = true;
+		}
+		cout << "exceed magnitude value is " << exceedMag << endl;
+		if (exceedMag)
+		{
+			float desiredTheta = 0.0;
+			desiredTheta = 3.142 + (initialThetaBeforeHome - turnSize);
+			if (currentLocationOdom.theta <= desiredTheta && currentLocationOdom.theta > 0.0)
+			{
+				sendDriveCommand(0.0, 0.0);
+				cout << "done rotating" << endl;
+				rotateToHome = false;
+			}
+			else {
+				sendDriveCommand(30.0, -30.0);
+				cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
+			}
+			
+			
+			
+		}
+		else
+		{
+		      if (abs(ninetyRotate - initialThetaBeforeHome) >= 1.5)
+		      {
+			    sendDriveCommand(0.0, 0.0); 
+			     cout << "done rotating" << endl;
+			      rotateToHome = false;
+			      }
+		      else {
+			    sendDriveCommand(30.0, -30.0);
+		      }
+		}
 	}
 	
 	if (returnToHome)
@@ -363,6 +405,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float theTheta = atan2((0.4 - (currentLocationOdom.y+centerOffsetY)),(0.4 - (currentLocationOdom.x+centerOffsetX)));
 			float desiredTheta = theTheta - M_PI;
 			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
+			homeTheta = desiredTheta;
 		}
 		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY > 0)
 		{
@@ -370,7 +413,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float theTheta = atan2((0.4 - (currentLocationOdom.y+centerOffsetY)),(-0.4 - (currentLocationOdom.x+centerOffsetX)));
 			float desiredTheta = -theTheta;
 			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
-			
+			homeTheta = desiredTheta;
 		}
 		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY < 0)
 		{
@@ -378,6 +421,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float theTheta = atan2((-0.4 - (currentLocationOdom.y+centerOffsetY)),(-0.4 - (currentLocationOdom.x+centerOffsetX)));
 			float desiredTheta = theTheta;
 			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
+			homeTheta = desiredTheta;
 		}
 		else if (currentLocationOdom.x + centerOffsetX > 0.0 && currentLocationOdom.y + centerOffsetY < 0)
 		{
@@ -385,10 +429,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float theTheta = atan2((-0.4 - (currentLocationOdom.y+centerOffsetY)),(0.4 - (currentLocationOdom.x+centerOffsetX)));
 			float desiredTheta = M_PI - theTheta;
 			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
+			homeTheta = desiredTheta;
 		}
 		else {
 		}
 		
+		initialThetaBeforeHome = currentLocationOdom.theta;
 		returnToHome = false;
 		rotateToHome = true;
 	}
