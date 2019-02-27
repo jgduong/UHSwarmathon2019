@@ -315,6 +315,8 @@ bool hardcodedPop = false;
 
 bool aprilTagDetected = false;
 bool aprilTagAcquireSequence = false;
+bool returnToHome = false;
+bool rotateToHome = false;
 
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
@@ -341,11 +343,55 @@ float Position6Y = 0.0;
 
 float zDistanceToCube = 0.0;
 float tagPickupTimer = 0.0;
+int quadrant = 0;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
+	
+	if (rotateToHome)
+	{
+	}
+	
+	if (returnToHome)
+	{
+		
+		if (currentLocationOdom.x + centerOffsetX > 0.0 && currentLocationOdom.y + centerOffsetY > 0)
+		{
+			quadrant = 1;
+			float theTheta = atan2((0.4 - (currentLocationOdom.y+centerOffsetY)),(0.4 - (currentLocationOdom.x+centerOffsetX)));
+			float desiredTheta = theTheta - M_PI;
+			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
+		}
+		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY > 0)
+		{
+			quadrant = 2;
+			float theTheta = atan2((0.4 - (currentLocationOdom.y+centerOffsetY)),(-0.4 - (currentLocationOdom.x+centerOffsetX)));
+			float desiredTheta = -theTheta;
+			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
+			
+		}
+		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY < 0)
+		{
+			quadrant = 3;
+			float theTheta = atan2((-0.4 - (currentLocationOdom.y+centerOffsetY)),(-0.4 - (currentLocationOdom.x+centerOffsetX)));
+			float desiredTheta = theTheta;
+			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
+		}
+		else if (currentLocationOdom.x + centerOffsetX > 0.0 && currentLocationOdom.y + centerOffsetY < 0)
+		{
+			quadrant = 4;
+			float theTheta = atan2((-0.4 - (currentLocationOdom.y+centerOffsetY)),(0.4 - (currentLocationOdom.x+centerOffsetX)));
+			float desiredTheta = M_PI - theTheta;
+			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
+		}
+		else {
+		}
+		
+		returntoHome = false;
+		rotateToHome = true;
+	}
 	
 	if (aprilTagAcquireSequence)
 	{
@@ -356,7 +402,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		wrist.data = 1.25;
 		fingerAnglePublish.publish(fngr);
 		wristAnglePublish.publish(wrist);
-		sendDriveCommand(10.0, 10.0);
+		sendDriveCommand(20.0, 20.0);
 		
 		if (tagPickupTimer > (zDistanceToCube*20*10))
 		{
@@ -372,7 +418,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				if (tagPickupTimer > zDistanceToCube*200 +50)
 				{
 					aprilTagAcquireSequence = false;
-					mapTesting = true;
+					//mapTesting = true;
+					returnToHome = true;
 				}
 			}
 			
