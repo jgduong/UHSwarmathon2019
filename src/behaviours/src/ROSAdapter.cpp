@@ -362,7 +362,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		if (turnSize > 0.0) // left
 		{
-			if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
+			/*if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
 			{
 				exceedMag = true;
 			}
@@ -391,11 +391,20 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				else {
 					sendDriveCommand(-30.0, 30.0);
 				}
+			}*/
+			if (abs(currentLocationOdom.theta - homeTheta) <= 0.05)
+			{
+				sendDriveCommand(0.0, 0.0);
+				cout << "done rotating" << endl;
+				rotateToHome = false;
+			}
+			else {
+				sendDriveCommand(-30.0, 30.0);
 			}
 		}
 		else if (turnSize < 0.0) // right
 		{
-			if (abs(startingTheta + turnSize) >= 3.142)
+			/*if (abs(startingTheta + turnSize) >= 3.142)
 			{
 				exceedMag = true;
 			}
@@ -424,6 +433,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				else {
 					sendDriveCommand(30.0, -30.0);
 				}
+			}*/
+			if (abs(currentLocationOdom.theta - homeTheta) <= 0.05)
+			{
+				sendDriveCommand(0.0, 0.0);
+				cout << "done rotating" << endl;
+				rotateToHome = false;
+			}
+			else {
+				sendDriveCommand(30.0, -30.0);
 			}
 		}
 	}
@@ -521,11 +539,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
 		
-		if ( x > 0.005 )
+		if ( x > 0.002 )
 		{
 			sendDriveCommand(10.0, -10.0);
 		}
-		else if ( x < -0.005 )
+		else if ( x < -0.002 )
 		{
 			sendDriveCommand(-10.0, 10.0);
 		}
