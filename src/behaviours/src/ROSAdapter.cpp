@@ -358,18 +358,18 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(10.0, 10.0);
 		
-		if (tagPickupTimer > (zDistanceToCube*10*10))
+		if (tagPickupTimer > (zDistanceToCube*20*10))
 		{
 			sendDriveCommand(0.0, 0.0);
 			fngr.data = 0;
 			wrist.data = 0;
 			fingerAnglePublish.publish(fngr);
 			//wristAnglePublish.publish(wrist);
-			if (tagPickupTimer > zDistanceToCube*10*10 +30)
+			if (tagPickupTimer > zDistanceToCube*20*10 +30)
 			{
 				wristAnglePublish.publish(fngr);
 				
-				if (tagPickupTimer > zDistanceToCube*100 +50)
+				if (tagPickupTimer > zDistanceToCube*200 +50)
 				{
 					aprilTagAcquireSequence = false;
 					mapTesting = true;
@@ -411,6 +411,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			aprilTagAcquireSequence = true;
 			zDistanceToCube = z;
 			aprilTagDetected = false;
+			tagPickupTimer = 0.0;
 		}
 	}
 	
