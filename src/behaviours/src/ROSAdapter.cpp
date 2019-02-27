@@ -355,9 +355,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (rotateToHome)
 	{
 		cout << "initialThetaBeforeHome is: " << initialThetaBeforeHome << endl;
-		//cout << "step 6: rotating 90 degrees right..." << endl;
 		float turnSize = homeTheta - initialThetaBeforeHome;
-		//float turnSize = -1.5;
+		cout << "turnSize here is: " << turnSize << endl;
 		bool exceedMag = false;
 		ninetyRotate = currentLocationOdom.theta;
 		if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
@@ -385,7 +384,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else
 		{
-		      if (abs(ninetyRotate - initialThetaBeforeHome) >= 1.5)
+		      if (abs(ninetyRotate - initialThetaBeforeHome) >= turnSize)
 		      {
 			    sendDriveCommand(0.0, 0.0); 
 			     cout << "done rotating" << endl;
