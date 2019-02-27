@@ -345,7 +345,7 @@ float zDistanceToCube = 0.0;
 float tagPickupTimer = 0.0;
 int quadrant = 0;
 float homeTheta = 0.0;
-float initialThetaBeforeHome = 0.0
+float initialThetaBeforeHome = 0.0;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
