@@ -358,7 +358,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(10.0, 10.0);
 		
-		if (tagPickupTimer > (zDistanceToCube*10*10)
+		if (tagPickupTimer > (zDistanceToCube*10*10))
 		{
 			sendDriveCommand(0.0, 0.0);
 			fngr.data = 0;
