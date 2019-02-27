@@ -359,40 +359,72 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		cout << "turnSize here is: " << turnSize << endl;
 		bool exceedMag = false;
 		ninetyRotate = currentLocationOdom.theta;
-		if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
+		
+		if (turnSize > 0.0) // left
 		{
-			exceedMag = true;
-		}
-		//cout << "exceed magnitude value is " << exceedMag << endl;
-		if (exceedMag)
-		{
-			float desiredTheta = 0.0;
-			desiredTheta = 3.142 + (initialThetaBeforeHome - turnSize);
-			if (currentLocationOdom.theta <= desiredTheta && currentLocationOdom.theta > 0.0)
+			if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
 			{
-				sendDriveCommand(0.0, 0.0);
-				cout << "done rotating" << endl;
-				rotateToHome = false;
+				exceedMag = true;
+			}
+			if (exceedMag)
+			{
+				float desiredTheta = -3.142 + (initialThetaBeforeHome - turnSize);
+				cout << "desired theta calculated as: " << desiredTheta << endl;
+				
+				if (currentLocationOdom.theta >= desiredTheta && currentLocationOdom.theta < 0.0)
+				{
+					sendDriveCommand(0.0, 0.0);
+					cout << "done rotating " << endl;
+					rotateToHome = false;
+				}
+				else {
+					sendDriveCommand(-30.0, 30.0);
+				}
 			}
 			else {
-				sendDriveCommand(30.0, -30.0);
-				//cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
+				if (abs(ninetyRotate - initialThetaBeforeHome) >= turnSize)
+				{
+					sendDriveCommand(0.0, 0.0);
+					cout << "done rotating" << endl;
+					rotateToHome = false;
+				}
+				else {
+					sendDriveCommand(-30.0, 30.0);
+				}
 			}
-			
-			
-			
 		}
-		else
+		else if (turnSize < 0.0) // right
 		{
-		      if (abs(ninetyRotate - initialThetaBeforeHome) >= turnSize)
-		      {
-			    sendDriveCommand(0.0, 0.0); 
-			     cout << "done rotating" << endl;
-			      rotateToHome = false;
-			      }
-		      else {
-			    sendDriveCommand(30.0, -30.0);
-		      }
+			if (abs(startingTheta + turnSize) >= 3.142)
+			{
+				exceedMag = true;
+			}
+			if (exceedMag)
+			{
+				float desiredTheta = 3.142 + (initialThetaBeforeHome - turnSize);
+				cout << "desired theta calculated as: " << desiredTheta << endl;
+				
+				if (currentLocationOdom.theta <= desiredTheta && currentLocationOdom.theta > 0.0)
+				{
+					sendDriveCommand(0.0, 0.0);
+					cout << "done rotating " << endl;
+					rotateToHome = false;
+				}
+				else {
+					sendDriveCommand(30.0, -30.0);
+				}
+			}
+			else {
+				if (abs(ninetyRotate - initialThetaBeforeHome) <= turnSize)
+				{
+					sendDriveCommand(0.0, 0.0);
+					cout << "done rotating" << endl;
+					rotateToHome = false;
+				}
+				else {
+					sendDriveCommand(30.0, -30.0);
+				}
+			}
 		}
 	}
 	
