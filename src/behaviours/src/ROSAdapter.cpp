@@ -389,7 +389,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else {
 		}
 		
-		returntoHome = false;
+		returnToHome = false;
 		rotateToHome = true;
 	}
 	
