@@ -346,7 +346,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (aprilTagDetected)
 	{
 		mapTesting = false;
-		sendDriveCommand(0.0, 0.0);
+		//sendDriveCommand(0.0, 0.0);
 		
 		//tuple<float, float, float> pos = tags[tagIndex].getPosition();
 		//float r = get<0>(pos);
@@ -357,6 +357,20 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		float z = tags.back().getPositionZ();
 		
 		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
+		
+		if ( x > 0.01 )
+		{
+			sendDriveCommand(10.0, -10.0);
+		}
+		else if ( x < 0.01 )
+		{
+			sendDriveCommand(10.0, -10.0);
+		}
+		else
+		{
+			cout << "centered on cube" << endl;
+			sendDriveCommand(0.0, 0.0);
+		}
 	}
 	
 	if (hardcodedPop)
