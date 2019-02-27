@@ -362,9 +362,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 			sendDriveCommand(10.0, -10.0);
 		}
-		else if ( x < 0.01 )
+		else if ( x < -0.01 )
 		{
-			sendDriveCommand(10.0, -10.0);
+			sendDriveCommand(-10.0, 10.0);
 		}
 		else
 		{
