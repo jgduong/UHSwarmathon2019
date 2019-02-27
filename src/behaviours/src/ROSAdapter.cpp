@@ -339,6 +339,9 @@ float Position4Y = 0.0;
 float Position5Y = 0.0;
 float Position6Y = 0.0;
 
+float zDistanceToCube = 0.0;
+float tagPickupTimer = 0.0;
+
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
@@ -346,6 +349,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (aprilTagAcquireSequence)
 	{
+		tagPickupTimer++;
 		std_msgs::Float32 fngr;
 		fngr.data = M_PI_2;
 		std_msgs::Float32 wrist;
@@ -353,6 +357,28 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		fingerAnglePublish.publish(fngr);
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(10.0, 10.0);
+		
+		if (tagPickupTimer > (zDistanceToCube*10*10)
+		{
+			sendDriveCommand(0.0, 0.0);
+			fngr.data = 0;
+			wrist.data = 0;
+			fingerAnglePublish.publish(fngr);
+			//wristAnglePublish.publish(wrist);
+			if (tagPickupTimer > zDistanceToCube*10*10 +30)
+			{
+				wristAnglePublish.publish(fngr);
+				
+				if (tagPickupTimer > zDistanceToCube*100 +50)
+				{
+					aprilTagAcquireSequence = false;
+					mapTesting = true;
+				}
+			}
+			
+			
+			
+		}
 	}
 	
 	if (aprilTagDetected)
@@ -383,6 +409,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "centered on cube" << endl;
 			sendDriveCommand(0.0, 0.0);
 			aprilTagAcquireSequence = true;
+			zDistanceToCube = z;
 			aprilTagDetected = false;
 		}
 	}
