@@ -346,8 +346,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (aprilTagAcquireSequence)
 	{
-		fingerAnglePublish.publish(M_PI_2);
-		wristAnglePublish.publish(1.25);
+		std_msgs::Float32 fngr;
+		fngr.data = M_PI_2;
+		std_msgs::Float32 wrist;
+		wrist.data = 1.25;
+		fingerAnglePublish.publish(fngr);
+		wristAnglePublish.publish(wrist);
 		sendDriveCommand(10.0, 10.0);
 	}
 	
