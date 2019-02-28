@@ -358,13 +358,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (driveToHome)
 	{
-		cout << "starting position X, Y is: " << startPosX << ",  " << startPosY << endl;
-		cout << "current location odometry x,y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
+		//cout << "starting position X, Y is: " << startPosX << ",  " << startPosY << endl;
+		//cout << "current location odometry x,y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		cout << "desired distance is: " << distanceToHome << endl;
 		sendDriveCommand(30.0, 30.0);
-		float displacement = sqrt(((startPosX - currentLocationOdom.x + centerOffsetX)*(startPosX - currentLocationOdom.x + centerOffsetX)) + ((startPosY - currentLocationOdom.y + centerOffsetY)*(startPosY - currentLocationOdom.y + centerOffsetY)));
-		cout << "caluclated displacement is: " << displacement << endl;
-		cout << "using jenb's formula, displacement is: " << calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY)) << endl;
+		//float displacement = sqrt(((startPosX - currentLocationOdom.x + centerOffsetX)*(startPosX - currentLocationOdom.x + centerOffsetX)) + ((startPosY - currentLocationOdom.y + centerOffsetY)*(startPosY - currentLocationOdom.y + centerOffsetY)));
+		//cout << "caluclated displacement is: " << displacement << endl;
+		float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY)) << endl;
+		cout << "using jenb's formula, displacement is: " << displacement << endl;
 		if (abs(displacement - distanceToHome) <= 0.05)
 		{
 			sendDriveCommand(0.0, 0.0);
@@ -605,13 +606,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
 		
-		if ( x > 0.001 )
+		if ( x > 0.0015 )
 		{
-			sendDriveCommand(10.0, -10.0);
+			sendDriveCommand(5.0, -5.0);
 		}
-		else if ( x < -0.001 )
+		else if ( x < -0.0015 )
 		{
-			sendDriveCommand(-10.0, 10.0);
+			sendDriveCommand(-5.0, 5.0);
 		}
 		else
 		{
