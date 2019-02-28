@@ -364,7 +364,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		sendDriveCommand(30.0, 30.0);
 		//float displacement = sqrt(((startPosX - currentLocationOdom.x + centerOffsetX)*(startPosX - currentLocationOdom.x + centerOffsetX)) + ((startPosY - currentLocationOdom.y + centerOffsetY)*(startPosY - currentLocationOdom.y + centerOffsetY)));
 		//cout << "caluclated displacement is: " << displacement << endl;
-		float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY)) << endl;
+		float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY));
 		cout << "using jenb's formula, displacement is: " << displacement << endl;
 		if (abs(displacement - distanceToHome) <= 0.05)
 		{
