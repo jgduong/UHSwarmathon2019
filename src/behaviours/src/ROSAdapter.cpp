@@ -361,7 +361,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//cout << "starting position X, Y is: " << startPosX << ",  " << startPosY << endl;
 		//cout << "current location odometry x,y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		cout << "desired distance is: " << distanceToHome << endl;
-		sendDriveCommand(60.0, 60.0);
+		sendDriveCommand(100.0, 100.0);
 		float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY));
 		cout << "using jenb's formula, displacement is: " << displacement << endl;
 		if (abs(displacement - distanceToHome) <= 0.01 || displacement >= distanceToHome)
@@ -440,6 +440,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				}*/
 				//distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
+				distanceToHome -= 0.25;
 			}
 			else {
 				sendDriveCommand(-30.0, 30.0);
@@ -505,7 +506,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 				}*/
 				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
-				//distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
+				distanceToHome -= 0.25;
 			}
 			else {
 				sendDriveCommand(30.0, -30.0);
