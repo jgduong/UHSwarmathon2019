@@ -440,7 +440,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				}*/
 				//distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
-				distanceToHome -= 0.5;
+				distanceToHome -= 0.7;
 			}
 			else {
 				sendDriveCommand(-30.0, 30.0);
@@ -506,7 +506,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 				}*/
 				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
-				distanceToHome -= 0.5;
+				distanceToHome -= 0.7;
 			}
 			else {
 				sendDriveCommand(30.0, -30.0);
