@@ -361,12 +361,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//cout << "starting position X, Y is: " << startPosX << ",  " << startPosY << endl;
 		//cout << "current location odometry x,y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		cout << "desired distance is: " << distanceToHome << endl;
-		sendDriveCommand(30.0, 30.0);
-		//float displacement = sqrt(((startPosX - currentLocationOdom.x + centerOffsetX)*(startPosX - currentLocationOdom.x + centerOffsetX)) + ((startPosY - currentLocationOdom.y + centerOffsetY)*(startPosY - currentLocationOdom.y + centerOffsetY)));
-		//cout << "caluclated displacement is: " << displacement << endl;
+		sendDriveCommand(60.0, 60.0);
 		float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY));
 		cout << "using jenb's formula, displacement is: " << displacement << endl;
-		if (abs(displacement - distanceToHome) <= 0.001 || displacement >= distanceToHome)
+		if (abs(displacement - distanceToHome) <= 0.01 || displacement >= distanceToHome)
 		{
 			sendDriveCommand(0.0, 0.0);
 			driveToHome = false;
@@ -421,7 +419,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				startPosX = currentLocationOdom.x + centerOffsetX;
 				startPosY = currentLocationOdom.y + centerOffsetY;
 				
-				if (quadrant == 1)
+				/*if (quadrant == 1)
 				{
 					distanceToHome = sqrt((0.25 - currentLocationOdom.y + centerOffsetY)*(0.25 - currentLocationOdom.y + centerOffsetY) + (0.25 - currentLocationOdom.x + centerOffsetX)*(0.25 - currentLocationOdom.x + centerOffsetX));
 				}
@@ -439,7 +437,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				}
 				else {
 					distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
-				}
+				}*/
+				distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 			}
 			else {
 				sendDriveCommand(-30.0, 30.0);
@@ -485,7 +484,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				driveToHome = true;
 				startPosX = currentLocationOdom.x + centerOffsetX;
 				startPosY = currentLocationOdom.y + centerOffsetY;
-				if (quadrant == 1)
+				/*if (quadrant == 1)
 				{
 					distanceToHome = sqrt((0.25 - currentLocationOdom.y + centerOffsetY)*(0.25 - currentLocationOdom.y + centerOffsetY) + (0.25 - currentLocationOdom.x + centerOffsetX)*(0.25 - currentLocationOdom.x + centerOffsetX));
 				}
@@ -503,7 +502,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				}
 				else {
 					distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
-				}
+				}*/
+				distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 				
 			}
 			else {
@@ -515,7 +515,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (returnToHome)
 	{
 		
-		if (currentLocationOdom.x + centerOffsetX > 0.0 && currentLocationOdom.y + centerOffsetY > 0)
+		/*if (currentLocationOdom.x + centerOffsetX > 0.0 && currentLocationOdom.y + centerOffsetY > 0)
 		{
 			quadrant = 1;
 			float theTheta = atan2((0.25 - (currentLocationOdom.y+centerOffsetY)),(0.25 - (currentLocationOdom.x+centerOffsetX)));
@@ -549,9 +549,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			homeTheta = desiredTheta;
 		}
 		else {
-		}
+		}*/
 		
 		initialThetaBeforeHome = currentLocationOdom.theta;
+		homeTheta = atan2((0 - (currentLocationOdom.y + centerOffsetY)),(0 - (currentLocationOdom.x + centerOffsetX)));
 		returnToHome = false;
 		rotateToHome = true;
 	}
