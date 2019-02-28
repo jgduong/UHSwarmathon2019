@@ -438,7 +438,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				else {
 					distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 				}*/
-				distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
+				//distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
+				distanceToHome = calcDistance(currentLocatonOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
 			}
 			else {
 				sendDriveCommand(-30.0, 30.0);
