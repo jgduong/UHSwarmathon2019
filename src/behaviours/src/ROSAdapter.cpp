@@ -518,7 +518,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float theTheta = atan2((0.25 - (currentLocationOdom.y+centerOffsetY)),(0.25 - (currentLocationOdom.x+centerOffsetX)));
 			float desiredTheta = theTheta - M_PI;
 			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
-			homeTheta = desiredTheta;
+			//homeTheta = desiredTheta;
+			homeTheta = -desiredTheta;
 		}
 		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY > 0)
 		{
