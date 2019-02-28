@@ -359,10 +359,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (driveToHome)
 	{
 		cout << "starting position X, Y is: " << startPosX << ",  " << startPosY << endl;
+		cout << "current location odometry x,y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		cout << "desired distance is: " << distanceToHome << endl;
 		sendDriveCommand(30.0, 30.0);
 		float displacement = sqrt(((startPosX - currentLocationOdom.x + centerOffsetX)*(startPosX - currentLocationOdom.x + centerOffsetX)) + ((startPosY - currentLocationOdom.y + centerOffsetY)*(startPosY - currentLocationOdom.y + centerOffsetY)));
 		cout << "caluclated displacement is: " << displacement << endl;
+		cout << "using jenb's formula, displacement is: " << calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY)) << endl;
 		if (abs(displacement - distanceToHome) <= 0.05)
 		{
 			sendDriveCommand(0.0, 0.0);
@@ -518,8 +520,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float theTheta = atan2((0.25 - (currentLocationOdom.y+centerOffsetY)),(0.25 - (currentLocationOdom.x+centerOffsetX)));
 			float desiredTheta = theTheta - M_PI;
 			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
-			//homeTheta = desiredTheta;
-			homeTheta = -desiredTheta;
+			homeTheta = desiredTheta;
 		}
 		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY > 0)
 		{
@@ -527,7 +528,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float theTheta = atan2((0.25 - (currentLocationOdom.y+centerOffsetY)),(-0.25 - (currentLocationOdom.x+centerOffsetX)));
 			float desiredTheta = -theTheta;
 			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
-			homeTheta = desiredTheta;
+			//homeTheta = desiredTheta;
+			homeTheta = -desiredTheta;
 		}
 		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY < 0)
 		{
