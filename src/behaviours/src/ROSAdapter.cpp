@@ -362,7 +362,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		sendDriveCommand(30.0, 30.0);
 		float displacement = sqrt(((startPosX - currentLocationOdom.x + centerOffsetX)*(startPosX - currentLocationOdom.x + centerOffsetX)) + ((startPosY - currentLocationOdom.y + centerOffsetY)*(startPosY - currentLocationOdom.y + centerOffsetY)));
 		cout << "caluclated displacement is: " << displacement << endl;
-		if (displacement >= distanceToHome)
+		if (abs(displacement - distanceToHome) <= 0.05)
 		{
 			sendDriveCommand(0.0, 0.0);
 			driveToHome = false;
@@ -601,11 +601,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
 		
-		if ( x > 0.002 )
+		if ( x > 0.001 )
 		{
 			sendDriveCommand(10.0, -10.0);
 		}
-		else if ( x < -0.002 )
+		else if ( x < -0.001 )
 		{
 			sendDriveCommand(-10.0, 10.0);
 		}
