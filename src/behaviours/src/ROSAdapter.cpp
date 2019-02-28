@@ -358,6 +358,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (driveToHome)
 	{
+		cout << "starting position X, Y is: " << startPosX << ",  " << startPosY << endl;
 		cout << "desired distance is: " << distanceToHome << endl;
 		sendDriveCommand(30.0, 30.0);
 		float displacement = sqrt(((startPosX - currentLocationOdom.x + centerOffsetX)*(startPosX - currentLocationOdom.x + centerOffsetX)) + ((startPosY - currentLocationOdom.y + centerOffsetY)*(startPosY - currentLocationOdom.y + centerOffsetY)));
