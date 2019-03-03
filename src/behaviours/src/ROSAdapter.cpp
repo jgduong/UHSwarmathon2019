@@ -318,6 +318,7 @@ bool aprilTagAcquireSequence = false;
 bool returnToHome = false;
 bool rotateToHome = false;
 bool driveToHome = false;
+bool middleStep = false;
 
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
@@ -560,7 +561,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (aprilTagAcquireSequence)
 	{
 		//tagPickupTimer++;
-		bool middleStep = false;
+		
 		std_msgs::Float32 fngr;
 		fngr.data = M_PI_2;
 		std_msgs::Float32 wrist;
@@ -642,6 +643,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			zDistanceToCube = z;
 			aprilTagDetected = false;
 			tagPickupTimer = 0.0;
+			middleStep = false;
 		}
 	}
 	
