@@ -580,7 +580,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			else
 			{
-				sendDriveCommand(20.0, 20.0)
+				sendDriveCommand(20.0, 20.0);
 			}
 			
 			if (tagPickupTimer > (zDistanceToCube*20*10))
