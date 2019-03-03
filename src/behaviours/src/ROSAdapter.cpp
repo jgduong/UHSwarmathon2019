@@ -584,35 +584,25 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				tagPickupTimer++;
 			}
 			
-			if (tagPickupTimer > (zDistanceToCube*20*10))
+		}
+		else if (tagPickupTimer > (zDistanceToCube*20*10))
+		{
+			sendDriveCommand(0.0, 0.0);
+			fngr.data = 0;
+			wrist.data = 0;
+			fingerAnglePublish.publish(fngr);
+			//wristAnglePublish.publish(wrist);
+			tagPickupTimer++;
+			if (tagPickupTimer > zDistanceToCube*20*10 +30)
 			{
-				sendDriveCommand(0.0, 0.0);
-				fngr.data = 0;
-				wrist.data = 0;
-				fingerAnglePublish.publish(fngr);
-				//wristAnglePublish.publish(wrist);
-				tagPickupTimer++;
-				if (tagPickupTimer > zDistanceToCube*20*10 +30)
+				wristAnglePublish.publish(fngr);
+				if (tagPickupTimer > zDistanceToCube*200 + 50)
 				{
-					wristAnglePublish.publish(fngr);
-
-					if (tagPickupTimer > zDistanceToCube*200 + 50)
-					{
-						aprilTagAcquireSequence = false;
-						//mapTesting = true;
-						returnToHome = true;
-					}
+					aprilTagAcquireSequence = false;
+					//mapTesting = true;
+					returnToHome = true;
 				}
-				else {
-					tagPickupTimer++;
-				}
-
-
-
 			}
-			/*else {
-				tagPickupTimer++;
-			}*/
 		}
 		else {
 			tagPickupTimer++;
