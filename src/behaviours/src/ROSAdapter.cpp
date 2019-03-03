@@ -1150,7 +1150,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
 			
 			float displacement = sqrt(((currentLocationOdom.x - Position6X)*(currentLocationOdom.x - Position6X)) + ((currentLocationOdom.y - Position6Y)*(currentLocationOdom.y - Position6Y)));
-			if (displacement >= 0.65)
+			if (displacement >= 0.55)
 			{
 				step = 12;
 				startingTheta = currentLocationOdom.theta;
