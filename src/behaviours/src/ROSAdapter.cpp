@@ -560,6 +560,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (aprilTagAcquireSequence)
 	{
 		//tagPickupTimer++;
+		bool middleStep = false;
 		std_msgs::Float32 fngr;
 		fngr.data = M_PI_2;
 		std_msgs::Float32 wrist;
@@ -568,7 +569,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(20.0, 20.0);
 		float x = tags.back().getPositionX();
-		if (tagPickupTimer > (zDistanceToCube*100))
+		if (tagPickupTimer > (zDistanceToCube*100) && !middleStep)
 		{
 			if ( x > 0.001 )
 			{
@@ -582,6 +583,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				sendDriveCommand(20.0, 20.0);
 				tagPickupTimer++;
+				middleStep = true;
 			}
 			
 		}
