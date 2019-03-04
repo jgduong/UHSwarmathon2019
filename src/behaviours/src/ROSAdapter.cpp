@@ -723,21 +723,25 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		float x = tags.back().getPositionX();
 		if (tagPickupTimer > (zDistanceToCube*100) && !middleStep)
 		{
-			if ( x > 0.002 )
+			if ( x > 0.002 && tagPickupTimer < 200 )
 			{
-				sendDriveCommand(5.0, -5.0);
+				sendDriveCommand(7.0, -5.0);
 			}
-			else if ( x < 0 )
+			else if ( x < 0 && tagPickupTimer < 200 )
 			{
-				sendDriveCommand(-5.0, 5.0);
+				sendDriveCommand(-5.0, 7.0);
 			}
-			else
+			else if (tagPickupTimer < 200)
 			{
 				sendDriveCommand(20.0, 20.0);
-				tagPickupTimer++;
 				middleStep = true;
 			}
-			
+			else if (!middleStep && tagPickupTimer > 200)
+			{
+				aprilTagAcquireSequence = false;
+				mapTesting = true;
+			}
+			tagPickupTimer++;
 		}
 		else if (tagPickupTimer > (zDistanceToCube*20*10 +10))
 		{
