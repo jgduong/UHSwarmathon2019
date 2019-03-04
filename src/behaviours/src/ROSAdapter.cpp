@@ -1521,12 +1521,15 @@ void spiralSearch(const ros::TimerEvent&)
 		}
 		else if (FrontError <= 0.5)
 		{
-			leftDrive = FrontError*100 - 125;
+			//leftDrive = FrontError*100 - 125;
+			leftDrive = FrontError*200 - 150;
 			rightDrive = 100;
 		}
 		else {
 			leftDrive = 100*FrontError - 100;
+			//leftDrive = 50*FrontError;
 			rightDrive = 100;
+
 		}
 
 	
@@ -1568,20 +1571,27 @@ void spiralSearch(const ros::TimerEvent&)
 		{
 			if (RightError < 0)
 			{
-				leftDrive = 100 + RightError*200;
+				leftDrive = 100 + RightError*400;
+				//leftDrive = 100 + RightError*200;
 				//leftDrive = leftDrive + RightError*200;
 			}
 			//THIS ENTIRE ELSE IF BLOCK IS (barely)TESTED
 			else if (RightError <= 0.25) {
 				//rightDrive = 100 - (100*RightError);
 				//rightDrive = -50;
-				leftDrive = (200*RightError)+50;
+				//leftDrive = (200*RightError)+50;
+				leftDrive = 25 + (RightError*300);
 				rightDrive = 100;
 			}
 			else {
 				rightDrive = 100 - (200*RightError);
 				//rightDrive = rightDrive - (200*RightError);
 			}
+		}
+		//NEW, MAY WANT TO REMOVE 
+		else if (FrontError > 0.5)
+		{
+			//rightDrive = 100 - (200*RightError);
 		}
 		cout << "sending drive commands: " << leftDrive << ", " << rightDrive << endl;
 		sendDriveCommand(leftDrive, rightDrive);
