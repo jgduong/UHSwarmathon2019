@@ -248,36 +248,6 @@ int main(int argc, char **argv) {
 	  return EXIT_SUCCESS;
 }
 
-bool initialMove = false;
-bool mapTesting = false;
-bool rotateBool = false;
-bool GPSCenter = false;
-float startingTheta = 0.0;
-float ninetyRotate = 0.0;
-
-int step = 0;
-float initialPositionTrackerX = 0.0;
-float initialPositionTrackerY = 0.0;
-float Position1X = 0.0;
-float Position2X = 0.0;
-float Position3X = 0.0;
-float Position4X = 0.0;
-float Position5X = 0.0;
-		
-float Position1Y = 0.0;
-float Position2Y = 0.0;
-float Position3Y = 0.0;
-float Position4Y = 0.0;
-float Position5Y = 0.0;
-
-enum States{
-  SPIRAL_SEARCH = 0,
-  AVOID_OBSTACLE,
-  PICKUP,
-  DROPOFF,
-  FIND_SPIRAL_EDGE
-};
-
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
