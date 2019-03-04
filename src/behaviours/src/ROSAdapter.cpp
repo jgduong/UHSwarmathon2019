@@ -362,7 +362,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
 	
-	if (returnToSpiralSeach)
+	if (returnToSpiralSearch)
 	{
 		bool oneEightyRotate_a = false;
 		bool oneEightyRotate_b = false;
