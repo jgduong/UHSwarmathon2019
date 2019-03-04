@@ -65,6 +65,8 @@ class LogicController {
     swarmie *thisSwarmie;
     //priority_queue<Controller> ControllerQueue;
   
+    LogicController() {}
+  
     LogicController(float initialX, float initialY, float initialTheta) {
        prevState = 0;
        currState = 0;
