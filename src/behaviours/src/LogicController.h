@@ -56,6 +56,8 @@ struct swarmie {
 };
 
 class LogicController {
+  private:
+    SpiralSearchController spiralSearchController;
   
   public: 
     int prevState;
@@ -95,7 +97,7 @@ class LogicController {
     }
     */
     if (state == SPIRAL_SEARCH) {
-      SpiralSearchController.DoWork();
+      spiralSearchController.DoWork();
     }
     else if (state == AVOID_OBSTACLE) {
       //ObstacleController.DoWork();
