@@ -1,8 +1,13 @@
-/*
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+using namespace std;
+
 #ifndef LOGICCONTROLLER_H
 #define LOGICCONTROLLER_H
 
 #include "Controller.h"
+/*
 #include "PickUpController.h"
 #include "DropOffController.h"
 #include "SearchController.h"
@@ -16,202 +21,100 @@
 
 using namespace std;
 
-// This struct contains a controller object and ties it to a priority value as
-// well as providing functionality to compare priorities with the < operator.
-struct PrioritizedController {
-  int priority = -1;
-  Controller* controller = nullptr;
-
-  PrioritizedController(int pri, Controller* cntrl) :
-    priority(pri),
-    controller(cntrl)
-  {
-  }
-
-  inline bool operator <(const PrioritizedController& other) const
-  {
-    return priority < other.priority;
+enum States{
+  SPIRAL_SEARCH = 0,
+  AVOID_OBSTACLE,
+  PICKUP,
+  DROPOFF,
+  FIND_SPIRAL_EDGE
+};
+/*
+enum actions {
+  stop = 0,
+  driveStraight,
+  rotate
+};
+*/
+struct swarmie {
+  float currX;
+  float currY;
+  float currTheta;
+  float leftVel;
+  float rightVel;
+  //int action;
+  
+  swarmie(float x, float y, float theta) {
+    currX = x;
+    currY = y;
+    currTheta = theta;
+    leftVel = 0;
+    rightVel = 0;
+    //action = 0;
   }
 };
 
-std::vector<PrioritizedController> prioritizedControllers;
-priority_queue<PrioritizedController> control_queue;
-
 class LogicController {
-  private:
-   enum ProcessState {
-    INIT,
-    SPIRAL_SEARCH,
-    PICK_UP_CUBE,
-    DROP_OFF_CUBE,
-    DRIVE_TO_WAYPOINT
-  };
   
   public: 
+    int prevState;
+    int currState;
+    swarmie *thisSwarmie;
+    //priority_queue<Controller> ControllerQueue;
   
-  void switch() {
-    case 0:  //Init
-      prioritizedControllers = {
-      PrioritizedController{-1, (Controller*)(&searchController)},
-      PrioritizedController{15, (Controller*)(&obstacleController)},
-      PrioritizedController{-1, (Controller*)(&pickUpController)},
-      PrioritizedController{10, (Controller*)(&range_controller)},
-      PrioritizedController{1, (Controller*)(&dropOffController)},
-      PrioritizedController{-1, (Controller*)(&manualWaypointController)}
-      };
-      break;
-    case 1: 
-    //spiral search
-      prioritizedControllers = {
-        PrioritizedController{0, (Controller*)(&searchController)},
-        PrioritizedController{10, (Controller*)(&obstacleController)},
-        PrioritizedController{15, (Controller*)(&pickUpController)},
-        PrioritizedController{5, (Controller*)(&range_controller)},
-        PrioritizedController{-1, (Controller*)(&dropOffController)},
-        PrioritizedController{-1, (Controller*)(&manualWaypointController)}
-       }; 
-        break;
-    case 2 :
-      //pickup
-      prioritizedControllers = {
-        PrioritizedController{-1, (Controller*)(&searchController)},
-        PrioritizedController{15, (Controller*)(&obstacleController)},
-        PrioritizedController{-1, (Controller*)(&pickUpController)},
-        PrioritizedController{10, (Controller*)(&range_controller)},
-        PrioritizedController{1, (Controller*)(&dropOffController)},
-        PrioritizedController{-1, (Controller*)(&manualWaypointController)}
-     };
-      break;
-    case 3: 
-      //dropoff
-      prioritizedControllers = {
-        PrioritizedController{-1, (Controller*)(&searchController)},
-        PrioritizedController{-1, (Controller*)(&obstacleController)},
-        PrioritizedController{-1, (Controller*)(&pickUpController)},
-        PrioritizedController{10, (Controller*)(&range_controller)},
-        PrioritizedController{1, (Controller*)(&dropOffController)},
-        PrioritizedController{-1, (Controller*)(&manualWaypointController)}
-      };
-      break;
-    case 4: 
-      //waypoint
-      prioritizedControllers = {
-        PrioritizedController{-1, (Controller*)(&searchController)},
-        PrioritizedController{-1, (Controller*)(&obstacleController)},
-        PrioritizedController{-1, (Controller*)(&pickUpController)},
-        PrioritizedController{-1, (Controller*)(&range_controller)},
-        PrioritizedController{-1, (Controller*)(&dropOffController)},
-        PrioritizedController{5,  (Controller*)(&manualWaypointController)}
-      };
-      
+    LogicController(float initialX, float initialY, float initialTheta) {
+       prevState = 0;
+       currState = 0;
+       swarmie *Swarmie = new swarmie(initialX, initialY, initialTheta);
+       thisSwarmie = Swarmie;
+    }
+/*  
+    void updateQueue(int state) {
+      //add obstacle controller
+       if (state == SPIRAL_SEARCH) {
+         ControllerQueue.push((Controller*)(&SpiralSearchController), 5);
+       }
+      else if (state == PICKUP) {
+        //add pickup controller
+      }
+      else if (state == DROPOFF) {
+         //add dropoff controller
+      }
+      else if (state == FIND_SPIRAL_EDGE) {
+        //ADD FIND_SPIRAL_EDGE CONTROLLER 
+      }
+    }
+*/  
+  void DoWork(int state) {
+    /*
+    Controller *currController;
+    for (int i = ControllerQueue.size(); i > 0; i--) {
+        currController = ControllerQueue.pop();
+        currController.DoWork();
+    }
+    */
+    if (state == SPIRAL_SEARCH) {
+      SpiralSearchController.DoWork();
+    }
+    else if (state == AVOID_OBSTACLE) {
+      //ObstacleController.DoWork();
+    }
+    else if (state == PICKUP) {
+      //PickupController.DoWork();
+    }
+    else if (state == DROPOFF) {
+      // DropoffController.DoWork();
+    }
+    else if (state == FIND_SPIRAL_EDGE) {
+      //FindEdgeController.DoWork();
+    }
   }
   
+  void updateInfo(float x, float y, float theta) {
+    thisSwarmie.currX = x;
+    thisSwarmie.currY = y;
+    thisSwarmie.currTheta = theta;
+  }
   
-}
-
-
-/*
-class LogicController : virtual Controller
-{
-public:
-  LogicController();
-  ~LogicController();
-
-  void Reset() override;
-  Result DoWork() override;
-  void UpdateData();
-  bool ShouldInterrupt() override;
-  bool HasWork() override;
-
-  // Give the controller a list of visible april tags.
-  // NOTE: This function may be named SetTagData() in other classes
-  //       but they are the same function.
-  void SetAprilTags(vector<Tag> tags);
-  void SetSonarData(float left, float center, float right);
-  void SetPositionData(Point currentLocation);
-  void SetMapPositionData(Point currentLocationMap);
-  void SetVelocityData(float linearVelocity, float angularVelocity);
-  void SetMapVelocityData(float linearVelocity, float angularVelocity);
-  void SetCenterLocationOdom(Point centerLocationOdom);
-  void SetCenterLocationMap(Point centerLocationMap);
-
-
-  // Passthrough for providing new waypoints to the
-  // ManualWaypointController.
-  void AddManualWaypoint(Point wpt, int waypoint_id);
-
-
-  // Passthrough for removing waypoints from the
-  // ManualWaypointController.
-  void RemoveManualWaypoint(int waypoint_id);
-
-
-  // Passthrough for getting the list of manual waypoints that have
-  // been visited.
-  std::vector<int> GetClearedWaypoints();
-
-
-  // Put the logic controller into manual mode. Changes process state
-  // to PROCESS_STATE_MANUAL and logic state to LOGIC_STATE_INTERRUPT.
-
-  // If the logic controller is already in manual mode this has no
-  // effect.
-  void SetModeManual();
-
-
-  // Put the logic controller into autonomous mode. Resets the logic
-  // controller and clears all manual waypoints.
-  //
-  // If the logic controller is already in autonomous mode, then this
-  // has no effect.
-  void SetModeAuto();
-
-  void SetCurrentTimeInMilliSecs( long int time );
-
-  // Tell the logic controller whether rovers should automatically
-  // resstrict their foraging range. If so provide the shape of the
-  // allowed range.
-  void setVirtualFenceOn( RangeShape* range );
-  void setVirtualFenceOff( );
-
-protected:
-  void ProcessData();
-
-private:
-
-  enum LogicState {
-    LOGIC_STATE_INTERRUPT = 0,
-    LOGIC_STATE_WAITING,
-    LOGIC_STATE_PRECISION_COMMAND
-  };
-
-  enum ProcessState {
-    _FIRST = 0,
-    PROCESS_STATE_SEARCHING = 0,
-    PROCESS_STATE_TARGET_PICKEDUP,
-    PROCESS_STATE_DROP_OFF,
-    _LAST,
-    PROCESS_STATE_MANUAL // robot is under manual control
-  };
-
-  LogicState logicState;
-  ProcessState processState;
-
-  PickUpController pickUpController;
-  DropOffController dropOffController;
-  SearchController searchController;
-  ObstacleController obstacleController;
-  DriveController driveController;
-  RangeController range_controller;
-  ManualWaypointController manualWaypointController;
-
-  std::vector<PrioritizedController> prioritizedControllers;
-  priority_queue<PrioritizedController> control_queue;
-
-  void controllerInterconnect();
-
-  long int current_time = 0;
 };
 
 #endif // LOGICCONTROLLER_H
-*/
