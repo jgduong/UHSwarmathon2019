@@ -397,7 +397,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					startingTheta = currentLocationOdom.theta;
 				}
 				else {
-					sendDriveCommand(-30.0, 30.0);
+					//sendDriveCommand(-30.0, 30.0);
+					sendDriveCommand(-50.0, 50.0);
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 				}
 				
@@ -416,7 +417,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 			      }
 			      else {
-				    sendDriveCommand(-30.0, 30.0);
+				    //sendDriveCommand(-30.0, 30.0);
+				      sendDriveCommand(-50.0, 50.0);
 			      }
 			}
 		}
@@ -446,7 +448,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				      startPosY = currentLocationOdom.y + centerOffsetY;
 				}
 				else {
-					sendDriveCommand(-30.0, 30.0);
+					//sendDriveCommand(-30.0, 30.0);
+					sendDriveCommand(-50.0, 50.0);
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 				}
 				
@@ -466,13 +469,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 			      }
 			      else {
-				    sendDriveCommand(-30.0, 30.0);
+				    //sendDriveCommand(-30.0, 30.0);
+				      sendDriveCommand(-50.0, 50.0);
 			      }
 			}
 		}
 		else if (reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b)
 		{
-			sendDriveCommand(50.0, 50.0);
+			sendDriveCommand(100.0, 100.0);
 			float x = currentLocationOdom.x + centerOffsetX;
 			float y = currentLocationOdom.y + centerOffsetY;
 			cout << "distance to return is: " << distanceToHome << endl;
@@ -587,10 +591,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				}*/
 				//distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
-				distanceToHome -= 0.7;
+				distanceToHome -= 0.5;
 			}
 			else {
-				sendDriveCommand(-30.0, 30.0);
+				sendDriveCommand(-50.0, 50.0);
 			}
 		}
 		else if (turnSize < 0.0) // right
@@ -654,10 +658,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
 				}*/
 				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
-				distanceToHome -= 0.7;
+				distanceToHome -= 0.5;
 			}
 			else {
-				sendDriveCommand(30.0, -30.0);
+				sendDriveCommand(50.0, -50.0);
 			}
 		}
 	}
@@ -743,10 +747,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			fingerAnglePublish.publish(fngr);
 			//wristAnglePublish.publish(wrist);
 			tagPickupTimer++;
-			if (tagPickupTimer > zDistanceToCube*20*10 +30)
+			if (tagPickupTimer > zDistanceToCube*20*10 +20)
 			{
 				wristAnglePublish.publish(fngr);
-				if (tagPickupTimer > zDistanceToCube*200 + 50)
+				if (tagPickupTimer > zDistanceToCube*200 + 30)
 				{
 					aprilTagAcquireSequence = false;
 					//mapTesting = true;
@@ -1677,13 +1681,13 @@ void spiralSearch(const ros::TimerEvent&)
 		}
 		else if (FrontError <= 0.5)
 		{
-			//leftDrive = FrontError*100 - 125;
-			leftDrive = FrontError*200 - 150;
+			leftDrive = FrontError*100 - 125;
+			//leftDrive = FrontError*200 - 150;
 			rightDrive = 100;
 		}
 		else {
-			leftDrive = 100*FrontError - 100;
-			//leftDrive = 50*FrontError;
+			//leftDrive = 100*FrontError - 100;
+			leftDrive = 50*FrontError;
 			rightDrive = 100;
 
 		}
