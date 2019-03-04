@@ -484,6 +484,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				returnToSpiralSearch = false;
 				initialMove = true;
 				step = 12;
+				startingTheta = currentLocationOdom.theta;
 			}
 		}
 		reverseFromBaseTimer++;
@@ -718,11 +719,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		float x = tags.back().getPositionX();
 		if (tagPickupTimer > (zDistanceToCube*100) && !middleStep)
 		{
-			if ( x > 0.001 )
+			if ( x > 0.002 )
 			{
 				sendDriveCommand(5.0, -5.0);
 			}
-			else if ( x < -0.001 )
+			else if ( x < 0 )
 			{
 				sendDriveCommand(-5.0, 5.0);
 			}
@@ -734,7 +735,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			
 		}
-		else if (tagPickupTimer > (zDistanceToCube*20*10))
+		else if (tagPickupTimer > (zDistanceToCube*20*10 +10))
 		{
 			sendDriveCommand(0.0, 0.0);
 			fngr.data = 0;
@@ -755,6 +756,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else {
 			tagPickupTimer++;
+			if (tagPickupTimer >= 200.0 && !middleStep)
+			{
+				aprilTagAcquireSequence = false;
+				mapTesting = true;
+			}
 		}
 	}
 	
@@ -773,15 +779,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
 		
-		if ( x > 0.001 )
+		if ( x > 0.002 )
 		{
 			sendDriveCommand(5.0, -5.0);
 		}
-		else if ( x < -0.001 )
+		else if ( x < 0 )
 		{
 			sendDriveCommand(-5.0, 5.0);
 		}
-		else
+		else if (x <= 0.002 && x >= 0)
 		{
 			cout << "centered on cube" << endl;
 			sendDriveCommand(0.0, 0.0);
@@ -790,6 +796,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			aprilTagDetected = false;
 			tagPickupTimer = 0.0;
 			middleStep = false;
+		}
+		else
+		{
+			sendDriveCommand(5.0, 5.0);
 		}
 	}
 	
