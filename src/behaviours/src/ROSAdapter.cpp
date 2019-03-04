@@ -321,6 +321,8 @@ bool driveToHome = false;
 bool middleStep = false;
 
 bool returnToSpiralSearch = false;
+bool oneEightyRotate_a = false;
+bool oneEightyRotate_b = false;
 
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
@@ -364,8 +366,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (returnToSpiralSearch)
 	{
-		bool oneEightyRotate_a = false;
-		bool oneEightyRotate_b = false;
 		if (reverseFromBaseTimer < 40)
 		{
 			sendDriveCommand(-50.0, -50.0);
@@ -420,7 +420,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			      }
 			}
 		}
-		else if (reverseFromBaseTimer >= 40 && oneEightyRotate_b)
+		else if (reverseFromBaseTimer >= 60 && oneEightyRotate_b)
 		{
 			float turnSize = 1.5;
 			bool exceedMag = false;
@@ -470,7 +470,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			      }
 			}
 		}
-		else if (reverseFromBaseTimer >= 40 && !oneEightyRotate_a && !oneEightyRotate_b)
+		else if (reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b)
 		{
 			sendDriveCommand(50.0, 50.0);
 			float x = currentLocationOdom.x + centerOffsetX;
@@ -510,6 +510,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				driveToHome = false;
 				returnToSpiralSearch = true;
 				reverseFromBaseTimer = 0.0;
+				oneEightyRotate_a = false;
+				oneEightyRotate_b = false;
 			}
 			dropOffTimer++;
 		}
