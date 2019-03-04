@@ -37,7 +37,7 @@ enum actions {
   rotate
 };
 */
-struct swarmieInfo {
+struct swarmie {
   float currX;
   float currY;
   float currTheta;
@@ -45,7 +45,7 @@ struct swarmieInfo {
   float rightVel;
   //int action;
   
-  swarmieInfo(float x, float y, float theta) {
+  swarmie(float x, float y, float theta) {
     currX = x;
     currY = y;
     currTheta = theta;
@@ -54,8 +54,6 @@ struct swarmieInfo {
     //action = 0;
   }
 };
-
-struct SwarmieInfo swarmie;
 
 class LogicController {
   private:
