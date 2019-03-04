@@ -247,7 +247,9 @@ int main(int argc, char **argv) {
 	  
 	  return EXIT_SUCCESS;
 }
-
+float startingTheta;
+bool rotateBool;
+int currState;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
