@@ -163,6 +163,8 @@ char prev_state_machine[128];
 vector <geometry_msgs::Point> startingLocationGPS;
 unordered_map<float, set<float>> visitedLocations;	//hashtable to store visited locations
 
+LogicController logicController = new LogicController(currentLocationOdom.x, currentLocationOdom.y, currentLocationOdom.theta);
+
 int main(int argc, char **argv) {
   
   gethostname(host, sizeof (host));
