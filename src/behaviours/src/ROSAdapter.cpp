@@ -368,7 +368,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		bool oneEightyRotate_b = false;
 		if (reverseFromBaseTimer < 40)
 		{
-			sendDriveCommand(-20.0, -20.0);
+			sendDriveCommand(-50.0, -50.0);
 			oneEightyRotate_a = true;
 			startingTheta = currentLocationOdom.theta;
 		}
