@@ -320,6 +320,8 @@ bool rotateToHome = false;
 bool driveToHome = false;
 bool middleStep = false;
 
+bool returnToSpiralSearch = false;
+
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
 
@@ -345,6 +347,7 @@ float Position6Y = 0.0;
 
 float zDistanceToCube = 0.0;
 float tagPickupTimer = 0.0;
+float dropOffTimer = 0.0;
 int quadrant = 0;
 float homeTheta = 0.0;
 float initialThetaBeforeHome = 0.0;
@@ -352,13 +355,143 @@ float distanceToHome = 0.0;
 float startPosX = 0.0;
 float startPosY = 0.0;
 
+float reverseFromBaseTimer = 0.0;
+
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
 	
+	if (returnToSpiralSeach)
+	{
+		bool oneEightyRotate_a = false;
+		bool oneEightyRotate_b = false;
+		if (reverseFromBaseTimer < 40)
+		{
+			sendDriveCommand(-20.0, -20.0);
+			oneEightyRotate_a = true;
+			startingTheta = currentLocationOdom.theta;
+		}
+		else if (reverseFromBaseTimer >= 40 && oneEightyRotate_a)
+		{
+			float turnSize = 1.5;
+			bool exceedMag = false;
+
+			ninetyRotate = currentLocationOdom.theta;
+			if (abs(startingTheta + turnSize) >= 3.142)
+			{
+				exceedMag = true;
+			}
+			cout << "exceed magnitude value is " << exceedMag << endl;
+			if (exceedMag)
+			{
+				float desiredTheta = 0.0;
+
+				desiredTheta = -3.142 + (startingTheta - turnSize);
+				if (currentLocationOdom.theta >= desiredTheta && currentLocationOdom.theta < 0.0)
+				{
+					sendDriveCommand(0.0, 0.0);
+					cout << "done rotating" << endl;
+					oneEightyRotate_b = true;
+					oneEightyRotate_a = false;
+					startingTheta = currentLocationOdom.theta;
+				}
+				else {
+					sendDriveCommand(-30.0, 30.0);
+					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
+				}
+				
+				
+				
+			}
+			else
+			{
+			      if (abs(ninetyRotate - startingTheta) >= 1.5)
+			      {
+				    sendDriveCommand(0.0, 0.0); 
+				     cout << "done rotating" << endl;
+				    oneEightyRotate_b = true;
+					oneEightyRotate_a = false;
+				      startingTheta = currentLocationOdom.theta;
+
+			      }
+			      else {
+				    sendDriveCommand(-30.0, 30.0);
+			      }
+			}
+		}
+		else if (reverseFromBaseTimer >= 40 && oneEightyRotate_b)
+		{
+			float turnSize = 1.5;
+			bool exceedMag = false;
+
+			ninetyRotate = currentLocationOdom.theta;
+			if (abs(startingTheta + turnSize) >= 3.142)
+			{
+				exceedMag = true;
+			}
+			cout << "exceed magnitude value is " << exceedMag << endl;
+			if (exceedMag)
+			{
+				float desiredTheta = 0.0;
+
+				desiredTheta = -3.142 + (startingTheta - turnSize);
+				if (currentLocationOdom.theta >= desiredTheta && currentLocationOdom.theta < 0.0)
+				{
+					sendDriveCommand(0.0, 0.0);
+					cout << "done rotating" << endl;
+					oneEightyRotate_b = false;
+					oneEightyRotate_a = false;
+					startPosX = currentLocationOdom.x + centerOffsetX;
+				      startPosY = currentLocationOdom.y + centerOffsetY;
+				}
+				else {
+					sendDriveCommand(-30.0, 30.0);
+					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
+				}
+				
+				
+				
+			}
+			else
+			{
+			      if (abs(ninetyRotate - startingTheta) >= 1.5)
+			      {
+				    sendDriveCommand(0.0, 0.0); 
+				     cout << "done rotating" << endl;
+				    oneEightyRotate_b = false;
+					oneEightyRotate_a = false;
+				      startPosX = currentLocationOdom.x + centerOffsetX;
+				      startPosY = currentLocationOdom.y + centerOffsetY;
+
+			      }
+			      else {
+				    sendDriveCommand(-30.0, 30.0);
+			      }
+			}
+		}
+		else if (reverseFromBaseTimer >= 40 && !oneEightyRotate_a && !oneEightyRotate_b)
+		{
+			sendDriveCommand(50.0, 50.0);
+			float x = currentLocationOdom.x + centerOffsetX;
+			float y = currentLocationOdom.y + centerOffsetY;
+			cout << "distance to return is: " << distanceToHome << endl;
+			float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY));
+			if (displacement >= distanceToHome && !isVisited(x,y))
+			{
+				
+				cout << "we have returned to a suitable location" << endl;
+				returnToSpiralSearch = false;
+				initialMove = true;
+				step = 12;
+			}
+		}
+		reverseFromBaseTimer++;
+	}
+	
 	if (driveToHome)
 	{
+		std_msgs::Float32 fngr;
 		//cout << "starting position X, Y is: " << startPosX << ",  " << startPosY << endl;
 		//cout << "current location odometry x,y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		cout << "desired distance is: " << distanceToHome << endl;
@@ -367,8 +500,18 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		cout << "using jenb's formula, displacement is: " << displacement << endl;
 		if (abs(displacement - distanceToHome) <= 0.01 || displacement >= distanceToHome)
 		{
+			fngr.data = M_PI_2;
+			fingerAnglePublish.publish(fngr);
 			sendDriveCommand(0.0, 0.0);
-			driveToHome = false;
+			if (dropOffTimer >= 30.0)
+			{
+				fngr.data = 0;
+				fingerAnglePublish.publish(fngr);
+				driveToHome = false;
+				returnToSpiralSearch = true;
+				reverseFromBaseTimer = 0.0;
+			}
+			dropOffTimer++;
 		}
 	}
 	if (rotateToHome)
@@ -419,7 +562,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				driveToHome = true;
 				startPosX = currentLocationOdom.x + centerOffsetX;
 				startPosY = currentLocationOdom.y + centerOffsetY;
-
+				dropOffTimer = 0.0;
 				/*if (quadrant == 1)
 				{
 					distanceToHome = sqrt((0.25 - currentLocationOdom.y + centerOffsetY)*(0.25 - currentLocationOdom.y + centerOffsetY) + (0.25 - currentLocationOdom.x + centerOffsetX)*(0.25 - currentLocationOdom.x + centerOffsetX));
@@ -487,6 +630,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				driveToHome = true;
 				startPosX = currentLocationOdom.x + centerOffsetX;
 				startPosY = currentLocationOdom.y + centerOffsetY;
+				dropOffTimer = 0.0;
 				/*if (quadrant == 1)
 				{
 					distanceToHome = sqrt((0.25 - currentLocationOdom.y + centerOffsetY)*(0.25 - currentLocationOdom.y + centerOffsetY) + (0.25 - currentLocationOdom.x + centerOffsetX)*(0.25 - currentLocationOdom.x + centerOffsetX));
