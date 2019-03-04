@@ -8,7 +8,7 @@ using namespace std;
 #define LOGICCONTROLLER_H
 
 #include "Controller.h"
-#include <SpiralSearchController.h>
+#include "SpiralSearchController.h"
 /*
 #include "PickUpController.h"
 #include "DropOffController.h"
