@@ -356,6 +356,7 @@ float initialThetaBeforeHome = 0.0;
 float distanceToHome = 0.0;
 float startPosX = 0.0;
 float startPosY = 0.0;
+float detectionTimeOut = 0.0;
 
 float reverseFromBaseTimer = 0.0;
 
@@ -725,11 +726,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 			if ( x > 0.002 && tagPickupTimer < 200 )
 			{
-				sendDriveCommand(7.0, -5.0);
+				sendDriveCommand(5.0, -5.0);
 			}
 			else if ( x < 0 && tagPickupTimer < 200 )
 			{
-				sendDriveCommand(-5.0, 7.0);
+				sendDriveCommand(-5.0, 5.0);
 			}
 			else if (tagPickupTimer < 200)
 			{
@@ -776,7 +777,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	{
 		mapTesting = false;
 		//sendDriveCommand(0.0, 0.0);
-		
+		detectionTimeOut++;
 		//tuple<float, float, float> pos = tags[tagIndex].getPosition();
 		//float r = get<0>(pos);
 		//float p = get<1>(pos);
@@ -787,15 +788,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
 		
-		if ( x > 0.002 )
+		if ( x > 0 && detectionTimeOut < 200)
 		{
-			sendDriveCommand(5.0, -5.0);
+			sendDriveCommand(7.0, -5.0);
 		}
-		else if ( x < 0 )
+		else if ( x < -0.002 && detectionTimeOut < 200)
 		{
-			sendDriveCommand(-5.0, 5.0);
+			sendDriveCommand(-5.0, 7.0);
 		}
-		else if (x <= 0.002 && x >= 0)
+		else if (x <= 0 && x >= -0.002)
 		{
 			cout << "centered on cube" << endl;
 			sendDriveCommand(0.0, 0.0);
@@ -808,6 +809,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else
 		{
 			sendDriveCommand(5.0, 5.0);
+			aprilTagDetectionSequence = false;
+			mapTesting = true;
 		}
 	}
 	
@@ -1866,6 +1869,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 		{
 			aprilTagDetected = true;
 			tagIndex++;
+			detectionTimeOut = 0.0;
 		}
 	}
 }
