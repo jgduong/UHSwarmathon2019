@@ -33,7 +33,6 @@ add_executable(
   src/PID.cpp
   src/DriveController.cpp
   src/RangeController.cpp
-  src/LogicController.cpp
   src/ManualWaypointController.cpp
 )
 
