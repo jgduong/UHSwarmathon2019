@@ -114,9 +114,9 @@ class LogicController {
   }
   
   void updateInfo(float x, float y, float theta) {
-    thisSwarmie.currX = x;
-    thisSwarmie.currY = y;
-    thisSwarmie.currTheta = theta;
+    thisSwarmie->currX = x;
+    thisSwarmie->currY = y;
+    thisSwarmie->currTheta = theta;
   }
   
 };
