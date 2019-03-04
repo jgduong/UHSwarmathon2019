@@ -290,7 +290,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
     		else
     		{	currState = SPIRAL_SEARCH;
-      			logicController.DoWork(currState);
+      			logicController->DoWork(currState);
     		}
   	}
 	  
