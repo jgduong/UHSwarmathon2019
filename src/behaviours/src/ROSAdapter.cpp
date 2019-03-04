@@ -809,7 +809,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else
 		{
 			sendDriveCommand(5.0, 5.0);
-			aprilTagDetectionSequence = false;
+			aprilTagAcquireSequence = false;
 			mapTesting = true;
 		}
 	}
