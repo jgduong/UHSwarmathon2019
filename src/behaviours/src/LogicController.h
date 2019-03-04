@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+
 using namespace std;
 
 #ifndef LOGICCONTROLLER_H
 #define LOGICCONTROLLER_H
 
 #include "Controller.h"
+#include <SpiralSearchController.h>
 /*
 #include "PickUpController.h"
 #include "DropOffController.h"
