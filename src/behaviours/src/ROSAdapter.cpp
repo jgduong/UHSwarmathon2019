@@ -289,10 +289,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			rotateBool = true;
 		}
     		else
-    		{	currState = SPIRAL_SEARCH;
-      			logicController->DoWork(currState);
+    		{	
+			return;
     		}
   	}
+	else {
+		currState = SPIRAL_SEARCH;
+      		logicController->DoWork(currState);
+	}
 	  
 	humanTime();
 	
