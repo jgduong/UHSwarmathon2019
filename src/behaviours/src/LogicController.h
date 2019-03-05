@@ -330,8 +330,8 @@ class LogicController {
 				//step = 12;
 				
 				//this is temporary
-				Wheels.left = 0.0;
-				Wheels.right = 0.0;
+				//Wheels.left = 0.0;
+				//Wheels.right = 0.0;
 				startingTheta = currTheta;
 
 			}
