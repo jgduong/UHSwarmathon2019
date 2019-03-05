@@ -730,11 +730,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		float x = tags.back().getPositionX();
 		if (tagPickupTimer > (zDistanceToCube*100) && !middleStep)
 		{
-			if ( x > 0.002 && tagPickupTimer < 200 )
+			if ( x > -0.001 && tagPickupTimer < 200 )
 			{
 				sendDriveCommand(5.0, -5.0);
 			}
-			else if ( x < 0 && tagPickupTimer < 200 )
+			else if ( x < -0.004 && tagPickupTimer < 200 )
 			{
 				sendDriveCommand(-5.0, 5.0);
 			}
@@ -1741,7 +1741,7 @@ void spiralSearch(const ros::TimerEvent&)
 		cout << "CurrentLocation X,Y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		RightError = RightError - 0.25;
 		if (maxFrontError)
-		{
+		{	//MAKE THIS LESS SENSITIVE TO RIGHTERROR (linearize it)
 			if (RightError < 0)
 			{
 				leftDrive = 100 + RightError*400;
