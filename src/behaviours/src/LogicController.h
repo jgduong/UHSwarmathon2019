@@ -104,7 +104,7 @@ class LogicController {
     }
     */
     if (state == SPIRAL_SEARCH) {
-      spiralSearchController.DoWork(thisSwarmie);
+      spiralSearchController.DoWork(thisSwarmie->currX, thisSwarmie->currY, thisSwarmie->currTheta);
     }
     else if (state == AVOID_OBSTACLE) {
       //ObstacleController.DoWork();
