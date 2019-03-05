@@ -37,7 +37,7 @@ enum actions {
   rotate
 };
 */
-typedef struct swarmie {
+extern typedef struct swarmie {
   float currX;
   float currY;
   float currTheta;
@@ -55,7 +55,7 @@ typedef struct swarmie {
   }
 } Swarmie;
 
-extern Swarmie thisSwarmie;
+//extern Swarmie thisSwarmie;
 
 //typedef struct swarmie Swarmie;
 
@@ -66,7 +66,7 @@ class LogicController {
   public: 
     int prevState;
     int currState;
-    //Swarmie *thisSwarmie;
+    Swarmie *thisSwarmie;
     //priority_queue<Controller> ControllerQueue;
   
     LogicController() {}
