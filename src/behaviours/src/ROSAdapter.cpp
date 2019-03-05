@@ -481,7 +481,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			float x = currentLocationOdom.x + centerOffsetX;
 			float y = currentLocationOdom.y + centerOffsetY;
 			//TEST/TEMP, account for reversing distance
-			distanceToHome -= 1.0;
+			distanceToHome -= 0.2;
 			cout << "distance to return is: " << distanceToHome << endl;
 			float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY));
 			
