@@ -197,7 +197,7 @@ class LogicController {
 				float desiredTheta = 0.0;
 
 				desiredTheta = -3.142 + (startingTheta - turnSize);
-				if (thisSwarmie->currtheta >= desiredTheta && thisSwarmie->currtheta < 0.0)
+				if (thisSwarmie->currTheta >= desiredTheta && thisSwarmie->currTheta < 0.0)
 				{
 					//sendDriveCommand(0.0, 0.0);
           thisSwarmie->leftVel = 0.0;
