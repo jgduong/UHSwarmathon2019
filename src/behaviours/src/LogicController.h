@@ -55,7 +55,7 @@ typedef struct swarmie {
   }
 } Swarmie;
 
-extern thisSwarmie;
+extern Swarmie thisSwarmie;
 
 //typedef struct swarmie Swarmie;
 
