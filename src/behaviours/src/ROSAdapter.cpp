@@ -447,6 +447,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					oneEightyRotate_a = false;
 					startPosX = currentLocationOdom.x + centerOffsetX;
 				      startPosY = currentLocationOdom.y + centerOffsetY;
+					//TEST/TEMP, account for reversing distance
+					distanceToHome -= 0.2;
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
@@ -467,6 +469,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					oneEightyRotate_a = false;
 				      startPosX = currentLocationOdom.x + centerOffsetX;
 				      startPosY = currentLocationOdom.y + centerOffsetY;
+				      //TEST/TEMP, account for reversing distance
+					distanceToHome -= 0.2;
 
 			      }
 			      else {
@@ -480,8 +484,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			sendDriveCommand(100.0, 100.0);
 			float x = currentLocationOdom.x + centerOffsetX;
 			float y = currentLocationOdom.y + centerOffsetY;
-			//TEST/TEMP, account for reversing distance
-			distanceToHome -= 0.2;
+			
 			cout << "distance to return is: " << distanceToHome << endl;
 			float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY));
 			
