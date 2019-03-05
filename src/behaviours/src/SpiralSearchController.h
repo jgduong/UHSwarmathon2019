@@ -6,10 +6,10 @@ class SpiralSearchController {
 
   public: 
     
-    void DoWork(Swarmie thisSwarmie) {
+    void DoWork(float currX, float currY, float currTheta) {
       cout << "Spiral Search Controller is working" << endl;
-      cout << "Current Location: (" << thisSwarmie->currX << ", " << thisSwarmie->currY << ")" << endl;
-      cout << "Theta = " << thisSwarmie->currTheta << endl;
+      cout << "Current Location: (" << currX << ", " << currY << ")" << endl;
+      cout << "Theta = " << currTheta << endl;
     }
 
 
