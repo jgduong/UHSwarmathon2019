@@ -174,7 +174,7 @@ class LogicController {
 		  */
 		  if (step == 1) {
 			  spiralSearchController.updateData(currX, currY, currTheta);
-			cout << "step 2: rotating 90 degrees left..." << endl;
+			cout << "step 1: rotating 90 degrees left..." << endl;
 			  
 			  visitedLocations[normalizedValue(currX)].insert(normalizedValue(currY));
 
@@ -206,7 +206,7 @@ class LogicController {
 					initialPosX = currX;
 					initialPosY = currY;
 
-					cout << "done rotating" << endl;
+					cout << "done rotating: step 1" << endl;
 					startingTheta = currTheta;
 					step = 2;
 				}
@@ -235,7 +235,7 @@ class LogicController {
 					//step = 1;
 					initialPosX = currX;
 					initialPosY = currY;
-					cout << "done rotating" << endl;
+					cout << "done rotating : step 1" << endl;
 					startingTheta = currTheta;
 					step = 2;
 
@@ -250,7 +250,8 @@ class LogicController {
 		}
 		
 		else if (step == 2)
-		{	spiralSearchController.updateData(currX, currY, currTheta);
+		{	
+			spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "step 2: rotating 90 degrees left..." << endl;
 			float turnSize = 1.5;
 			bool exceedMag = false;
@@ -270,7 +271,7 @@ class LogicController {
 				{
 					Wheels.left = 0.0;
 					Wheels.right = 0.0;
-					cout << "done rotating" << endl;
+					cout << "done rotating: step 2" << endl;
 					startingTheta = currTheta;
 					step2X = currX;
 					step2Y= currY;
@@ -291,7 +292,7 @@ class LogicController {
 				    //sendDriveCommand(0.0, 0.0); 
 				     Wheels.left = 0.0;
 				     Wheels.right = 0.0;
-				     cout << "done rotating" << endl;
+				     cout << "done rotating: step 2" << endl;
 				     startingTheta = currTheta;
 				     step2X = currX;
 				     step2Y = currY;
@@ -329,8 +330,8 @@ class LogicController {
 				//step = 12;
 				
 				//this is temporary
-				Wheels.left = 0.0;
-				Wheels.right = 0.0;
+				//Wheels.left = 0.0;
+				//Wheels.right = 0.0;
 				startingTheta = currTheta;
 
 			}
