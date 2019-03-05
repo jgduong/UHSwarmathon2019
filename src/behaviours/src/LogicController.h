@@ -144,8 +144,9 @@ class LogicController {
 	  }
 
 	  void setCenterOffset(float x, float y) {
-	    centerOffsetX = x;
-	    centerOffsetY = y;
+	    	centerOffsetX = x;
+	    	centerOffsetY = y;
+		spiralSearchController.setCenterOffset(x, y);
 	  }
 
 	  struct wheels InitialRotate() {
