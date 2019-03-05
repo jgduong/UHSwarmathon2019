@@ -357,7 +357,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerOffsetY = 1.207*sin(3.142/4) + 0.45;
 				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45 << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45 << endl;
 			}
-			logicController.setCenterOffset(centerOffsetX, centerOffsetY);
+			logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 			
 			std_msgs::Float32MultiArray myCoordinate;
 			myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
@@ -371,7 +371,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
 
 			visitedLocationsPublisher.publish(myCoordinate);
-			Wheels = logicController.InitialRotate();
+			Wheels = logicController->InitialRotate();
 			SendDriveCommand(Wheels->left, Wheels->right);
 			//rotateBool = true;
 		}
