@@ -37,10 +37,10 @@
 
 // To handle shutdown signals so the node quits
 // properly in response to "rosnode kill"
-#include <ros/ros.h>
+//#include <ros/ros.h>
 #include <signal.h>
 
-#include <math.h>
+//#include <math.h>
 #include <exception> // For exception handling
 
 using namespace std;
