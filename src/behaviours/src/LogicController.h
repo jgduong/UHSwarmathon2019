@@ -197,12 +197,12 @@ class LogicController {
 				float desiredTheta = 0.0;
 
 				desiredTheta = -3.142 + (startingTheta - turnSize);
-				if (thisSwarmie->theta >= desiredTheta && thisSwarmie->theta < 0.0)
+				if (thisSwarmie->currtheta >= desiredTheta && thisSwarmie->currtheta < 0.0)
 				{
 					//sendDriveCommand(0.0, 0.0);
           thisSwarmie->leftVel = 0.0;
           thisSwarmie->rightVel = 0.0;
-					rotateBool = false;
+					//rotateBool = false;
 					//hardcodedPop = true;
 				    	 //initialMove = true;
 				      //step = 1;
@@ -229,8 +229,8 @@ class LogicController {
 				      //sendDriveCommand(0.0, 0.0);
               thisSwarmie->leftVel = 0.0;
               thisSwarmie->rightVel = 0.0;
-					    rotateBool = false;
-				      hardcodedPop = true;
+					//    rotateBool = false;
+				      //hardcodedPop = true;
 				    	//initialMove = true;
 				      //GPSCenter = true;
 				      //step = 1;
