@@ -369,7 +369,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	{
 		if (reverseFromBaseTimer < 40)
 		{
-			sendDriveCommand(-50.0, -50.0);
+			sendDriveCommand(-100.0, -100.0);
 			oneEightyRotate_a = true;
 			startingTheta = currentLocationOdom.theta;
 		}
@@ -480,8 +480,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			sendDriveCommand(100.0, 100.0);
 			float x = currentLocationOdom.x + centerOffsetX;
 			float y = currentLocationOdom.y + centerOffsetY;
+			//TEST/TEMP, account for reversing distance
+			distanceToHome -= 1.0;
 			cout << "distance to return is: " << distanceToHome << endl;
 			float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY));
+			
 			if (displacement >= distanceToHome && !isVisited(x,y))
 			{
 				
@@ -530,7 +533,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		bool exceedMag = false;
 		ninetyRotate = currentLocationOdom.theta;
 		
-		if (turnSize > 0.0) // left
+		if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 		{
 			/*if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
 			{
@@ -598,7 +601,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				sendDriveCommand(-50.0, 50.0);
 			}
 		}
-		else if (turnSize < 0.0) // right
+		else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
 		{
 			/*if (abs(startingTheta + turnSize) >= 3.142)
 			{
