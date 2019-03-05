@@ -199,8 +199,8 @@ class LogicController {
 			}
 			else {
 				//sendDriveCommand(-30.0, 30.0);
-          			Wheel.left = -30.0;
-          			Wheel.right = 30.0;
+          			Wheels.left = -30.0;
+          			Wheels.right = 30.0;
 				cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 			}
 				
@@ -213,8 +213,8 @@ class LogicController {
 			if (abs(ninetyRotate - startingTheta) >= 1.5)
 			{
 				//sendDriveCommand(0.0, 0.0);
-              			Wheel.left = 0.0;
-              			Wheel.right = 0.0;
+              			Wheels.left = 0.0;
+              			Wheels.right = 0.0;
 				//    rotateBool = false;
 				//hardcodedPop = true;
 				//initialMove = true;
@@ -227,8 +227,8 @@ class LogicController {
 			 }	//else, turn right
 			 else {
 				//sendDriveCommand(-30.0, 30.0);
-              			Wheel.left = -30.0;
-              			Wheel.right = 30.0;
+              			Wheels.left = -30.0;
+              			Wheels.right = 30.0;
 			 }
 			
     	}
