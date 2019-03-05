@@ -365,14 +365,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			myCoordinate.layout.dim[0].stride = 1;
 			myCoordinate.layout.dim[0].label = "poop";
 
-			myCoordinate.data.push_back(normalizedValue(thisSwarmie->currX+centerOffsetX));
-			myCoordinate.data.push_back(normalizedValue(thisSwarmie->currY+centerOffsetY));
+			myCoordinate.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			myCoordinate.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
 
 			visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
 
 			visitedLocationsPublisher.publish(myCoordinate);
 			Wheels = logicController->InitialRotate();
-			SendDriveCommand(Wheels->left, Wheels->right);
+			sendDriveCommand(Wheels->left, Wheels->right);
 			//rotateBool = true;
 		}
     		else
