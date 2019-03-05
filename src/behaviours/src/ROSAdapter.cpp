@@ -379,8 +379,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			initialPopf.layout.dim[0].stride = 1;
 			initialPopf.layout.dim[0].label = "poopf";
 			//UPDATED FROM 10 TO 25
-			initialPopf.data.push_back(normalizedValue(currX+centerOffsetX));
-			initialPopf.data.push_back(normalizedValue(currY+centerOffsetY));
+			initialPopf.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+			initialPopf.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
 			
 			visitedLocationsPublisher.publish(initialPopf);
 			
