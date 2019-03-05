@@ -255,6 +255,8 @@ bool rotateBool = false;
 int currState;
 float centerOffsetX = 0.0;
 float centerOffsetY = 0.0;
+
+struct wheels Wheels;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
@@ -369,7 +371,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
 
 			visitedLocationsPublisher.publish(myCoordinate);
-			logicController.InitialRotate();
+			Wheels = logicController.InitialRotate();
+			SendDriveCommand(Wheels->left, Wheels->right);
 			//rotateBool = true;
 		}
     		else
@@ -390,7 +393,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 void sendDriveCommand(double left, double right)
 {
 	velocity.linear.x = left,
-    velocity.angular.z = right;
+    	velocity.angular.z = right;
   
 	// publish the drive commands
 	driveControlPublish.publish(velocity);
