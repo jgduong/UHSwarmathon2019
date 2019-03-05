@@ -64,7 +64,7 @@ typedef struct swarmie {
 struct wheels {
   float left;
   float right;
-}
+};
 
 float calcDistance(float curX, float curY, float goalX, float goalY) {
 	float dist = sqrt( (goalX - curX)*(goalX - curX) + (goalY - curY)*(goalY - curY) );
@@ -98,6 +98,7 @@ class LogicController {
   public: 
     float initialPosX;
     float initialPosY;
+    float startingTheta;
     float centerOffsetX;
     float centerOffsetY;
     int prevState;
@@ -109,13 +110,18 @@ class LogicController {
     LogicController() {}
   
     LogicController(float initialX, float initialY, float initialTheta) {
-       prevState = 0;
-       currState = 0;
-       Swarmie *tempSwarmie = new swarmie(initialX, initialY, initialTheta);
-       thisSwarmie = tempSwarmie;
+	    
+       	prevState = 0;
+       	currState = 0;
+	    
+	initialPosX = initialX;
+	initialPosY = initialY;
+       	startingTheta = initialTheta;
+       	Swarmie *tempSwarmie = new swarmie(initialX, initialY, initialTheta);
+       	thisSwarmie = tempSwarmie;
     
-       Wheels.left = 0.0;
-       Wheels.right = 0.0;
+       	Wheels.left = 0.0;
+       	Wheels.right = 0.0;
     }
 
   void DoWork(int state) {
