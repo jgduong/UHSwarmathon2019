@@ -44,23 +44,6 @@ enum actions {
 };
 */
 
-typedef struct swarmie {
-  float currX;
-  float currY;
-  float currTheta;
-  float leftVel;
-  float rightVel;
-  //int action;
-  
-  swarmie(float x, float y, float theta) {
-    currX = x;
-    currY = y;
-    currTheta = theta;
-    leftVel = 0;
-    rightVel = 0;
-    //action = 0;
-  }
-} Swarmie;
 
 struct wheels {
   float left;
@@ -97,20 +80,22 @@ class LogicController {
     SpiralSearchController spiralSearchController;
   
   public: 
-    float initialPosX;
-    float initialPosY;
-    float startingTheta;
-    float centerOffsetX;
-    float centerOffsetY;
-    int prevState;
-    int currState;
-    Swarmie *thisSwarmie;
-    struct wheels Wheels;
-    //priority_queue<Controller> ControllerQueue;
+	float currX; 
+	float currY;
+	float currTheta;
+    	float initialPosX;
+    	float initialPosY;
+    	float startingTheta;
+    	float centerOffsetX;
+    	float centerOffsetY;
+    	int prevState;
+    	int currState;
+    	struct wheels Wheels;
+    	//priority_queue<Controller> ControllerQueue;
   
-    LogicController() {}
+    	LogicController() {}
   
-    LogicController(float initialX, float initialY, float initialTheta) {
+    	LogicController(float initialX, float initialY, float initialTheta) {
 	    
        	prevState = 0;
        	currState = 0;
@@ -118,8 +103,9 @@ class LogicController {
 	initialPosX = initialX;
 	initialPosY = initialY;
        	startingTheta = initialTheta;
-       	Swarmie *tempSwarmie = new swarmie(initialX, initialY, initialTheta);
-       	thisSwarmie = tempSwarmie;
+       	currX = initialX;
+	currY = initialY;
+	currTheta = initialTheta;
     
        	Wheels.left = 0.0;
        	Wheels.right = 0.0;
@@ -134,7 +120,7 @@ class LogicController {
     }
     */
     if (state == SPIRAL_SEARCH) {
-      spiralSearchController.DoWork(thisSwarmie->currX, thisSwarmie->currY, thisSwarmie->currTheta);
+      spiralSearchController.DoWork(currX, currY, currTheta);
     }
     else if (state == AVOID_OBSTACLE) {
       //ObstacleController.DoWork();
@@ -151,9 +137,9 @@ class LogicController {
   }
   
   void updateInfo(float x, float y, float theta) {
-    thisSwarmie->currX = x;
-    thisSwarmie->currY = y;
-    thisSwarmie->currTheta = theta;
+    currX = x;
+    currY = y;
+    currTheta = theta;
   }
   
   void setCenterOffset(float x, float y) {
@@ -163,8 +149,8 @@ class LogicController {
   
   struct wheels InitialRotate() {
 		//Rotate to starting position...
-	  float ninetyRotate = thisSwarmie->currTheta;
-	  cout << "Current theta is: " << thisSwarmie->currTheta << endl;
+	  float ninetyRotate = currTheta;
+	  cout << "Current theta is: " << currTheta << endl;
 		/*
 	  std_msgs::Float32MultiArray myCoordinate;
 		myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
@@ -183,72 +169,69 @@ class LogicController {
 		
 		geometry_msgs::Point tempLocal;
 		
-			float turnSize = 1.5;
-			bool exceedMag = false;
+		float turnSize = 1.5;
+		bool exceedMag = false;
 
-			ninetyRotate = thisSwarmie->currTheta;
-			//if the ninety degree turn crosses the pi line, this is a special condition
-			if (abs(startingTheta + turnSize) >= 3.14159)
-			{
-				exceedMag = true;
-			}
-			cout << "exceed magnitude value is " << exceedMag << endl;
-			if (exceedMag)
-			{
-				float desiredTheta = 0.0;
+		//if the ninety degree turn crosses the pi line, this is a special condition
+		if (abs(startingTheta + turnSize) >= 3.14159)
+		{
+			exceedMag = true;
+		}
+		cout << "exceed magnitude value is " << exceedMag << endl;
+		if (exceedMag)
+		{
+			float desiredTheta = 0.0;
 
-				desiredTheta = -3.142 + (startingTheta - turnSize);
-				if (thisSwarmie->currTheta >= desiredTheta && thisSwarmie->currTheta < 0.0)
-				{
-					//sendDriveCommand(0.0, 0.0);
-          thisSwarmie->leftVel = 0.0;
-          thisSwarmie->rightVel = 0.0;
-					//rotateBool = false;
-					//hardcodedPop = true;
-				    	 //initialMove = true;
-				      //step = 1;
-					initialPosX = thisSwarmie->currX;
-					initialPosY = thisSwarmie->currY;
+			desiredTheta = -3.142 + (startingTheta - turnSize);
+			if (currTheta >= desiredTheta && currTheta < 0.0)
+			{
+				//sendDriveCommand(0.0, 0.0);
+          			Wheel.left = 0.0;
+          			Wheel.right = 0.0;
+				//rotateBool = false;
+				//hardcodedPop = true;
+				//initialMove = true;
+				//step = 1;
+				initialPosX = currX;
+				initialPosY = currY;
 					
-				     cout << "done rotating" << endl;
-				}
-				else {
-					//sendDriveCommand(-30.0, 30.0);
-          thisSwarmie->leftVel = -30.0;
-          thisSwarmie->rightVel = 30.0;
-					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
-				}
-				
-				
-				
+				cout << "done rotating" << endl;
 			}
-			else
-			{	//ninetyRotate = current theta
-				//if the diff between the current theta and starting theta is >= 90 degrees, stop
-			      if (abs(ninetyRotate - startingTheta) >= 1.5)
-			      {
-				      //sendDriveCommand(0.0, 0.0);
-              thisSwarmie->leftVel = 0.0;
-              thisSwarmie->rightVel = 0.0;
-					//    rotateBool = false;
-				      //hardcodedPop = true;
-				    	//initialMove = true;
-				      //GPSCenter = true;
-				      //step = 1;
-					    initialPosX = thisSwarmie->currX;
-					    initialPosY = thisSwarmie->currY;
-				      cout << "done rotating" << endl;
+			else {
+				//sendDriveCommand(-30.0, 30.0);
+          			Wheel.left = -30.0;
+          			Wheel.right = 30.0;
+				cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
+			}
+				
+				
+				
+		}
+		else
+		{	//ninetyRotate = current theta
+			//if the diff between the current theta and starting theta is >= 90 degrees, stop
+			if (abs(ninetyRotate - startingTheta) >= 1.5)
+			{
+				//sendDriveCommand(0.0, 0.0);
+              			Wheel.left = 0.0;
+              			Wheel.right = 0.0;
+				//    rotateBool = false;
+				//hardcodedPop = true;
+				//initialMove = true;
+				//GPSCenter = true;
+				//step = 1;
+				initialPosX = currX;
+				initialPosY = currY;
+				cout << "done rotating" << endl;
 
-			      }	//else, turn right
-			      else {
-				      //sendDriveCommand(-30.0, 30.0);
-              thisSwarmie->leftVel = -30.0;
-              thisSwarmie->rightVel = 30.0;
-			      }
+			 }	//else, turn right
+			 else {
+				//sendDriveCommand(-30.0, 30.0);
+              			Wheel.left = -30.0;
+              			Wheel.right = 30.0;
+			 }
 			
-    }
-	Wheels.left = thisSwarmie->leftVel;
-	  Wheels.right = thisSwarmie->rightVel;
+    	}
   	return Wheels;
   }
 };
