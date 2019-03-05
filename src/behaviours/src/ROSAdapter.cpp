@@ -372,7 +372,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 			visitedLocationsPublisher.publish(myCoordinate);
 			Wheels = logicController->InitialRotate();
-			sendDriveCommand(Wheels->left, Wheels->right);
+			sendDriveCommand(Wheels.left, Wheels.right);
 			//rotateBool = true;
 		}
     		else
