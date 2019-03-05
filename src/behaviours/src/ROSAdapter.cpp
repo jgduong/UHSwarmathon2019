@@ -97,6 +97,7 @@ ros::Publisher heartbeatPublisher;		//publishes ROSAdapters status via its "hear
 // to indicate when waypoints have been reached.
 ros::Publisher waypointFeedbackPublisher;	//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
 ros::Publisher robotLocationGPS;			//publishes name of robot to /swarmies
+ros::Publisher robotnamePublisher;			//publishes name of robot to /swarmies
 ros::Publisher visitedLocationsPublisher;
 
 // Subscribers
@@ -355,6 +356,19 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45 << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45 << endl;
 			}
 			logicController.setCenterOffset(centerOffsetX, centerOffsetY);
+			
+			std_msgs::Float32MultiArray myCoordinate;
+			myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
+			myCoordinate.layout.dim[0].size = 2;
+			myCoordinate.layout.dim[0].stride = 1;
+			myCoordinate.layout.dim[0].label = "poop";
+
+			myCoordinate.data.push_back(normalizedValue(thisSwarmie->currX+centerOffsetX));
+			myCoordinate.data.push_back(normalizedValue(thisSwarmie->currY+centerOffsetY));
+
+			visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+
+			visitedLocationsPublisher.publish(myCoordinate);
 			logicController.InitialRotate();
 			//rotateBool = true;
 		}
