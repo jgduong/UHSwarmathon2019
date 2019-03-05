@@ -339,6 +339,64 @@ class LogicController {
 		
 		return Wheels;
 	  }
+	
+	struct wheels turnRight90() {
+		spiralSearchController.updateData()
+		cout << "rotating right to begin spiral search..." << endl;
+		float turnSize = -1.5;
+		bool exceedMag = false;
+
+		ninetyRotate = currTheta;
+		if (abs(startingTheta + turnSize) >= 3.142)
+		{
+			exceedMag = true;
+		}
+		cout << "exceed magnitude value is " << exceedMag << endl;
+		if (exceedMag)
+		{
+			float desiredTheta = 0.0;
+
+			desiredTheta = 3.142 + (startingTheta - turnSize);
+			if (currTheta <= desiredTheta && currTheta > 0.0)
+			{
+				//sendDriveCommand(0.0, 0.0);
+				Wheels.left = 0.0;
+				Wheels.right = 0.0;
+				cout << "done rotating: RIGHT 90" << endl;
+				//step = 13;
+				//initialMove = false;
+				//mapTesting = true;
+			}
+			else {
+				//sendDriveCommand(30.0, -30.0);
+				Wheels.left = 30.0;
+				Wheels.right = -30.0
+				cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
+			}
+			
+			
+			
+		}
+		else
+		{
+		      if (abs(ninetyRotate - startingTheta) >= 1.5)
+		      {
+			    //sendDriveCommand(0.0, 0.0); 
+			      Wheels.left = 0.0;
+			      Wheels.right = 0.0;
+			    cout << "done rotating: RIGHT 90" << endl;
+			    //step = 13;
+			     // initialMove = false;
+			     // mapTesting = true;
+		      }
+		      else {
+			    //sendDriveCommand(30.0, -30.0);
+			    Wheels.left = 30;
+			    Wheels.right = -30.0;
+		      }
+
+		}
+	}
 };
 
 #endif // LOGICCONTROLLER_H
