@@ -381,6 +381,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 	}
 	else {
+		logicController->updateData(CurrentLocationOdom.x, CurrentLocationOdom.y, CurrentLocationOdom.theta);
 		currState = SPIRAL_SEARCH;
       		logicController->DoWork(currState);
 	}
