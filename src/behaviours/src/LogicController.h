@@ -247,8 +247,8 @@ class LogicController {
 			      }
 			
     }
-	Wheels->left = thisSwarmie->leftVel;
-	  Wheels->right = thisSwarmie->rightVel;
+	Wheels.left = thisSwarmie->leftVel;
+	  Wheels.right = thisSwarmie->rightVel;
   	return Wheels;
   }
 };
