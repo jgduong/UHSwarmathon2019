@@ -271,7 +271,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 
 		      cout << "initialization has run..." << endl;
-		      initialized = true;
+		      //initialized = true;
 
 		      startingTheta = currentLocationOdom.theta;
 
@@ -368,11 +368,27 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			myCoordinate.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
 			myCoordinate.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
 
-			visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
+			//visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
 
 			visitedLocationsPublisher.publish(myCoordinate);
 			Wheels = logicController->InitialRotate();
+			
+			std_msgs::Float32MultiArray initialPopf;
+			initialPopf.layout.dim.push_back(std_msgs::MultiArrayDimension());
+			initialPopf.layout.dim[0].size = 2;
+			initialPopf.layout.dim[0].stride = 1;
+			initialPopf.layout.dim[0].label = "poopf";
+			//UPDATED FROM 10 TO 25
+			initialPopf.data.push_back(normalizedValue(currX+centerOffsetX));
+			initialPopf.data.push_back(normalizedValue(currY+centerOffsetY));
+			
+			visitedLocationsPublisher.publish(initialPopf);
+			
 			sendDriveCommand(Wheels.left, Wheels.right);
+			
+			if (Wheels.left != 30.0 && Wheels.right != 30.0) {
+				initialized = true;	
+			}
 			//rotateBool = true;
 		}
     		else
