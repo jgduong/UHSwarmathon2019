@@ -186,8 +186,8 @@ class LogicController {
 			if (currTheta >= desiredTheta && currTheta < 0.0)
 			{
 				//sendDriveCommand(0.0, 0.0);
-          			Wheel.left = 0.0;
-          			Wheel.right = 0.0;
+          			Wheels.left = 0.0;
+          			Wheels.right = 0.0;
 				//rotateBool = false;
 				//hardcodedPop = true;
 				//initialMove = true;
