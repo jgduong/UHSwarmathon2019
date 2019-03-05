@@ -250,8 +250,10 @@ int main(int argc, char **argv) {
 	  return EXIT_SUCCESS;
 }
 float startingTheta;
-bool rotateBool;
+bool rotateBool = false;
 int currState;
+float centerOffsetX = 0.0;
+float centerOffsetY = 0.0;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
