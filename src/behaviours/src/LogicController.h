@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <unordered_map>
+#include <set>
 #include <math.h>
 
 #include <std_msgs/Float32MultiArray.h>
