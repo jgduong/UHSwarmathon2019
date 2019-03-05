@@ -247,7 +247,8 @@ class LogicController {
 			      }
 			
     }
-  return Wheels;
+  	return Wheels;
+  }
 };
 
 #endif // LOGICCONTROLLER_H
