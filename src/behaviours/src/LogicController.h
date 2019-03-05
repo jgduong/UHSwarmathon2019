@@ -91,6 +91,8 @@ class LogicController {
     	int prevState;
     	int currState;
     	struct wheels Wheels;
+	unordered_map<float, set<float>> visitedLocations;
+	
     	//priority_queue<Controller> ControllerQueue;
   
     	LogicController() {}
@@ -148,10 +150,13 @@ class LogicController {
 	    	centerOffsetY = y;
 		spiralSearchController.setCenterOffset(x, y);
 	  }
-
+		
+	int step = 1;
 	  struct wheels InitialRotate() {
-			//Rotate to starting position...
+		//Rotate to starting position...
 		  float ninetyRotate = currTheta;
+		  float step2X;
+		  float step2Y;
 		  cout << "Current theta is: " << currTheta << endl;
 			/*
 		  std_msgs::Float32MultiArray myCoordinate;
@@ -167,9 +172,12 @@ class LogicController {
 
 			visitedLocationsPublisher.publish(myCoordinate);
 		  */
+		  if (step == 1) {
 			cout << "step 2: rotating 90 degrees left..." << endl;
+			  
+			  visitedLocations[normalizedValue(currX)].insert(normalizedValue(currY));
 
-			geometry_msgs::Point tempLocal;
+			//geometry_msgs::Point tempLocal;
 
 			float turnSize = 1.5;
 			bool exceedMag = false;
@@ -198,6 +206,7 @@ class LogicController {
 					initialPosY = currY;
 
 					cout << "done rotating" << endl;
+					step = 2;
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
@@ -225,6 +234,7 @@ class LogicController {
 					initialPosX = currX;
 					initialPosY = currY;
 					cout << "done rotating" << endl;
+					step = 2;
 
 				 }	//else, turn right
 				 else {
@@ -233,7 +243,90 @@ class LogicController {
 					Wheels.right = 30.0;
 				 }
 
+			}
 		}
+		
+		else if (step == 2)
+		{	
+			cout << "step 2: rotating 90 degrees left..." << endl;
+			float turnSize = 1.5;
+			bool exceedMag = false;
+
+			ninetyRotate = currTheta;
+			if (abs(startingTheta + turnSize) >= 3.142)
+			{
+				exceedMag = true;
+			}
+			cout << "exceed magnitude value is " << exceedMag << endl;
+			if (exceedMag)
+			{
+				float desiredTheta = 0.0;
+
+				desiredTheta = -3.142 + (startingTheta - turnSize);
+				if (currTheta >= desiredTheta && currTheta < 0.0)
+				{
+					Wheels.left = 0.0;
+					Wheels.right = 0.0;
+					cout << "done rotating" << endl;
+					step = 3;
+					//initialMove = false;
+				}
+				else {
+					//sendDriveCommand(-30.0, 30.0);
+					Wheels.left = -30.0;
+					Wheels.right = 30.0;
+					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
+				}
+			}
+			else
+			{
+			      if (abs(ninetyRotate - startingTheta) >= 1.5)
+			      {
+				    //sendDriveCommand(0.0, 0.0); 
+				     Wheels.left = 0.0;
+				     Wheels.right = 0.0;
+				     cout << "done rotating" << endl;
+				     step = 3;
+				      //initialMove = false;
+
+			      }
+			      else {
+				    //sendDriveCommand(-30.0, 30.0);
+				      Wheels.left = -30.0;
+				      Wheels.right = 30.0;
+			      }
+			}
+			
+		}
+		else if (step == 3)
+		{
+			//NEW BLOK FOR INITAL POP IDEA
+			
+			
+			cout << "Moving into place to begin spiral search..." << endl;
+			//sendDriveCommand(30.0, 30.0);
+			Wheels.left = 30.0;
+			Wheels.right = 30.0;
+
+			visitedLocations[normalizedValue(currX)].insert(normalizedValue(currY));
+
+			//visitedLocationsPublisher.publish(initialPopf);
+			//cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
+			
+			//float displacement = sqrt(((currX - Step2X)*(currY - Position6X)) + ((currY - Position6Y)*(currY - Position6Y)));
+			float displacement = calcDistance(currX, currY, step2X, step2Y);
+			if (displacement >= 0.55)
+			{	//???
+				//step = 12;
+				
+				//this is temporary
+				Wheels.left = 0.0;
+				Wheels.right = 0.0;
+				startingTheta = currTheta;
+
+			}
+		}
+		
 		return Wheels;
 	  }
 };
