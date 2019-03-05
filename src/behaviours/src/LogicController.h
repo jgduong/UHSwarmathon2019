@@ -248,7 +248,7 @@ class LogicController {
 		}
 		
 		else if (step == 2)
-		{	spiralSearchController.updateTheta(currX, currY, currTheta);
+		{	spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "step 2: rotating 90 degrees left..." << endl;
 			float turnSize = 1.5;
 			bool exceedMag = false;
