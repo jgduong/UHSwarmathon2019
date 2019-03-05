@@ -173,6 +173,7 @@ class LogicController {
 			visitedLocationsPublisher.publish(myCoordinate);
 		  */
 		  if (step == 1) {
+			  spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "step 2: rotating 90 degrees left..." << endl;
 			  
 			  visitedLocations[normalizedValue(currX)].insert(normalizedValue(currY));
@@ -247,7 +248,7 @@ class LogicController {
 		}
 		
 		else if (step == 2)
-		{	
+		{	spiralSearchController.updateTheta(currX, currY, currTheta);
 			cout << "step 2: rotating 90 degrees left..." << endl;
 			float turnSize = 1.5;
 			bool exceedMag = false;
@@ -302,7 +303,7 @@ class LogicController {
 		{
 			//NEW BLOK FOR INITAL POP IDEA
 			
-			
+			spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "Moving into place to begin spiral search..." << endl;
 			//sendDriveCommand(30.0, 30.0);
 			Wheels.left = 30.0;
