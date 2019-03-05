@@ -387,7 +387,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			sendDriveCommand(Wheels.left, Wheels.right);
 			
 			if (Wheels.left == 30.0 && Wheels.right == 30.0) {
-				Wheels = turnRight90();
+				Wheels = logicController->turnRight90();
 				initialized= true;
 			}
 			//rotateBool = true;
