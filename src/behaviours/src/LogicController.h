@@ -207,6 +207,7 @@ class LogicController {
 					initialPosY = currY;
 
 					cout << "done rotating" << endl;
+					startingTheta = currTheta;
 					step = 2;
 				}
 				else {
@@ -235,6 +236,7 @@ class LogicController {
 					initialPosX = currX;
 					initialPosY = currY;
 					cout << "done rotating" << endl;
+					startingTheta = currTheta;
 					step = 2;
 
 				 }	//else, turn right
@@ -269,6 +271,7 @@ class LogicController {
 					Wheels.left = 0.0;
 					Wheels.right = 0.0;
 					cout << "done rotating" << endl;
+					startTheta = currTheta;
 					step = 3;
 					//initialMove = false;
 				}
@@ -287,6 +290,7 @@ class LogicController {
 				     Wheels.left = 0.0;
 				     Wheels.right = 0.0;
 				     cout << "done rotating" << endl;
+				     startTheta = currTheta;
 				     step = 3;
 				      //initialMove = false;
 
