@@ -55,7 +55,7 @@ typedef struct swarmie {
   }
 } Swarmie;
 
-extern Swarmie swarmie;
+extern thisSwarmie;
 
 //typedef struct swarmie Swarmie;
 
@@ -66,7 +66,7 @@ class LogicController {
   public: 
     int prevState;
     int currState;
-    Swarmie *thisSwarmie;
+    //Swarmie *thisSwarmie;
     //priority_queue<Controller> ControllerQueue;
   
     LogicController() {}
