@@ -325,10 +325,10 @@ class LogicController {
 			
 			//float displacement = sqrt(((currX - Step2X)*(currY - Position6X)) + ((currY - Position6Y)*(currY - Position6Y)));
 			float displacement = calcDistance(currX, currY, step2X, step2Y);
+			
 			if (displacement >= 0.55)
 			{	//???
 				//step = 12;
-				
 				//this is temporary
 				//Wheels.left = 0.0;
 				//Wheels.right = 0.0;
