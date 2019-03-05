@@ -265,7 +265,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	
 	if (!initialized)
-  	{
+  	{	logicController->updateData(currentLocationOdom.x, currentLocationOdom.y, currentLocationOdom.theta);
 		cout << "not initialized detected... " << endl;
     		if (timerTimeElapsed > startDelayInSeconds)
 		{
