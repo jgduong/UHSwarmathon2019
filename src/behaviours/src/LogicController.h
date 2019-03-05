@@ -55,6 +55,8 @@ struct swarmie {
   }
 };
 
+typedef struct swarmie Swarmie;
+
 class LogicController {
   private:
     SpiralSearchController spiralSearchController;
@@ -62,7 +64,7 @@ class LogicController {
   public: 
     int prevState;
     int currState;
-    swarmie *thisSwarmie;
+    Swarmie *thisSwarmie;
     //priority_queue<Controller> ControllerQueue;
   
     LogicController() {}
@@ -70,8 +72,8 @@ class LogicController {
     LogicController(float initialX, float initialY, float initialTheta) {
        prevState = 0;
        currState = 0;
-       swarmie *Swarmie = new swarmie(initialX, initialY, initialTheta);
-       thisSwarmie = Swarmie;
+       Swarmie *tempSwarmie = new swarmie(initialX, initialY, initialTheta);
+       thisSwarmie = tempSwarmie;
     }
 /*  
     void updateQueue(int state) {
