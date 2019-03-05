@@ -55,6 +55,8 @@ typedef struct swarmie {
   }
 } Swarmie;
 
+extern Swarmie swarmie;
+
 //typedef struct swarmie Swarmie;
 
 class LogicController {
