@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-//#include <math.h>
+#include <math.h>
 //#include <unordered_map>
 //#include <set>
 
@@ -16,15 +16,15 @@
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int16.h>
 #include <std_msgs/UInt8.h>
-//#include <std_msgs/String.h>
+#include <std_msgs/String.h>
 #include <sensor_msgs/Joy.h>
 #include <sensor_msgs/Range.h>
 #include <geometry_msgs/Pose2D.h>
 #include <geometry_msgs/Twist.h>
-//#include <geometry_msgs/Point.h>
+#include <geometry_msgs/Point.h>
 #include <nav_msgs/Odometry.h>
 #include <apriltags_ros/AprilTagDetectionArray.h>
-//#include <std_msgs/Float32MultiArray.h>
+#include <std_msgs/Float32MultiArray.h>
 #include <std_msgs/MultiArrayDimension.h>
 #include "swarmie_msgs/Waypoint.h"
 
@@ -32,7 +32,7 @@
 #include "LogicController.h"
 #include <vector>
 
-//#include "Point.h"
+#include "Point.h"
 #include "Tag.h"
 
 // To handle shutdown signals so the node quits
