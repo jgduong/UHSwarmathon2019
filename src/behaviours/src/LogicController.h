@@ -37,7 +37,8 @@ enum actions {
   rotate
 };
 */
-extern typedef struct swarmie {
+/*
+typedef struct swarmie {
   float currX;
   float currY;
   float currTheta;
@@ -54,7 +55,7 @@ extern typedef struct swarmie {
     //action = 0;
   }
 } Swarmie;
-
+*/
 //extern Swarmie thisSwarmie;
 
 //typedef struct swarmie Swarmie;
@@ -62,6 +63,24 @@ extern typedef struct swarmie {
 class LogicController {
   private:
     SpiralSearchController spiralSearchController;
+  
+   typedef struct swarmie {
+    float currX;
+    float currY;
+    float currTheta;
+    float leftVel;
+    float rightVel;
+    //int action;
+
+    swarmie(float x, float y, float theta) {
+      currX = x;
+      currY = y;
+      currTheta = theta;
+      leftVel = 0;
+      rightVel = 0;
+      //action = 0;
+    }
+   } Swarmie;
   
   public: 
     int prevState;
