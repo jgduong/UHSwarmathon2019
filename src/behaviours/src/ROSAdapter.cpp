@@ -354,8 +354,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerOffsetY = 1.207*sin(3.142/4) + 0.45;
 				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45 << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45 << endl;
 			}
-			
-			rotateBool = true;
+			logicController.setCenterOffset(centerOffsetX, centerOffsetY);
+			logicController.InitialRotate();
+			//rotateBool = true;
 		}
     		else
     		{
