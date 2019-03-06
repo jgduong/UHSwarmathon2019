@@ -346,7 +346,7 @@ class LogicController {
 		float turnSize = -1.5;
 		bool exceedMag = false;
 
-		ninetyRotate = currTheta;
+		float ninetyRotate = currTheta;
 		if (abs(startingTheta + turnSize) >= 3.142)
 		{
 			exceedMag = true;
@@ -370,7 +370,7 @@ class LogicController {
 			else {
 				//sendDriveCommand(30.0, -30.0);
 				Wheels.left = 30.0;
-				Wheels.right = -30.0
+				Wheels.right = -30.0;
 				cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 			}
 			
