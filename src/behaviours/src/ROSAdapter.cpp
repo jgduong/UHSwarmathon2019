@@ -393,7 +393,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				rotate2 = true;
 			}
 			if (rotate2) {
-				float displacement = calcDistance(currX, currY, step2X, step2Y);
+				float displacement = calcDistance(currentLocationOdom.x, currentLocationOdom.y, step2X, step2Y);
 				if (displacement >= 0.55) {
 					Wheels = logicController->turnRight90();
 					if (Wheels.left == 0.0 && Wheels.right == 0.0) {
