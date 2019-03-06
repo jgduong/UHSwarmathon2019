@@ -319,7 +319,7 @@ class LogicController {
 			Wheels.right = 30.0;
 
 			visitedLocations[normalizedValue(currX)].insert(normalizedValue(currY));
-
+			startingTheta = currTheta;
 			//visitedLocationsPublisher.publish(initialPopf);
 			//cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
 			
@@ -348,7 +348,7 @@ class LogicController {
 		float turnSize = -1.5;
 		bool exceedMag = false;
 		
-		startingTheta = currTheta;
+		
 		float ninetyRotate = currTheta;
 		if (abs(startingTheta + turnSize) >= 3.142)
 		{
