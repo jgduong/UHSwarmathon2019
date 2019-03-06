@@ -341,7 +341,7 @@ class LogicController {
 	  }
 	
 	struct wheels turnRight90() {
-		spiralSearchController.updateData()
+		spiralSearchController.updateData(currX, currY, currTheta);
 		cout << "rotating right to begin spiral search..." << endl;
 		float turnSize = -1.5;
 		bool exceedMag = false;
