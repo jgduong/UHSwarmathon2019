@@ -256,6 +256,8 @@ int currState;
 float centerOffsetX = 0.0;
 float centerOffsetY = 0.0;
 bool rotate2 = false;
+float step2X;
+float step2Y;
 struct wheels Wheels;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -388,8 +390,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			
 			if (Wheels.left == 30.0 && Wheels.right == 30.0) {
 				//2nd rotate done 
-				float step2X = currentLocationOdom.x;
-				float step2Y = currentLocationOdom.y;
+				step2X = currentLocationOdom.x;
+				step2Y = currentLocationOdom.y;
 				rotate2 = true;
 			}
 			if (rotate2) {
