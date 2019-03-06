@@ -324,10 +324,11 @@ class LogicController {
 			//cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
 			
 			//float displacement = sqrt(((currX - Step2X)*(currY - Position6X)) + ((currY - Position6Y)*(currY - Position6Y)));
-			float displacement = calcDistance(currX, currY, step2X, step2Y);
+			/*float displacement = calcDistance(currX, currY, step2X, step2Y);
 			
 			if (displacement >= 0.55)
 			{	//???
+				
 				//step = 12;
 				//this is temporary
 				//Wheels.left = 0.0;
@@ -335,6 +336,7 @@ class LogicController {
 				startingTheta = currTheta;
 
 			}
+			*/
 		}
 		
 		return Wheels;
