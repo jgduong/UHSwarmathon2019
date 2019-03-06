@@ -347,7 +347,8 @@ class LogicController {
 		cout << "rotating right to begin spiral search..." << endl;
 		float turnSize = -1.5;
 		bool exceedMag = false;
-
+		
+		startingTheta = currTheta;
 		float ninetyRotate = currTheta;
 		if (abs(startingTheta + turnSize) >= 3.142)
 		{
