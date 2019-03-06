@@ -255,7 +255,7 @@ bool rotateBool = false;
 int currState;
 float centerOffsetX = 0.0;
 float centerOffsetY = 0.0;
-
+bool rotate2 = false;
 struct wheels Wheels;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -387,8 +387,19 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			sendDriveCommand(Wheels.left, Wheels.right);
 			
 			if (Wheels.left == 30.0 && Wheels.right == 30.0) {
-				Wheels = logicController->turnRight90();
-				initialized= true;
+				//2nd rotate done 
+				float step2X = currentLocationOdom.x;
+				float step2Y = currentLocationOdom.y;
+				rotate2 = true;
+			}
+			if (rotate2) {
+				float displacement = calcDistance(currX, currY, step2X, step2Y);
+				if (displacement >= 0.55) {
+					Wheels = logicController->turnRight90();
+					if (Wheels.left == 0.0 && Wheels.right == 0.0) {
+						initialized= true;
+					}
+				}	
 			}
 			//rotateBool = true;
 		}
