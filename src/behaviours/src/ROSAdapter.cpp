@@ -386,7 +386,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			
 			visitedLocationsPublisher.publish(initialPopf);
 			
-			sendDriveCommand(Wheels.left, Wheels.right);
+			
 			
 			if (Wheels.left == 30.0 && Wheels.right == 30.0 && !rotate2) {
 				//2nd rotate done 
@@ -396,6 +396,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			if (rotate2) {
 				float displacement = calcDistance(currentLocationOdom.x, currentLocationOdom.y, step2X, step2Y);
+				cout << "displacement is: " << displacement << endl;
 				if (displacement >= 0.55) {
 					Wheels = logicController->turnRight90();
 					if (Wheels.left == 0.0 && Wheels.right == 0.0) {
@@ -403,6 +404,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					}
 				}	
 			}
+			sendDriveCommand(Wheels.left, Wheels.right);
 			//rotateBool = true;
 		}
     		else
