@@ -92,7 +92,7 @@ class SpiralSearchController {
       {
         float xWall = normalizedValue(newX);
         float yWall = normalizedValue(newY);
-        FrontError = sqrt((xWall - (currX))*(xWall - (currX)) + (yWall - (currentY))*(yWall - (currY)));
+        FrontError = sqrt((xWall - (currX))*(xWall - (currX)) + (yWall - (currY))*(yWall - (currY)));
       }
       else {
         FrontError = 2;
