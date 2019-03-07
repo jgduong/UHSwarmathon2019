@@ -408,6 +408,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 	}
 	else {
+		
+		cout << "current location is: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		std_msgs::Float32MultiArray currLocation;
 		currLocation.layout.dim.push_back(std_msgs::MultiArrayDimension());
 		currLocation.layout.dim[0].size = 2;
@@ -422,6 +424,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		logicController->addVisitedLocation(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.x + centerOffsetX));
 		
 		//temporarily setting the state to spiral search
+		
 		currState = SPIRAL_SEARCH;
       		Wheels = logicController->DoWork(currState);
 		sendDriveCommand(Wheels.left, Wheels.right);
