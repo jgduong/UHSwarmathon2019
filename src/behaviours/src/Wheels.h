@@ -1,4 +1,4 @@
-#ifdef WHEELS_H
+#ifndef WHEELS_H
 #define WHEELS_H
 
 struct wheels {
