@@ -31,7 +31,7 @@ class SpiralSearchController {
       centerOffsetY = y;
     }
 
-    bool isVisited(float x, float y) {
+    bool isVisited(float x, float y, const unordered_map<float, set<float>> &visitedLocations) {
     if (visitedLocations.find(x) != visitedLocations.end()) {
       //x location exists in hashmap, check y coordinate
       if (visitedLocations[x].find(y) != visitedLocations[x].end()) {
@@ -47,9 +47,9 @@ class SpiralSearchController {
       }
     }
     
-    struct wheels DoWork(const unordered_map &visitedLocations) {
+    struct wheels DoWork(const unordered_map<float, set<float>> &visitedLocations) {
       cout << "test: current location (" << currX << ", " << currY << ")";
-      if (visitedLocations.find(currX) != visitedLocations.end() && visitedLocations[currX].find(currY) != visitedLocations[currX].end())
+      if (isVisited(currX, currY, visitedLocations)
       {
         cout << "exists in the hashmap" << endl;
       }
