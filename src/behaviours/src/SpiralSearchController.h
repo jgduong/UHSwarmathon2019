@@ -14,7 +14,7 @@ class SpiralSearchController {
   
     float centerOffsetX;
     float centerOffsetY;
-    wheels Wheels;
+    struct wheels Wheels;
     Wheels.left = 0.0;
     Wheels.right = 0.0;
   
