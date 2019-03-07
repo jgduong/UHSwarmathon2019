@@ -74,6 +74,7 @@ float normalizedValue(float x)
 //extern Swarmie thisSwarmie;
 
 //typedef struct swarmie Swarmie;
+extern typedef unordered_map<float, set<float>> hashmap;
 
 class LogicController {
   private:
@@ -91,7 +92,7 @@ class LogicController {
     	int prevState;
     	int currState;
     	struct wheels Wheels;
-	typedef unordered_map<float, set<float>> hashmap;
+	
 	hashmap visitedLocations;
 	
     	//priority_queue<Controller> ControllerQueue;
