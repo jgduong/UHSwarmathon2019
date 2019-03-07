@@ -78,7 +78,7 @@ class SpiralSearchController {
         newX = normalizedValue(currX + m*0.25*cos(currTheta));
         newY = normalizedValue(currY + m*0.25*sin(currTheta));
         cout << "current x, y" << currX << ", " << currY  << endl;
-        if (isVisited(normalizedValue(newX), normalizedValue(newY)), visitedLocations)
+        if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
         {
           cout << "Front vector ended at m = " << m << "after checking: " << newX << ", " << newY << endl;
           maxFrontError = false;
@@ -125,7 +125,7 @@ class SpiralSearchController {
         newX = normalizedValue(currX+ n*0.25*cos(currTheta - 1.571));
         newY = normalizedValue(currY + n*0.25*sin(currTheta - 1.571));
 
-        if (isVisited(normalizedValue(newX), normalizedValue(newY)))
+        if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
         {
           cout << "Right vector ended at n = " << n << "after checking: " << normalizedValue(newX) << ", " << normalizedValue(newY) << endl;
           maxRightError = false;
