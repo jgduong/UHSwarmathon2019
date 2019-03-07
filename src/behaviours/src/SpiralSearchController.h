@@ -2,7 +2,8 @@
 #include <unordered_map>
 #include <set>
 #include "Wheels.h"
-#include "LogicController.h"
+#include "normalizedValue.h"
+//#include "LogicController.h"
 using namespace std;
 
 class SpiralSearchController {
