@@ -258,6 +258,7 @@ float centerOffsetY = 0.0;
 bool rotate2 = false;
 float step2X;
 float step2Y;
+bool centerInit = true;
 struct wheels Wheels;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -278,7 +279,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		      startingTheta = currentLocationOdom.theta;
 
 		      //cout << "startingTheta is: " << startingTheta << endl;
-
+	
 		      centerLocationOdom.x = currentLocationOdom.x;
 		      centerLocationOdom.y = currentLocationOdom.y;
 		      //centerLocationOdom.theta = currentLocation.theta;
@@ -295,64 +296,72 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			//TEMPORARY TESTING FOR CENTER OFFSET
 			//2/11/19, increased intensity of starting positions, from 0.2 to 0.325 to 0.5 and now 0.45
 			//calculates the center offset based on starting location
-			if ((currentLocationOdom.theta >= -0.15 && currentLocationOdom.theta <= 0) || (currentLocationOdom.theta<= 0.15 && currentLocationOdom.theta >= 0))
+			if (centerInit && ((currentLocationOdom.theta >= -0.15 && currentLocationOdom.theta <= 0) || (currentLocationOdom.theta<= 0.15 && currentLocationOdom.theta >= 0)))
 			{
+				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x - 1.0 - 0.45;
 				centerLocationOdom.y = currentLocationOdom.y;
 				centerOffsetX = -1.0 -0.45;
 				centerOffsetY = 0.0;
 				cout << "current location is: " << currentLocationOdom.x + 1.45 << ", " << currentLocationOdom.y << endl;
 			}
-			else if(currentLocationOdom.theta >= 0.6 && currentLocationOdom.theta<= 0.9)
+			else if(centerInit && (currentLocationOdom.theta >= 0.6 && currentLocationOdom.theta<= 0.9))
 			{
+				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x - 1.207*cos(3.142/4) - 0.45;
 				centerLocationOdom.y = currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45;
 				centerOffsetX = -1.207*cos(3.142/4) - 0.45;
 				centerOffsetY = -1.207*sin(3.142/4) - 0.45;
 				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45<< ", " << currentLocationOdom.y + 1.207*sin(3.142/4) +0.5<< endl;
 			}
-			else if(currentLocationOdom.theta >= 1.35 && currentLocationOdom.theta<= 1.65)
+			else if(centerInit && (currentLocationOdom.theta >= 1.35 && currentLocationOdom.theta<= 1.65))
 			{
+				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x;
 				centerLocationOdom.y = currentLocationOdom.y - 1.0 - 0.45;
 				centerOffsetX = 0.0;
 				centerOffsetY = -1.0 - 0.45;
 				cout << "current location is: " << currentLocationOdom.x << ", " << currentLocationOdom.y + 0.45 + 1.0 << endl;
 			}
-			else if(currentLocationOdom.theta >= 2.1 && currentLocationOdom.theta<= 2.4)
+			else if(centerInit && (currentLocationOdom.theta >= 2.1 && currentLocationOdom.theta<= 2.4))
 			{
+				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45;
 				centerLocationOdom.y = currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45;
 				centerOffsetX = 1.207*cos(3.142/4) + 0.45;
 				centerOffsetY = -1.207*sin(3.142/4) - 0.45;
 				cout << "current location is: " << currentLocationOdom.x - 1.207*cos(3.142/4) - 0.45 << ", " << currentLocationOdom.y + 1.207*sin(3.142/4) + 0.45<< endl;
 			}
-			else if((currentLocationOdom.theta >= 2.85) || (currentLocationOdom.theta <= -2.85))
+			else if(centerInit && ((currentLocationOdom.theta >= 2.85) || (currentLocationOdom.theta <= -2.85)))
 			{
+				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x + 1.0 + 0.45;
 				centerLocationOdom.y = currentLocationOdom.y;
 				centerOffsetX = 1.0 + 0.45;
 				centerOffsetY = 0.0;
 				cout << "current location is: " << currentLocationOdom.x - 1.0 - 0.45 << ", " << currentLocationOdom.y << endl;
 			}
-			else if(currentLocationOdom.theta >= -2.4 && currentLocationOdom.theta <= -2.1)
+			else if(centerInit && (currentLocationOdom.theta >= -2.4 && currentLocationOdom.theta <= -2.1))
 			{
+				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45;
 				centerLocationOdom.y = currentLocationOdom.y + 1.207*sin(3.142/4) + 0.45;
 				centerOffsetX = 1.207*cos(3.142/4) + 0.45;
 				centerOffsetY = 1.207*sin(3.142/4) + 0.45;
 				cout << "current location is: " << currentLocationOdom.x - 1.207*cos(3.142/4) - 0.45 << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45 << endl;
 			}
-			else if(currentLocationOdom.theta >= -1.65 && currentLocationOdom.theta <= -1.35)
+			else if(centerInit && (currentLocationOdom.theta >= -1.65 && currentLocationOdom.theta <= -1.35))
 			{
+				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x;
 				centerLocationOdom.y = currentLocationOdom.y + 1.0 + 0.45;
 				centerOffsetX = 0.0;
 				centerOffsetY = 1.0 + 0.45;
 				cout << "current location is: " << currentLocationOdom.x << ", " << currentLocationOdom.y - 1.0 - 0.45<< endl;
 			}
-			else if(currentLocationOdom.theta >= -0.9 && currentLocationOdom.theta<= -0.6)
+			else if(centerInit && (currentLocationOdom.theta >= -0.9 && currentLocationOdom.theta<= -0.6))
 			{
+				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x - 1.207*cos(3.142/4) - 0.45;
 				centerLocationOdom.y = currentLocationOdom.y + 1.207*sin(3.142/4) + 0.45;
 				centerOffsetX = -1.207*cos(3.142/4) - 0.45;
@@ -420,8 +429,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		currLocation.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
 		visitedLocationsPublisher.publish(currLocation);
 		
-		logicController->updateData(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.x + centerOffsetX), currentLocationOdom.theta);
-		logicController->addVisitedLocation(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.x + centerOffsetX));
+		logicController->updateData(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.y+ centerOffsetY), currentLocationOdom.theta);
+		logicController->addVisitedLocation(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.y + centerOffsetY));
 		
 		//temporarily setting the state to spiral search
 		
