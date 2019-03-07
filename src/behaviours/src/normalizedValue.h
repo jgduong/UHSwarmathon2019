@@ -1,3 +1,6 @@
+#ifndef NORMALIZEDVALUE_H
+#define NORMALIZEDVALUE_H
+
 float normalizedValue(float x)
 {
 	float temp = x * 100;
@@ -14,3 +17,5 @@ float normalizedValue(float x)
 		return n*0.25;
 	}
 }
+
+#endif
