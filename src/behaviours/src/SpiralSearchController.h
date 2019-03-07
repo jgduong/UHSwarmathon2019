@@ -1,14 +1,9 @@
 #include <iostream>
 #include <unordered_map>
 #include <set>
+#include "Wheels.h"
 //#include "LogicController.h"
 using namespace std;
-
-struct wheels {
-  float left;
-  float right;
-};
-
 
 class SpiralSearchController {
 
