@@ -261,7 +261,7 @@ bool rotate2 = false;
 float step2X;
 float step2Y;
 bool centerInit = true;
-struct wheels Wheels;
+wheels Wheels;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
