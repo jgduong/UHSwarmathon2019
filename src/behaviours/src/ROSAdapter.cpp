@@ -277,7 +277,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		      startingTheta = currentLocationOdom.theta;
 
-		      cout << "startingTheta is: " << startingTheta << endl;
+		      //cout << "startingTheta is: " << startingTheta << endl;
 
 		      centerLocationOdom.x = currentLocationOdom.x;
 		      centerLocationOdom.y = currentLocationOdom.y;
