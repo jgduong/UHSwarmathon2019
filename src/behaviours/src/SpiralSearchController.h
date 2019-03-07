@@ -19,7 +19,9 @@ class SpiralSearchController {
   
     float centerOffsetX;
     float centerOffsetY;
-    struct wheels *Wheels;
+    struct wheels Wheels;
+    Wheels.left = 0.0;
+    Wheels.right = 0.0;
   
     void updateData(float x, float y, float theta) {
       currX = x;
@@ -60,7 +62,7 @@ class SpiralSearchController {
       //cout << "Theta = " << currTheta << endl;
       Wheels->left = 0.0;
       Wheels->right = 0.0;
-      return *Wheels;
+      return Wheels;
     }
 
 
