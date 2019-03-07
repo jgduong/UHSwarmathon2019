@@ -14,6 +14,7 @@ using namespace std;
 #define LOGICCONTROLLER_H
 
 #include "Wheels.h"
+#include "normalizedValue.h"
 #include "Controller.h"
 #include "SpiralSearchController.h"
 /*
