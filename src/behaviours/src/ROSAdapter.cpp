@@ -399,7 +399,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					}
 				}	
 			}
-			//sendDriveCommand(Wheels.left, Wheels.right);
+			sendDriveCommand(Wheels.left, Wheels.right);
 			//rotateBool = true;
 		}
     		else
@@ -424,10 +424,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//temporarily setting the state to spiral search
 		currState = SPIRAL_SEARCH;
       		Wheels = logicController->DoWork(currState);
+		sendDriveCommand(Wheels.left, Wheels.right);
 	}
 	  
 	humanTime();
-	sendDriveCommand(Wheels.left, Wheels.right);
+	
 		
 }
 
