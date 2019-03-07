@@ -3,12 +3,12 @@
 #include <set>
 //#include "LogicController.h"
 using namespace std;
-/*
+
 struct wheels {
   float left;
   float right;
 };
-*/
+
 
 class SpiralSearchController {
 
