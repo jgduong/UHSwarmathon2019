@@ -15,8 +15,8 @@ class SpiralSearchController {
     float centerOffsetX;
     float centerOffsetY;
     wheels Wheels;
-    Wheels.left = 0.0;
-    Wheels.right = 0.0;
+    Wheels->left = 0.0;
+    Wheels->right = 0.0;
   
     void updateData(float x, float y, float theta) {
       currX = x;
