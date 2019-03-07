@@ -34,6 +34,7 @@
 #include <vector>
 
 #include "Wheels.h"
+#include "normalizedValue.h"
 #include "Point.h"
 #include "Tag.h"
 
