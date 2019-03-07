@@ -57,8 +57,8 @@ class SpiralSearchController {
       //cout << "Spiral Search Controller is working" << endl;
       //cout << "Current Location: (" << currX << ", " << currY << ")" << endl;
       //cout << "Theta = " << currTheta << endl;
-      Wheels->left = 0.0;
-      Wheels->right = 0.0;
+      Wheels.left = 0.0;
+      Wheels.right = 0.0;
       return Wheels;
     }
 
