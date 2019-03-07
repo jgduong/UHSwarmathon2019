@@ -79,7 +79,7 @@ class LogicController {
     	float centerOffsetY;
     	int prevState;
     	int currState;
-    	struct wheels Wheels;
+    	wheels Wheels;
 	unordered_map<float, set<float>> visitedLocations;
 	
     	//priority_queue<Controller> ControllerQueue;
@@ -102,7 +102,7 @@ class LogicController {
 		Wheels.right = 0.0;
     	}
 
-	  struct wheels DoWork(int state) {
+	  wheels DoWork(int state) {
 	    if (state == SPIRAL_SEARCH) {
 	      Wheels = spiralSearchController.DoWork(visitedLocations);
 	    }
@@ -327,7 +327,7 @@ class LogicController {
 		visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 	}
 	
-	struct wheels turnRight90() {
+	wheels turnRight90() {
 		spiralSearchController.updateData(currX, currY, currTheta);
 		cout << "rotating right to begin spiral search..." << endl;
 		float turnSize = -1.5;
