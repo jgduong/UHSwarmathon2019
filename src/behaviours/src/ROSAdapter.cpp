@@ -4,6 +4,7 @@
 //#include <set>
 
 // ROS libraries
+
 #include <angles/angles.h>
 #include <random_numbers/random_numbers.h>
 #include <tf/transform_datatypes.h>
@@ -32,6 +33,7 @@
 #include "LogicController.h"
 #include <vector>
 
+#include "Wheels.h"
 #include "Point.h"
 #include "Tag.h"
 
