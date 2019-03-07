@@ -115,15 +115,8 @@ class LogicController {
     	}
 
 	  struct wheels DoWork(int state) {
-	    /*
-	    Controller *currController;
-	    for (int i = ControllerQueue.size(); i > 0; i--) {
-		currController = ControllerQueue.pop();
-		currController.DoWork();
-	    }
-	    */
 	    if (state == SPIRAL_SEARCH) {
-	      Wheels = spiralSearchController.DoWork(currX, currY, currTheta);
+	      Wheels = spiralSearchController.DoWork(visitedLocations);
 	    }
 	    else if (state == AVOID_OBSTACLE) {
 	      //ObstacleController.DoWork();
@@ -175,7 +168,7 @@ class LogicController {
 			visitedLocationsPublisher.publish(myCoordinate);
 		  */
 		  if (step == 1) {
-			  spiralSearchController.updateData(currX, currY, currTheta);
+			spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "step 1: rotating 90 degrees left..." << endl;
 
 			//geometry_msgs::Point tempLocal;
