@@ -432,7 +432,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		logicController->updateData(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.y+ centerOffsetY), currentLocationOdom.theta);
 		cout << "logicController data updated" << endl;
 		logicController->addVisitedLocation(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.y + centerOffsetY));
-		
+		cout << "location added to hashmap" << endl;
 		//temporarily setting the state to spiral search
 		
 		currState = SPIRAL_SEARCH;
