@@ -14,7 +14,7 @@ class SpiralSearchController {
   
     float centerOffsetX;
     float centerOffsetY;
-    struct wheels Wheels;
+    wheels Wheels;
     Wheels.left = 0.0;
     Wheels.right = 0.0;
   
@@ -45,7 +45,7 @@ class SpiralSearchController {
         }
     }
     
-    struct wheels DoWork(unordered_map<float, set<float>> &visitedLocations) {
+    wheels DoWork(unordered_map<float, set<float>> &visitedLocations) {
       cout << "test: current location (" << currX << ", " << currY << ")";
       if (isVisited(currX, currY, visitedLocations))
       {
