@@ -60,7 +60,7 @@ class SpiralSearchController {
       //cout << "Theta = " << currTheta << endl;
       Wheels->left = 0.0;
       Wheels->right = 0.0;
-      return Wheels;
+      return *Wheels;
     }
 
 
