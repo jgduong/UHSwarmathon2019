@@ -47,7 +47,7 @@ class SpiralSearchController {
       }
     }
     
-    struct wheels DoWork(hashmap &visitedLocations) {
+    struct wheels DoWork(const unordered_map &visitedLocations) {
       cout << "test: current location (" << currX << ", " << currY << ")";
       if (visitedLocations.find(currX) != visitedLocations.end() && visitedLocations[currX].find(currY) != visitedLocations[currX].end())
       {
