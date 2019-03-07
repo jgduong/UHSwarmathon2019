@@ -363,7 +363,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			
 			//visitedLocations[normalizedValue(currentLocationOdom.x + centerOffsetX)].insert(normalizedValue(currentLocationOdom.Y + centerOffsetY));
 			if (!rotate2) {
-				addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
+				addVisitedLocations(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
 				Wheels = logicController->InitialRotate();
 			}
 			
