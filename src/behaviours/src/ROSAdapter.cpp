@@ -418,8 +418,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		currLocation.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
 		visitedLocationsPublisher.publish(currLocation);
 		
-		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
-		logicController->addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
+		logicController->updateData(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.x + centerOffsetX), currentLocationOdom.theta);
+		logicController->addVisitedLocation(normalizedValue(currentLocationOdom.x + centerOffsetX), normalizedValue(currentLocationOdom.x + centerOffsetX));
 		
 		//temporarily setting the state to spiral search
 		currState = SPIRAL_SEARCH;
