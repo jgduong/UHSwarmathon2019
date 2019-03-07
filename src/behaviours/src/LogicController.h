@@ -13,6 +13,7 @@ using namespace std;
 #ifndef LOGICCONTROLLER_H
 #define LOGICCONTROLLER_H
 
+#include "Wheels.h"
 #include "Controller.h"
 #include "SpiralSearchController.h"
 /*
@@ -36,20 +37,6 @@ enum States{
   DROPOFF,
   FIND_SPIRAL_EDGE
 };
-/*
-enum actions {
-  stop = 0,
-  driveStraight,
-  rotate
-};
-*/
-
-/*
-struct wheels {
-  float left;
-  float right;
-};
-*/
 
 float calcDistance(float curX, float curY, float goalX, float goalY) {
 	float dist = sqrt( (goalX - curX)*(goalX - curX) + (goalY - curY)*(goalY - curY) );
