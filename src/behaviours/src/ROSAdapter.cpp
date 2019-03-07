@@ -267,7 +267,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	
 	if (!initialized)
-  	{	logicController->updateData(currentLocationOdom.x, currentLocationOdom.y, currentLocationOdom.theta);
+  	{	logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 		cout << "not initialized detected... " << endl;
     		if (timerTimeElapsed > startDelayInSeconds)
 		{
@@ -361,52 +361,45 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 			
-			std_msgs::Float32MultiArray myCoordinate;
-			myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
-			myCoordinate.layout.dim[0].size = 2;
-			myCoordinate.layout.dim[0].stride = 1;
-			myCoordinate.layout.dim[0].label = "poop";
-
-			myCoordinate.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
-			myCoordinate.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
-
-			//visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
-
-			visitedLocationsPublisher.publish(myCoordinate);
+			//visitedLocations[normalizedValue(currentLocationOdom.x + centerOffsetX)].insert(normalizedValue(currentLocationOdom.Y + centerOffsetY));
 			if (!rotate2) {
+				addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
 				Wheels = logicController->InitialRotate();
 			}
 			
-			std_msgs::Float32MultiArray initialPopf;
-			initialPopf.layout.dim.push_back(std_msgs::MultiArrayDimension());
-			initialPopf.layout.dim[0].size = 2;
-			initialPopf.layout.dim[0].stride = 1;
-			initialPopf.layout.dim[0].label = "poopf";
-			//UPDATED FROM 10 TO 25
-			initialPopf.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
-			initialPopf.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
-			
-			visitedLocationsPublisher.publish(initialPopf);
 			
 			
 			
 			if (Wheels.left == 30.0 && Wheels.right == 30.0 && !rotate2) {
 				//2nd rotate done 
-				step2X = currentLocationOdom.x;
-				step2Y = currentLocationOdom.y;
+				step2X = currentLocationOdom.x + centerOffsetX;
+				step2Y = currentLocationOdom.y + centerOffsetY;
 				rotate2 = true;
 			}
 			if (rotate2) {
-				float displacement = calcDistance(currentLocationOdom.x, currentLocationOdom.y, step2X, step2Y);
+				float displacement = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, step2X, step2Y);
 				cout << "displacement is: " << displacement << endl;
+				logicController->addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
+				
+				std_msgs::Float32MultiArray initialPopf;
+				initialPopf.layout.dim.push_back(std_msgs::MultiArrayDimension());
+				initialPopf.layout.dim[0].size = 2;
+				initialPopf.layout.dim[0].stride = 1;
+				initialPopf.layout.dim[0].label = "initialLoc";
+				//UPDATED FROM 10 TO 25
+				initialPopf.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+				initialPopf.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+				visitedLocationsPublisher.publish(initialPopf);
+				
 				if (displacement >= 0.55) {
+					
 					Wheels = logicController->turnRight90();
 					if (Wheels.left == 0.0 && Wheels.right == 0.0) {
 						initialized= true;
 					}
 				}	
 			}
-			sendDriveCommand(Wheels.left, Wheels.right);
+			//sendDriveCommand(Wheels.left, Wheels.right);
 			//rotateBool = true;
 		}
     		else
@@ -415,13 +408,26 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 	}
 	else {
-		logicController->updateData(currentLocationOdom.x, currentLocationOdom.y, currentLocationOdom.theta);
+		std_msgs::Float32MultiArray currLocation;
+		currLocation.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		currLocation.layout.dim[0].size = 2;
+		currLocation.layout.dim[0].stride = 1;
+		currLocation.layout.dim[0].label = "currLoc";
+		//UPDATED FROM 10 TO 25
+		currLocation.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+		currLocation.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+		visitedLocationsPublisher.publish(currLocation);
+		
+		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
+		logicController->addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
+		
+		//temporarily setting the state to spiral search
 		currState = SPIRAL_SEARCH;
-      		logicController->DoWork(currState);
+      		Wheels = logicController->DoWork(currState);
 	}
 	  
 	humanTime();
-	
+	sendDriveCommand(Wheels.left, Wheels.right);
 		
 }
 
