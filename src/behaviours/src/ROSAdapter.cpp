@@ -373,7 +373,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			//visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
 
 			visitedLocationsPublisher.publish(myCoordinate);
-			Wheels = logicController->InitialRotate();
+			if (!rotate2) {
+				Wheels = logicController->InitialRotate();
+			}
 			
 			std_msgs::Float32MultiArray initialPopf;
 			initialPopf.layout.dim.push_back(std_msgs::MultiArrayDimension());
