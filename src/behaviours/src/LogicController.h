@@ -44,11 +44,12 @@ enum actions {
 };
 */
 
-
+/*
 struct wheels {
   float left;
   float right;
 };
+*/
 
 float calcDistance(float curX, float curY, float goalX, float goalY) {
 	float dist = sqrt( (goalX - curX)*(goalX - curX) + (goalY - curY)*(goalY - curY) );
