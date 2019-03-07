@@ -91,7 +91,8 @@ class LogicController {
     	int prevState;
     	int currState;
     	struct wheels Wheels;
-	unordered_map<float, set<float>> visitedLocations;
+	typedef unordered_map<float, set<float>> hashmap;
+	hashmap visitedLocations;
 	
     	//priority_queue<Controller> ControllerQueue;
   
@@ -113,7 +114,7 @@ class LogicController {
 		Wheels.right = 0.0;
     	}
 
-	  void DoWork(int state) {
+	  struct wheels DoWork(int state) {
 	    /*
 	    Controller *currController;
 	    for (int i = ControllerQueue.size(); i > 0; i--) {
@@ -122,7 +123,7 @@ class LogicController {
 	    }
 	    */
 	    if (state == SPIRAL_SEARCH) {
-	      spiralSearchController.DoWork(currX, currY, currTheta);
+	      Wheels = spiralSearchController.DoWork(currX, currY, currTheta);
 	    }
 	    else if (state == AVOID_OBSTACLE) {
 	      //ObstacleController.DoWork();
@@ -136,6 +137,7 @@ class LogicController {
 	    else if (state == FIND_SPIRAL_EDGE) {
 	      //FindEdgeController.DoWork();
 	    }
+		return Wheels;
 	  }
 
 	  void updateData(float x, float y, float theta) {
@@ -175,8 +177,6 @@ class LogicController {
 		  if (step == 1) {
 			  spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "step 1: rotating 90 degrees left..." << endl;
-			  
-			  visitedLocations[normalizedValue(currX)].insert(normalizedValue(currY));
 
 			//geometry_msgs::Point tempLocal;
 
@@ -318,7 +318,7 @@ class LogicController {
 			Wheels.left = 30.0;
 			Wheels.right = 30.0;
 
-			visitedLocations[normalizedValue(currX)].insert(normalizedValue(currY));
+			
 			startingTheta = currTheta;
 			//visitedLocationsPublisher.publish(initialPopf);
 			//cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
@@ -341,6 +341,10 @@ class LogicController {
 		
 		return Wheels;
 	  }
+	
+	void addVisitedLocation(float x, float y) {
+		visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
+	}
 	
 	struct wheels turnRight90() {
 		spiralSearchController.updateData(currX, currY, currTheta);
