@@ -48,7 +48,7 @@ class SpiralSearchController {
         }
     }
     
-    struct wheels DoWork(unordered_map<float, set<float>> &visitedLocations) {
+    struct *wheels DoWork(unordered_map<float, set<float>> &visitedLocations) {
       cout << "test: current location (" << currX << ", " << currY << ")";
       if (isVisited(currX, currY, visitedLocations))
       {
