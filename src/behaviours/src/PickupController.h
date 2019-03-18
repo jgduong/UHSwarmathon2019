@@ -44,7 +44,7 @@ public:
                 Wheels.left = -5.0;
                 Wheels.right = 6.0;
             }
-            else if (x <= 0 && x >= -0.002)
+            else if (tagX <= 0 && tagX >= -0.002)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
