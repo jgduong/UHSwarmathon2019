@@ -51,7 +51,8 @@ float calcDistance(float curX, float curY, float goalX, float goalY) {
 
 class LogicController {
   private:
-    SpiralSearchController spiralSearchController;
+    	SpiralSearchController spiralSearchController;
+	PickupController pickupController;
   
   public: 
 	float currX; 
@@ -95,7 +96,7 @@ class LogicController {
 	      //ObstacleController.DoWork();
 	    }
 	    else if (state == PICKUP) {
-	      //PickupController.DoWork();
+	      Wheels = pickupController.DoWork();
 	    }
 	    else if (state == DROPOFF) {
 	      // DropoffController.DoWork();
