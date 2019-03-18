@@ -6,9 +6,9 @@ using namespace std;
 class PickupController {
 
 private:
-    float detectionTimeout;
-    float zDistanceToCube;
-    bool approachTag;
+    float detectionTimeout = 0.0;
+    float zDistanceToCube = 0.0;
+    bool approachTag = false;
     float tagX;
     float tagY;
     float tagZ;
@@ -17,11 +17,6 @@ public:
 
     wheels Wheels;
     
-    PickUpController() {
-        detectionTimeout = 0.0;   
-        zDistanceToCube = 0.0;
-        approachTag = false;
-    }
     
     void updateTags(float x, float y, float z) {
         tagX = x;
@@ -58,7 +53,7 @@ public:
                 approachTag = true;
                 zDistanceToCube = z;
                 //aprilTagDetected = false;
-                tagPickupTimer = 0.0;
+                //tagPickupTimer = 0.0;
                 //middleStep = false;
             }
             else
