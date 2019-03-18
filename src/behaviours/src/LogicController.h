@@ -14,6 +14,7 @@ using namespace std;
 #define LOGICCONTROLLER_H
 
 #include "Wheels.h"
+#include "Tag.h"
 #include "normalizedValue.h"
 #include "Controller.h"
 #include "SpiralSearchController.h"
@@ -113,6 +114,11 @@ class LogicController {
 	    	currTheta = theta;
 		spiralSearchController.updateData(x, y, theta);
 	  }
+	
+	void updateTags(float x, float y, float z) {
+		pickupController.updateTags(x, y, z);
+		
+	}
 
 	  void setCenterOffset(float x, float y) {
 	    	centerOffsetX = x;
