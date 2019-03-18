@@ -130,7 +130,7 @@ class LogicController {
 		  //initialPop.data.push_back(x);
 		  //initialPop.data.push_back(y);
 
-		  visitedLocations[currX].insert(currY);
+		  visitedLocations[x].insert(y);
 		  //visitedLocationsPublisher.publish(initialPop);
 		  //initialPop.data.clear();
 		}
