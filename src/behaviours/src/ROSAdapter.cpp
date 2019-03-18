@@ -452,7 +452,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//temporarily setting the state to spiral search
 		
 		//currState = SPIRAL_SEARCH;
-      		Wheels = logicController->DoWork(currState);
+		if (currState == PICKUP && Wheels.left == 0.0 && Wheels.right == 0.0) {
+			
+		}
+		else {
+      			Wheels = logicController->DoWork(currState);
+		}
 		
 		if (Wheels.left == 5.0 && Wheels.right == 5.0) {
 			//centering on tag has failed (timeout), return to spiral search
@@ -504,6 +509,10 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    
 	    //logicController.SetAprilTags(tags);
 		if (currState == SPIRAL_SEARCH) {
+			//lower wrist angle switch to pickup state
+			wrist.data = 1.25;
+			wristAnglePublish.publish(wrist);
+			
 			currState = PICKUP;
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 		}
