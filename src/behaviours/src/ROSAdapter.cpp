@@ -453,6 +453,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		//currState = SPIRAL_SEARCH;
       		Wheels = logicController->DoWork(currState);
+		
+		if (Wheels.left == 5.0 && Wheels.right == 5.0) {
+			//centering on tag has failed (timeout), return to spiral search
+			currState = SPIRAL_SEARCH;
+		}
 		sendDriveCommand(Wheels.left, Wheels.right);
 	}
 	  
@@ -474,31 +479,33 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 {
 	if (message->detections.size() > 0) 
 	{
-	    vector<Tag> tags;
-	
-	    for (int i = 0; i < message->detections.size(); i++) 
-		{
-	      // Package up the ROS AprilTag data into our own type that does not rely on ROS.
-	      Tag loc;
-	      loc.setID( message->detections[i].id );
-	
-	      // Pass the position of the AprilTag
-	      geometry_msgs::PoseStamped tagPose = message->detections[i].pose;
-	      loc.setPosition( make_tuple( tagPose.pose.position.x,
-					   tagPose.pose.position.y,
-					   tagPose.pose.position.z ) );
-	
-	      // Pass the orientation of the AprilTag
-	      loc.setOrientation( ::boost::math::quaternion<float>( tagPose.pose.orientation.x,
-								    tagPose.pose.orientation.y,
-								    tagPose.pose.orientation.z,
-								    tagPose.pose.orientation.w ) );
-	      tags.push_back(loc);
+		    vector<Tag> tags;
+
+		    for (int i = 0; i < message->detections.size(); i++) 
+			{
+		      // Package up the ROS AprilTag data into our own type that does not rely on ROS.
+		      Tag loc;
+		      loc.setID( message->detections[i].id );
+
+		      // Pass the position of the AprilTag
+		      geometry_msgs::PoseStamped tagPose = message->detections[i].pose;
+		      loc.setPosition( make_tuple( tagPose.pose.position.x,
+						   tagPose.pose.position.y,
+						   tagPose.pose.position.z ) );
+
+		      // Pass the orientation of the AprilTag
+		      loc.setOrientation( ::boost::math::quaternion<float>( tagPose.pose.orientation.x,
+									    tagPose.pose.orientation.y,
+									    tagPose.pose.orientation.z,
+									    tagPose.pose.orientation.w ) );
+		      tags.push_back(loc);
+		      //logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
 		if (currState == SPIRAL_SEARCH) {
-			currState = PICKUP;	
+			currState = PICKUP;
+			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 		}
 	}
 	
