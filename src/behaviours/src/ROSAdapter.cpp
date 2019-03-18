@@ -253,6 +253,7 @@ int main(int argc, char **argv) {
 	  
 	  return EXIT_SUCCESS;
 }
+
 float startingTheta;
 bool rotateBool = false;
 int currState;
@@ -264,6 +265,7 @@ float step2Y;
 bool centerInit = true;
 bool initialMapPopulate = true;
 wheels Wheels;
+
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
@@ -274,11 +276,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (!initialized)
   	{	
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
-		if (initialMapPopulate) {
-			logicController->populateMap();
-			initialMapPopulate = false;
-			cout << "Center location border has been added to hashmap" << endl;
-		}
+
 		
 		cout << "not initialized detected... " << endl;
     		if (timerTimeElapsed > startDelayInSeconds)
@@ -286,6 +284,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		      cout << "initialization has run..." << endl;
 		      //initialized = true;
+			
+			if (initialMapPopulate) {
+				logicController->populateMap();
+				initialMapPopulate = false;
+				cout << "Center location border has been added to hashmap" << endl;
+			}
 
 		      startingTheta = currentLocationOdom.theta;
 
@@ -416,6 +420,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					Wheels = logicController->turnRight90();
 					if (Wheels.left == 0.0 && Wheels.right == 0.0) {
 						initialized= true;
+						currState = SPIRAL_SEARCH;
 					}
 				}	
 			}
@@ -446,7 +451,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		cout << "location added to hashmap" << endl;
 		//temporarily setting the state to spiral search
 		
-		currState = SPIRAL_SEARCH;
+		//currState = SPIRAL_SEARCH;
       		Wheels = logicController->DoWork(currState);
 		sendDriveCommand(Wheels.left, Wheels.right);
 	}
@@ -492,7 +497,12 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
+		if (currState == SPIRAL_SEARCH) {
+			currState = PICKUP;	
+		}
 	}
+	
+	
 }
 
 void modeHandler(const std_msgs::UInt8::ConstPtr& message)
@@ -546,7 +556,8 @@ void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& msg) {
 	//std_msgs::Float32MultiArray receivedCoordinate[2];
 	float x = msg->data[0];
 	float y = msg->data[1];
-	visitedLocations[x].insert(y);
+	logicController->addVisitedLocation(x, y);
+	//visitedLocations[x].insert(y);
 	//visitedLocations[myCoordinate[0]].insert(myCoordinate[1]);
 	//visitedLocationsPublisher.publish(myCoordinate);
 }
