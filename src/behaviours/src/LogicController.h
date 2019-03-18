@@ -118,8 +118,33 @@ class LogicController {
 	    	centerOffsetY = y;
 		spiralSearchController.setCenterOffset(x, y);
 	  }
-		
-	int step = 1;
+	
+	    void populateMap() {
+		//populates hashmap with points around the home base	
+	      float x;
+	      float y;
+	      for (x = -1.50; x != 1.75; x+=0.25)
+	      {
+		for (y = -1.50; y != 1.75; y += 0.25)
+		{
+		  //initialPop.data.push_back(x);
+		  //initialPop.data.push_back(y);
+
+		  visitedLocations[currX].insert(currY);
+		  //visitedLocationsPublisher.publish(initialPop);
+		  //initialPop.data.clear();
+		}
+	      }
+	      //hardcodedPop = false;
+	      //mapTesting = true;
+	      //rotateBool = true;
+	      //initialMove = true;
+	      //step = 10;
+
+	      //startingTheta = currentLocationOdom.theta;
+	    }
+
+	  int step = 1;
 	  struct wheels InitialRotate() {
 		//Rotate to starting position...
 		  float ninetyRotate = currTheta;
