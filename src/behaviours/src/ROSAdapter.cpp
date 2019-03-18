@@ -369,7 +369,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	{
 		if (reverseFromBaseTimer < 40)
 		{
-			sendDriveCommand(-50.0, -50.0);
+			sendDriveCommand(-100.0, -100.0);
 			oneEightyRotate_a = true;
 			startingTheta = currentLocationOdom.theta;
 		}
@@ -447,6 +447,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					oneEightyRotate_a = false;
 					startPosX = currentLocationOdom.x + centerOffsetX;
 				      startPosY = currentLocationOdom.y + centerOffsetY;
+					//TEST/TEMP, account for reversing distance
+					distanceToHome -= 0.2;
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
@@ -467,6 +469,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					oneEightyRotate_a = false;
 				      startPosX = currentLocationOdom.x + centerOffsetX;
 				      startPosY = currentLocationOdom.y + centerOffsetY;
+				      //TEST/TEMP, account for reversing distance
+					distanceToHome -= 1.0;
 
 			      }
 			      else {
@@ -480,8 +484,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			sendDriveCommand(100.0, 100.0);
 			float x = currentLocationOdom.x + centerOffsetX;
 			float y = currentLocationOdom.y + centerOffsetY;
+			
 			cout << "distance to return is: " << distanceToHome << endl;
 			float displacement = calcDistance((startPosX),(startPosY),(currentLocationOdom.x + centerOffsetX),(currentLocationOdom.y + centerOffsetY));
+			
 			if (displacement >= distanceToHome && !isVisited(x,y))
 			{
 				
@@ -491,6 +497,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				step = 12;
 				startingTheta = currentLocationOdom.theta;
 			}
+			//if ()
+			//{
+				
+			//}
 		}
 		reverseFromBaseTimer++;
 	}
@@ -530,7 +540,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		bool exceedMag = false;
 		ninetyRotate = currentLocationOdom.theta;
 		
-		if (turnSize > 0.0) // left
+		if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 		{
 			/*if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
 			{
@@ -598,7 +608,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				sendDriveCommand(-50.0, 50.0);
 			}
 		}
-		else if (turnSize < 0.0) // right
+		else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
 		{
 			/*if (abs(startingTheta + turnSize) >= 3.142)
 			{
@@ -724,11 +734,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		float x = tags.back().getPositionX();
 		if (tagPickupTimer > (zDistanceToCube*100) && !middleStep)
 		{
-			if ( x > 0.002 && tagPickupTimer < 200 )
+			if ( x > -0.001 && tagPickupTimer < 200 )
 			{
 				sendDriveCommand(5.0, -5.0);
 			}
-			else if ( x < 0 && tagPickupTimer < 200 )
+			else if ( x < -0.004 && tagPickupTimer < 200 )
 			{
 				sendDriveCommand(-5.0, 5.0);
 			}
@@ -1735,7 +1745,7 @@ void spiralSearch(const ros::TimerEvent&)
 		cout << "CurrentLocation X,Y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		RightError = RightError - 0.25;
 		if (maxFrontError)
-		{
+		{	//MAKE THIS LESS SENSITIVE TO RIGHTERROR (linearize it)
 			if (RightError < 0)
 			{
 				leftDrive = 100 + RightError*400;
@@ -1865,11 +1875,13 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (mapTesting)
+		if (mapTesting || (reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b))
 		{
 			aprilTagDetected = true;
 			tagIndex++;
 			detectionTimeOut = 0.0;
+			returnToSpiralSearch = false;
+			reverseFromBaseTimer = 0.0;
 		}
 	}
 }
