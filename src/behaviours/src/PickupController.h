@@ -27,7 +27,7 @@ public:
     wheels DoWork() {
           detectionTimeout++;
           cout << "Target detected : in PICKUP state" << endl;
-          cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
+          cout << "x, y, z of aprilTag: " << tagX << ", " << tagY << ", " << tagZ << endl;
           //Wheels.left = 0.0;
           //Wheels.right = 0.0;
         
