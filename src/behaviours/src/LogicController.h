@@ -17,8 +17,8 @@ using namespace std;
 #include "normalizedValue.h"
 #include "Controller.h"
 #include "SpiralSearchController.h"
+#include "PickupController.h"
 /*
-#include "PickUpController.h"
 #include "DropOffController.h"
 #include "SearchController.h"
 #include "ObstacleController.h"
@@ -89,22 +89,22 @@ class LogicController {
     	}
 
 	  wheels DoWork(int state) {
-	    if (state == SPIRAL_SEARCH) {
-	      Wheels = spiralSearchController.DoWork(visitedLocations);
-	    }
-	    else if (state == AVOID_OBSTACLE) {
-	      //ObstacleController.DoWork();
-	    }
-	    else if (state == PICKUP) {
-	      Wheels = pickupController.DoWork();
-	    }
-	    else if (state == DROPOFF) {
-	      // DropoffController.DoWork();
-	    }
-	    else if (state == FIND_SPIRAL_EDGE) {
-	      //FindEdgeController.DoWork();
-	    }
-		return Wheels;
+		    if (state == SPIRAL_SEARCH) {
+		      Wheels = spiralSearchController.DoWork(visitedLocations);
+		    }
+		    else if (state == AVOID_OBSTACLE) {
+		      //ObstacleController.DoWork();
+		    }
+		    else if (state == PICKUP) {
+		      Wheels = pickupController.DoWork();
+		    }
+		    else if (state == DROPOFF) {
+		      // DropoffController.DoWork();
+		    }
+		    else if (state == FIND_SPIRAL_EDGE) {
+		      //FindEdgeController.DoWork();
+		    }
+		    return Wheels;
 	  }
 
 	  void updateData(float x, float y, float theta) {
