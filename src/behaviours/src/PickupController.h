@@ -24,7 +24,7 @@ public:
         tagZ = z;
     }
     
-    wheels DoWork() {
+    wheels DoWork(float selfX, float selfY) {
           detectionTimeout++;
           cout << "Target detected : in PICKUP state" << endl;
           cout << "x, y, z of aprilTag: " << tagX << ", " << tagY << ", " << tagZ << endl;
@@ -65,6 +65,11 @@ public:
                 //aprilTagAcquireSequence = false;
                 //mapTesting = true;
             }
+        
+        if (approachCube) {
+            
+            
+        }
 
           return Wheels;
     }
