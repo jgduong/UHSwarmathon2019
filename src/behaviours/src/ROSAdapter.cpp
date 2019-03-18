@@ -325,6 +325,10 @@ bool returnToSpiralSearch = false;
 bool oneEightyRotate_a = false;
 bool oneEightyRotate_b = false;
 
+bool obstacleLeft = false;
+bool obstacleRight = false;
+bool obstacleCenter = false;
+
 float startingTheta = 0.0;
 float ninetyRotate = 0.0;
 
@@ -366,10 +370,75 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
 	
-	if ( (sonarCenterData < 2.0 || sonarLeftData < 2.0 || sonarRightData < 2.0) && (!rotateBool && !initialMove && !initialized && !hardcodedPop) )
+	if (obstacleLeft)
+	{
+	}
+	
+	if (obstacleRight)
+	{
+	}
+	
+	if (obstacleCenter)
+	{
+	}
+	
+	
+	if ( (sonarCenterData < 0.4 || sonarLeftData < 0.4 || sonarRightData < 0.4) && (!rotateBool && !initialMove && initialized && !hardcodedPop) && (!obstacleLeft && !obstacleRight && !obstacleCenter) )
 	{
 		cout << "obstacle detected: " << endl;
 		cout << "left: " << sonarLeftData << ", center: " << sonarCenterData << ", right: " << sonarRightData << endl;
+		
+		if (sonarLeftData < sonarRightData && sonarLeftData < sonarCenterData)
+		{
+			cout << "left avoidance initiated" << endl;
+			obstacleLeft = true;
+			
+		}
+		else if (sonarLeftData > sonarRightData && sonarRightData < sonarCenterData)
+		{
+			cout << "right avoidance initiated" << endl;
+			obstacleRight = true;
+		}
+		else {
+			cout << "general avoidance initiated" << endl;
+			obstacleCenter = true;
+		}
+		
+		if (mapTesting)
+		{
+			prevBool = 1;
+			mapTesting = false;
+		}
+		else if (aprilTagDetected)
+		{
+			prevBool = 2;
+			aprilTagDetected = false;
+		}
+		else if (aprilTagAcquireSequence)
+		{
+			prevBool = 3;
+			aprilTagAcquireSequence = false;
+		}
+		else if (returnToHome)
+		{
+			prevBool = 4;
+			returnToHome = false;
+		}
+		else if (rotateToHome)
+		{
+			prevBool = 5;
+			rotateToHome = false;
+		}
+		else if (driveToHome)
+		{
+			prevBool = 6;
+			driveToHome = false;
+		}
+		else if (returnToSpiralSearch)
+		{
+			prevBool = 7;
+			returnToSpiralSearch = false;
+		}
 	}
 	
 	if (returnToSpiralSearch)
@@ -1904,7 +1973,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarLeftData = sonarLeft->range;
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
-	cout << "left: " << sonarLeftData << ", center: " << sonarCenterData << ", right: " << sonarRightData << endl;
+	//cout << "left: " << sonarLeftData << ", center: " << sonarCenterData << ", right: " << sonarRightData << endl;
 }
 
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
