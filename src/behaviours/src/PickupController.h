@@ -51,7 +51,7 @@ public:
                 Wheels.left = 0.0;
                 Wheels.right = 0.0;
                 approachTag = true;
-                zDistanceToCube = z;
+                zDistanceToCube = tagZ;
                 //aprilTagDetected = false;
                 //tagPickupTimer = 0.0;
                 //middleStep = false;
