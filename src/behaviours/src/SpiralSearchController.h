@@ -45,6 +45,31 @@ class SpiralSearchController {
           return false;
         }
     }
+  
+    void populateMap() {
+        //populates hashmap with points around the home base	
+      float x;
+      float y;
+      for (x = -1.50; x != 1.75; x+=0.25)
+      {
+        for (y = -1.50; y != 1.75; y += 0.25)
+        {
+          //initialPop.data.push_back(x);
+          //initialPop.data.push_back(y);
+
+          visitedLocations[initialPop.data[0]].insert(initialPop.data[1]);
+          //visitedLocationsPublisher.publish(initialPop);
+          //initialPop.data.clear();
+        }
+      }
+      //hardcodedPop = false;
+      //mapTesting = true;
+      //rotateBool = true;
+      //initialMove = true;
+      //step = 10;
+
+      //startingTheta = currentLocationOdom.theta;
+    }
     
     wheels DoWork(unordered_map<float, set<float>> &visitedLocations) {
       /*
