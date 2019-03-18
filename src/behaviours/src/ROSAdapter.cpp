@@ -470,7 +470,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				      startPosX = currentLocationOdom.x + centerOffsetX;
 				      startPosY = currentLocationOdom.y + centerOffsetY;
 				      //TEST/TEMP, account for reversing distance
-					distanceToHome -= 0.15;
+					distanceToHome -= 1;
 
 			      }
 			      else {
