@@ -507,6 +507,9 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 			currState = PICKUP;
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 		}
+		if (currState == PICKUP) {
+			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+		}
 	}
 	
 	
