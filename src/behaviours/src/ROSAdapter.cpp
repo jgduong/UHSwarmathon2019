@@ -306,6 +306,7 @@ int main(int argc, char **argv) {
 	  
 	  return EXIT_SUCCESS;
 }
+int prevBool = 0;
 
 bool initialMove = false;
 bool mapTesting = false;
@@ -364,6 +365,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
+	
+	if ( (sonarCenterData < 2.0 || sonarLeftData < 2.0 || sonarRightData < 2.0) && (!rotateBool && !initialMove && !initialized && !hardcodedPop) )
+	{
+		cout << "obstacle detected: " << endl;
+		cout << "left: " << sonarLeftData << ", center: " << sonarCenterData << ", right: " << sonarRightData << endl;
+	}
 	
 	if (returnToSpiralSearch)
 	{
