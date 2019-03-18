@@ -262,6 +262,7 @@ bool rotate2 = false;
 float step2X;
 float step2Y;
 bool centerInit = true;
+bool initialMapPopulate = true;
 wheels Wheels;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -271,7 +272,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	
 	if (!initialized)
-  	{	logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
+  	{	
+		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
+		if (initialMapPopulate) {
+			logicController->populateMap();
+			initialMapPopulate = false;
+			cout << "Center location border has been added to hashmap" << endl;
+		}
+		
 		cout << "not initialized detected... " << endl;
     		if (timerTimeElapsed > startDelayInSeconds)
 		{
