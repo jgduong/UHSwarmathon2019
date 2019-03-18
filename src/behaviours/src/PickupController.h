@@ -32,13 +32,13 @@ public:
           //Wheels.right = 0.0;
         
             //center on cube
-            if ( tagX > 0 && detectionTimeOut < 200)
+            if ( tagX > 0 && detectionTimeout < 200)
             {
                 //sendDriveCommand(6.0, -5.0);
                 Wheels.left = 6.0;
                 Wheels.right = -5.0;
             }
-            else if ( tagX < -0.002 && detectionTimeOut < 200)
+            else if ( tagX < -0.002 && detectionTimeout < 200)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 Wheels.left = -5.0;
