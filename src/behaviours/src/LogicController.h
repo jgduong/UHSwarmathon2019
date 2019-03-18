@@ -97,7 +97,7 @@ class LogicController {
 		      //ObstacleController.DoWork();
 		    }
 		    else if (state == PICKUP) {
-		      Wheels = pickupController.DoWork();
+		      Wheels = pickupController.DoWork(currX, currY);
 		    }
 		    else if (state == DROPOFF) {
 		      // DropoffController.DoWork();
