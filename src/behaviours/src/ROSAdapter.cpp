@@ -34,7 +34,7 @@
 #include <vector>
 
 #include "Swarmie.h"
-#include "normalizedValue.h"
+#include "Caclulations.h"
 #include "Point.h"
 #include "Tag.h"
 
