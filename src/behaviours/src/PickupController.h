@@ -1,6 +1,6 @@
 #include "Swarmie.h"
 #include "Tag.h"
-#include "Caclulations.h"
+#include "Calculations.h"
 #include <iostream>
 using namespace std;
 
