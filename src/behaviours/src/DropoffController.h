@@ -25,7 +25,7 @@ class DropoffController {
   
   public:
   
-	  void updateData(float x, float y, float z) {
+	  void updateData(float x, float y, float theta) {
 	      currX = x;
 	      currY = y;
 	      currTheta = theta;
