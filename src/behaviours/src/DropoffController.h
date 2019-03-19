@@ -47,7 +47,7 @@ class DropoffController {
 			float turnSize = homeTheta - initialTheta;
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
-			ninetyRotate = currTheta;
+			//ninetyRotate = currTheta;
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
