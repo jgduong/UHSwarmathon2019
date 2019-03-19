@@ -372,6 +372,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (obstacleLeft)
 	{
+		tags.clear();
+		
 		std_msgs::Float32MultiArray initialPopd;
 		initialPopd.layout.dim.push_back(std_msgs::MultiArrayDimension());
 		initialPopd.layout.dim[0].size = 2;
@@ -452,6 +454,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (obstacleRight)
 	{
+		tags.clear();
+		
 		std_msgs::Float32MultiArray initialPopd;
 		initialPopd.layout.dim.push_back(std_msgs::MultiArrayDimension());
 		initialPopd.layout.dim[0].size = 2;
@@ -532,6 +536,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (obstacleCenter)
 	{
+		tags.clear();
+		
 		std_msgs::Float32MultiArray initialPopd;
 		initialPopd.layout.dim.push_back(std_msgs::MultiArrayDimension());
 		initialPopd.layout.dim[0].size = 2;
@@ -671,6 +677,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (returnToSpiralSearch)
 	{
+		tags.clear();
+		
 		if (reverseFromBaseTimer < 40)
 		{
 			sendDriveCommand(-100.0, -100.0);
@@ -811,6 +819,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (driveToHome)
 	{
+		tags.clear();
+		
 		std_msgs::Float32 fngr;
 		//cout << "starting position X, Y is: " << startPosX << ",  " << startPosY << endl;
 		//cout << "current location odometry x,y: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
@@ -838,6 +848,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	}
 	if (rotateToHome)
 	{
+		tags.clear();
+		
 		cout << "initialThetaBeforeHome is: " << initialThetaBeforeHome << endl;
 		float turnSize = homeTheta - initialThetaBeforeHome;
 		cout << "turnSize here is: " << turnSize << endl;
@@ -846,36 +858,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 		{
-			/*if (abs(initialThetaBeforeHome + turnSize) >= 3.142)
-			{
-				exceedMag = true;
-			}
-			if (exceedMag)
-			{
-				float desiredTheta = -3.142 + (initialThetaBeforeHome - turnSize);
-				cout << "desired theta calculated as: " << desiredTheta << endl;
-				
-				if (currentLocationOdom.theta >= desiredTheta && currentLocationOdom.theta < 0.0)
-				{
-					sendDriveCommand(0.0, 0.0);
-					cout << "done rotating " << endl;
-					rotateToHome = false;
-				}
-				else {
-					sendDriveCommand(-30.0, 30.0);
-				}
-			}
-			else {
-				if (abs(ninetyRotate - initialThetaBeforeHome) >= turnSize)
-				{
-					sendDriveCommand(0.0, 0.0);
-					cout << "done rotating" << endl;
-					rotateToHome = false;
-				}
-				else {
-					sendDriveCommand(-30.0, 30.0);
-				}
-			}*/
 			if (abs(currentLocationOdom.theta - homeTheta) <= 0.05)
 			{
 				sendDriveCommand(0.0, 0.0);
@@ -885,26 +867,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				startPosX = currentLocationOdom.x + centerOffsetX;
 				startPosY = currentLocationOdom.y + centerOffsetY;
 				dropOffTimer = 0.0;
-				/*if (quadrant == 1)
-				{
-					distanceToHome = sqrt((0.25 - currentLocationOdom.y + centerOffsetY)*(0.25 - currentLocationOdom.y + centerOffsetY) + (0.25 - currentLocationOdom.x + centerOffsetX)*(0.25 - currentLocationOdom.x + centerOffsetX));
-				}
-				else if (quadrant == 2)
-				{
-					distanceToHome = sqrt((0.25 - currentLocationOdom.y + centerOffsetY)*(0.25 - currentLocationOdom.y + centerOffsetY) + (-0.25 - currentLocationOdom.x + centerOffsetX)*(-0.25 - currentLocationOdom.x + centerOffsetX));
-				}
-				else if (quadrant == 3)
-				{
-					distanceToHome = sqrt((-0.25 - currentLocationOdom.y + centerOffsetY)*(-0.25 - currentLocationOdom.y + centerOffsetY) + (-0.25 - currentLocationOdom.x + centerOffsetX)*(-0.25 - currentLocationOdom.x + centerOffsetX));
-				}
-				else if (quadrant == 4)
-				{
-					distanceToHome = sqrt((-0.25 - currentLocationOdom.y + centerOffsetY)*(-0.25 - currentLocationOdom.y + centerOffsetY) + (0.25 - currentLocationOdom.x + centerOffsetX)*(0.25 - currentLocationOdom.x + centerOffsetX));
-				}
-				else {
-					distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
-				}*/
-				//distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
+
 				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
 				distanceToHome -= 0.5;
 			}
@@ -914,36 +877,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
 		{
-			/*if (abs(startingTheta + turnSize) >= 3.142)
-			{
-				exceedMag = true;
-			}
-			if (exceedMag)
-			{
-				float desiredTheta = 3.142 + (initialThetaBeforeHome - turnSize);
-				cout << "desired theta calculated as: " << desiredTheta << endl;
-				
-				if (currentLocationOdom.theta <= desiredTheta && currentLocationOdom.theta > 0.0)
-				{
-					sendDriveCommand(0.0, 0.0);
-					cout << "done rotating " << endl;
-					rotateToHome = false;
-				}
-				else {
-					sendDriveCommand(30.0, -30.0);
-				}
-			}
-			else {
-				if (abs(ninetyRotate - initialThetaBeforeHome) <= turnSize)
-				{
-					sendDriveCommand(0.0, 0.0);
-					cout << "done rotating" << endl;
-					rotateToHome = false;
-				}
-				else {
-					sendDriveCommand(30.0, -30.0);
-				}
-			}*/
 			if (abs(currentLocationOdom.theta - homeTheta) <= 0.05)
 			{
 				sendDriveCommand(0.0, 0.0);
@@ -953,25 +886,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				startPosX = currentLocationOdom.x + centerOffsetX;
 				startPosY = currentLocationOdom.y + centerOffsetY;
 				dropOffTimer = 0.0;
-				/*if (quadrant == 1)
-				{
-					distanceToHome = sqrt((0.25 - currentLocationOdom.y + centerOffsetY)*(0.25 - currentLocationOdom.y + centerOffsetY) + (0.25 - currentLocationOdom.x + centerOffsetX)*(0.25 - currentLocationOdom.x + centerOffsetX));
-				}
-				else if (quadrant == 2)
-				{
-					distanceToHome = sqrt((0.25 - currentLocationOdom.y + centerOffsetY)*(0.25 - currentLocationOdom.y + centerOffsetY) + (-0.25 - currentLocationOdom.x + centerOffsetX)*(-0.25 - currentLocationOdom.x + centerOffsetX));
-				}
-				else if (quadrant == 3)
-				{
-					distanceToHome = sqrt((-0.25 - currentLocationOdom.y + centerOffsetY)*(-0.25 - currentLocationOdom.y + centerOffsetY) + (-0.25 - currentLocationOdom.x + centerOffsetX)*(-0.25 - currentLocationOdom.x + centerOffsetX));
-				}
-				else if (quadrant == 4)
-				{
-					distanceToHome = sqrt((-0.25 - currentLocationOdom.y + centerOffsetY)*(-0.25 - currentLocationOdom.y + centerOffsetY) + (0.25 - currentLocationOdom.x + centerOffsetX)*(0.25 - currentLocationOdom.x + centerOffsetX));
-				}
-				else {
-					distanceToHome = sqrt((0 - currentLocationOdom.y + centerOffsetY)*(0 - currentLocationOdom.y + centerOffsetY) + (0 - currentLocationOdom.x + centerOffsetX)*(0 - currentLocationOdom.x + centerOffsetX));
-				}*/
+
 				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
 				distanceToHome -= 0.5;
 			}
@@ -983,41 +898,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (returnToHome)
 	{
-		
-		/*if (currentLocationOdom.x + centerOffsetX > 0.0 && currentLocationOdom.y + centerOffsetY > 0)
-		{
-			quadrant = 1;
-			float theTheta = atan2((0.4 - (currentLocationOdom.y+centerOffsetY)),(0.4 - (currentLocationOdom.x+centerOffsetX)));
-			float desiredTheta = theTheta - M_PI;
-			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
-			homeTheta = desiredTheta;
-		}
-		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY > 0)
-		{
-			quadrant = 2;
-			float theTheta = atan2((0.4 - (currentLocationOdom.y+centerOffsetY)),(-0.4 - (currentLocationOdom.x+centerOffsetX)));
-			float desiredTheta = -theTheta;
-			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
-			homeTheta = desiredTheta;
-		}
-		else if (currentLocationOdom.x + centerOffsetX < 0.0 && currentLocationOdom.y + centerOffsetY < 0)
-		{
-			quadrant = 3;
-			float theTheta = atan2((-0.4 - (currentLocationOdom.y+centerOffsetY)),(-0.4 - (currentLocationOdom.x+centerOffsetX)));
-			float desiredTheta = theTheta;
-			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
-			homeTheta = desiredTheta;
-		}
-		else if (currentLocationOdom.x + centerOffsetX > 0.0 && currentLocationOdom.y + centerOffsetY < 0)
-		{
-			quadrant = 4;
-			float theTheta = atan2((-0.4 - (currentLocationOdom.y+centerOffsetY)),(0.4 - (currentLocationOdom.x+centerOffsetX)));
-			float desiredTheta = M_PI - theTheta;
-			cout << "quadrant is: " << quadrant << ", desiredTheta is: " << desiredTheta << endl;
-			homeTheta = desiredTheta;
-		}
-		else {
-		}*/
+		tags.clear();
 		homeTheta = atan2((0 - (currentLocationOdom.y + centerOffsetY)),(0 - (currentLocationOdom.x + centerOffsetX)));
 		initialThetaBeforeHome = currentLocationOdom.theta;
 		returnToHome = false;
@@ -1035,7 +916,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		fingerAnglePublish.publish(fngr);
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(20.0, 20.0);
-		float x = tags.back().getPositionX();
+		//float x = tags.back().getPositionX();
 		if (tagPickupTimer > (zDistanceToCube*100) && !middleStep)
 		{
 			if ( x > -0.001 && tagPickupTimer < 200 )
@@ -1090,25 +971,39 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (aprilTagDetected)
 	{
 		mapTesting = false;
+		float zIndex = 0;
+		float zDistance = 100;
+		float xDistance = 100;
 		//sendDriveCommand(0.0, 0.0);
 		detectionTimeOut++;
 		//tuple<float, float, float> pos = tags[tagIndex].getPosition();
 		//float r = get<0>(pos);
 		//float p = get<1>(pos);
 		//float y = get<2>(pos);
-		float x = tags.back().getPositionX();
-		float y = tags.back().getPositionY();
-		float z = tags.back().getPositionZ();
+		for (int i = 0; i < tags.size(); i++)
+		{
+    			max = 100;
+			if (tags[i].getPositionZ() < zDistance)
+			{
+				zDistance = tags[i].getPositionZ();
+				zIndex = i;
+			}
+		}
 		
-		cout << "x, y, z of aprilTag: " << x << ", " << y << ", " << z << endl;
+		xDistance = tags[zIndex].getPositionY();
+		cout << "x, z of NEAREST aprilTag: " << x << ", " << z << endl;
+		
+		float thetaToCube = atan2((zDistance),(xDistance)) + currentLocationOdom.theta;
+		
+		cout << "desired theta calculated to aprilTag: " << endl;
 		
 		if ( x > 0 && detectionTimeOut < 200)
 		{
-			sendDriveCommand(7.0, -5.0);
+			sendDriveCommand(6.5, -5.0);
 		}
 		else if ( x < -0.002 && detectionTimeOut < 200)
 		{
-			sendDriveCommand(-5.0, 7.0);
+			sendDriveCommand(-5.0, 6.5);
 		}
 		else if (x <= 0 && x >= -0.002)
 		{
@@ -1692,6 +1587,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (rotateBool)
 	{
+		tags.clear();
 		//Rotate to starting position...
 	      ninetyRotate = currentLocationOdom.theta;
 	      cout << "Current theta is: " << currentLocationOdom.theta << endl;
@@ -1903,6 +1799,8 @@ void spiralSearch(const ros::TimerEvent&)
 {
 	if (mapTesting)
 	{
+		tags.clear();
+		
 		//cout << "in mapTesting loop" << endl;
 		//sendDriveCommand(30.0, 30.0);
 		//cout << "sendDriveCommand done" << endl;
