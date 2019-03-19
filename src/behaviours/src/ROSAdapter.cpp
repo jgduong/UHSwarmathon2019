@@ -611,7 +611,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	}
 	
 	
-	if ( (sonarCenterData < 0.4 || sonarLeftData < 0.4 || sonarRightData < 0.4) && (!rotateBool && !initialMove && initialized && !hardcodedPop) && (!obstacleLeft && !obstacleRight && !obstacleCenter) || (reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b) )
+	if ( (sonarCenterData < 0.4 || sonarLeftData < 0.4 || sonarRightData < 0.4) && (!rotateBool && !initialMove && initialized && !hardcodedPop) && (!obstacleLeft && !obstacleRight && !obstacleCenter && !aprilTagAcquireSequence) || (reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b) )
 	{
 		cout << "obstacle detected: " << endl;
 		cout << "left: " << sonarLeftData << ", center: " << sonarCenterData << ", right: " << sonarRightData << endl;
