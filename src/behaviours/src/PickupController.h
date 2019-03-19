@@ -99,6 +99,7 @@ public:
                 swarmie.right = 0.0;
                 swarmie.wrist = 0;
                 swarmie.finger = 0;
+		swarmie.pickupSuccess = true;
             }
             
         }
