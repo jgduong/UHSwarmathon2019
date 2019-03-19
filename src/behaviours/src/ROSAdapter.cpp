@@ -392,7 +392,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 			sendDriveCommand(50.0, 50.0);
 		}
-		else if (sonarLeft >= 1.5)
+		else if (sonarLeftData >= 1.5)
 		{
 			obstacleLeft = false;
 			if (prevBool == 1)
@@ -472,7 +472,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 			sendDriveCommand(50.0, 50.0);
 		}
-		else if (sonarLeft >= 1.5)
+		else if (sonarRightData >= 1.5)
 		{
 			obstacleRight = false;
 			if (prevBool == 1)
@@ -544,15 +544,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		visitedLocationsPublisher.publish(initialPopd);
 		
-		if (sonarCenterData <= 0.4)
+		if (sonarCenterData <= 0.4 || sonarRightData <= 0.5)
 		{
 			sendDriveCommand(-40.0, 40.0);
 		}
-		else if (sonarLeftData <= 1.5)
+		else if (sonarCenterData <= 1.5 || sonarRightData <= 1.5)
 		{
 			sendDriveCommand(50.0, 10.0);
 		}
-		else if (sonarLeft >= 1.5)
+		else if (sonarCenterData >= 1.5)
 		{
 			obstacleCenter = false;
 			if (prevBool == 1)
