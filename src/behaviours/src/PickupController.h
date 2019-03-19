@@ -13,6 +13,9 @@ private:
     float tagY;
     float tagZ;
     
+    float selfX;
+    float selfY;
+    
     float startingX;
     float startingY;
     float distTravelled = 0;
@@ -28,7 +31,12 @@ public:
         tagZ = z;
     }
     
-    Swarmie DoWork(float selfX, float selfY) {
+    void updateData(float x, float y) {
+	    	selfX = x;
+	    	selfY = y;
+	  }
+    
+    Swarmie DoWork() {
           detectionTimeout++;
           cout << "Target detected : in PICKUP state" << endl;
           cout << "x, y, z of aprilTag: " << tagX << ", " << tagY << ", " << tagZ << endl;
