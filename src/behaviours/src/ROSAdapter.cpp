@@ -524,12 +524,12 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (currState == SPIRAL_SEARCH && initialized) {
+		if (currState == SPIRAL_SEARCH ) {
 			//lower wrist angle switch to pickup state
-			wrist.data = 1.25;
-			wristAnglePublish.publish(wrist);
-			fngr.data = M_PI_2;
-			fingerAnglePublish.publish(fngr);
+			//wrist.data = 1.25;
+			//wristAnglePublish.publish(wrist);
+			//fngr.data = M_PI_2;
+			//fingerAnglePublish.publish(fngr);
 			
 			currState = PICKUP;
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
