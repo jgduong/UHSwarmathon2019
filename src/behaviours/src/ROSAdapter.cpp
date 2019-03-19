@@ -34,6 +34,7 @@
 #include <vector>
 
 #include "Wheels.h"
+#include "Gripper.h"
 #include "normalizedValue.h"
 #include "Point.h"
 #include "Tag.h"
@@ -267,6 +268,7 @@ bool initialMapPopulate = true;
 std_msgs::Float32 wrist;
 std_msgs::Float32 fngr;
 wheels Wheels;
+gripper Gripper;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -454,7 +456,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//temporarily setting the state to spiral search
 		
 		//currState = SPIRAL_SEARCH;
-      		Wheels = logicController->DoWork(currState);
+		if (currState == PICKUP && Wheels.left == 0.01 && Wheels.right == 0.01) {
+			//centered successfully on cube, control gripper to pick it up
+			fngr.data = 0;
+			wrist.data = 0;
+			fingerAnglePublish.publish(fngr);
+			wristAnglePublish.publish(wrist);
+		}
+      		else Wheels = logicController->DoWork(currState);
 
 		
 		if (Wheels.left == 5.0 && Wheels.right == 5.0) {
