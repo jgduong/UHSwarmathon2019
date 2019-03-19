@@ -59,6 +59,8 @@ class LogicController {
 	float currX; 
 	float currY;
 	float currTheta;
+	float normX;
+	float normY;
     	float initialPosX;
     	float initialPosY;
     	float startingTheta;
@@ -78,11 +80,14 @@ class LogicController {
 		prevState = 0;
 		currState = 0;
 
-		initialPosX = initialX;
-		initialPosY = initialY;
+		initialPosX = normalizedValue(initialX);
+		initialPosY = normalizedValue(initialY);
 		startingTheta = initialTheta;
 		currX = initialX;
 		currY = initialY;
+		normX = initialPosX;
+		normY = initialPosY;
+		
 		currTheta = initialTheta;
 
 		swarmie.left = 0.0;
@@ -100,7 +105,7 @@ class LogicController {
 		      //ObstacleController.DoWork();
 		    }
 		    else if (state == PICKUP) {
-		      swarmie = pickupController.DoWork(currX, currY);
+		      swarmie = pickupController.DoWork();
 		    }
 		    else if (state == DROPOFF) {
 		      // DropoffController.DoWork();
@@ -115,7 +120,11 @@ class LogicController {
 	    	currX = x;
 	    	currY = y;
 	    	currTheta = theta;
+		  
+		normX = normalizedValue(x);
+		normY = normalizedValue(y);
 		spiralSearchController.updateData(x, y, theta);
+		pickupController.updateData(x, y, theta);
 	  }
 	
 	void updateTags(float x, float y, float z) {
@@ -158,23 +167,10 @@ class LogicController {
 	  Swarmie InitialRotate() {
 		//Rotate to starting position...
 		  float ninetyRotate = currTheta;
-		  float step2X;
-		  float step2Y;
+		  //float step2X;
+		  //float step2Y;
 		  cout << "Current theta is: " << currTheta << endl;
-			/*
-		  std_msgs::Float32MultiArray myCoordinate;
-			myCoordinate.layout.dim.push_back(std_msgs::MultiArrayDimension());
-			myCoordinate.layout.dim[0].size = 2;
-			myCoordinate.layout.dim[0].stride = 1;
-			myCoordinate.layout.dim[0].label = "poop";
 
-			myCoordinate.data.push_back(normalizedValue(thisSwarmie->currX+centerOffsetX));
-			myCoordinate.data.push_back(normalizedValue(thisSwarmie->currY+centerOffsetY));
-
-			visitedLocations[myCoordinate.data[0]].insert(myCoordinate.data[1]);
-
-			visitedLocationsPublisher.publish(myCoordinate);
-		  */
 		  if (step == 1) {
 			spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "step 1: rotating 90 degrees left..." << endl;
@@ -274,8 +270,8 @@ class LogicController {
 					swarmie.right = 0.0;
 					cout << "done rotating: step 2" << endl;
 					startingTheta = currTheta;
-					step2X = currX;
-					step2Y= currY;
+					//step2X = currX;
+					//step2Y= currY;
 					step = 3;
 					//initialMove = false;
 				}
@@ -295,8 +291,8 @@ class LogicController {
 				     swarmie.right = 0.0;
 				     cout << "done rotating: step 2" << endl;
 				     startingTheta = currTheta;
-				     step2X = currX;
-				     step2Y = currY;
+				     //step2X = currX;
+				     //step2Y = currY;
 				     step = 3;
 				      //initialMove = false;
 
