@@ -372,18 +372,246 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (obstacleLeft)
 	{
+		std_msgs::Float32MultiArray initialPopd;
+		initialPopd.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		initialPopd.layout.dim[0].size = 2;
+		initialPopd.layout.dim[0].stride = 1;
+		initialPopd.layout.dim[0].label = "poopd";
+		initialPopd.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+		initialPopd.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+
+		visitedLocations[initialPopd.data[0]].insert(initialPopd.data[1]);
+
+		visitedLocationsPublisher.publish(initialPopd);
+		
+		if (sonarLeftData < 0.4 && sonarCenterData <= 1.5)
+		{
+			sendDriveCommand(40.0, -40.0);
+		}
+		else if (sonarLeftData <= 1.5)
+		{
+			sendDriveCommand(50.0, 50.0);
+		}
+		else if (sonarLeft >= 1.5)
+		{
+			obstacleLeft = false;
+			if (prevBool == 1)
+			{
+				mapTesting = true;
+			}
+			else if (prevBool == 2)
+			{
+				aprilTagDetected = true;
+				tagIndex++;
+				detectionTimeOut = 0.0;
+				//returnToSpiralSearch = false;
+				reverseFromBaseTimer = 0.0;
+			}
+			else if (prevBool == 3)
+			{
+				//aprilTagAcquireSequence = true;
+				aprilTagDetected = true;
+				tagIndex++;
+				detectionTimeOut = 0.0;
+				//returnToSpiralSearch = false;
+				reverseFromBaseTimer = 0.0;
+			}
+			else if (prevBool == 4)
+			{
+				returnToHome = true;
+				
+			}
+			else if (prevBool == 5)
+			{
+				rotateToHome = true;
+				homeTheta = atan2((0 - (currentLocationOdom.y + centerOffsetY)),(0 - (currentLocationOdom.x + centerOffsetX)));
+				initialThetaBeforeHome = currentLocationOdom.theta;
+				//returnToHome = false;
+			}
+			else if (prevBool == 6)
+			{
+				driveToHome = true;
+				startPosX = currentLocationOdom.x + centerOffsetX;
+				startPosY = currentLocationOdom.y + centerOffsetY;
+				dropOffTimer = 0.0;
+				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
+				distanceToHome -= 0.5;
+			}
+			else if (prevBool == 7)
+			{
+				returnToSpiralSearch = true;
+				//fngr.data = 0;
+				//fingerAnglePublish.publish(fngr);
+				//driveToHome = false;
+				reverseFromBaseTimer = 80.0;
+				oneEightyRotate_a = false;
+				oneEightyRotate_b = false;
+			}
+		}
 	}
 	
 	if (obstacleRight)
 	{
+		std_msgs::Float32MultiArray initialPopd;
+		initialPopd.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		initialPopd.layout.dim[0].size = 2;
+		initialPopd.layout.dim[0].stride = 1;
+		initialPopd.layout.dim[0].label = "poopq";
+		initialPopd.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+		initialPopd.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+
+		visitedLocations[initialPopd.data[0]].insert(initialPopd.data[1]);
+
+		visitedLocationsPublisher.publish(initialPopd);
+		
+		if (sonarRightData < 0.4 && sonarCenterData <= 1.5)
+		{
+			sendDriveCommand(-40.0, 40.0);
+		}
+		else if (sonarRightData <= 1.5)
+		{
+			sendDriveCommand(50.0, 50.0);
+		}
+		else if (sonarLeft >= 1.5)
+		{
+			obstacleRight = false;
+			if (prevBool == 1)
+			{
+				mapTesting = true;
+			}
+			else if (prevBool == 2)
+			{
+				aprilTagDetected = true;
+				tagIndex++;
+				detectionTimeOut = 0.0;
+				//returnToSpiralSearch = false;
+				reverseFromBaseTimer = 0.0;
+			}
+			else if (prevBool == 3)
+			{
+				//aprilTagAcquireSequence = true;
+				aprilTagDetected = true;
+				tagIndex++;
+				detectionTimeOut = 0.0;
+				//returnToSpiralSearch = false;
+				reverseFromBaseTimer = 0.0;
+			}
+			else if (prevBool == 4)
+			{
+				returnToHome = true;
+				
+			}
+			else if (prevBool == 5)
+			{
+				rotateToHome = true;
+				homeTheta = atan2((0 - (currentLocationOdom.y + centerOffsetY)),(0 - (currentLocationOdom.x + centerOffsetX)));
+				initialThetaBeforeHome = currentLocationOdom.theta;
+				//returnToHome = false;
+			}
+			else if (prevBool == 6)
+			{
+				driveToHome = true;
+				startPosX = currentLocationOdom.x + centerOffsetX;
+				startPosY = currentLocationOdom.y + centerOffsetY;
+				dropOffTimer = 0.0;
+				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
+				distanceToHome -= 0.5;
+			}
+			else if (prevBool == 7)
+			{
+				returnToSpiralSearch = true;
+				//fngr.data = 0;
+				//fingerAnglePublish.publish(fngr);
+				//driveToHome = false;
+				reverseFromBaseTimer = 80.0;
+				oneEightyRotate_a = false;
+				oneEightyRotate_b = false;
+			}
+		}
 	}
 	
 	if (obstacleCenter)
 	{
+		std_msgs::Float32MultiArray initialPopd;
+		initialPopd.layout.dim.push_back(std_msgs::MultiArrayDimension());
+		initialPopd.layout.dim[0].size = 2;
+		initialPopd.layout.dim[0].stride = 1;
+		initialPopd.layout.dim[0].label = "poopd";
+		initialPopd.data.push_back(normalizedValue(currentLocationOdom.x+centerOffsetX));
+		initialPopd.data.push_back(normalizedValue(currentLocationOdom.y+centerOffsetY));
+
+		visitedLocations[initialPopd.data[0]].insert(initialPopd.data[1]);
+
+		visitedLocationsPublisher.publish(initialPopd);
+		
+		if (sonarCenterData <= 0.4)
+		{
+			sendDriveCommand(-40.0, 40.0);
+		}
+		else if (sonarLeftData <= 1.5)
+		{
+			sendDriveCommand(50.0, 10.0);
+		}
+		else if (sonarLeft >= 1.5)
+		{
+			obstacleCenter = false;
+			if (prevBool == 1)
+			{
+				mapTesting = true;
+			}
+			else if (prevBool == 2)
+			{
+				aprilTagDetected = true;
+				tagIndex++;
+				detectionTimeOut = 0.0;
+				//returnToSpiralSearch = false;
+				reverseFromBaseTimer = 0.0;
+			}
+			else if (prevBool == 3)
+			{
+				//aprilTagAcquireSequence = true;
+				aprilTagDetected = true;
+				tagIndex++;
+				detectionTimeOut = 0.0;
+				//returnToSpiralSearch = false;
+				reverseFromBaseTimer = 0.0;
+			}
+			else if (prevBool == 4)
+			{
+				returnToHome = true;
+				
+			}
+			else if (prevBool == 5)
+			{
+				rotateToHome = true;
+				homeTheta = atan2((0 - (currentLocationOdom.y + centerOffsetY)),(0 - (currentLocationOdom.x + centerOffsetX)));
+				initialThetaBeforeHome = currentLocationOdom.theta;
+				//returnToHome = false;
+			}
+			else if (prevBool == 6)
+			{
+				driveToHome = true;
+				startPosX = currentLocationOdom.x + centerOffsetX;
+				startPosY = currentLocationOdom.y + centerOffsetY;
+				dropOffTimer = 0.0;
+				distanceToHome = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, 0, 0);
+				distanceToHome -= 0.5;
+			}
+			else if (prevBool == 7)
+			{
+				returnToSpiralSearch = true;
+				//fngr.data = 0;
+				//fingerAnglePublish.publish(fngr);
+				//driveToHome = false;
+				reverseFromBaseTimer = 80.0;
+				oneEightyRotate_a = false;
+				oneEightyRotate_b = false;
+			}
+		}
 	}
 	
 	
-	if ( (sonarCenterData < 0.4 || sonarLeftData < 0.4 || sonarRightData < 0.4) && (!rotateBool && !initialMove && initialized && !hardcodedPop) && (!obstacleLeft && !obstacleRight && !obstacleCenter) )
+	if ( (sonarCenterData < 0.4 || sonarLeftData < 0.4 || sonarRightData < 0.4) && (!rotateBool && !initialMove && initialized && !hardcodedPop) && (!obstacleLeft && !obstacleRight && !obstacleCenter) || (reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b) )
 	{
 		cout << "obstacle detected: " << endl;
 		cout << "left: " << sonarLeftData << ", center: " << sonarCenterData << ", right: " << sonarRightData << endl;
