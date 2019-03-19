@@ -15,7 +15,7 @@ using namespace std;
 
 #include "Swarmie.h"
 #include "Tag.h"
-#include "normalizedValue.h"
+#include "Calculations.h"
 #include "Controller.h"
 #include "SpiralSearchController.h"
 #include "PickupController.h"
@@ -40,10 +40,6 @@ enum States{
   FIND_SPIRAL_EDGE
 };
 
-float calcDistance(float curX, float curY, float goalX, float goalY) {
-	float dist = sqrt( (goalX - curX)*(goalX - curX) + (goalY - curY)*(goalY - curY) );
-	return dist;
-}
 
 //extern Swarmie thisSwarmie;
 
@@ -54,6 +50,7 @@ class LogicController {
   private:
     	SpiralSearchController spiralSearchController;
 	PickupController pickupController;
+	DropoffController dropoffController;
   
   public: 
 	float currX; 
@@ -108,7 +105,7 @@ class LogicController {
 		      swarmie = pickupController.DoWork();
 		    }
 		    else if (state == DROPOFF) {
-		      // DropoffController.DoWork();
+		      dropoffController.DoWork();
 		    }
 		    else if (state == FIND_SPIRAL_EDGE) {
 		      //FindEdgeController.DoWork();
@@ -125,17 +122,18 @@ class LogicController {
 		normY = normalizedValue(y);
 		spiralSearchController.updateData(x, y, theta);
 		pickupController.updateData(x, y);
+		dropoffController.DoWork(x, y, z);
 	  }
 	
 	void updateTags(float x, float y, float z) {
 		pickupController.updateTags(x, y, z);
-		
 	}
 
 	  void setCenterOffset(float x, float y) {
 	    	centerOffsetX = x;
 	    	centerOffsetY = y;
 		spiralSearchController.setCenterOffset(x, y);
+		dropOffController.setCenterOffset(x, y);
 	  }
 	
 	    void populateMap() {
