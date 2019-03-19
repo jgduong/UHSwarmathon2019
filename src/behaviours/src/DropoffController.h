@@ -38,10 +38,12 @@ class DropoffController {
 	  }
   
 	  Swarmie DoWork() {
+		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
 			homeTheta = atan2((0 - (currX + centerOffsetY)),(0 - (currX + centerOffsetX)));
 			initialTheta = currTheta;
-			spinHome = false;
+			initCalc = false;
+			spinHome = true;
 	  	}
 		else if (spinHome) {
 			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
