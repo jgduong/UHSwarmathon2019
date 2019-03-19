@@ -13,7 +13,7 @@ using namespace std;
 #ifndef LOGICCONTROLLER_H
 #define LOGICCONTROLLER_H
 
-#include "Wheels.h"
+#include "Swarmie.h"
 #include "Tag.h"
 #include "normalizedValue.h"
 #include "Controller.h"
@@ -66,7 +66,7 @@ class LogicController {
     	float centerOffsetY;
     	int prevState;
     	int currState;
-    	wheels Wheels;
+    	Swarmie swarmie;
 	unordered_map<float, set<float>> visitedLocations;
 	
     	//priority_queue<Controller> ControllerQueue;
@@ -85,19 +85,22 @@ class LogicController {
 		currY = initialY;
 		currTheta = initialTheta;
 
-		Wheels.left = 0.0;
-		Wheels.right = 0.0;
+		swarmie.left = 0.0;
+		swarmie.right = 0.0;
+		swarmie.wrist = 0;
+		swarmie.finger = 0;
+		
     	}
 
-	  wheels DoWork(int state) {
+	  Swarmie DoWork(int state) {
 		    if (state == SPIRAL_SEARCH) {
-		      Wheels = spiralSearchController.DoWork(visitedLocations);
+		      swarmie = spiralSearchController.DoWork(visitedLocations);
 		    }
 		    else if (state == AVOID_OBSTACLE) {
 		      //ObstacleController.DoWork();
 		    }
 		    else if (state == PICKUP) {
-		      Wheels = pickupController.DoWork(currX, currY);
+		      swarmie = pickupController.DoWork(currX, currY);
 		    }
 		    else if (state == DROPOFF) {
 		      // DropoffController.DoWork();
@@ -105,7 +108,7 @@ class LogicController {
 		    else if (state == FIND_SPIRAL_EDGE) {
 		      //FindEdgeController.DoWork();
 		    }
-		    return Wheels;
+		    return swarmie;
 	  }
 
 	  void updateData(float x, float y, float theta) {
@@ -152,7 +155,7 @@ class LogicController {
 	    }
 
 	  int step = 1;
-	  struct wheels InitialRotate() {
+	  Swarmie InitialRotate() {
 		//Rotate to starting position...
 		  float ninetyRotate = currTheta;
 		  float step2X;
@@ -195,8 +198,8 @@ class LogicController {
 				if (currTheta >= desiredTheta && currTheta < 0.0)
 				{
 					//sendDriveCommand(0.0, 0.0);
-					Wheels.left = 0.0;
-					Wheels.right = 0.0;
+					swarmie.left = 0.0;
+					swarmie.right = 0.0;
 					//rotateBool = false;
 					//hardcodedPop = true;
 					//initialMove = true;
@@ -210,8 +213,8 @@ class LogicController {
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
-					Wheels.left = -30.0;
-					Wheels.right = 30.0;
+					swarmie.left = -30.0;
+					swarmie.right = 30.0;
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 				}
 
@@ -224,8 +227,8 @@ class LogicController {
 				if (abs(ninetyRotate - startingTheta) >= 1.5)
 				{
 					//sendDriveCommand(0.0, 0.0);
-					Wheels.left = 0.0;
-					Wheels.right = 0.0;
+					swarmie.left = 0.0;
+					swarmie.right = 0.0;
 					//    rotateBool = false;
 					//hardcodedPop = true;
 					//initialMove = true;
@@ -240,8 +243,8 @@ class LogicController {
 				 }	//else, turn right
 				 else {
 					//sendDriveCommand(-30.0, 30.0);
-					Wheels.left = -30.0;
-					Wheels.right = 30.0;
+					swarmie.left = -30.0;
+					swarmie.right = 30.0;
 				 }
 
 			}
@@ -267,8 +270,8 @@ class LogicController {
 				desiredTheta = -3.142 + (startingTheta - turnSize);
 				if (currTheta >= desiredTheta && currTheta < 0.0)
 				{
-					Wheels.left = 0.0;
-					Wheels.right = 0.0;
+					swarmie.left = 0.0;
+					swarmie.right = 0.0;
 					cout << "done rotating: step 2" << endl;
 					startingTheta = currTheta;
 					step2X = currX;
@@ -278,8 +281,8 @@ class LogicController {
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
-					Wheels.left = -30.0;
-					Wheels.right = 30.0;
+					swarmie.left = -30.0;
+					swarmie.right = 30.0;
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 				}
 			}
@@ -288,8 +291,8 @@ class LogicController {
 			      if (abs(ninetyRotate - startingTheta) >= 1.5)
 			      {
 				    //sendDriveCommand(0.0, 0.0); 
-				     Wheels.left = 0.0;
-				     Wheels.right = 0.0;
+				     swarmie.left = 0.0;
+				     swarmie.right = 0.0;
 				     cout << "done rotating: step 2" << endl;
 				     startingTheta = currTheta;
 				     step2X = currX;
@@ -300,8 +303,8 @@ class LogicController {
 			      }
 			      else {
 				    //sendDriveCommand(-30.0, 30.0);
-				      Wheels.left = -30.0;
-				      Wheels.right = 30.0;
+				      swarmie.left = -30.0;
+				      swarmie.right = 30.0;
 			      }
 			}
 			
@@ -313,8 +316,8 @@ class LogicController {
 			spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "Moving into place to begin spiral search..." << endl;
 			//sendDriveCommand(30.0, 30.0);
-			Wheels.left = 30.0;
-			Wheels.right = 30.0;
+			swarmie.left = 30.0;
+			swarmie.right = 30.0;
 
 			
 			startingTheta = currTheta;
@@ -337,14 +340,14 @@ class LogicController {
 			*/
 		}
 		
-		return Wheels;
+		return swarmie;
 	  }
 	
 	void addVisitedLocation(float x, float y) {
 		visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 	}
 	
-	wheels turnRight90() {
+	Swarmie turnRight90() {
 		spiralSearchController.updateData(currX, currY, currTheta);
 		cout << "rotating right to begin spiral search..." << endl;
 		float turnSize = -1.5;
@@ -365,8 +368,8 @@ class LogicController {
 			if (currTheta <= desiredTheta && currTheta > 0.0)
 			{
 				//sendDriveCommand(0.0, 0.0);
-				Wheels.left = 0.0;
-				Wheels.right = 0.0;
+				swarmie.left = 0.0;
+				swarmie.right = 0.0;
 				cout << "done rotating: RIGHT 90" << endl;
 				//step = 13;
 				//initialMove = false;
@@ -374,8 +377,8 @@ class LogicController {
 			}
 			else {
 				//sendDriveCommand(30.0, -30.0);
-				Wheels.left = 30.0;
-				Wheels.right = -30.0;
+				swarmie.left = 30.0;
+				swarmie.right = -30.0;
 				cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 			}
 			
@@ -387,8 +390,8 @@ class LogicController {
 		      if (abs(ninetyRotate - startingTheta) >= 1.5)
 		      {
 			    //sendDriveCommand(0.0, 0.0); 
-			      Wheels.left = 0.0;
-			      Wheels.right = 0.0;
+			      swarmie.left = 0.0;
+			      swarmie.right = 0.0;
 			    cout << "done rotating: RIGHT 90" << endl;
 			    //step = 13;
 			     // initialMove = false;
@@ -396,13 +399,13 @@ class LogicController {
 		      }
 		      else {
 			    //sendDriveCommand(30.0, -30.0);
-			    Wheels.left = 30;
-			    Wheels.right = -30.0;
+			    swarmie.left = 30;
+			    swarmie.right = -30.0;
 		      }
 
 		}
 		
-		return Wheels;
+		return swarmie;
 	}
 };
 
