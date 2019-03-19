@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <set>
-#include "Wheels.h"
+#include "Swarmie.h"
 #include "normalizedValue.h"
 //#include "LogicController.h"
 using namespace std;
@@ -15,7 +15,7 @@ class SpiralSearchController {
   
     float centerOffsetX;
     float centerOffsetY;
-    wheels Wheels;
+    Swarmie swarmie;
     //Wheels.left = 0.0;
     //Wheels.right = 0.0;
   
@@ -181,10 +181,10 @@ class SpiralSearchController {
       }
       cout << "sending drive commands: " << leftDrive << ", " << rightDrive << endl;
       //sendDriveCommand(leftDrive, rightDrive);
-      Wheels.left = leftDrive;
-      Wheels.right = rightDrive;
+      swarmie.left = leftDrive;
+      swarmie.right = rightDrive;
 
-      return Wheels;
+      return swarmie;
     }
 
 
