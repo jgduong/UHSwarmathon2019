@@ -33,7 +33,8 @@ using namespace std;
 using namespace std;
 
 enum States{
-  SPIRAL_SEARCH = 0,
+  INIT = 0,
+  SPIRAL_SEARCH,
   AVOID_OBSTACLE,
   PICKUP,
   DROPOFF,
