@@ -917,13 +917,30 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(20.0, 20.0);
 		float x = tags.back().getPositionX();
-		if (tagPickupTimer > (zDistanceToCube*100) && !middleStep)
+		
+		float xDistance = 1;
+		float zDistance = 1;
+		float lowestzIndex = 0;
+		for (int i = 0; i < tags.size(); i++)
 		{
-			if ( x > -0.001 && tagPickupTimer < 200 )
+			if (tags[i].getPositionZ() < zDistance)
+			{
+				zDistance = tags[i].getPositionZ();
+				xDistance = tags[i].getPositionX();
+				lowestzIndex = i;
+				cout << "lowest Z index occurs at index: " << lowestzIndex << ", with a z value of: " << zDistance << ", and a corresponding x of: " << xDistance << endl;
+			}
+		}
+		cout << "x, z of NEAREST aprilTag: " << xDistance << ", " << zDistance << endl;
+		cout << "for reference: tags.back() returns x, z: " << tags.back().getPositionX() << ", " << tags.back().getPositionZ() << endl;
+		
+		if (tagPickupTimer > (zDistance*100) && !middleStep)
+		{
+			if ( xDistance > -0.01 && tagPickupTimer < 200 )
 			{
 				sendDriveCommand(5.0, -5.0);
 			}
-			else if ( x < -0.004 && tagPickupTimer < 200 )
+			else if ( xDistance < -0.02 && tagPickupTimer < 200 )
 			{
 				sendDriveCommand(-5.0, 5.0);
 			}
@@ -939,7 +956,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			tagPickupTimer++;
 		}
-		else if (tagPickupTimer > (zDistanceToCube*20*10 +10))
+		else if (tagPickupTimer > (zDistance*20*10 +10))
 		{
 			sendDriveCommand(0.0, 0.0);
 			fngr.data = 0;
@@ -947,10 +964,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			fingerAnglePublish.publish(fngr);
 			//wristAnglePublish.publish(wrist);
 			tagPickupTimer++;
-			if (tagPickupTimer > zDistanceToCube*20*10 +20)
+			if (tagPickupTimer > zDistance*20*10 +20)
 			{
 				wristAnglePublish.publish(fngr);
-				if (tagPickupTimer > zDistanceToCube*200 + 30)
+				if (tagPickupTimer > zDistance*200 + 30)
 				{
 					aprilTagAcquireSequence = false;
 					//mapTesting = true;
@@ -986,30 +1003,30 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			if (tags[i].getPositionZ() < zDistance)
 			{
 				zDistance = tags[i].getPositionZ();
-				lowestzIndex = i;
 				xDistance = tags[i].getPositionX();
+				lowestzIndex = i;
 				cout << "lowest Z index occurs at index: " << lowestzIndex << ", with a z value of: " << zDistance << ", and a corresponding x of: " << xDistance << endl;
 			}
 		}
 		
-		xDistance = tags[lowestzIndex].getPositionY();
+		//xDistance = tags[lowestzIndex].getPositionY();
 		cout << "x, z of NEAREST aprilTag: " << xDistance << ", " << zDistance << endl;
 		
-		float thetaToCube = atan2((zDistance),(xDistance)) + currentLocationOdom.theta;
+		//float thetaToCube = atan2((zDistance),(xDistance)) + currentLocationOdom.theta;
 		
-		cout << "desired theta calculated to aprilTag: " << thetaToCube << " using currentTheta: " << currentLocationOdom.theta << endl;
+		//cout << "desired theta calculated to aprilTag: " << thetaToCube << " using currentTheta: " << currentLocationOdom.theta << endl;
 		
 		cout << "for reference: tags.back() returns x, z: " << tags.back().getPositionX() << ", " << tags.back().getPositionZ() << endl;
 		
-		if ( xDistance > 0 && detectionTimeOut < 200)
+		if ( xDistance > -0.01 && detectionTimeOut < 200)
 		{
 			sendDriveCommand(6.5, -5.0);
 		}
-		else if ( xDistance < -0.002 && detectionTimeOut < 200)
+		else if ( xDistance < -0.03 && detectionTimeOut < 200)
 		{
 			sendDriveCommand(-5.0, 6.5);
 		}
-		else if (xDistance <= 0 && xDistance >= -0.002)
+		else if (xDistance <= -0.01 && xDistance >= -0.03)
 		{
 			cout << "centered on cube" << endl;
 			sendDriveCommand(0.0, 0.0);
