@@ -89,7 +89,7 @@ public:
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
-            if (distTravelled < (zDistanceToCube + 0.05)) {
+            if (distTravelled < (zDistanceToCube)) {
                 swarmie.left = 30.0;
                 swarmie.right = 30.0;
             }
