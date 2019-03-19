@@ -36,19 +36,19 @@ public:
           //Wheels.right = 0.0;
         
             //center on cube
-            if ( tagX > 0 && detectionTimeout < 200)
+            if ( tagX > 0 && detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(6.0, -5.0);
                 Wheels.left = 6.0;
                 Wheels.right = -5.0;
             }
-            else if ( tagX < -0.002 && detectionTimeout < 200)
+            else if ( tagX < -0.002 && detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 Wheels.left = -5.0;
                 Wheels.right = 6.0;
             }
-            else if (tagX <= 0 && tagX >= -0.002)
+            else if (tagX <= 0 && tagX >= -0.002 && !approachCube)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
