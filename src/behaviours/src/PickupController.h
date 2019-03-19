@@ -54,6 +54,8 @@ public:
                 //sendDriveCommand(0.0, 0.0);
                 swarmie.left = 0.01;
                 swarmie.right = 0.01;
+                swarmie.wrist = 1.25;
+                swarmie.finger = M_PI_2;
                 
                 zDistanceToCube = tagZ;
                 //aprilTagDetected = false;
@@ -86,6 +88,8 @@ public:
                 cout << "Currently next to cube" << endl;
                 swarmie.left = 0.0;
                 swarmie.right = 0.0;
+                swarmie.wrist = 0;
+                swarmie.finger = 0;
             }
             
         }
