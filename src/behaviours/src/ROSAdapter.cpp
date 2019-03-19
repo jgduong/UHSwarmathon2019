@@ -971,7 +971,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (aprilTagDetected)
 	{
 		mapTesting = false;
-		float zIndex = 0;
+		float lowestzIndex = 0;
 		float zDistance = 100;
 		float xDistance = 100;
 		//sendDriveCommand(0.0, 0.0);
@@ -980,21 +980,23 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//float r = get<0>(pos);
 		//float p = get<1>(pos);
 		//float y = get<2>(pos);
+		cout << "tags.size() is: " << tags.size() << endl;
 		for (int i = 0; i < tags.size(); i++)
 		{
 			if (tags[i].getPositionZ() < zDistance)
 			{
 				zDistance = tags[i].getPositionZ();
-				zIndex = i;
+				lowestzIndex = i;
+				cout << "lowest Z index occurs at index: " << lowestzIndex << ", with a z value of: " << zDistance << ", and a corresponding x of: " << xDistance << endl;
 			}
 		}
 		
-		xDistance = tags[zIndex].getPositionY();
+		xDistance = tags[lowestzIndex].getPositionY();
 		cout << "x, z of NEAREST aprilTag: " << xDistance << ", " << zDistance << endl;
 		
 		float thetaToCube = atan2((zDistance),(xDistance)) + currentLocationOdom.theta;
 		
-		cout << "desired theta calculated to aprilTag: " << endl;
+		cout << "desired theta calculated to aprilTag: " << thetaToCube << " vs currentTheta: " << currentLocationOdom.theta << endl;
 		
 		if ( xDistance > 0 && detectionTimeOut < 200)
 		{
@@ -1020,6 +1022,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			aprilTagAcquireSequence = false;
 			mapTesting = true;
 		}
+		tags.clear();  //mayb remove?
 	}
 	
 	if (hardcodedPop)
