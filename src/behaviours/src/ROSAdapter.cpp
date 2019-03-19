@@ -454,7 +454,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//temporarily setting the state to spiral search
 		
 		//currState = SPIRAL_SEARCH;
-		if (currState == PICKUP && Wheels.left == 0.0 && Wheels.right == 0.0) {
+		if (currState == PICKUP && Wheels.left == 0.00 && Wheels.right == 00.0) {
 			//centered successfully on cube, control gripper to pick it up
 			cout << "closing gripper now " << endl;
 			fngr.data = 0;
@@ -514,7 +514,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (currState == SPIRAL_SEARCH) {
+		if (currState == SPIRAL_SEARCH && initialized) {
 			//lower wrist angle switch to pickup state
 			wrist.data = 1.25;
 			wristAnglePublish.publish(wrist);
