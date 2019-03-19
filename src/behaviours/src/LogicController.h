@@ -106,7 +106,7 @@ class LogicController {
 		      swarmie = pickupController.DoWork();
 		    }
 		    else if (state == DROPOFF) {
-		      dropoffController.DoWork();
+		      swarmie = dropoffController.DoWork();
 		    }
 		    else if (state == FIND_SPIRAL_EDGE) {
 		      //FindEdgeController.DoWork();
