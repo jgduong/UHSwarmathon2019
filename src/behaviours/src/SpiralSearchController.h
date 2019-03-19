@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <set>
 #include "Swarmie.h"
-#include "normalizedValue.h"
+#include "Calculations.h"
 //#include "LogicController.h"
 using namespace std;
 
