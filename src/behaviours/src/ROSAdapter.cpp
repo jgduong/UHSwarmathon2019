@@ -476,6 +476,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			//centering on tag has failed (timeout), return to spiral search
 			currState = SPIRAL_SEARCH;
 		}
+		if (currState == PICKUP && swarmie.pickupSuccess) {
+			currState == DROPOFF;
+			swarmie.pickupSuccess = false;
+		}
 		
 		fngr.data = swarmie.finger;
 		wrist.data = swarmie.wrist;
@@ -555,11 +559,6 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarLeftData = sonarLeft->range;
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
-	
-	if (currState == PICKUP && swarmie.pickupSuccess) {
-		currState == DROPOFF;
-		swarmie.pickupSuccess = false;
-	}
 }
 
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
