@@ -37,7 +37,7 @@ class DropoffController {
 	  }
   
 	  Swarmie DoWork() {
-		if (init) {
+		if (initCalc) {
 			homeTheta = atan2((0 - (currX + centerOffsetY)),(0 - (currX + centerOffsetX)));
 			initialTheta = currTheta;
 			spinHome = false;
