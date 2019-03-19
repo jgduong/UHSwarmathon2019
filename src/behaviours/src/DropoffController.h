@@ -1,4 +1,5 @@
 #include "Swarmie.h"
+#include "Caclulations.h"
 #include <iostream>
 using namespace std;
 
@@ -6,39 +7,94 @@ using namespace std;
 class DropoffController {
 
   private:
-  float currX;
-  float currY;
-  float currTheta;
-  float centerOffsetX;
-  float centerOffsetY;
-  
-  float initialTheta;
-  float homeTheta;
-  bool spinHome = true;
-  Swarmie swarmie;
+	float currX;
+	float currY;
+	float currTheta;
+	float centerOffsetX;
+	float centerOffsetY;
+
+	float initialX;
+	float initialY;
+	float initialTheta;
+	float homeTheta;
+
+	bool initCalc = true;
+	bool spinHome = false;
+	bool driveHome = false;
+	Swarmie swarmie;
   
   public:
   
-  void updateData(float x, float y, float x) {
-      currX = x;
-      currY = y;
-      currTheta = theta;
-  }
+	  void updateData(float x, float y, float x) {
+	      currX = x;
+	      currY = y;
+	      currTheta = theta;
+	  }
+
+	  void setCenterOffset(float x, float y) {
+	      centerOffsetX = x;
+	      centerOffsetY = y;
+	  }
   
-  void setCenterOffset(float x, float y) {
-      centerOffsetX = x;
-      centerOffsetY = y;
-  }
-  
-  Swarmie DoWork() {
-    if (spinHome) {
-      homeTheta = atan2((0 - (currentLocationOdom.y + centerOffsetY)),(0 - (currentLocationOdom.x + centerOffsetX)));
-      initialTheta = currTheta;
-    }
-		//returnToHome = false;
-    //rotateToHome = true;
-    
-  
-  }
+	  Swarmie DoWork() {
+		if (init) {
+			homeTheta = atan2((0 - (currX + centerOffsetY)),(0 - (currX + centerOffsetX)));
+			initialTheta = currTheta;
+			spinHome = false;
+	  	}
+		else if (spinHome) {
+			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
+			float turnSize = homeTheta - initialTheta;
+			cout << "turnSize here is: " << turnSize << endl;
+			bool exceedMag = false;
+			ninetyRotate = currTheta;
+
+			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
+			{
+				if (abs(currTheta - homeTheta) <= 0.05)
+				{
+					//done rotating to home
+					//sendDriveCommand(0.0, 0.0);
+					swarmie.left = 0.0;
+					swarmie.right = 0.0;
+					cout << "done rotating" << endl;
+					spinHome = false;
+					driveHome = true;
+					initialX = currX + centerOffsetX;
+					initialY = currX + centerOffsetY;
+					//dropOffTimer = 0.0;
+					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
+					distanceToHome -= 0.5;
+				}
+				else {
+					//sendDriveCommand(-50.0, 50.0);
+					swarmie.left = -50.0;
+					swarmie.right = 50.0;
+				}
+			}
+			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
+			{
+				if (abs(currTheta - homeTheta) <= 0.05)
+				{
+					//sendDriveCommand(0.0, 0.0);
+					swarmie.left = 0.0;
+					swarmie.right = 0.0;
+					cout << "done rotating" << endl;
+					spinHome = false;
+					driveToHome = true;
+					initialX = currX + centerOffsetX;
+					initialY = currY + centerOffsetY;
+					//dropOffTimer = 0.0;
+					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
+					distanceToHome -= 0.5;
+				}
+				else {
+					//sendDriveCommand(50.0, -50.0);
+					swarmie.left = 50.0;
+					swarmie.right = -50.0;
+				}
+			}
+		}
+	  }
 
 };
