@@ -998,6 +998,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//float p = get<1>(pos);
 		//float y = get<2>(pos);
 		cout << "tags.size() is: " << tags.size() << endl;
+		
+		zDistance = tags[i].getPositionZ();
+		xDistance = tags[i].getPositionX();
 		for (int i = 0; i < tags.size(); i++)
 		{
 			if (tags[i].getPositionZ() < zDistance)
@@ -1042,7 +1045,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			aprilTagAcquireSequence = false;
 			mapTesting = true;
 		}
-		//tags.clear();  //mayb remove?
+		tags.clear();  //mayb remove?
 	}
 	
 	if (hardcodedPop)
