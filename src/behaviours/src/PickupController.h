@@ -78,7 +78,7 @@ public:
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
-            if (distTravelled < (zDistanceToCube + 0.1)) {
+            if (distTravelled < (zDistanceToCube + 0.05)) {
                 Wheels.left = 30.0;
                 Wheels.right = 30.0;
             }
