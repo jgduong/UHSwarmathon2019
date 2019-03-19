@@ -11,6 +11,8 @@ class SpiralSearchController {
   public: 
     float currX;
     float currY;
+    float normalizedX;
+    float normalizedY;
     float currTheta;
   
     float centerOffsetX;
@@ -23,6 +25,9 @@ class SpiralSearchController {
       currX = x;
       currY = y;
       currTheta = theta;
+      
+      normalizedX = normalizedValue(x);
+      normalizedY = normalizedValue(y);
     }
   
     void setCenterOffset(float x, float y) {
@@ -31,9 +36,12 @@ class SpiralSearchController {
     }
 
     bool isVisited(float x, float y, unordered_map<float, set<float>> &visitedLocations) {
-      if (visitedLocations.find(x) != visitedLocations.end()) {
+      float normX = normalizedValue(x);
+      float normY = normalizedValue(y);
+     
+      if (visitedLocations.find(normX) != visitedLocations.end()) {
         //x location exists in hashmap, check y coordinate
-        if (visitedLocations[x].find(y) != visitedLocations[x].end()) {
+        if (visitedLocations[normX].find(normY) != visitedLocations[normX].end()) {
           //y location also exists, so this coordinate has been visited
           return true;
         }
@@ -79,7 +87,7 @@ class SpiralSearchController {
       {
         newX = normalizedValue(currX + m*0.25*cos(currTheta));
         newY = normalizedValue(currY + m*0.25*sin(currTheta));
-        cout << "current x, y" << currX << ", " << currY  << endl;
+        cout << "current x, y" << normalizedX << ", " << normalizedY  << endl;
         if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
         {
           cout << "Front vector ended at m = " << m << "after checking: " << newX << ", " << newY << endl;
@@ -143,7 +151,7 @@ class SpiralSearchController {
         float xWall = normalizedValue(newX);
         float yWall = normalizedValue(newY);
         cout << "RightError calculated with currentLocation and xWall,yWall = " << xWall << ", " << yWall << endl;
-        RightError = sqrt((xWall - (currX))*(xWall - (currX)) + (yWall - (currY))*(yWall - (currY)));
+        RightError = sqrt((xWall - (normalizedX))*(xWall - (normalizedX)) + (yWall - (normalizedY))*(yWall - (normalizedY)));
       }
       else {
         cout << "max RightError" << endl;
@@ -151,7 +159,7 @@ class SpiralSearchController {
       }
       //RightError = RightError - 0.25;
       cout << "RightError is: " << RightError << ", desired is 0.25" << endl;
-      cout << "CurrentLocation X,Y: " << currX << ", " << currY << endl;
+      cout << "CurrentLocation X,Y: " << normalizedX << ", " << normalizedY << endl;
       RightError = RightError - 0.25;
       if (maxFrontError)
       {	//MAKE THIS LESS SENSITIVE TO RIGHTERROR (linearize it)
