@@ -96,6 +96,7 @@ class DropoffController {
 				}
 			}
 		}
+		return swarmie;
 	  }
 
 };
