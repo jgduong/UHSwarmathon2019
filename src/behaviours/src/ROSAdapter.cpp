@@ -555,6 +555,11 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarLeftData = sonarLeft->range;
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
+	
+	if (currState == PICKUP && swarmie.pickupSuccess) {
+		currState == DROPOFF;
+		swarmie.pickupSuccess = false;
+	}
 }
 
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
