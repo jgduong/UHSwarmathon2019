@@ -44,6 +44,9 @@ class DropoffController {
 			initialTheta = currTheta;
 			initCalc = false;
 			spinHome = true;
+			swarmie.left = 0.0;
+			swarmie.right = 0.0;
+			return swarmie;
 	  	}
 		else if (spinHome) {
 			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
@@ -68,11 +71,13 @@ class DropoffController {
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
 					distanceToHome -= 0.5;
+					return swarmie;
 				}
 				else {
 					//sendDriveCommand(-50.0, 50.0);
 					swarmie.left = -50.0;
 					swarmie.right = 50.0;
+					return swarmie;
 				}
 			}
 			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
@@ -92,15 +97,17 @@ class DropoffController {
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
 					distanceToHome -= 0.5;
+					return swarmie;
 				}
 				else {
 					//sendDriveCommand(50.0, -50.0);
 					swarmie.left = 50.0;
 					swarmie.right = -50.0;
+					return swarmie;
 				}
 			}
 		}
-		return swarmie;
+		//return swarmie;
 	  }
 
 };
