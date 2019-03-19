@@ -33,7 +33,7 @@
 #include "LogicController.h"
 #include <vector>
 
-#include "Wheels.h"
+#include "Swarmie.h"
 #include "normalizedValue.h"
 #include "Point.h"
 #include "Tag.h"
@@ -266,7 +266,7 @@ bool centerInit = true;
 bool initialMapPopulate = true;
 std_msgs::Float32 wrist;
 std_msgs::Float32 fngr;
-wheels Wheels;
+Swarmie swarmie;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -390,13 +390,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			//visitedLocations[normalizedValue(currentLocationOdom.x + centerOffsetX)].insert(normalizedValue(currentLocationOdom.Y + centerOffsetY));
 			if (!rotate2) {
 				logicController->addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
-				Wheels = logicController->InitialRotate();
+				swarmie = logicController->InitialRotate();
 			}
 			
 			
 			
 			
-			if (Wheels.left == 30.0 && Wheels.right == 30.0 && !rotate2) {
+			if (swarmie.left == 30.0 && swarmie.right == 30.0 && !rotate2) {
 				//2nd rotate done 
 				step2X = currentLocationOdom.x + centerOffsetX;
 				step2Y = currentLocationOdom.y + centerOffsetY;
@@ -419,14 +419,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				
 				if (displacement >= 0.55) {
 					
-					Wheels = logicController->turnRight90();
-					if (Wheels.left == 0.0 && Wheels.right == 0.0) {
+					swarmie = logicController->turnRight90();
+					if (swarmie.left == 0.0 && swarmie.right == 0.0) {
 						initialized= true;
 						currState = SPIRAL_SEARCH;
 					}
 				}	
 			}
-			sendDriveCommand(Wheels.left, Wheels.right);
+			sendDriveCommand(swarmie.left, swarmie.right);
 			//rotateBool = true;
 		}
     		else
@@ -454,7 +454,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//temporarily setting the state to spiral search
 		
 		//currState = SPIRAL_SEARCH;
-		if (currState == PICKUP && Wheels.left == 0.00 && Wheels.right == 00.0) {
+		/*
+		if (currState == PICKUP && swarmie.left == 0.00 && swarmie.right == 00.0) {
 			//centered successfully on cube, control gripper to pick it up
 			cout << "closing gripper now " << endl;
 			fngr.data = 0;
@@ -462,14 +463,23 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			fingerAnglePublish.publish(fngr);
 			wristAnglePublish.publish(wrist);
 		}
-      		else Wheels = logicController->DoWork(currState);
+		*/
+      		//else 
+		//{
+			swarmie = logicController->DoWork(currState);
+		//}
 
 		
-		if (Wheels.left == 5.0 && Wheels.right == 5.0) {
+		if (swarmie.left == 5.0 && swarmie.right == 5.0) {
 			//centering on tag has failed (timeout), return to spiral search
 			currState = SPIRAL_SEARCH;
 		}
-		sendDriveCommand(Wheels.left, Wheels.right);
+		
+		fngr.data = swarmie.finger;
+		wrist.data = swarmie.wrist;
+		fingerAnglePublish.publish(finger);
+		wristAnglePublish.publish(wrist);
+		sendDriveCommand(swarmie.left, swarmie.right);
 	}
 	  
 	humanTime();
