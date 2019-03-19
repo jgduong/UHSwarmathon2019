@@ -265,6 +265,7 @@ float step2Y;
 bool centerInit = true;
 bool initialMapPopulate = true;
 std_msgs::Float32 wrist;
+std_msgs::Float32 fngr;
 wheels Wheels;
 
 void behaviourStateMachine(const ros::TimerEvent&)
@@ -509,6 +510,8 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 			//lower wrist angle switch to pickup state
 			wrist.data = 1.25;
 			wristAnglePublish.publish(wrist);
+			fngr.data = M_PI_2;
+			fingerAnglePublish.publish(fngr);
 			
 			currState = PICKUP;
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
