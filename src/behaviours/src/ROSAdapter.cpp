@@ -83,6 +83,8 @@ float sonarRightData = 0.0;
 
 bool initialized = false;
 
+vector<Tag> tags;
+
 geometry_msgs::Twist velocity;
 
 float linearVelocity = 0;	//forward speed, POSITIVE = forward, NEGATIVE = backward
@@ -500,7 +502,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 {
 	if (message->detections.size() > 0) 
 	{
-		    vector<Tag> tags;
+		    
 
 		    for (int i = 0; i < message->detections.size(); i++) 
 			{
