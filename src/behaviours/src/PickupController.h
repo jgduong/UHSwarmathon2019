@@ -8,10 +8,14 @@ class PickupController {
 private:
     float detectionTimeout = 0.0;
     float zDistanceToCube = 0.0;
-    bool approachTag = false;
+    bool approachCube = false;
     float tagX;
     float tagY;
     float tagZ;
+    
+    float startingX;
+    float startingY;
+    float distTravelled = 0;
 
 public: 
 
@@ -50,11 +54,14 @@ public:
                 //sendDriveCommand(0.0, 0.0);
                 Wheels.left = 0.0;
                 Wheels.right = 0.0;
-                approachTag = true;
+                
                 zDistanceToCube = tagZ;
                 //aprilTagDetected = false;
                 //tagPickupTimer = 0.0;
                 //middleStep = false;
+                startingX = selfX;
+                startingY = selfY;
+                approachCube = true;
             }
             else
             {
@@ -67,7 +74,19 @@ public:
             }
         
         if (approachCube) {
-            
+            cout << "Approaching cube..." << endl;
+            cout << "z DistanceToCube is "  << zDistanceToCube << endl;
+            distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
+            cout << "Distance travelled is : " << distTravelled << endl;
+            if (distTravelled < (zDistanceToCube + 0.1)) {
+                Wheels.left = 30.0;
+                Wheels.right = 30.0;
+            }
+            else {
+                cout << "Currently next to cube" << endl;
+                Wheels.left = 0.0;
+                Wheels.right = 0.0;
+            }
             
         }
 
