@@ -6,6 +6,7 @@ struct Swarmie {
   float right;
   float wrist;
   float finger;
+  bool pickupSuccess;
 };
 
 #endif 
