@@ -477,7 +477,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		fngr.data = swarmie.finger;
 		wrist.data = swarmie.wrist;
-		fingerAnglePublish.publish(finger);
+		fingerAnglePublish.publish(fngr);
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(swarmie.left, swarmie.right);
 	}
