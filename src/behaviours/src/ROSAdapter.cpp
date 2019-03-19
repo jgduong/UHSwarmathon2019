@@ -1009,7 +1009,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "centered on cube" << endl;
 			sendDriveCommand(0.0, 0.0);
 			aprilTagAcquireSequence = true;
-			zDistanceToCube = z;
+			zDistanceToCube = zDistance;
 			aprilTagDetected = false;
 			tagPickupTimer = 0.0;
 			middleStep = false;
