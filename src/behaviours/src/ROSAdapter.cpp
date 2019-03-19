@@ -999,8 +999,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//float y = get<2>(pos);
 		cout << "tags.size() is: " << tags.size() << endl;
 		
-		zDistance = tags[i].getPositionZ();
-		xDistance = tags[i].getPositionX();
+		zDistance = tags[0].getPositionZ();
+		xDistance = tags[0].getPositionX();
 		for (int i = 0; i < tags.size(); i++)
 		{
 			if (tags[i].getPositionZ() < zDistance)
