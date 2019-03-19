@@ -264,6 +264,7 @@ float step2X;
 float step2Y;
 bool centerInit = true;
 bool initialMapPopulate = true;
+std_msgs::Float32 wrist;
 wheels Wheels;
 
 void behaviourStateMachine(const ros::TimerEvent&)
