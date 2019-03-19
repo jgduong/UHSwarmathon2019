@@ -453,12 +453,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//temporarily setting the state to spiral search
 		
 		//currState = SPIRAL_SEARCH;
-		if (currState == PICKUP && Wheels.left == 0.0 && Wheels.right == 0.0) {
-			
-		}
-		else {
-      			Wheels = logicController->DoWork(currState);
-		}
+      		Wheels = logicController->DoWork(currState);
+
 		
 		if (Wheels.left == 5.0 && Wheels.right == 5.0) {
 			//centering on tag has failed (timeout), return to spiral search
