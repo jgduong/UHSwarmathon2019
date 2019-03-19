@@ -397,6 +397,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else if (sonarLeftData >= 1.5)
 		{
 			obstacleLeft = false;
+			cout << "obstacle cleared from left " << endl;
 			if (prevBool == 1)
 			{
 				mapTesting = true;
@@ -479,6 +480,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else if (sonarRightData >= 1.5)
 		{
 			obstacleRight = false;
+			cout << "obstacle cleared from right " << endl;
 			if (prevBool == 1)
 			{
 				mapTesting = true;
@@ -560,6 +562,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		else if (sonarCenterData >= 1.5)
 		{
+			cout << "obstacle cleared from center " << endl;
 			obstacleCenter = false;
 			if (prevBool == 1)
 			{
@@ -948,6 +951,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				sendDriveCommand(20.0, 20.0);
 				middleStep = true;
+				zDistanceToCube = tags[lowestzIndex].getPositionZ();
 			}
 			else if (!middleStep && tagPickupTimer > 200)
 			{
@@ -956,7 +960,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			tagPickupTimer++;
 		}
-		else if (tagPickupTimer > (zDistance*20*10 +10))
+		else if (tagPickupTimer > (zDistanceToCube*20*10 +10))
 		{
 			sendDriveCommand(0.0, 0.0);
 			fngr.data = 0;
@@ -964,7 +968,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			fingerAnglePublish.publish(fngr);
 			//wristAnglePublish.publish(wrist);
 			tagPickupTimer++;
-			if (tagPickupTimer > zDistance*20*10 +20)
+			if (tagPickupTimer > zDistanceToCube*20*10 +20)
 			{
 				wristAnglePublish.publish(fngr);
 				if (tagPickupTimer > zDistance*200 + 30)
