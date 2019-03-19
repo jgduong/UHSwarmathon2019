@@ -454,8 +454,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//temporarily setting the state to spiral search
 		
 		//currState = SPIRAL_SEARCH;
-		if (currState == PICKUP && Wheels.left == 0.01 && Wheels.right == 0.01) {
+		if (currState == PICKUP && Wheels.left == 0.0 && Wheels.right == 0.0) {
 			//centered successfully on cube, control gripper to pick it up
+			cout << "closing gripper now " << endl;
 			fngr.data = 0;
 			wrist.data = 0;
 			fingerAnglePublish.publish(fngr);
