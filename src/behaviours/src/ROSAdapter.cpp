@@ -267,7 +267,6 @@ bool initialMapPopulate = true;
 std_msgs::Float32 wrist;
 std_msgs::Float32 fngr;
 wheels Wheels;
-gripper Gripper;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
