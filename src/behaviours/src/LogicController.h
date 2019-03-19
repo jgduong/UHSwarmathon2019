@@ -124,7 +124,7 @@ class LogicController {
 		normX = normalizedValue(x);
 		normY = normalizedValue(y);
 		spiralSearchController.updateData(x, y, theta);
-		pickupController.updateData(x, y, theta);
+		pickupController.updateData(x, y);
 	  }
 	
 	void updateTags(float x, float y, float z) {
