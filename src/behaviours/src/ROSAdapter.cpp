@@ -478,7 +478,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		if (currState == PICKUP && swarmie.pickupSuccess) {
 			cout << "PICKUP SUCCESS" << endl;
-			currState == DROPOFF;
+			currState = DROPOFF;
 			swarmie.pickupSuccess = false;
 		}
 		
