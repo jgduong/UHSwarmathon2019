@@ -477,6 +477,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			currState = SPIRAL_SEARCH;
 		}
 		if (currState == PICKUP && swarmie.pickupSuccess) {
+			cout << "PICKUP SUCCESS" << endl;
 			currState == DROPOFF;
 			swarmie.pickupSuccess = false;
 		}
@@ -530,13 +531,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (currState == SPIRAL_SEARCH ) {
-			//lower wrist angle switch to pickup state
-			//wrist.data = 1.25;
-			//wristAnglePublish.publish(wrist);
-			//fngr.data = M_PI_2;
-			//fingerAnglePublish.publish(fngr);
-			
+		if (currState == SPIRAL_SEARCH ) {	
 			currState = PICKUP;
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 		}
