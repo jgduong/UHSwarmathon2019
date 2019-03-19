@@ -258,7 +258,7 @@ int main(int argc, char **argv) {
 
 float startingTheta;
 bool rotateBool = false;
-int currState;
+int currState = INIT;
 float centerOffsetX = 0.0;
 float centerOffsetY = 0.0;
 bool rotate2 = false;
