@@ -1,5 +1,5 @@
 #include "Swarmie.h"
-#include "Caclulations.h"
+#include "Calculations.h"
 #include <iostream>
 using namespace std;
 
