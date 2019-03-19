@@ -133,7 +133,7 @@ class LogicController {
 	    	centerOffsetX = x;
 	    	centerOffsetY = y;
 		spiralSearchController.setCenterOffset(x, y);
-		dropOffController.setCenterOffset(x, y);
+		dropoffController.setCenterOffset(x, y);
 	  }
 	
 	    void populateMap() {
