@@ -1,4 +1,4 @@
-#include "Wheels.h"
+#include "Swarmie.h"
 #include "Tag.h"
 #include <iostream>
 using namespace std;
@@ -19,7 +19,7 @@ private:
 
 public: 
 
-    wheels Wheels;
+    Swarmie swarmie;
     
     
     void updateTags(float x, float y, float z) {
@@ -28,7 +28,7 @@ public:
         tagZ = z;
     }
     
-    wheels DoWork(float selfX, float selfY) {
+    Swarmie DoWork(float selfX, float selfY) {
           detectionTimeout++;
           cout << "Target detected : in PICKUP state" << endl;
           cout << "x, y, z of aprilTag: " << tagX << ", " << tagY << ", " << tagZ << endl;
@@ -39,21 +39,21 @@ public:
             if ( tagX > 0 && detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(6.0, -5.0);
-                Wheels.left = 6.0;
-                Wheels.right = -5.0;
+                swarmie.left = 6.0;
+                swarmie.right = -5.0;
             }
             else if ( tagX < -0.002 && detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(-5.0, 7.0);
-                Wheels.left = -5.0;
-                Wheels.right = 6.0;
+                swarmie.left = -5.0;
+                swarmie.right = 6.0;
             }
             else if (tagX <= 0 && tagX >= -0.002 && !approachCube)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
-                Wheels.left = 0.01;
-                Wheels.right = 0.01;
+                swarmie.left = 0.01;
+                swarmie.right = 0.01;
                 
                 zDistanceToCube = tagZ;
                 //aprilTagDetected = false;
@@ -67,8 +67,8 @@ public:
             {
                 //timeout
                 //sendDriveCommand(5.0, 5.0);
-                Wheels.left = 5.0;
-                Wheels.right = 5.0;
+                swarmie.left = 5.0;
+                swarmie.right = 5.0;
                 //aprilTagAcquireSequence = false;
                 //mapTesting = true;
             }
@@ -79,18 +79,18 @@ public:
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
             if (distTravelled < (zDistanceToCube + 0.05)) {
-                Wheels.left = 30.0;
-                Wheels.right = 30.0;
+                swarmie.left = 30.0;
+                swarmie.right = 30.0;
             }
             else {
                 cout << "Currently next to cube" << endl;
-                Wheels.left = 0.0;
-                Wheels.right = 0.0;
+                swarmie.left = 0.0;
+                swarmie.right = 0.0;
             }
             
         }
 
-          return Wheels;
+          return swarmie;
     }
 
 
