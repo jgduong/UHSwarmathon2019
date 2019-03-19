@@ -916,7 +916,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		fingerAnglePublish.publish(fngr);
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(20.0, 20.0);
-		//float x = tags.back().getPositionX();
+		float x = tags.back().getPositionX();
 		if (tagPickupTimer > (zDistanceToCube*100) && !middleStep)
 		{
 			if ( x > -0.001 && tagPickupTimer < 200 )
@@ -982,7 +982,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//float y = get<2>(pos);
 		for (int i = 0; i < tags.size(); i++)
 		{
-    			max = 100;
 			if (tags[i].getPositionZ() < zDistance)
 			{
 				zDistance = tags[i].getPositionZ();
@@ -991,7 +990,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}
 		
 		xDistance = tags[zIndex].getPositionY();
-		cout << "x, z of NEAREST aprilTag: " << x << ", " << z << endl;
+		cout << "x, z of NEAREST aprilTag: " << xDistance << ", " << zDistance << endl;
 		
 		float thetaToCube = atan2((zDistance),(xDistance)) + currentLocationOdom.theta;
 		
