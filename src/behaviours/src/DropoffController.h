@@ -17,7 +17,8 @@ class DropoffController {
 	float initialY;
 	float initialTheta;
 	float homeTheta;
-
+	float distanceToHome = 0.0;
+		
 	bool initCalc = true;
 	bool spinHome = false;
 	bool driveHome = false;
