@@ -52,8 +52,8 @@ public:
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
-                Wheels.left = 0.0;
-                Wheels.right = 0.0;
+                Wheels.left = 0.01;
+                Wheels.right = 0.01;
                 
                 zDistanceToCube = tagZ;
                 //aprilTagDetected = false;
