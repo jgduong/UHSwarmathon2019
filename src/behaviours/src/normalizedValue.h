@@ -1,5 +1,5 @@
-#ifndef NORMALIZEDVALUE_H
-#define NORMALIZEDVALUE_H
+#ifndef CALCULATIONS_H
+#define CALCULATIONS_H
 
 float normalizedValue(float x)
 {
@@ -16,6 +16,11 @@ float normalizedValue(float x)
 		int n = (val/25);
 		return n*0.25;
 	}
+}
+
+float calcDistance(float curX, float curY, float goalX, float goalY) {
+	float dist = sqrt( (goalX - curX)*(goalX - curX) + (goalY - curY)*(goalY - curY) );
+	return dist;
 }
 
 #endif
