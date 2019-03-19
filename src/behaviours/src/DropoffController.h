@@ -77,6 +77,8 @@ class DropoffController {
 			}
 			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
 			{
+				cout << "currTheta is " << currTheta << endl;
+				cout << "homeTheta is " << homeTheta << endl;
 				if (abs(currTheta - homeTheta) <= 0.05)
 				{
 					//sendDriveCommand(0.0, 0.0);
