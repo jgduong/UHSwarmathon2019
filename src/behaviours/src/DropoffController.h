@@ -21,7 +21,7 @@ class DropoffController {
 		
 	bool initCalc = true;
 	bool spinHome = false;
-	bool driveHome = false;
+	bool driveToHome = false;
 	Swarmie swarmie;
   
   public:
@@ -60,7 +60,7 @@ class DropoffController {
 					swarmie.right = 0.0;
 					cout << "done rotating" << endl;
 					spinHome = false;
-					driveHome = true;
+					driveToHome = true;
 					initialX = currX + centerOffsetX;
 					initialY = currX + centerOffsetY;
 					//dropOffTimer = 0.0;
