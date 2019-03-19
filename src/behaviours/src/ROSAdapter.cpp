@@ -996,15 +996,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		cout << "desired theta calculated to aprilTag: " << endl;
 		
-		if ( x > 0 && detectionTimeOut < 200)
+		if ( xDistance > 0 && detectionTimeOut < 200)
 		{
 			sendDriveCommand(6.5, -5.0);
 		}
-		else if ( x < -0.002 && detectionTimeOut < 200)
+		else if ( xDistance < -0.002 && detectionTimeOut < 200)
 		{
 			sendDriveCommand(-5.0, 6.5);
 		}
-		else if (x <= 0 && x >= -0.002)
+		else if (xDistance <= 0 && xDistance >= -0.002)
 		{
 			cout << "centered on cube" << endl;
 			sendDriveCommand(0.0, 0.0);
