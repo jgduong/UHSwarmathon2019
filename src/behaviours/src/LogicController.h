@@ -122,7 +122,7 @@ class LogicController {
 		normY = normalizedValue(y);
 		spiralSearchController.updateData(x, y, theta);
 		pickupController.updateData(x, y);
-		dropoffController.DoWork(x, y, z);
+		dropoffController.DoWork(x, y, theta);
 	  }
 	
 	void updateTags(float x, float y, float z) {
