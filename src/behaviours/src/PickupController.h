@@ -90,16 +90,21 @@ public:
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
             if (distTravelled < (zDistanceToCube)) {
-                swarmie.left = 30.0;
-                swarmie.right = 30.0;
+                    swarmie.left = 30.0;
+                    swarmie.right = 30.0;
             }
             else {
-                cout << "Currently next to cube" << endl;
-                swarmie.left = 0.0;
-                swarmie.right = 0.0;
-                swarmie.wrist = 0;
-                swarmie.finger = 0;
-		swarmie.pickupSuccess = true;
+		    pickupDelay++;
+                    cout << "Currently next to cube" << endl;
+                    swarmie.left = 0.0;
+                    swarmie.right = 0.0;
+		    swarmie.finger = 0;
+		    if (pickupDelay >= 20) {
+			    swarmie.wrist = 0;
+			    //swarmie.finger = 0;
+			    swarmie.pickupSuccess = true;
+			    pickupDelay = 0;
+		    }
             }
             
         }
