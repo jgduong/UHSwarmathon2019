@@ -55,6 +55,7 @@ public:
           cout << "Target detected : in PICKUP state, minX is: " << minX << endl;
           cout << "index of centermost tag: " << indexOfClosestTag << ", x,z: " << tags[indexOfClosestTag].getPositionX() << ", " << tags[indexOfClosestTag].getPositionZ() << endl;
 	  swarmie.pickupSuccess = false;
+	    swarmie.dropoffSuccess = false;
         
             //center on cube
             if ( minX > 0 && detectionTimeout < 200 && !approachCube)
