@@ -51,7 +51,7 @@ public:
     
     Swarmie DoWork() {
           detectionTimeout++;
-          cout << "Target detected : in PICKUP state, minX isL " << minX << endl;
+          cout << "Target detected : in PICKUP state, minX is: " << minX << endl;
           cout << "index of centermost tag: " << indexOfClosestTag << ", x,z: " << tags[indexOfClosestTag].getPositionX() << ", " << tags[indexOfClosestTag].getPositionZ() << endl;
 	  
         
@@ -75,7 +75,8 @@ public:
                 swarmie.left = 0.01;
                 swarmie.right = 0.01;
                 swarmie.wrist = 1.25;
-                swarmie.finger = M_PI_2;
+                //swarmie.finger = M_PI_2;
+		swarmie.finger = M_PI_2 + 0.2;    
                 
                 zDistanceToCube = tags[indexOfClosestTag].getPositionZ();
                 //aprilTagDetected = false;
