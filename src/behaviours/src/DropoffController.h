@@ -20,7 +20,7 @@ class DropoffController {
 	float distanceToHome = 0.0;
 	float distTravelled = 0.0;
 	
-	int pickupDelay = 0;
+	//int pickupDelay = 0;
 		
 	bool initCalc = true;
 	bool spinHome = false;
@@ -44,7 +44,7 @@ class DropoffController {
 	  }
   
 	  Swarmie DoWork() {
-		pickupDelay++;
+		
 		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
 			desiredTheta = atan2((0 - (currY + centerOffsetY)),(0 - (currX + centerOffsetX)));
@@ -55,7 +55,7 @@ class DropoffController {
 			swarmie.right = 0.0;
 			//return swarmie;
 	  	}
-		else if (spinHome && pickupDelay >= 20) {
+		else if (spinHome) {
 			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
 			float turnSize = desiredTheta - initialTheta;
 			cout << "turnSize here is: " << turnSize << endl;
@@ -66,6 +66,7 @@ class DropoffController {
 			{
 				if (abs(currTheta - desiredTheta) <= 0.0)
 				{
+					
 					//done rotating to home
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
@@ -105,7 +106,7 @@ class DropoffController {
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
 					distanceToHome -= 0.5;
-					pickupDelay = 0;
+					//pickupDelay = 0;
 					//return swarmie;
 				}
 				else {
