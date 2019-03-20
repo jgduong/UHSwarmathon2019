@@ -339,7 +339,9 @@ class LogicController {
 	  }
 	
 	void addVisitedLocation(float x, float y) {
-		visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
+		if (currState == SPIRAL_SEARCH || currState == AVOID_OBSTACLE) {
+			visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
+		}
 	}
 	
 	Swarmie turnRight90() {
