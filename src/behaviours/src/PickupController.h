@@ -48,15 +48,17 @@ public:
             //center on cube
             if ( tagX > 0 && detectionTimeout < 200 && !approachCube)
             {
-                //sendDriveCommand(6.0, -5.0);
-                swarmie.left = 6.0;
-                swarmie.right = -5.0;
+		    swarmie.pickupSuccess = false;
+                    //sendDriveCommand(6.0, -5.0);
+                    swarmie.left = 6.0;
+                    swarmie.right = -5.0;
             }
             else if ( tagX < -0.01 & detectionTimeout < 200 && !approachCube)
             {
-                //sendDriveCommand(-5.0, 7.0);
-                swarmie.left = -5.0;
-                swarmie.right = 6.0;
+                    //sendDriveCommand(-5.0, 7.0);
+		    swarmie.pickupSuccess = false;
+                    swarmie.left = -5.0;
+                    swarmie.right = 6.0;
             }
             else if (tagX <= 0 && tagX >= -0.01 && !approachCube)
             {
@@ -66,7 +68,8 @@ public:
                 swarmie.right = 0.01;
                 swarmie.wrist = 1.25;
                 swarmie.finger = M_PI_2;
-                
+                detectionTimeout = 0;
+		    
                 zDistanceToCube = tagZ;
                 //aprilTagDetected = false;
                 //tagPickupTimer = 0.0;
