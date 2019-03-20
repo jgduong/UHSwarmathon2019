@@ -10,9 +10,10 @@ private:
     float detectionTimeout = 0.0;
     float zDistanceToCube = 0.0;
     bool approachCube = false;
-    float tagX;
-    float tagY;
-    float tagZ;
+    //float tagX;
+    //float tagY;
+    //float tagZ;
+    vector<Tag> tags;
     
     float selfX;
     float selfY;
@@ -24,12 +25,21 @@ private:
 public: 
 
     Swarmie swarmie;
+    float minX;
+    float indexOfClosestTag;
     
-    
-    void updateTags(float x, float y, float z) {
-        tagX = x;
-        tagY = y;
-        tagZ = z;
+    //void updateTags(float x, float y, float z) {
+    void updateTags(vector<Tag> tagsReceived) {
+	minX = tagsReceived[0].getPositionX();
+	for (int i = 0; i < tagsReceived.size(); i++)
+	{
+		tags.push_back(tagsReceived[i]);
+		if (tagsReceived[i].getPositionX() < minX)
+		{
+			minX = tagsReceived[i].getPositionX();
+			indexOfClosestTag = i;
+		}
+	}
     }
     
     void updateData(float x, float y) {
@@ -39,25 +49,24 @@ public:
     
     Swarmie DoWork() {
           detectionTimeout++;
-          cout << "Target detected : in PICKUP state" << endl;
-          cout << "x, y, z of aprilTag: " << tagX << ", " << tagY << ", " << tagZ << endl;
-          //Wheels.left = 0.0;
-          //Wheels.right = 0.0;
+          cout << "Target detected : in PICKUP state, minX isL " << minX << endl;
+          cout << "index of centermost tag: " << indexOfClosestTag << ", x,z: " << tags[indexOfClosestTag].getPositionX() << ", " << tags[indexOfClosestTag].getPositionZ() << endl;
+	  
         
             //center on cube
-            if ( tagX > 0 && detectionTimeout < 200 && !approachCube)
+            if ( minX > 0 && detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(6.0, -5.0);
                 swarmie.left = 6.0;
                 swarmie.right = -5.0;
             }
-            else if ( tagX < -0.01 & detectionTimeout < 200 && !approachCube)
+            else if ( minX < -0.01 & detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 swarmie.left = -5.0;
                 swarmie.right = 6.0;
             }
-            else if (tagX <= 0 && tagX >= -0.01 && !approachCube)
+            else if (minX <= 0 && minX >= -0.01 && !approachCube)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
@@ -66,7 +75,7 @@ public:
                 swarmie.wrist = 1.25;
                 swarmie.finger = M_PI_2;
                 
-                zDistanceToCube = tagZ;
+                zDistanceToCube = tags[indexOfClosestTag].getPositionZ();
                 //aprilTagDetected = false;
                 //tagPickupTimer = 0.0;
                 //middleStep = false;
