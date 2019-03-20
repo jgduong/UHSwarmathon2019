@@ -19,6 +19,8 @@ class DropoffController {
 	float desiredTheta;
 	float distanceToHome = 0.0;
 	float distTravelled = 0.0;
+	
+	int pickupDelay = 0;
 		
 	bool initCalc = true;
 	bool spinHome = false;
@@ -42,6 +44,7 @@ class DropoffController {
 	  }
   
 	  Swarmie DoWork() {
+		pickupDelay++;
 		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
 			desiredTheta = atan2((0 - (currY + centerOffsetY)),(0 - (currX + centerOffsetX)));
@@ -52,7 +55,7 @@ class DropoffController {
 			swarmie.right = 0.0;
 			//return swarmie;
 	  	}
-		else if (spinHome) {
+		else if (spinHome && pickupDelay >= 20) {
 			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
 			float turnSize = desiredTheta - initialTheta;
 			cout << "turnSize here is: " << turnSize << endl;
@@ -61,7 +64,7 @@ class DropoffController {
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
-				if (abs(currTheta - desiredTheta) <= 0.01)
+				if (abs(currTheta - desiredTheta) <= 0.0)
 				{
 					//done rotating to home
 					//sendDriveCommand(0.0, 0.0);
@@ -75,6 +78,7 @@ class DropoffController {
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
 					distanceToHome -= 0.5;
+					pickupDelay = 0;
 					//return swarmie;
 				}
 				else {
@@ -88,7 +92,7 @@ class DropoffController {
 			{
 				cout << "currTheta is " << currTheta << endl;
 				cout << "desiredTheta is " << desiredTheta << endl;
-				if (abs(currTheta - desiredTheta) <= 0.01)
+				if (abs(currTheta - desiredTheta) <= 0.0)
 				{
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
@@ -101,6 +105,7 @@ class DropoffController {
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
 					distanceToHome -= 0.5;
+					pickupDelay = 0;
 					//return swarmie;
 				}
 				else {
@@ -131,6 +136,7 @@ class DropoffController {
 				  initialY = currY;
 				  backOff = true;
 				  driveToHome = false;
+				  distTravelled = 0.0;
 				  
 	       		  }
 			  else {
@@ -152,6 +158,7 @@ class DropoffController {
 				  swarmie.right = 0.0;
 				  backOff = false;
 				  rotate180 = true;
+				  distTravelled = 0.0;
 				  
 				  desiredTheta = currTheta + M_PI;
 				  if (desiredTheta > M_PI) {
@@ -180,6 +187,21 @@ class DropoffController {
 				  swarmie.right = 50.0;
 			  }
 			  
+		  }
+		  else if (backToSpiral) {
+			  cout << "distanceToHome is: " << distanceToHome << endl;
+			  cout << "distanceTravelled is: " << distTravelled << endl;
+			  if (abs(distanceToHome - distTravelled) <= 0.01) {
+				  cout << "Successfull drove back to spiral edge" << endl;
+				  swarmie.left = 0.0;
+				  swarmie.right = 0.0;
+				  backToSpiral = false;
+			  }
+			  else {
+				  cout << "Driving back to spiral" << endl;
+				  swarmie.left = 100.0;
+				  swarmie.right = 100.0;
+			  }
 		  }
 		return swarmie;
 	  }
