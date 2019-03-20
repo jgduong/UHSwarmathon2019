@@ -70,6 +70,8 @@ class SpiralSearchController {
       Wheels.left = 0.0;
       Wheels.right = 0.0;
       */
+      swarmie.pickupSuccess = false;
+      swarmie.dropoffSuccess = false;
       
       float newTheta = currTheta - 1.53;
 
