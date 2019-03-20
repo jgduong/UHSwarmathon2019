@@ -123,7 +123,7 @@ class DropoffController {
 				  cout << "Made it to home base...dropping off cube!" << endl;
 	  			  //fngr.data = M_PI_2;
 				  //fingerAnglePublish.publish(fngr);
-				  swarmie.finger = M_PI_2;
+				  swarmie.finger = M_PI_2 + 0.2;
 				  //sendDriveCommand(0.0, 0.0);
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
