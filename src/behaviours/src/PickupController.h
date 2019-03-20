@@ -20,6 +20,7 @@ private:
     float startingX;
     float startingY;
     float distTravelled = 0;
+    int pickupDelay = 0;
 
 public: 
 
