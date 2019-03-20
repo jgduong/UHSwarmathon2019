@@ -2108,7 +2108,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (mapTesting || ((reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b) && !isVisted((normalizedValue(currentLocationOdom.x + centerOffsetX)),(normalizedValue(currentLocationOdom.y + centerOffsetX))))
+		if (mapTesting || ((reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b) && !isVisited((normalizedValue(currentLocationOdom.x + centerOffsetX)),(normalizedValue(currentLocationOdom.y + centerOffsetX)))) )
 		{
 			aprilTagDetected = true;
 			tagIndex++;
