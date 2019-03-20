@@ -389,7 +389,8 @@ class LogicController {
 			    //sendDriveCommand(0.0, 0.0); 
 			      swarmie.left = 0.0;
 			      swarmie.right = 0.0;
-			    cout << "done rotating: RIGHT 90" << endl;
+			      swarmie.initialized = true;
+			      cout << "done rotating: RIGHT 90" << endl;
 			    //step = 13;
 			     // initialMove = false;
 			     // mapTesting = true;
