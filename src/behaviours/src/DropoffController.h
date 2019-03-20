@@ -74,7 +74,7 @@ class DropoffController {
 					initialY = currY;
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
-					distanceToHome -= 1;
+					distanceToHome -= 0.4;
 					//return swarmie;
 				}
 				else {
@@ -100,7 +100,7 @@ class DropoffController {
 					initialY = currY;
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
-					distanceToHome -= 1;
+					distanceToHome -= 0.4;
 					//return swarmie;
 				}
 				else {
