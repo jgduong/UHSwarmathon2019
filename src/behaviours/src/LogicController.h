@@ -126,8 +126,9 @@ class LogicController {
 		dropoffController.updateData(x, y, theta);
 	  }
 	
-	void updateTags(float x, float y, float z) {
-		pickupController.updateTags(x, y, z);
+	//void updateTags(float x, float y, float z) {
+	void updateTags(vector<Tag> tags) {
+		pickupController.updateTags(tags);
 	}
 
 	  void setCenterOffset(float x, float y) {
