@@ -341,6 +341,7 @@ class LogicController {
 	
 	void addVisitedLocation(float x, float y) {
 		if (currState == SPIRAL_SEARCH || currState == AVOID_OBSTACLE) {
+			cout << "location added to hashmap" << endl;
 			visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 		}
 	}
