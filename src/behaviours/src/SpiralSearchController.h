@@ -58,7 +58,7 @@ class SpiralSearchController {
     
     Swarmie DoWork(unordered_map<float, set<float>> &visitedLocations) {
       swarmie.pickupSuccess = false;
-      swarmie.dropoffSucess = false;
+      swarmie.dropoffSuccess = false;
       /*
       cout << "test: current location (" << currX << ", " << currY << ")";
       if (isVisited(currX, currY, visitedLocations))
