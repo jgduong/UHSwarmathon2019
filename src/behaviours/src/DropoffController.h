@@ -59,6 +59,7 @@ class DropoffController {
 			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
 			float turnSize = desiredTheta - initialTheta;
 			cout << "turnSize here is: " << turnSize << endl;
+			cout << "currTheta = " << currTheta << endl;
 			bool exceedMag = false;
 			//ninetyRotate = currTheta;
 
