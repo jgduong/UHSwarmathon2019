@@ -43,6 +43,8 @@ class DropoffController {
   
 	  Swarmie DoWork() {
 		cout << "Currently in the DROPOFF state" << endl;
+		  swarmie.pickupSuccess = false;
+		  swarmie.dropiffSuccess = false;
 		if (initCalc) {
 			desiredTheta = atan2((0 - currY),(0 - currX));
 			initialTheta = currTheta;
@@ -191,7 +193,6 @@ class DropoffController {
               		    swarmie.right = 0.0;
                		   backToSpiral = false;
 				swarmie.dropoffSuccess = true;
-				swarmie.pickupSuccess = false;
              		 }
              		 else {
                		   cout << "Driving back to spiral" << endl;
