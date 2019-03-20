@@ -51,7 +51,7 @@ public:
                 swarmie.left = 6.0;
                 swarmie.right = -5.0;
             }
-            else if ( tagX < -0.002 && detectionTimeout < 200 && !approachCube)
+            else if ( tagX < -0.01 & detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 swarmie.left = -5.0;
