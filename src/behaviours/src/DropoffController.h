@@ -18,6 +18,7 @@ class DropoffController {
 	float initialTheta;
 	float homeTheta;
 	float distanceToHome = 0.0;
+	float distTravelled = 0.0;
 		
 	bool initCalc = true;
 	bool spinHome = false;
@@ -108,6 +109,44 @@ class DropoffController {
 				}
 			}
 		}
+		  else if (driveToHome) {
+			  
+			  //sendDriveCommand(100.0, 100.0);
+			  //swarmie.left = 100.0;
+			  //swarmie.right = 100.0;
+			 
+			  if (distanceToHome - distTravelled <= 0.01)
+			  {
+				  cout << "Made it to home base...dropping off cube!" << endl;
+	  			  //fngr.data = M_PI_2;
+				  //fingerAnglePublish.publish(fngr);
+				  swarmie.finger = M_PI_2;
+				  //sendDriveCommand(0.0, 0.0);
+				  swarmie.left = 0.0;
+				  swarmie.right = 0.0;
+				  /*
+				  if (dropOffTimer >= 30.0)
+				  {
+				  	  fngr.data = 0;
+					  fingerAnglePublish.publish(fngr);
+					  driveToHome = false;
+					  returnToSpiralSearch = true;
+					  reverseFromBaseTimer = 0.0;
+					  oneEightyRotate_a = false;
+					  oneEightyRotate_b = false;
+				  }
+				  */
+				  //dropOffTimer++;
+	       		  }
+			  else {
+				  cout << "desired distance is: " << distanceToHome << endl;
+				  distTravelled = calcDist(currX, currY, initialX, initialY);
+			  	  cout << "distance travelled is: " << distTravelled << endl;
+				  swarmie.left = 100.0;
+			  	  swarmie.right = 100.0;
+			  }
+
+		  }
 		return swarmie;
 	  }
 
