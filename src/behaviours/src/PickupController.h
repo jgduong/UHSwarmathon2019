@@ -115,6 +115,7 @@ public:
 			swarmie.wrist = 0;
 			swarmie.pickupSuccess = true;
 			pickUpDelay = 0;
+			approachCube = false;
 		}
 		    
             }
