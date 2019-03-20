@@ -70,8 +70,8 @@ class DropoffController {
 					cout << "done rotating" << endl;
 					spinHome = false;
 					driveToHome = true;
-					initialX = currX + centerOffsetX;
-					initialY = currX + centerOffsetY;
+					initialX = currX;
+					initialY = curry;
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 1;
@@ -96,8 +96,8 @@ class DropoffController {
 					cout << "done rotating" << endl;
 					spinHome = false;
 					driveToHome = true;
-					initialX = currX + centerOffsetX;
-					initialY = currY + centerOffsetY;
+					initialX = currX;
+					initialY = currY;
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 1;
@@ -180,6 +180,22 @@ class DropoffController {
 			  }
 			  
 		  }
+		  else if (backToSpiral) {
+              		cout << "distanceToHome is: " << distanceToHome << endl;
+              		cout << "distanceTravelled is: " << distTravelled << endl;
+              		distTravelled = calcDistance(currX, currY, initialX, initialY);
+              		if (abs(distanceToHome - distTravelled) <= 0.01) {
+              		    cout << "Successfull drove back to spiral edge" << endl;
+              		    swarmie.left = 0.0;
+              		    swarmie.right = 0.0;
+               		   backToSpiral = false;
+             		 }
+             		 else {
+               		   cout << "Driving back to spiral" << endl;
+                	 swarmie.left = 100.0;
+                	  swarmie.right = 100.0;
+              		}
+         	 }
 		return swarmie;
 	  }
 
