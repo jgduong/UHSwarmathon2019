@@ -48,7 +48,7 @@ public:
             //center on cube
             if ( tagX > 0 && detectionTimeout < 200 && !approachCube)
             {
-		    swarmie.pickupSuccess = false;
+		    //swarmie.pickupSuccess = false;
                     //sendDriveCommand(6.0, -5.0);
                     swarmie.left = 6.0;
                     swarmie.right = -5.0;
