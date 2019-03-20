@@ -57,7 +57,7 @@ public:
                 swarmie.left = -5.0;
                 swarmie.right = 6.0;
             }
-            else if (tagX <= 0 && tagX >= -0.002 && !approachCube)
+            else if (tagX <= 0 && tagX >= -0.01 && !approachCube)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
