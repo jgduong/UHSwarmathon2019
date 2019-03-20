@@ -47,7 +47,7 @@ class DropoffController {
 		
 		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
-			desiredTheta = atan2((0 - (currY + centerOffsetY)),(0 - (currX + centerOffsetX)));
+			desiredTheta = atan2((0 - (currY)),(0 - (currX)));
 			initialTheta = currTheta;
 			initCalc = false;
 			spinHome = true;
@@ -78,7 +78,7 @@ class DropoffController {
 					initialX = currX + centerOffsetX;
 					initialY = currX + centerOffsetY;
 					//dropOffTimer = 0.0;
-					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
+					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 0.5;
 					//pickupDelay = 0;
 					//return swarmie;
@@ -105,7 +105,7 @@ class DropoffController {
 					initialX = currX + centerOffsetX;
 					initialY = currY + centerOffsetY;
 					//dropOffTimer = 0.0;
-					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
+					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 0.5;
 					//pickupDelay = 0;
 					//return swarmie;
