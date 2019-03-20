@@ -386,13 +386,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		visitedLocationsPublisher.publish(initialPopd);
 		
-		if (sonarLeftData < 0.4 && sonarCenterData <= 1.5)
+		if (sonarLeftData < 0.5 && sonarCenterData <= 1.5)
 		{
 			sendDriveCommand(40.0, -40.0);
 		}
 		else if (sonarLeftData <= 1.5)
 		{
-			sendDriveCommand(50.0, 50.0);
+			sendDriveCommand(50.0, 10.0);
 		}
 		else if (sonarLeftData >= 1.5)
 		{
@@ -469,13 +469,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		visitedLocationsPublisher.publish(initialPopd);
 		
-		if (sonarRightData < 0.4 && sonarCenterData <= 1.5)
+		if (sonarRightData < 0.5 && sonarCenterData <= 1.5)
 		{
 			sendDriveCommand(-40.0, 40.0);
 		}
 		else if (sonarRightData <= 1.5)
 		{
-			sendDriveCommand(50.0, 50.0);
+			sendDriveCommand(10.0, 50.0);
 		}
 		else if (sonarRightData >= 1.5)
 		{
@@ -552,15 +552,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 		visitedLocationsPublisher.publish(initialPopd);
 		
-		if (sonarCenterData <= 0.4 || sonarRightData <= 0.5)
+		if (sonarCenterData <= 0.5 || sonarRightData <= 0.5)
 		{
 			sendDriveCommand(-40.0, 40.0);
 		}
-		else if (sonarCenterData <= 1.5 || sonarRightData <= 1.5)
+		else if (sonarRightData <= 1.5)
 		{
 			sendDriveCommand(50.0, 10.0);
 		}
-		else if (sonarCenterData >= 1.5)
+		else if (sonarCenterData >= 1.5 && sonarRightData >= 1.5)
 		{
 			cout << "obstacle cleared from center " << endl;
 			obstacleCenter = false;
@@ -944,7 +944,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				sendDriveCommand(5.0, -5.0);
 			}
-			else if ( xDistance < -0.02 && tagPickupTimer < 200 )
+			else if ( xDistance < -0.03 && tagPickupTimer < 200 )
 			{
 				sendDriveCommand(-5.0, 5.0);
 			}
@@ -2108,7 +2108,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (mapTesting || (reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b))
+		if (mapTesting || ((reverseFromBaseTimer >= 80 && !oneEightyRotate_a && !oneEightyRotate_b)&&displacement >= distanceToHome-0.1))
 		{
 			aprilTagDetected = true;
 			tagIndex++;
