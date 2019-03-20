@@ -27,6 +27,7 @@ public:
     Swarmie swarmie;
     float minX;
     float indexOfClosestTag;
+    int pickUpDelay = 0;
     
     //void updateTags(float x, float y, float z) {
     void updateTags(vector<Tag> tagsReceived) {
@@ -35,6 +36,7 @@ public:
 	{
 		tags.push_back(tagsReceived[i]);
 		if (tagsReceived[i].getPositionX() < minX)
+		if ( abs( -0.005 - tagsReceived[i].getPositionX() ) < minX )
 		{
 			minX = tagsReceived[i].getPositionX();
 			indexOfClosestTag = i;
@@ -106,9 +108,14 @@ public:
                 cout << "Currently next to cube" << endl;
                 swarmie.left = 0.0;
                 swarmie.right = 0.0;
-                swarmie.wrist = 0;
                 swarmie.finger = 0;
-		swarmie.pickupSuccess = true;
+		if (pickUpDelay >= 20)
+		{
+			swarmie.wrist = 0;
+			swarmie.pickupSuccess = true;
+			pickUpDelay = 0;
+		}
+		    
             }
             
         }
