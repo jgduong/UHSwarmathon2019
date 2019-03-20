@@ -24,6 +24,7 @@ class DropoffController {
 	bool spinHome = false;
 	bool driveToHome = false;
 	bool rotate180 = false;
+	bool backToSpiral = false;
 	Swarmie swarmie;
   
   public:
