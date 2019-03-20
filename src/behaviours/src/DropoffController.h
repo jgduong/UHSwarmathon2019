@@ -209,6 +209,7 @@ class DropoffController {
 				  swarmie.dropoffSuccess = true;
 				  swarmie.pickupSuccess = false;
 				  backToSpiral = false;
+				  initCalc = true;
 			  }
 			  else {
 				  cout << "Driving back to spiral" << endl;
