@@ -71,7 +71,7 @@ class DropoffController {
 					spinHome = false;
 					driveToHome = true;
 					initialX = currX;
-					initialY = curry;
+					initialY = currY;
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 1;
