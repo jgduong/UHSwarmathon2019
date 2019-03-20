@@ -280,6 +280,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (!initialized)
   	{	
+		swarmie.initialized = false;
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 
 		
