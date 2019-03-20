@@ -50,13 +50,15 @@ public:
             {
 		    //swarmie.pickupSuccess = false;
                     //sendDriveCommand(6.0, -5.0);
+		    cout << "centering on cube" << endl;
                     swarmie.left = 6.0;
                     swarmie.right = -5.0;
             }
             else if ( tagX < -0.01 & detectionTimeout < 200 && !approachCube)
             {
                     //sendDriveCommand(-5.0, 7.0);
-		    swarmie.pickupSuccess = false;
+		    cout << "centering on cube" << endl;
+		    //swarmie.pickupSuccess = false;
                     swarmie.left = -5.0;
                     swarmie.right = 6.0;
             }
