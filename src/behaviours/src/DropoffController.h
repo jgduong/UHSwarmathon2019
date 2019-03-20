@@ -175,7 +175,7 @@ class DropoffController {
 			  else {
 				  cout << "Rotating away from home base" << endl;
 				  swarmie.left = -50.0;
-				  swarmie.right = -50.0;
+				  swarmie.right = 50.0;
 			  }
 			  
 		  }
