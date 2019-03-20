@@ -280,7 +280,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	if (!initialized)
   	{	
-		swarmie.initialized = false;
+		//swarmie.initialized = false;
 		swarmie.pickupSuccess = false;
 		swarmie.dropoffSuccess = false;
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
@@ -426,7 +426,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				if (displacement >= 0.55) {
 					
 					swarmie = logicController->turnRight90();
-					if (swarmie.left == 0.0 && swarmie.right == 0.0 && swarmie.initialized) {
+					if (swarmie.left == 0.0 && swarmie.right == 0.0) {
 						initialized= true;
 						currState = SPIRAL_SEARCH;
 					}
@@ -540,7 +540,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (currState == SPIRAL_SEARCH) {	
+		if (currState == SPIRAL_SEARCH && ) {	
 			currState = PICKUP;
 			//swarmie.pickupSuccess = false;
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
