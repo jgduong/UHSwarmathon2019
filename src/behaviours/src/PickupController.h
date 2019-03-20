@@ -105,6 +105,7 @@ public:
 			    //swarmie.finger = 0;
 			    swarmie.pickupSuccess = true;
 			    approachCube = false;
+			    detectionTimeout = 0;
 			    pickupDelay = 0;
 		    }
             }
