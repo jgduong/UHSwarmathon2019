@@ -105,6 +105,7 @@ public:
                 swarmie.right = 30.0;
             }
             else {
+		pickUpDelay++;
                 cout << "Currently next to cube" << endl;
                 swarmie.left = 0.0;
                 swarmie.right = 0.0;
