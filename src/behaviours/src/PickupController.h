@@ -104,6 +104,7 @@ public:
 			    swarmie.wrist = 0;
 			    //swarmie.finger = 0;
 			    swarmie.pickupSuccess = true;
+			    approachCube = false;
 			    pickupDelay = 0;
 		    }
             }
