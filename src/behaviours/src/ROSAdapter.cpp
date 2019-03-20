@@ -269,6 +269,7 @@ bool initialMapPopulate = true;
 std_msgs::Float32 wrist;
 std_msgs::Float32 fngr;
 Swarmie swarmie;
+swarmie.initialized = false;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
@@ -422,7 +423,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				if (displacement >= 0.55) {
 					
 					swarmie = logicController->turnRight90();
-					if (swarmie.left == 0.0 && swarmie.right == 0.0) {
+					if (swarmie.left == 0.0 && swarmie.right == 0.0 && swarmie.initialized) {
 						initialized= true;
 						currState = SPIRAL_SEARCH;
 					}
