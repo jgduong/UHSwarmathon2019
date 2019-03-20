@@ -472,14 +472,19 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//}
 
 		
-		if (swarmie.left == 5.0 && swarmie.right == 5.0) {
-			//centering on tag has failed (timeout), return to spiral search
-			currState = SPIRAL_SEARCH;
+		if (currState == PICKUP && swarmie.left == 5.0 && swarmie.right == 5.0) {
+		    //centering on tag has failed (timeout), return to spiral search
+		    currState = SPIRAL_SEARCH;
 		}
-		if (currState == PICKUP && swarmie.pickupSuccess) {
-			cout << "PICKUP SUCCESS" << endl;
-			currState = DROPOFF;
-			swarmie.pickupSuccess = false;
+		else if (currState == PICKUP && swarmie.pickupSuccess) {
+		    cout << "PICKUP SUCCESS" << endl;
+		    currState = DROPOFF;
+		    swarmie.pickupSuccess = false;
+		}
+		else if (currState == DROPOFF && swarmie.dropoffSuccess) {
+		    cout << "Returning to SpiralSearch" << endl;
+		    currState = SPIRAL_SEARCH;
+		    swarmie.dropoffSuccess = true;
 		}
 		
 		fngr.data = swarmie.finger;
