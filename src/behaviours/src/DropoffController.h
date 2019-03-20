@@ -176,7 +176,7 @@ class DropoffController {
 		  else if (rotate180) {
 			  cout << "desiredTheta is: " << desiredTheta << endl;
 			  cout << "currTheta is: " << currTheta << endl;
-			  if (abs(desiredTheta - currTheta) <= 0.01) {
+			  if (abs(desiredTheta - currTheta) <= 0.02) {
 				  cout << "Done driving off of home base" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
