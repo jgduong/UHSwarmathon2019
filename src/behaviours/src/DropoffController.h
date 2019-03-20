@@ -45,7 +45,7 @@ class DropoffController {
   
 	  Swarmie DoWork() {
 		  
-		swarmie.initialized = true;
+		//swarmie.initialized = true;
 		swarmie.pickupSuccess = true;
 		swarmie.dropoffSuccess = false;
 		
