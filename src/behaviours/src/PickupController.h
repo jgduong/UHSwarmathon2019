@@ -110,6 +110,7 @@ public:
 			    approachCube = false;
 			    detectionTimeout = 0;
 			    pickupDelay = 0;
+			    distTravelled = 0.0;
 		    }
             }
             
