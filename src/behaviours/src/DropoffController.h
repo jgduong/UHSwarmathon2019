@@ -16,13 +16,14 @@ class DropoffController {
 	float initialX;
 	float initialY;
 	float initialTheta;
-	float homeTheta;
+	float desiredTheta;
 	float distanceToHome = 0.0;
 	float distTravelled = 0.0;
 		
 	bool initCalc = true;
 	bool spinHome = false;
 	bool driveToHome = false;
+	bool rotate180 = false;
 	Swarmie swarmie;
   
   public:
@@ -41,7 +42,7 @@ class DropoffController {
 	  Swarmie DoWork() {
 		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
-			homeTheta = atan2((0 - (currY + centerOffsetY)),(0 - (currX + centerOffsetX)));
+			desiredTheta = atan2((0 - (currY + centerOffsetY)),(0 - (currX + centerOffsetX)));
 			initialTheta = currTheta;
 			initCalc = false;
 			spinHome = true;
@@ -51,14 +52,14 @@ class DropoffController {
 	  	}
 		else if (spinHome) {
 			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
-			float turnSize = homeTheta - initialTheta;
+			float turnSize = desiredTheta - initialTheta;
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
 			//ninetyRotate = currTheta;
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
-				if (abs(currTheta - homeTheta) <= 0.05)
+				if (abs(currTheta - desiredTheta) <= 0.05)
 				{
 					//done rotating to home
 					//sendDriveCommand(0.0, 0.0);
@@ -84,8 +85,8 @@ class DropoffController {
 			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
 			{
 				cout << "currTheta is " << currTheta << endl;
-				cout << "homeTheta is " << homeTheta << endl;
-				if (abs(currTheta - homeTheta) <= 0.05)
+				cout << "desiredTheta is " << desiredTheta << endl;
+				if (abs(currTheta - desiredTheta) <= 0.05)
 				{
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
@@ -124,19 +125,13 @@ class DropoffController {
 				  //sendDriveCommand(0.0, 0.0);
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
-				  /*
-				  if (dropOffTimer >= 30.0)
-				  {
-				  	  fngr.data = 0;
-					  fingerAnglePublish.publish(fngr);
-					  driveToHome = false;
-					  returnToSpiralSearch = true;
-					  reverseFromBaseTimer = 0.0;
-					  oneEightyRotate_a = false;
-					  oneEightyRotate_b = false;
+				  rotate180 = true;
+				  driveToHome = false;
+				  
+				  desiredTheta = currTheta + M_PI;
+				  if (desiredTheta > M_PI) {
+					desiredTheta -= 2*M_PI;	  
 				  }
-				  */
-				  //dropOffTimer++;
 	       		  }
 			  else {
 				  cout << "desired distance is: " << distanceToHome << endl;
@@ -146,6 +141,21 @@ class DropoffController {
 			  	  swarmie.right = 100.0;
 			  }
 
+		  }
+		  else if (rotate180) {
+			  if (abs(desiredTheta - currTheta) <= 0.02)) {
+				  cout << "Done rotating away from home" << endl;
+				  swarmie.left = 0.0;
+				  swarmie.right = 0.0;
+				  rotate180 = false;
+				  backToSpiral = true;
+			  }
+			  else {
+				  cout << "Rotating away from home base" << endl;
+				  swarmie.left = -50.0;
+				  swarmie.right = 50.0;
+			  }
+			  
 		  }
 		return swarmie;
 	  }
