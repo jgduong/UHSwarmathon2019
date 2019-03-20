@@ -28,6 +28,7 @@ public:
     float minX;
     float indexOfClosestTag;
     int pickUpDelay = 0;
+    swarmie.pickupSuccess = false;
     
     //void updateTags(float x, float y, float z) {
     void updateTags(vector<Tag> tagsReceived) {
