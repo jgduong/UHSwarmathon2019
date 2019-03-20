@@ -23,6 +23,7 @@ class DropoffController {
 	bool initCalc = true;
 	bool spinHome = false;
 	bool driveToHome = false;
+	bool backOff = false;
 	bool rotate180 = false;
 	bool backToSpiral = false;
 	Swarmie swarmie;
@@ -60,7 +61,7 @@ class DropoffController {
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
-				if (abs(currTheta - desiredTheta) <= 0.05)
+				if (abs(currTheta - desiredTheta) <= 0.02)
 				{
 					//done rotating to home
 					//sendDriveCommand(0.0, 0.0);
@@ -87,7 +88,7 @@ class DropoffController {
 			{
 				cout << "currTheta is " << currTheta << endl;
 				cout << "desiredTheta is " << desiredTheta << endl;
-				if (abs(currTheta - desiredTheta) <= 0.05)
+				if (abs(currTheta - desiredTheta) <= 0.02)
 				{
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
@@ -126,7 +127,9 @@ class DropoffController {
 				  //sendDriveCommand(0.0, 0.0);
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
-				  rotate180 = true;
+				  initialX = currX;
+				  initialY = currY;
+				  backOff = true;
 				  driveToHome = false;
 				  
 				  desiredTheta = currTheta + M_PI;
@@ -143,11 +146,27 @@ class DropoffController {
 			  }
 
 		  }
+		  else if (backOff) {
+			  distTravelled = calcDistance(currX, currY, initialX, initialY);
+			  cout << "Distance travelled is: " << distTravelled << endl;
+			  if (abs(0.5 - distTravelled) <= 0.02) {
+				  cout << "Successfully backed out of home base" << endl;
+				  swarmie.left = 0.0;
+				  swarmie.right = 0.0;
+				  backOff = false;
+				  rotate180 = true;
+			  }
+			  else {
+				cout << "Backing out of home base" << endl;
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
+			  }
+		  }
 		  else if (rotate180) {
 			  cout << "desiredTheta is: " << desiredTheta << endl;
 			  cout << "currTheta is: " << currTheta << endl;
 			  if (abs(desiredTheta - currTheta) <= 0.02) {
-				  cout << "Done rotating away from home" << endl;
+				  cout << "Done driving off of home base" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
 				  rotate180 = false;
@@ -156,7 +175,7 @@ class DropoffController {
 			  else {
 				  cout << "Rotating away from home base" << endl;
 				  swarmie.left = -50.0;
-				  swarmie.right = 50.0;
+				  swarmie.right = -50.0;
 			  }
 			  
 		  }
