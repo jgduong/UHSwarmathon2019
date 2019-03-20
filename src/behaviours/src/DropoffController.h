@@ -161,6 +161,7 @@ class DropoffController {
 				  backOff = false;
 				  rotate180 = true;
 				  distTravelled = 0.0;
+				  distanceToHome = distanceToHome - 0.75;
 				  
 				  desiredTheta = currTheta + M_PI;
 				  if (desiredTheta > M_PI) {
@@ -184,6 +185,7 @@ class DropoffController {
 				  initialY = currY;
 				  rotate180 = false;
 				  backToSpiral = true;
+				  
 			  }
 			  else {
 				  cout << "Rotating away from home base" << endl;
