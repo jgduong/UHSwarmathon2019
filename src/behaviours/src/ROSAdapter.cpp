@@ -481,7 +481,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		if (currState == PICKUP && swarmie.pickupSuccess) {
 			cout << "PICKUP SUCCESS" << endl;
 			currState = DROPOFF;
-			swarmie.pickupSuccess = false;
+			//swarmie.pickupSuccess = false;
 		}
 		else if (currState == DROPOFF && swarmie.dropoffSuccess) {
 			cout << "Returning to SpiralSearch" << endl;
@@ -538,8 +538,9 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (currState == SPIRAL_SEARCH && initialized) {	
+		if (currState == SPIRAL_SEARCH && swarmie.initialized) {	
 			currState = PICKUP;
+			swarmie.pickupSuccess = false;
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 		}
 		if (currState == PICKUP) {
