@@ -79,7 +79,7 @@ class DropoffController {
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX + centerOffsetX, currY + centerOffsetY, 0, 0);
 					distanceToHome -= 0.5;
-					pickupDelay = 0;
+					//pickupDelay = 0;
 					//return swarmie;
 				}
 				else {
