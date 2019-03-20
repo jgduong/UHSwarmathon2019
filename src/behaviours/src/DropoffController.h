@@ -44,7 +44,7 @@ class DropoffController {
 	  Swarmie DoWork() {
 		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
-			desiredTheta = atan2((0 - (currY + centerOffsetY)),(0 - (currX + centerOffsetX)));
+			desiredTheta = atan2((0 - currY),(0 - currX));
 			initialTheta = currTheta;
 			initCalc = false;
 			spinHome = true;
@@ -145,6 +145,7 @@ class DropoffController {
 		  else if (backOff) {
 			  distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  cout << "Distance travelled is: " << distTravelled << endl;
+			  swarmie.finger = 0;
 			  if (abs(1 - distTravelled) <= 0.02) {
 				  cout << "Successfully backed out of home base" << endl;
 				  swarmie.left = 0.0;
