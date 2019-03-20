@@ -140,7 +140,7 @@ class DropoffController {
 	       		  }
 			  else {
 				  cout << "desired distance is: " << distanceToHome << endl;
-				  distTravelled = calcDist(currX, currY, initialX, initialY);
+				  distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  	  cout << "distance travelled is: " << distTravelled << endl;
 				  swarmie.left = 100.0;
 			  	  swarmie.right = 100.0;
