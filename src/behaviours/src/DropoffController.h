@@ -75,8 +75,8 @@ class DropoffController {
 					cout << "done rotating" << endl;
 					spinHome = false;
 					driveToHome = true;
-					initialX = currX + centerOffsetX;
-					initialY = currX + centerOffsetY;
+					initialX = currX;
+					initialY = currX;
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 0.5;
@@ -102,8 +102,8 @@ class DropoffController {
 					cout << "done rotating" << endl;
 					spinHome = false;
 					driveToHome = true;
-					initialX = currX + centerOffsetX;
-					initialY = currY + centerOffsetY;
+					initialX = currX;
+					initialY = currY;
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 0.5;
