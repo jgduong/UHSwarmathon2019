@@ -538,7 +538,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (currState == SPIRAL_SEARCH && swarmie.initialized) {	
+		if (currState == SPIRAL_SEARCH) {	
 			currState = PICKUP;
 			//swarmie.pickupSuccess = false;
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
