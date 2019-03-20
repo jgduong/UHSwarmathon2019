@@ -484,7 +484,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		else if (currState == DROPOFF && swarmie.dropoffSuccess) {
 		    cout << "Returning to SpiralSearch" << endl;
 		    currState = SPIRAL_SEARCH;
-		    swarmie.dropoffSuccess = true;
+		    swarmie.dropoffSuccess = false;
 		}
 		
 		fngr.data = swarmie.finger;
