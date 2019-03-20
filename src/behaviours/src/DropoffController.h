@@ -132,10 +132,6 @@ class DropoffController {
 				  backOff = true;
 				  driveToHome = false;
 				  
-				  desiredTheta = currTheta + M_PI;
-				  if (desiredTheta > M_PI) {
-					desiredTheta -= 2*M_PI;	  
-				  }
 	       		  }
 			  else {
 				  cout << "desired distance is: " << distanceToHome << endl;
@@ -155,6 +151,11 @@ class DropoffController {
 				  swarmie.right = 0.0;
 				  backOff = false;
 				  rotate180 = true;
+				  
+				  desiredTheta = currTheta + M_PI;
+				  if (desiredTheta > M_PI) {
+					desiredTheta -= 2*M_PI;	  
+				  }
 			  }
 			  else {
 				cout << "Backing out of home base" << endl;
@@ -165,7 +166,7 @@ class DropoffController {
 		  else if (rotate180) {
 			  cout << "desiredTheta is: " << desiredTheta << endl;
 			  cout << "currTheta is: " << currTheta << endl;
-			  if (abs(desiredTheta - currTheta) <= 0.02) {
+			  if (abs(desiredTheta - currTheta) <= 0.03) {
 				  cout << "Done driving off of home base" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
