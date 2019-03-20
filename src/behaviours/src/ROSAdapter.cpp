@@ -533,7 +533,8 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    //logicController.SetAprilTags(tags);
 		if (currState == SPIRAL_SEARCH && initialized) {	
 			currState = PICKUP;
-			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+			logicController->updateTags( tags );
 		}
 		if (currState == PICKUP) {
 			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
