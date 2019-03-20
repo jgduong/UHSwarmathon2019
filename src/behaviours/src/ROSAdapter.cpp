@@ -269,7 +269,7 @@ bool initialMapPopulate = true;
 std_msgs::Float32 wrist;
 std_msgs::Float32 fngr;
 Swarmie swarmie;
-swarmie.initialized = false;
+//swarmie.initialized = false;
 
 void behaviourStateMachine(const ros::TimerEvent&)
 {
