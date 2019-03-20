@@ -44,6 +44,10 @@ class DropoffController {
 	  }
   
 	  Swarmie DoWork() {
+		  
+		swarmie.initialized = true;
+		swarmie.pickupSuccess = true;
+		swarmie.dropoffSuccess = false;
 		
 		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
