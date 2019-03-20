@@ -89,6 +89,7 @@ public:
                 //sendDriveCommand(5.0, 5.0);
                 swarmie.left = 5.0;
                 swarmie.right = 5.0;
+		detectionTimeout = 0;
                 //aprilTagAcquireSequence = false;
                 //mapTesting = true;
             }
