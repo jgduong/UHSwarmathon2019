@@ -281,6 +281,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (!initialized)
   	{	
 		swarmie.initialized = false;
+		swarmie.pickupSuccess = false;
+		swarmie.dropoffSuccess = false;
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 
 		
