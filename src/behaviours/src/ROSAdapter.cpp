@@ -478,7 +478,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			//centering on tag has failed (timeout), return to spiral search
 			currState = SPIRAL_SEARCH;
 		}
-		else if (currState == PICKUP && swarmie.pickupSuccess) {
+		if (currState == PICKUP && swarmie.pickupSuccess) {
 			cout << "PICKUP SUCCESS" << endl;
 			currState = DROPOFF;
 			swarmie.pickupSuccess = false;
