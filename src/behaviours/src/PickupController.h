@@ -28,7 +28,7 @@ public:
     float minX;
     float indexOfClosestTag;
     int pickUpDelay = 0;
-    swarmie.pickupSuccess = false;
+    
     
     //void updateTags(float x, float y, float z) {
     void updateTags(vector<Tag> tagsReceived) {
@@ -54,7 +54,7 @@ public:
           detectionTimeout++;
           cout << "Target detected : in PICKUP state, minX is: " << minX << endl;
           cout << "index of centermost tag: " << indexOfClosestTag << ", x,z: " << tags[indexOfClosestTag].getPositionX() << ", " << tags[indexOfClosestTag].getPositionZ() << endl;
-	  
+	  swarmie.pickupSuccess = false;
         
             //center on cube
             if ( minX > 0 && detectionTimeout < 200 && !approachCube)
