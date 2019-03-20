@@ -42,7 +42,7 @@ public:
           detectionTimeout++;
 	    swarmie.pickupSuccess = false;
 	    swarmie.dropoffSuccess = false;
-	    swarmie.initialized = true;
+	    //swarmie.initialized = true;
           cout << "Target detected : in PICKUP state" << endl;
           cout << "x, y, z of aprilTag: " << tagX << ", " << tagY << ", " << tagZ << endl;
           //Wheels.left = 0.0;
