@@ -20,6 +20,7 @@ using namespace std;
 #include "SpiralSearchController.h"
 #include "PickupController.h"
 #include "DropoffController.h"
+#include "ObstacleController.h"
 /*
 #include "SearchController.h"
 #include "ObstacleController.h"
@@ -97,6 +98,7 @@ class LogicController {
 
 	  Swarmie DoWork(int state, int prev) {
 		  currState = state;
+		  prevState = prev;
 		    if (state == SPIRAL_SEARCH) {
 		      swarmie = spiralSearchController.DoWork(visitedLocations);
 		    }
