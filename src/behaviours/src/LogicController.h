@@ -66,6 +66,8 @@ class LogicController {
     	float centerOffsetY;
     	int prevState;
     	int currState;
+	bool initVals = true;
+	bool rotate = false;
     	Swarmie swarmie;
 	unordered_map<float, set<float>> visitedLocations;
 	
@@ -164,181 +166,30 @@ class LogicController {
 	      //startingTheta = currentLocationOdom.theta;
 	    }
 
-	  int step = 1;
-	  Swarmie InitialRotate() {
-		//Rotate to starting position...
-		  float ninetyRotate = currTheta;
-		  //float step2X;
-		  //float step2Y;
-		  cout << "Current theta is: " << currTheta << endl;
-
-		  if (step == 1) {
-			spiralSearchController.updateData(currX, currY, currTheta);
-			cout << "step 1: rotating 90 degrees left..." << endl;
-
-			//geometry_msgs::Point tempLocal;
-
-			float turnSize = 1.5;
-			bool exceedMag = false;
-
-			//if the ninety degree turn crosses the pi line, this is a special condition
-			if (abs(startingTheta + turnSize) >= 3.14159)
-			{
-				exceedMag = true;
+	
+	swarmie InitialRotate() {
+		if (initVals) {
+			desiredTheta = 	startingTheta + M_PI;
+			if (desiredTheta > M_PI) {
+				desiredTheta -= 2*M_PI;
 			}
-			cout << "exceed magnitude value is " << exceedMag << endl;
-			if (exceedMag)
-			{
-				float desiredTheta = 0.0;
-
-				desiredTheta = -3.142 + (startingTheta - turnSize);
-				if (currTheta >= desiredTheta && currTheta < 0.0)
-				{
-					//sendDriveCommand(0.0, 0.0);
-					swarmie.left = 0.0;
-					swarmie.right = 0.0;
-					//rotateBool = false;
-					//hardcodedPop = true;
-					//initialMove = true;
-					//step = 1;
-					initialPosX = currX;
-					initialPosY = currY;
-
-					cout << "done rotating: step 1" << endl;
-					startingTheta = currTheta;
-					step = 2;
-				}
-				else {
-					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -30.0;
-					swarmie.right = 30.0;
-					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
-				}
-
-
-
-			}
-			else
-			{	//ninetyRotate = current theta
-				//if the diff between the current theta and starting theta is >= 90 degrees, stop
-				if (abs(ninetyRotate - startingTheta) >= 1.5)
-				{
-					//sendDriveCommand(0.0, 0.0);
-					swarmie.left = 0.0;
-					swarmie.right = 0.0;
-					//    rotateBool = false;
-					//hardcodedPop = true;
-					//initialMove = true;
-					//GPSCenter = true;
-					//step = 1;
-					initialPosX = currX;
-					initialPosY = currY;
-					cout << "done rotating : step 1" << endl;
-					startingTheta = currTheta;
-					step = 2;
-
-				 }	//else, turn right
-				 else {
-					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -30.0;
-					swarmie.right = 30.0;
-				 }
-
-			}
+			initVals = false;
+			rotate = true;
 		}
-		
-		else if (step == 2)
-		{	
-			spiralSearchController.updateData(currX, currY, currTheta);
-			cout << "step 2: rotating 90 degrees left..." << endl;
-			float turnSize = 1.5;
-			bool exceedMag = false;
-
-			ninetyRotate = currTheta;
-			if (abs(startingTheta + turnSize) >= 3.142)
-			{
-				exceedMag = true;
+		else if (rotate) {
+			if (abs(desiredTheta - currTheta) <= 0.02) {
+				cout << "Initial rotate complete" << endl;
+				swarmie.left = 0.0;
+				swarmie.right = 0.0;
 			}
-			cout << "exceed magnitude value is " << exceedMag << endl;
-			if (exceedMag)
-			{
-				float desiredTheta = 0.0;
-
-				desiredTheta = -3.142 + (startingTheta - turnSize);
-				if (currTheta >= desiredTheta && currTheta < 0.0)
-				{
-					swarmie.left = 0.0;
-					swarmie.right = 0.0;
-					cout << "done rotating: step 2" << endl;
-					startingTheta = currTheta;
-					//step2X = currX;
-					//step2Y= currY;
-					step = 3;
-					//initialMove = false;
-				}
-				else {
-					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -30.0;
-					swarmie.right = 30.0;
-					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
-				}
+			else {
+				swarmie.left = -40.0;
+				swarmie.right = 40.0;
 			}
-			else
-			{
-			      if (abs(ninetyRotate - startingTheta) >= 1.5)
-			      {
-				    //sendDriveCommand(0.0, 0.0); 
-				     swarmie.left = 0.0;
-				     swarmie.right = 0.0;
-				     cout << "done rotating: step 2" << endl;
-				     startingTheta = currTheta;
-				     //step2X = currX;
-				     //step2Y = currY;
-				     step = 3;
-				      //initialMove = false;
-
-			      }
-			      else {
-				    //sendDriveCommand(-30.0, 30.0);
-				      swarmie.left = -30.0;
-				      swarmie.right = 30.0;
-			      }
-			}
-			
-		}
-		else if (step == 3)
-		{
-			//NEW BLOK FOR INITAL POP IDEA
-			
-			spiralSearchController.updateData(currX, currY, currTheta);
-			cout << "Moving into place to begin spiral search..." << endl;
-			//sendDriveCommand(30.0, 30.0);
-			swarmie.left = 30.0;
-			swarmie.right = 30.0;
-
-			
-			startingTheta = currTheta;
-			//visitedLocationsPublisher.publish(initialPopf);
-			//cout << "the point: " << initialPopf.data[0] << ", " << initialPopf.data[1] << " has been inserted/published..." << endl;
-			
-			//float displacement = sqrt(((currX - Step2X)*(currY - Position6X)) + ((currY - Position6Y)*(currY - Position6Y)));
-			/*float displacement = calcDistance(currX, currY, step2X, step2Y);
-			
-			if (displacement >= 0.55)
-			{	//???
-				
-				//step = 12;
-				//this is temporary
-				//Wheels.left = 0.0;
-				//Wheels.right = 0.0;
-				startingTheta = currTheta;
-
-			}
-			*/
 		}
 		
 		return swarmie;
-	  }
+	}
 	
 	void addVisitedLocation(float x, float y) {
 		if (currState == SPIRAL_SEARCH || currState == AVOID_OBSTACLE) {
@@ -346,7 +197,7 @@ class LogicController {
 			visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 		}
 	}
-	
+/*	
 	Swarmie turnRight90() {
 		spiralSearchController.updateData(currX, currY, currTheta);
 		cout << "rotating right to begin spiral search..." << endl;
@@ -409,6 +260,7 @@ class LogicController {
 		
 		return swarmie;
 	}
+*/
 };
 
 #endif // LOGICCONTROLLER_H
