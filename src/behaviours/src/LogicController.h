@@ -64,6 +64,7 @@ class LogicController {
     	float startingTheta;
     	float centerOffsetX;
     	float centerOffsetY;
+	float desiredTheta;
     	int prevState;
     	int currState;
 	bool initVals = true;
