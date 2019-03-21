@@ -221,6 +221,7 @@ class LogicController {
 			else
 			{	//ninetyRotate = current theta
 				//if the diff between the current theta and starting theta is >= 90 degrees, stop
+				cout << "ninetyRotate = " << ninetyRotate << ", startingTheta = " << startingTheta << endl;
 				if (abs(ninetyRotate - startingTheta) >= 1.5)
 				{
 					//sendDriveCommand(0.0, 0.0);
