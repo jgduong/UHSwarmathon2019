@@ -259,6 +259,7 @@ int main(int argc, char **argv) {
 float startingTheta;
 bool rotateBool = false;
 int currState = INIT;
+int prevState = currState;
 float centerOffsetX = 0.0;
 float centerOffsetY = 0.0;
 bool rotate2 = false;
@@ -468,7 +469,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		*/
       		//else 
 		//{
-			swarmie = logicController->DoWork(currState);
+			swarmie = logicController->DoWork(currState, prevState);
 		//}
 
 		
@@ -566,6 +567,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	
 	if ((sonarLeftData <= 0.5 || sonarCenterData <= 0.5 || sonarRightData <= 0.5) && (currState == SPIRAL_SEARCH))
 	{
+		prevState = currState
 		currState = AVOID_OBSTACLE;
 		LogicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
