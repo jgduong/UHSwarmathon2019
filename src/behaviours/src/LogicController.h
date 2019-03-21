@@ -114,6 +114,11 @@ class LogicController {
 		    }
 		    return swarmie;
 	  }
+	
+	  void UpdateSonar(float left, float center, float right) {
+		  
+		  obstacleController.updateSonar(left, center, right);
+	  }
 
 	  void updateData(float x, float y, float theta) {
 	    	currX = x;
