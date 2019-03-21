@@ -96,6 +96,7 @@ class LogicController {
     	}
 
 	  Swarmie DoWork(int state) {
+		  currState = state;
 		    if (state == SPIRAL_SEARCH) {
 		      swarmie = spiralSearchController.DoWork(visitedLocations);
 		    }
