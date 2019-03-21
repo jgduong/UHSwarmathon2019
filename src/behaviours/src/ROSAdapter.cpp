@@ -259,6 +259,7 @@ int main(int argc, char **argv) {
 float startingTheta;
 bool rotateBool = false;
 int currState = INIT;
+int prevState = currState;
 float centerOffsetX = 0.0;
 float centerOffsetY = 0.0;
 bool rotate2 = false;
@@ -569,6 +570,13 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarLeftData = sonarLeft->range;
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
+	
+	if ((sonarLeftData <= 0.5 || sonarCenterData <= 0.5 || sonarRightData <= 0.5) && (currState == SPIRAL_SEARCH))
+	{
+		prevState = currState;
+		currState = AVOID_OBSTACLE;
+		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+	}
 }
 
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
