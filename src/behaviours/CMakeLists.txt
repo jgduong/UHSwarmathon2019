@@ -25,7 +25,6 @@ include_directories(
 add_executable(
   behaviours
   src/Tag.cpp
-  src/ObstacleController.cpp 
   src/SearchController.cpp
   src/ROSAdapter.cpp
   src/PID.cpp
