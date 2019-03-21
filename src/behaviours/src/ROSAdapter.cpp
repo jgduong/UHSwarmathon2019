@@ -562,6 +562,13 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarLeftData = sonarLeft->range;
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
+	
+	
+	if ((sonarLeftData <= 0.5 || sonarCenterData <= 0.5 || sonarRightData <= 0.5) && (currState == SPIRAL_SEARCH))
+	{
+		currState = AVOID_OBSTACLE;
+		LogicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+	}
 }
 
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
