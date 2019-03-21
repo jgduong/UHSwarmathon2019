@@ -280,7 +280,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (!initialized)
   	{	
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
-		logicController->startingTheta = currentLocationOdom.theta;
 		
 		cout << "not initialized detected... " << endl;
     		if (timerTimeElapsed > startDelayInSeconds)
@@ -293,6 +292,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				logicController->populateMap();
 				initialMapPopulate = false;
 				cout << "Center location border has been added to hashmap" << endl;
+				logicController->startingTheta = currentLocationOdom.theta;
 			}
 
 		      startingTheta = currentLocationOdom.theta;
