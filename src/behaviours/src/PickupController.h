@@ -31,7 +31,6 @@ public:
     
     
 	void updateTags(vector<Tag> tagsReceived) {
-	    tagZ = tags[indexOfClosestTag].getPositionZ();
 	    minX = tagsReceived[0].getPositionX();
 	    for (int i = 0; i < tagsReceived.size(); i++)
 	    {
@@ -87,7 +86,7 @@ public:
                 swarmie.finger = M_PI_2;
                 detectionTimeout = 0;
 		    
-                zDistanceToCube = tagZ;
+                zDistanceToCube = tags[indexOfClosestTag].getPositionZ();
                 //aprilTagDetected = false;
                 //tagPickupTimer = 0.0;
                 //middleStep = false;
