@@ -24,14 +24,24 @@ private:
 
 public: 
 
-    Swarmie swarmie;
+        float minX;
+	int indexOfClosestTag
+        Swarmie swarmie;
     
     
-    void updateTags(float x, float y, float z) {
-        tagX = x;
-        tagY = y;
-        tagZ = z;
-    }
+	void updateTags(vector<Tag> tagsReceived) {
+	    minX = tagsReceived[0].getPositionX();
+	    for (int i = 0; i < tagsReceived.size(); i++)
+	    {
+		tags.push_back(tagsReceived[i]);
+		if (tagsReceived[i].getPositionX() < minX)
+		if ( abs( -0.005 - tagsReceived[i].getPositionX() ) < minX )
+		{
+		    minX = tagsReceived[i].getPositionX();
+		    indexOfClosestTag = i;
+		}
+	    }
+	}
     
     void updateData(float x, float y) {
 	    	selfX = x;
@@ -40,8 +50,8 @@ public:
     
     Swarmie DoWork() {
           detectionTimeout++;
-	    swarmie.pickupSuccess = false;
-	    swarmie.dropoffSuccess = false;
+	  swarmie.pickupSuccess = false;
+	  swarmie.dropoffSuccess = false;
 	    //swarmie.initialized = true;
           cout << "Target detected : in PICKUP state" << endl;
           cout << "x, y, z of aprilTag: " << tagX << ", " << tagY << ", " << tagZ << endl;
@@ -49,7 +59,7 @@ public:
           //Wheels.right = 0.0;
         
             //center on cube
-            if ( tagX > 0 && detectionTimeout < 200 && !approachCube)
+            if ( minX > 0 && detectionTimeout < 200 && !approachCube)
             {
 		    //swarmie.pickupSuccess = false;
                     //sendDriveCommand(6.0, -5.0);
@@ -57,7 +67,7 @@ public:
                     swarmie.left = 6.0;
                     swarmie.right = -5.0;
             }
-            else if ( tagX < -0.01 & detectionTimeout < 200 && !approachCube)
+            else if ( minX < -0.01 & detectionTimeout < 200 && !approachCube)
             {
                     //sendDriveCommand(-5.0, 7.0);
 		    cout << "centering on cube" << endl;
@@ -65,7 +75,7 @@ public:
                     swarmie.left = -5.0;
                     swarmie.right = 6.0;
             }
-            else if (tagX <= 0 && tagX >= -0.01 && !approachCube)
+            else if (minX <= 0 && minX >= -0.01 && !approachCube)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
