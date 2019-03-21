@@ -169,6 +169,7 @@ class LogicController {
 
 	
 	Swarmie InitialRotate() {
+		spiralSearchController.updateData(currX, currY, currTheta);
 		cout << "Initial rotate stage" << endl;
 		if (initVals) {
 			desiredTheta = 	startingTheta + M_PI;
@@ -182,7 +183,7 @@ class LogicController {
 		if (rotate) {
 			cout << "desiredTheta is: " << desiredTheta << endl;
 			cout << "currTheta is: " << currTheta << endl;
-			if (abs(desiredTheta - currTheta) <= 0.02) {
+			if (abs(desiredTheta - currTheta) <= 0.03) {
 				cout << "Initial rotate complete, going straight now" << endl;
 				swarmie.left = 30.0;
 				swarmie.right = 30.0;
