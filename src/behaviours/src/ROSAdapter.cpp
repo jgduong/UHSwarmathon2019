@@ -280,7 +280,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	if (!initialized)
   	{	
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
-		logicController->startingData = currentLocationOdom.theta;
+		logicController->startingTheta = currentLocationOdom.theta;
 		
 		cout << "not initialized detected... " << endl;
     		if (timerTimeElapsed > startDelayInSeconds)
