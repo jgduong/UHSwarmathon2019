@@ -197,6 +197,7 @@ class DropoffController {
 				initCalc = true;
 			
 				distanceToHome = 0.0;
+				distTravelled = 0.0;
              		 }
              		 else {
                		   cout << "Driving back to spiral" << endl;
