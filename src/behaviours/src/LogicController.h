@@ -95,13 +95,13 @@ class LogicController {
 		
     	}
 
-	  Swarmie DoWork(int state) {
+	  Swarmie DoWork(int state, int prev) {
 		  currState = state;
 		    if (state == SPIRAL_SEARCH) {
 		      swarmie = spiralSearchController.DoWork(visitedLocations);
 		    }
 		    else if (state == AVOID_OBSTACLE) {
-		      //ObstacleController.DoWork();
+		      ObstacleController.DoWork(prev);
 		    }
 		    else if (state == PICKUP) {
 		      swarmie = pickupController.DoWork();
