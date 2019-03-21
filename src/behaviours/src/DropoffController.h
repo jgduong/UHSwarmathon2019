@@ -90,8 +90,8 @@ class DropoffController {
 				}
 				else {
 					//sendDriveCommand(-50.0, 50.0);
-					swarmie.left = -50.0;
-					swarmie.right = 50.0;
+					swarmie.left = -40.0;
+					swarmie.right = 40.0;
 					//return swarmie;
 				}
 			}
@@ -118,8 +118,8 @@ class DropoffController {
 				else {
 					cout << "spinning towards home" << endl;
 					//sendDriveCommand(50.0, -50.0);
-					swarmie.left = 50.0;
-					swarmie.right = -50.0;
+					swarmie.left = 40.0;
+					swarmie.right = -40.0;
 					//return swarmie;
 				}
 			}
@@ -176,8 +176,8 @@ class DropoffController {
 			  }
 			  else {
 				cout << "Backing out of home base" << endl;
-				  swarmie.left = -50.0;
-				  swarmie.right = -50.0;
+				  swarmie.left = -100.0;
+				  swarmie.right = -100.0;
 			  }
 		  }
 		  else if (rotate180) {
@@ -196,8 +196,8 @@ class DropoffController {
 			  }
 			  else {
 				  cout << "Rotating away from home base" << endl;
-				  swarmie.left = -50.0;
-				  swarmie.right = 50.0;
+				  swarmie.left = -40.0;
+				  swarmie.right = 40.0;
 			  }
 			  
 		  }
