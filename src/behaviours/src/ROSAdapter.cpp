@@ -275,7 +275,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
 	
-	
+	cout << "CURRENT STATE IS : " << currState << endl;
 	
 	if (!initialized)
   	{	
