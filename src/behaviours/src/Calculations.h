@@ -1,6 +1,8 @@
 #ifndef CALCULATIONS_H
 #define CALCULATIONS_H
 
+#include <math.h>
+
 float normalizedValue(float x)
 {
 	float temp = x * 100;
