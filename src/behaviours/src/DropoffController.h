@@ -81,8 +81,8 @@ class DropoffController {
 				}
 				else {
 					//sendDriveCommand(-50.0, 50.0);
-					swarmie.left = -50.0;
-					swarmie.right = 50.0;
+					swarmie.left = -40.0;
+					swarmie.right = 40.0;
 					//return swarmie;
 				}
 			}
@@ -108,8 +108,8 @@ class DropoffController {
 				else {
 					cout << "spinning towards home" << endl;
 					//sendDriveCommand(50.0, -50.0);
-					swarmie.left = 50.0;
-					swarmie.right = -50.0;
+					swarmie.left = 40.0;
+					swarmie.right = -40.0;
 					//return swarmie;
 				}
 			}
@@ -188,7 +188,7 @@ class DropoffController {
               		cout << "distanceToHome is: " << distanceToHome << endl;
               		cout << "distanceTravelled is: " << distTravelled << endl;
               		distTravelled = calcDistance(currX, currY, initialX, initialY);
-              		if (abs(distanceToHome - distTravelled) <= 0.01) {
+              		if ( distanceToHome - distTravelled <= 0.01) {
               		    cout << "Successfull drove back to spiral edge" << endl;
               		    swarmie.left = 0.0;
               		    swarmie.right = 0.0;
