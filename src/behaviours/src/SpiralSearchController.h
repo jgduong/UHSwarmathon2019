@@ -153,7 +153,8 @@ class SpiralSearchController {
         float xWall = normalizedValue(newX);
         float yWall = normalizedValue(newY);
         cout << "RightError calculated with currentLocation and xWall,yWall = " << xWall << ", " << yWall << endl;
-        RightError = sqrt((xWall - (normalizedX))*(xWall - (normalizedX)) + (yWall - (normalizedY))*(yWall - (normalizedY)));
+        //RightError = sqrt((xWall - (normalizedX))*(xWall - (normalizedX)) + (yWall - (normalizedY))*(yWall - (normalizedY)));
+        RightError = sqrt((xWall - (currX))*(xWall - (currX)) + (yWall - (currY))*(yWall - (currY)));
       }
       else {
         cout << "max RightError" << endl;
