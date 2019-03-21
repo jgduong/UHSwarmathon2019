@@ -188,8 +188,8 @@ class LogicController {
 				swarmie.right = 30.0;
 			}
 			else {
-				swarmie.left = -40.0;
-				swarmie.right = 40.0;
+				swarmie.left = -30.0;
+				swarmie.right = 30.0;
 			}
 		}
 		
