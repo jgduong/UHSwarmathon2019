@@ -119,7 +119,7 @@ class DropoffController {
 			  //sendDriveCommand(100.0, 100.0);
 			  //swarmie.left = 100.0;
 			  //swarmie.right = 100.0;
-			 
+			 distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  if (distanceToHome - distTravelled <= 0.01)
 			  {
 				  cout << "Made it to home base...dropping off cube!" << endl;
@@ -137,7 +137,7 @@ class DropoffController {
 	       		  }
 			  else {
 				  cout << "desired distance is: " << distanceToHome << endl;
-				  distTravelled = calcDistance(currX, currY, initialX, initialY);
+				  //distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  	  cout << "distance travelled is: " << distTravelled << endl;
 				  swarmie.left = 100.0;
 			  	  swarmie.right = 100.0;
