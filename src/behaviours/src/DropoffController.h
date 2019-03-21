@@ -206,7 +206,7 @@ class DropoffController {
 			  cout << "distanceTravelled is: " << distTravelled << endl;
 			  distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  if (distanceToHome - distTravelled <= 0.01) {
-				  cout << "Successfull drove back to spiral edge" << endl;
+				  cout << "Successfully drove back to spiral edge" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
 				  swarmie.dropoffSuccess = true;
