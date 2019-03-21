@@ -195,6 +195,8 @@ class DropoffController {
                		   backToSpiral = false;
 				swarmie.dropoffSuccess = true;
 				initCalc = true;
+			
+				distanceToHome = 0.0;
              		 }
              		 else {
                		   cout << "Driving back to spiral" << endl;
