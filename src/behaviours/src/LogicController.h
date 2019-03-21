@@ -53,6 +53,7 @@ class LogicController {
     	SpiralSearchController spiralSearchController;
 	PickupController pickupController;
 	DropoffController dropoffController;
+	ObstacleController obstacleController;
   
   public: 
 	float currX; 
@@ -103,7 +104,7 @@ class LogicController {
 		      swarmie = spiralSearchController.DoWork(visitedLocations);
 		    }
 		    else if (state == AVOID_OBSTACLE) {
-		      swarmie = ObstacleController.DoWork(prev);
+		      swarmie = obstacleController.DoWork(prev);
 		    }
 		    else if (state == PICKUP) {
 		      swarmie = pickupController.DoWork();
