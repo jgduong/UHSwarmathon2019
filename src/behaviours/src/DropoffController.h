@@ -51,6 +51,7 @@ class DropoffController {
 		
 		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
+			distTravelled = 0.0;
 			desiredTheta = atan2((0 - (currY)),(0 - (currX)));
 			initialTheta = currTheta;
 			initCalc = false;
@@ -210,6 +211,7 @@ class DropoffController {
 				  swarmie.right = 0.0;
 				  swarmie.dropoffSuccess = true;
 				  swarmie.pickupSuccess = false;
+				  distanceToHome = 0.0;
 				  backToSpiral = false;
 				  initCalc = true;
 			  }
