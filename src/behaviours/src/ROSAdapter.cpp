@@ -487,6 +487,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		    currState = SPIRAL_SEARCH;
 		    swarmie.dropoffSuccess = false;
 		}
+		else if (currState == AVOID_OBSTACLE && swarmie.obstacleSuccess) {
+			
+			cout << "obstacle avoidance complete " << endl;
+			currState = prevState;
+			swarmie.obstacleSuccess = false;
+		}
 		
 		fngr.data = swarmie.finger;
 		wrist.data = swarmie.wrist;
@@ -567,7 +573,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	
 	if ((sonarLeftData <= 0.5 || sonarCenterData <= 0.5 || sonarRightData <= 0.5) && (currState == SPIRAL_SEARCH))
 	{
-		prevState = currState
+		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		LogicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
