@@ -31,7 +31,7 @@ public:
     
     
 	void updateTags(vector<Tag> tagsReceived) {
-	    tagZ = tags[indexOfClosestTag].getPositionZ()
+	    tagZ = tags[indexOfClosestTag].getPositionZ();
 	    minX = tagsReceived[0].getPositionX();
 	    for (int i = 0; i < tagsReceived.size(); i++)
 	    {
