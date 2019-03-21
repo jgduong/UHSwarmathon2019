@@ -81,12 +81,22 @@ class ObstacleController {
 		  cout << "right detection still, sonarRight is: " << SonarRight << endl;
               swarmie.left = -100.0;
               swarmie.right = 100.0;
+		  if (SonarRight <= 1.5)
+		  {
+			  swarmie.left = 75.0;
+			  swarmie.right = 75.0;
+		  }
           }
           else if (SonarLeft <= 2.9)
           {
 		  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
-              swarmie.left = 100.0;
-              swarmie.right = -100.0;
+              swarmie.left = -100.0;
+              swarmie.right = 100.0;
+		  if (SonarLeft <= 1.5)
+		  {
+			  swarmie.left = 75.0;
+			  swarmie.right = 75.0;
+		  }
           }
           else {
               cout << "obstacle controller has successfully rotated away from obstacle" << endl;
