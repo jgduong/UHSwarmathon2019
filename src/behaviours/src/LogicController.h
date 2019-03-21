@@ -167,7 +167,7 @@ class LogicController {
 	    }
 
 	
-	swarmie InitialRotate() {
+	Swarmie InitialRotate() {
 		if (initVals) {
 			desiredTheta = 	startingTheta + M_PI;
 			if (desiredTheta > M_PI) {
