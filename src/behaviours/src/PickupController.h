@@ -25,8 +25,9 @@ private:
 public: 
 
         float minX;
-	int indexOfClosestTag
+	int indexOfClosestTag;
         Swarmie swarmie;
+	vector<Tag> tags;
     
     
 	void updateTags(vector<Tag> tagsReceived) {
