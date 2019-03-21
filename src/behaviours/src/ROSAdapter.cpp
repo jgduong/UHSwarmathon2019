@@ -544,11 +544,15 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 		if (currState == SPIRAL_SEARCH) {	
 			currState = PICKUP;
 			//swarmie.pickupSuccess = false;
-			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+			logicController->updateTags(tags);
 		}
 		if (currState == PICKUP) {
-			logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+			logicController->updateTags(tags);
 		}
+		tags.clear();
+		
 	}
 	
 	
