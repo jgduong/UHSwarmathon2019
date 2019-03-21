@@ -130,9 +130,9 @@ class ObstacleController {
 		  else if (SonarLeft <= 2.9)
 		  {
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
-		      swarmie.left = -100.0;
-		      swarmie.right = 100.0;
-			  if (SonarCenter >= 2.0 && SonarRight >= 0.5)
+		      swarmie.left = 100.0;
+		      swarmie.right = -100.0;
+			  if (SonarCenter >= 2.0 && SonarLeft >= 0.5)
 			  {
 				  swarmie.left = 75.0;
 				  swarmie.right = 75.0;
