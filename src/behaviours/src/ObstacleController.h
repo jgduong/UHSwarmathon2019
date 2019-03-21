@@ -62,7 +62,7 @@ class ObstacleController {
 	      centerOffsetY = y;
 	  }
   
-	  Swarmie DoWork(prev) {
+	Swarmie DoWork(int prev) {
       cout << "Currently in the AVOID OBSTACLE state" << endl;
       swarmie.pickupSuccess = false;
       swarmie.dropoffSuccess = false;
