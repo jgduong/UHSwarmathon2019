@@ -169,6 +169,7 @@ class LogicController {
 
 	
 	Swarmie InitialRotate() {
+		cout << "Initial rotate stage" << endl;
 		if (initVals) {
 			desiredTheta = 	startingTheta + M_PI;
 			if (desiredTheta > M_PI) {
@@ -177,11 +178,14 @@ class LogicController {
 			initVals = false;
 			rotate = true;
 		}
-		else if (rotate) {
+		
+		if (rotate) {
+			cout << "desiredTheta is: " << desiredTheta << endl;
+			cout << "currTheta is: " << currTheta << endl;
 			if (abs(desiredTheta - currTheta) <= 0.02) {
-				cout << "Initial rotate complete" << endl;
-				swarmie.left = 0.0;
-				swarmie.right = 0.0;
+				cout << "Initial rotate complete, going straight now" << endl;
+				swarmie.left = 30.0;
+				swarmie.right = 30.0;
 			}
 			else {
 				swarmie.left = -40.0;
