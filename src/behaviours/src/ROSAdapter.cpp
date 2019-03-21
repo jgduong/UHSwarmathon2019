@@ -294,6 +294,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		      //initialized = true;
 			
 			if (initialMapPopulate) {
+				logicController->startingTheta = currentLocationOdom.theta;
 				logicController->populateMap();
 				initialMapPopulate = false;
 				cout << "Center location border has been added to hashmap" << endl;
