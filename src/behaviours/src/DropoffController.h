@@ -148,7 +148,7 @@ class DropoffController {
 			  distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  cout << "Distance travelled is: " << distTravelled << endl;
 			  //swarmie.finger = 0;
-			  if (abs(1 - distTravelled) <= 0.02) {
+			  if ( 1 - distTravelled <= 0.02) {
 				  cout << "Successfully backed out of home base" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
@@ -163,8 +163,8 @@ class DropoffController {
 			  }
 			  else {
 				cout << "Backing out of home base" << endl;
-				  swarmie.left = -50.0;
-				  swarmie.right = -50.0;
+				  swarmie.left = -100.0;
+				  swarmie.right = -100.0;
 			  }
 		  }
 		  else if (rotate180) {
