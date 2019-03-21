@@ -1,6 +1,5 @@
 #include "Swarmie.h"
 #include "Calculations.h"
-#include "LogicController.h"
 #include <iostream>
 using namespace std;
 
