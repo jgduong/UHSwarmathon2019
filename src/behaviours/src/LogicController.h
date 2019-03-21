@@ -197,7 +197,7 @@ class LogicController {
 			visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 		}
 	}
-/*	
+	
 	Swarmie turnRight90() {
 		spiralSearchController.updateData(currX, currY, currTheta);
 		cout << "rotating right to begin spiral search..." << endl;
@@ -260,7 +260,7 @@ class LogicController {
 		
 		return swarmie;
 	}
-*/
+
 };
 
 #endif // LOGICCONTROLLER_H
