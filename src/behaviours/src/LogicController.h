@@ -185,6 +185,7 @@ class LogicController {
 			cout << "currTheta is: " << currTheta << endl;
 			if (abs(desiredTheta - currTheta) <= 0.03) {
 				cout << "Initial rotate complete, going straight now" << endl;
+				startingTheta = currTheta;
 				swarmie.left = 30.0;
 				swarmie.right = 30.0;
 			}
