@@ -103,7 +103,7 @@ class LogicController {
 		      swarmie = spiralSearchController.DoWork(visitedLocations);
 		    }
 		    else if (state == AVOID_OBSTACLE) {
-		      ObstacleController.DoWork(prev);
+		      swarmie = ObstacleController.DoWork(prev);
 		    }
 		    else if (state == PICKUP) {
 		      swarmie = pickupController.DoWork();
