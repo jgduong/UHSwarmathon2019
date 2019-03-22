@@ -506,8 +506,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.spinHome = false;
 					logicController->dropoffController.driveToHome = false;
 					logicController->dropoffController.backOff = false;
-					logicController->dropoffController.rotate180 = false;
-					logicController->dropoffController.backToSpiral = true;
+					logicController->dropoffController.rotate180 = true;
+					logicController->dropoffController.backToSpiral = false;
 					logicController->dropoffController.distanceTravelled = 0.0;
 				}
 			}
