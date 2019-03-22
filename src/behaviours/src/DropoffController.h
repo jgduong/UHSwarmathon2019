@@ -178,7 +178,7 @@ class DropoffController {
 				  rotate180 = true;
 				  swarmie.finger = 0;
 				  
-				  desiredTheta = atan2((0 - currY),(0 - currX));
+				  desiredTheta = atan2((spiralY - currY),(spiralX - currX));
 				  compareTheta = currTheta;
 				  
 				   float turnSize = desiredTheta - currTheta;
