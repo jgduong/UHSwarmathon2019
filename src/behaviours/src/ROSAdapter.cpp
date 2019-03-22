@@ -493,12 +493,22 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "obstacle avoidance complete " << endl;
 			if (prevState == DROPOFF)
 			{
-				logicController->dropoffController.initCalc = true;
-				logicController->dropoffController.spinHome = false;
-				logicController->dropoffController.driveToHome = false;
-				logicController->dropoffController.backOff = false;
-				logicController->dropoffController.rotate180 = false;
-				logicController->dropoffController.backToSpiral = false;
+				if (logicController->dropoffController.backToSpiral != true) {
+					logicController->dropoffController.initCalc = true;
+					logicController->dropoffController.spinHome = false;
+					logicController->dropoffController.driveToHome = false;
+					logicController->dropoffController.backOff = false;
+					logicController->dropoffController.rotate180 = false;
+					logicController->dropoffController.backToSpiral = false;
+				}
+				else {
+					logicController->dropoffController.initCalc = false;
+					logicController->dropoffController.spinHome = false;
+					logicController->dropoffController.driveToHome = false;
+					logicController->dropoffController.backOff = false;
+					logicController->dropoffController.rotate180 = false;
+					logicController->dropoffController.backToSpiral = true;
+				}
 			}
 			currState = prevState;
 			swarmie.obstacleSuccess = false;
