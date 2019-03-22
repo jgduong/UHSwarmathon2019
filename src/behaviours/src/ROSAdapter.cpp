@@ -580,6 +580,9 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 		currState = AVOID_OBSTACLE;
 		logicController->updateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
+	else if (currState == AVOID_OBSTACLE) {
+		logicController->updateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+	}
 }
 
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
