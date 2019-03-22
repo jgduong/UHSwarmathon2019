@@ -20,9 +20,10 @@ using namespace std;
 #include "SpiralSearchController.h"
 #include "PickupController.h"
 #include "DropoffController.h"
+#include "ObstacleController.h"
 /*
 #include "SearchController.h"
-#include "ObstacleController.h"
+
 #include "DriveController.h"
 #include "RangeController.h"
 #include "ManualWaypointController.h"
