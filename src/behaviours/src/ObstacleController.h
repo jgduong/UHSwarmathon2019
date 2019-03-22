@@ -38,7 +38,7 @@ class ObstacleController {
         swarmie.left = 50.0;
         swarmie.right = 20.0;
       }
-      else if (rightSonar <= 0.5) {
+      else if (rightSonar <= 0.5 && centerSonar <= 0.5) {
         //swerve left
         cout << "Obstacle on the right!" << endl;
         swarmie.right = 50.0;
