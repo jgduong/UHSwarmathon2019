@@ -23,12 +23,14 @@ class ObstacleController {
     Swarmie DoWork() {
       
       if (init) {
+        swarmie.avoidObstacleSuccess = false;
         swarmie.pickupSuccess = false;
         swarmie.dropoffSuccess = false;
+        init = false;
       }
       
-      if (leftSonar <= 0.5) {
-        cout << "Obstacle on the left!" << endl;
+      if (leftSonar <= 0.5 || centerSonar <= 0.5) {
+        cout << "Obstacle on the left or center!" << endl;
         //swerve right
         swarmie.left = 100.0;
         swarmie.right = 60.0;
@@ -38,6 +40,13 @@ class ObstacleController {
         cout << "Obstacle on the right!" << endl;
         swarmie.right = 100.0;
         swarmie.left = 60.0;
+      }
+      else {
+        //no obstacle anymore
+        cout << "Obstacle avoided" << endl;
+        swarmie.left = 0.0;
+        swarmie.right = 0.0;
+        swarmie.avoidObstacleSuccess = true;
       }
       
       return swarmie;
