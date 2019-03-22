@@ -474,7 +474,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		*/
       		//else 
 		//{
-			swarmie = logicController->DoWork(currState);
+		cout << "currState is: " << currState << endl;
+		cout << "prevState is: " << prevState << endl;
+		swarmie = logicController->DoWork(currState);
 		//}
 
 		
