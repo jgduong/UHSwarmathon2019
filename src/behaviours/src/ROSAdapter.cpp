@@ -508,6 +508,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.backOff = false;
 					logicController->dropoffController.rotate180 = false;
 					logicController->dropoffController.backToSpiral = true;
+					logicController->dropoffController.distanceTravelled = 0.0;
 				}
 			}
 			currState = prevState;
