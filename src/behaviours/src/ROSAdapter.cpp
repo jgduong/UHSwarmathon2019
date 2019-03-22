@@ -492,6 +492,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			currState = SPIRAL_SEARCH;
 			swarmie.dropoffSuccess = false;
 		}
+		else if (currState == AVOID_OBSTACLE && avoidObstacleSuccess) {
+			currState = prevState;
+		}
 		
 		fngr.data = swarmie.finger;
 		wrist.data = swarmie.wrist;
