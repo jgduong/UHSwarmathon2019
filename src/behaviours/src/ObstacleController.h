@@ -50,6 +50,7 @@ class ObstacleController {
         swarmie.left = 0.0;
         swarmie.right = 0.0;
         swarmie.avoidObstacleSuccess = true;
+        init = true;
       }
       
       return swarmie;
