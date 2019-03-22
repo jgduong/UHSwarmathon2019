@@ -20,16 +20,22 @@ class DropoffController {
 	float distanceToHome = 0.0;
 	float distTravelled = 0.0;
 		
+	/*bool initCalc = true;
+	bool spinHome = false;
+	bool driveToHome = false;
+	bool backOff = false;
+	bool rotate180 = false;
+	bool backToSpiral = false;*/
+	Swarmie swarmie;
+  
+  public:
 	bool initCalc = true;
 	bool spinHome = false;
 	bool driveToHome = false;
 	bool backOff = false;
 	bool rotate180 = false;
 	bool backToSpiral = false;
-	Swarmie swarmie;
-  
-  public:
-  
+  	
 	  void updateData(float x, float y, float theta) {
 	      currX = x;
 	      currY = y;
