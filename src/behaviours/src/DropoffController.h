@@ -30,7 +30,7 @@ class DropoffController {
 	Swarmie swarmie;
   
   public:
-	float distTravelled = 0.0
+	float distTravelled = 0.0;
 	float compareTheta = 0.0;
 	bool initCalc = true;
 	bool spinHome = false;
