@@ -10,6 +10,7 @@ class ObstacleController {
     float leftSonar = 10.0;
     float rightSonar = 10.0;
     float centerSonar = 10.0;
+    int delay = 0;
     bool init = true;
     Swarmie swarmie;
 
@@ -45,12 +46,16 @@ class ObstacleController {
         swarmie.left = 90.0;
       }
       else if (leftSonar > 0.5 && centerSonar > 0.5 && rightSonar > 0.5) {
+        delay++;
         //no obstacle anymore
         cout << "Obstacle avoided" << endl;
-        swarmie.left = 0.0;
-        swarmie.right = 0.0;
-        swarmie.avoidObstacleSuccess = true;
-        init = true;
+        swarmie.left = 100.0;
+        swarmie.right = 100.0;
+        if (delay >= 10) {
+          //drive straight for 1 sec
+          swarmie.avoidObstacleSuccess = true;
+          init = true;
+        }
       }
       
       return swarmie;
