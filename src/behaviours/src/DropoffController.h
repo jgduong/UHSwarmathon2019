@@ -272,7 +272,7 @@ class DropoffController {
 				  swarmie.right = 30.0;
 			}  
 			 
-              		if ( distTravelled - distToSpiral <= 0.01) {
+              		if (distToSpiral - distTravelled <= 0.01) {
               		    cout << "Successfully drove back to spiral edge" << endl;
               		    swarmie.left = 0.0;
               		    swarmie.right = 0.0;
