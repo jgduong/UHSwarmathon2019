@@ -179,6 +179,8 @@ class DropoffController {
 				  rotate180 = true;
 				  swarmie.finger = 0;
 				  
+				  distTravelled = 0.0;
+				  
 				  desiredTheta = atan2((spiralY - currY),(spiralX - currX));
 				  compareTheta = currTheta;
 				  
@@ -233,8 +235,11 @@ class DropoffController {
 				  	rotate180 = false;
 				  	backToSpiral = true;
 					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
+					initialX = currX;
+					initialY = currY;
 				}
 				else {
+					cout << "spinning towards SPIRAL at: " << spiralX << ", " << spiralY << endl;
 					//sendDriveCommand(-50.0, 50.0);
 					swarmie.left = -40.0;
 					swarmie.right = 40.0;
@@ -251,9 +256,11 @@ class DropoffController {
 				  	rotate180 = false;
 					  backToSpiral = true;
 					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
+					initialX = currX;
+					initialY = currY;
 				}
 				else {
-					cout << "spinning towards home" << endl;
+					cout << "spinning towards SPIRAL at: " << spiralX << ", " << spiralY << endl;
 					//sendDriveCommand(50.0, -50.0);
 					swarmie.left = 40.0;
 					swarmie.right = -40.0;
