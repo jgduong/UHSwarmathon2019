@@ -19,6 +19,7 @@ class DropoffController {
 	float desiredTheta;
 	float distanceToHome = 0.0;
 	float distTravelled = 0.0;
+	float distToSpiral = 0.0;
 		
 	/*bool initCalc = true;
 	bool spinHome = false;
@@ -188,7 +189,7 @@ class DropoffController {
 				  swarmie.right = 0.0;
 				  rotate180 = false;
 				  backToSpiral = true;
-				  desiredTheta = currentLocationOdom.theta;
+				  desiredTheta = currTheta;
 			  }
 			  else {
 				  cout << "Rotating away from home base" << endl;
@@ -208,7 +209,7 @@ class DropoffController {
 				  swarmie.right = 30.0;
 			}  
 			 
-              		if ( distanceToHome - distTravelled <= 0.01) {
+              		if ( distTravelled - distToSpiral <= 0.01) {
               		    cout << "Successfully drove back to spiral edge" << endl;
               		    swarmie.left = 0.0;
               		    swarmie.right = 0.0;
@@ -218,6 +219,7 @@ class DropoffController {
 			
 				distanceToHome = 0.0;
 				distTravelled = 0.0;
+				distToSpiral = 0.0;
              		 }
              		 else {
                		   cout << "Driving back to spiral" << endl;
