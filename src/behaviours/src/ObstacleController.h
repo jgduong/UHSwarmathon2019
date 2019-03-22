@@ -21,6 +21,9 @@ class ObstacleController {
     }
   
     Swarmie DoWork() {
+      cout << "leftSonar is: " << leftSonar << endl;
+      cout << "rightSonar is: " << rightSonar << endl;
+      cout << "centerSonar is: " << centerSonar << endl;
       
       if (init) {
         swarmie.avoidObstacleSuccess = false;
