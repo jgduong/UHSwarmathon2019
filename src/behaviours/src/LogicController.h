@@ -53,10 +53,11 @@ class LogicController {
     	SpiralSearchController spiralSearchController;
 	PickupController pickupController;
 	//DropoffController dropoffController;
-	ObstacleController obstacleController;
+	//ObstacleController obstacleController;
   
   public: 
 	DropoffController dropoffController;
+	ObstacleController obstacleController;
 	float currX; 
 	float currY;
 	float currTheta;
