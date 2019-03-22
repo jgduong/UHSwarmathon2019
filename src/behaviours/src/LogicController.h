@@ -52,10 +52,11 @@ class LogicController {
   private:
     	SpiralSearchController spiralSearchController;
 	PickupController pickupController;
-	DropoffController dropoffController;
+	//DropoffController dropoffController;
 	ObstacleController obstacleController;
   
   public: 
+	DropoffController dropoffController;
 	float currX; 
 	float currY;
 	float currTheta;
