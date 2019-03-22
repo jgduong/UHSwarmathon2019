@@ -575,7 +575,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
-		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		logicController->updateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
 }
 
