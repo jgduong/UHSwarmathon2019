@@ -52,6 +52,7 @@ class LogicController {
     	SpiralSearchController spiralSearchController;
 	PickupController pickupController;
 	DropoffController dropoffController;
+	ObstacleController obstacleController;
   
   public: 
 	float currX; 
@@ -105,7 +106,7 @@ class LogicController {
 		      swarmie = spiralSearchController.DoWork(visitedLocations);
 		    }
 		    else if (state == AVOID_OBSTACLE) {
-		      //ObstacleController.DoWork();
+		      swarmie = obstacleController.DoWork();
 		    }
 		    else if (state == PICKUP) {
 		      swarmie = pickupController.DoWork();
@@ -113,9 +114,7 @@ class LogicController {
 		    else if (state == DROPOFF) {
 		      swarmie = dropoffController.DoWork();
 		    }
-		    else if (state == FIND_SPIRAL_EDGE) {
-		      //FindEdgeController.DoWork();
-		    }
+
 		    return swarmie;
 	  }
 
@@ -134,6 +133,7 @@ class LogicController {
 	void updateTags(vector<Tag> tags) {
 		pickupController.updateTags(tags);
 	}
+	
 
 	  void setCenterOffset(float x, float y) {
 	    	centerOffsetX = x;
@@ -141,6 +141,10 @@ class LogicController {
 		spiralSearchController.setCenterOffset(x, y);
 		dropoffController.setCenterOffset(x, y);
 	  }
+	
+	void updateSonar(float left, float center, float right) {
+		obstacleController->updateSonar(left, center, right);
+	}
 	
 	    void populateMap() {
 		//populates hashmap with points around the home base	
