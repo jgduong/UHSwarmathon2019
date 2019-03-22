@@ -65,6 +65,7 @@ class DropoffController {
 			swarmie.right = 0.0;
 			spiralX = currX;
 			spiralY = currY;
+			cout << "spiralX, spiralY: " << spiralX << ", " << spiralY << endl;
 			//return swarmie;
 	  	}
 		else if (spinHome) {
@@ -199,7 +200,7 @@ class DropoffController {
 			  
 		  }
 		  else if (backToSpiral) {
-              		cout << "distanceToHome is: " << distanceToHome << endl;
+              		cout << "distanceToSpiral is: " << distToSpiral << endl;
               		cout << "distanceTravelled is: " << distTravelled << endl;
               		distTravelled = calcDistance(currX, currY, initialX, initialY);
 			if (abs(currTheta - desiredTheta) > 0.03) {
