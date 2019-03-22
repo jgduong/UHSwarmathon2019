@@ -20,7 +20,7 @@ class ObstacleController {
       centerSonar = center;
     }
   
-    void DoWork() {
+    Swarmie DoWork() {
       
       if (init) {
         swarmie.pickupSuccess = false;
@@ -40,7 +40,7 @@ class ObstacleController {
         swarmie.left = 60.0;
       }
       
-      
+      return swarmie;
     }
 
 
