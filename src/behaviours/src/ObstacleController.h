@@ -106,7 +106,7 @@ class ObstacleController {
 		swarmie.left = 75.0;
 		swarmie.right = 75.0;
 		 delayCounter++;	  
-		  if (delayCounter >= 15)
+		  if (delayCounter >= 10)
 		  {
              	 	swarmie.obstacleSuccess = true;
 			 delayCounter = 0;
@@ -151,7 +151,7 @@ class ObstacleController {
 		      swarmie.left = 75.0;
 			swarmie.right = 75.0;
 			 delayCounter++;	  
-			  if (delayCounter >= 15)
+			  if (delayCounter >= 10)
 			  {
 				swarmie.obstacleSuccess = true;
 				  delayCounter = 0;
