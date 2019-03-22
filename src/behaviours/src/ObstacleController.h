@@ -24,6 +24,11 @@ class ObstacleController {
   float SonarCenter = 0.0;
   float SonarRight = 0.0;
 		
+	
+  int prevState;
+	Swarmie swarmie;
+  
+  public:
 	bool initCalc = true;
 	bool spinHome = false;
 	bool driveToHome = false;
@@ -31,10 +36,6 @@ class ObstacleController {
 	bool rotate180 = false;
 	bool backToSpiral = false;
   
-  int prevState;
-	Swarmie swarmie;
-  
-  public:
   
 	int delayCounter = 0;
 	
