@@ -36,6 +36,8 @@ class ObstacleController {
   
   public:
   
+	int delayCounter = 0;
+	
   enum States{
     INIT = 0,
     SPIRAL_SEARCH,
@@ -101,8 +103,14 @@ class ObstacleController {
           }
           else {
               cout << "obstacle controller has successfully rotated away from obstacle" << endl;
-              swarmie.obstacleSuccess = true;
-            
+		swarmie.left = 75.0;
+		swarmie.right = 75.0;
+		 delayCounter++;	  
+		  if (delayCounter >= 15)
+		  {
+             	 	swarmie.obstacleSuccess = true;
+			 delayCounter = 0;
+		  }
           }
         
       }
@@ -140,7 +148,14 @@ class ObstacleController {
 		  }
 		  else {
 		      cout << "obstacle controller has successfully rotated away from obstacle" << endl;
-		      swarmie.obstacleSuccess = true;
+		      swarmie.left = 75.0;
+			swarmie.right = 75.0;
+			 delayCounter++;	  
+			  if (delayCounter >= 15)
+			  {
+				swarmie.obstacleSuccess = true;
+				  delayCounter = 0;
+			  }
 
 		  }
 	}
