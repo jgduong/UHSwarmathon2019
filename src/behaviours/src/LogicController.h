@@ -103,6 +103,7 @@ class LogicController {
 	  Swarmie DoWork(int state) {
 		    currState = state;
 		    if (state == SPIRAL_SEARCH) {
+			    cout << "currState is SPIRAL_SEARCH" << endl;
 		      swarmie = spiralSearchController.DoWork(visitedLocations);
 		    }
 		    else if (state == AVOID_OBSTACLE) {
