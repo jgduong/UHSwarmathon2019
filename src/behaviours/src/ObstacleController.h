@@ -12,7 +12,7 @@ class ObstacleController {
     float centerSonar = 10.0;
     bool init = true;
     Swarmie swarmie;
-    swarmi.pickupSuccess = false;
+    swarmie.pickupSuccess = false;
     swarmie.dropoffSuccess = false;
   
     void updateSonar(float left, float center, float right) {
@@ -23,13 +23,13 @@ class ObstacleController {
   
     void DoWork() {
       
-      if (sonarLeft <= 0.5) {
+      if (leftSonar <= 0.5) {
         cout << "Obstacle on the left!" << endl;
         //swerve right
         swarmie.left = 100.0;
         swarmie.right = 60.0;
       }
-      else if (sonarRight <= 0.5) {
+      else if (rightSonar <= 0.5) {
         //swerve left
         cout << "Obstacle on the right!" << endl;
         swarmie.right = 100.0;
