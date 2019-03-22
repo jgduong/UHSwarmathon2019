@@ -119,7 +119,7 @@ class ObstacleController {
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
-		if (SonarCenter <= 2.9)
+		if (SonarCenter <= 2.9 && SonarLeft >= 2.9 && SonarRight >= 2.9)
 		  {
 			cout << "center detection still, sonarCenter is: " << SonarCenter << endl;
 		      swarmie.left = -100.0;
