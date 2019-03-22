@@ -35,6 +35,10 @@ class DropoffController {
 	bool backOff = false;
 	bool rotate180 = false;
 	bool backToSpiral = false;
+	float homeTheta = 0.0;
+	
+	float spiralX = 0.0;
+	float spiralY = 0.0;
   	
 	  void updateData(float x, float y, float theta) {
 	      currX = x;
@@ -52,24 +56,26 @@ class DropoffController {
 		  swarmie.pickupSuccess = false;
 		  swarmie.dropoffSuccess = false;
 		if (initCalc) {
-			desiredTheta = atan2((0 - currY),(0 - currX));
+			homeTheta = atan2((0 - currY),(0 - currX));
 			initialTheta = currTheta;
 			initCalc = false;
 			spinHome = true;
 			swarmie.left = 0.0;
 			swarmie.right = 0.0;
+			spiralX = currX;
+			spiralY = currY;
 			//return swarmie;
 	  	}
 		else if (spinHome) {
 			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
-			float turnSize = desiredTheta - initialTheta;
+			float turnSize = homeTheta - initialTheta;
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
 			//ninetyRotate = currTheta;
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
-				if (abs(currTheta - desiredTheta) <= 0.02)
+				if (abs(currTheta - homeTheta) <= 0.02)
 				{
 					//done rotating to home
 					//sendDriveCommand(0.0, 0.0);
@@ -95,8 +101,8 @@ class DropoffController {
 			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
 			{
 				cout << "currTheta is " << currTheta << endl;
-				cout << "desiredTheta is " << desiredTheta << endl;
-				if (abs(currTheta - desiredTheta) <= 0.02)
+				cout << "desiredTheta is " << homeTheta << endl;
+				if (abs(currTheta - homeTheta) <= 0.02)
 				{
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
@@ -182,6 +188,7 @@ class DropoffController {
 				  swarmie.right = 0.0;
 				  rotate180 = false;
 				  backToSpiral = true;
+				  desiredTheta = currentLocationOdom.theta;
 			  }
 			  else {
 				  cout << "Rotating away from home base" << endl;
@@ -194,8 +201,15 @@ class DropoffController {
               		cout << "distanceToHome is: " << distanceToHome << endl;
               		cout << "distanceTravelled is: " << distTravelled << endl;
               		distTravelled = calcDistance(currX, currY, initialX, initialY);
+			if (abs(currTheta - desiredTheta) > 0.03) {
+				  cout << "spinning to get back to spiral again" << endl;
+				  distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
+				  swarmie.left = -30.0;
+				  swarmie.right = 30.0;
+			}  
+			 
               		if ( distanceToHome - distTravelled <= 0.01) {
-              		    cout << "Successfull drove back to spiral edge" << endl;
+              		    cout << "Successfully drove back to spiral edge" << endl;
               		    swarmie.left = 0.0;
               		    swarmie.right = 0.0;
                		   backToSpiral = false;
