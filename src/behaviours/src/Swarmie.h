@@ -9,6 +9,7 @@ struct Swarmie {
   //bool initialized;
   bool pickupSuccess;
   bool dropoffSuccess;
+  bool avoidObstacleSuccess;
 };
 
 #endif 
