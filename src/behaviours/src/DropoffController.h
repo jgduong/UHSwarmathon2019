@@ -30,6 +30,7 @@ class DropoffController {
 	Swarmie swarmie;
   
   public:
+	float compareTheta = 0.0;
 	bool initCalc = true;
 	bool spinHome = false;
 	bool driveToHome = false;
@@ -40,6 +41,7 @@ class DropoffController {
 	
 	float spiralX = 0.0;
 	float spiralY = 0.0;
+	 float turnSize = 0.0;
   	
 	  void updateData(float x, float y, float theta) {
 	      currX = x;
@@ -58,6 +60,12 @@ class DropoffController {
 		  swarmie.dropoffSuccess = false;
 		if (initCalc) {
 			homeTheta = atan2((0 - currY),(0 - currX));
+			desiredTheta = homeTheta + M_PI;
+			if (desiredTheta >= M_PI)
+			{
+				desiredTheta -= 2 * M_PI;
+			}
+			
 			initialTheta = currTheta;
 			initCalc = false;
 			spinHome = true;
@@ -170,10 +178,10 @@ class DropoffController {
 				  rotate180 = true;
 				  swarmie.finger = 0;
 				  
-				  desiredTheta = currTheta + M_PI;
-				  if (desiredTheta > M_PI) {
-					desiredTheta -= 2*M_PI;	  
-				  }
+				  desiredTheta = atan2((0 - currY),(0 - currX));
+				  compareTheta = currTheta;
+				  
+				   float turnSize = desiredTheta - currTheta;
 			  }
 			  else {
 				cout << "Backing out of home base" << endl;
@@ -182,7 +190,7 @@ class DropoffController {
 			  }
 		  }
 		  else if (rotate180) {
-			  cout << "desiredTheta is: " << desiredTheta << endl;
+			 /* cout << "desiredTheta is: " << desiredTheta << endl;
 			  cout << "currTheta is: " << currTheta << endl;
 			  if (abs(desiredTheta - currTheta) <= 0.03) {
 				  cout << "Done driving off of home base" << endl;
@@ -196,7 +204,59 @@ class DropoffController {
 				  cout << "Rotating away from home base" << endl;
 				  swarmie.left = -50.0;
 				  swarmie.right = 50.0;
+			  }*/
+			  
+			  cout << "desiredTheta is: " << desiredTheta << endl;
+			  cout << "currTheta is: " << currTheta << endl;
+			 
+			  
+			  if (compareTheta != currTheta)
+			  {
+				  desiredTheta = atan2((spiralY - currY),(spiralX - currX));
+				  compareTheta = currTheta;
+				  turnSize = desiredTheta - currTheta;
 			  }
+			  
+			cout << "turnSize here is: " << turnSize << endl;
+			bool exceedMag = false;
+			//ninetyRotate = currTheta;
+
+			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
+			{
+				if (abs(currTheta - desiredTheta) <= 0.02)
+				{
+					//done rotating to home
+					//sendDriveCommand(0.0, 0.0);
+					swarmie.left = 0.0;
+					  swarmie.right = 0.0;
+				  	rotate180 = false;
+				  	backToSpiral = true;
+				}
+				else {
+					//sendDriveCommand(-50.0, 50.0);
+					swarmie.left = -40.0;
+					swarmie.right = 40.0;
+					//return swarmie;
+				}
+			}
+			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
+			{
+				if (abs(currTheta - desiredTheta) <= 0.02)
+				{
+					//sendDriveCommand(0.0, 0.0);
+					swarmie.left = 0.0;
+				 	 swarmie.right = 0.0;
+				  	rotate180 = false;
+					  backToSpiral = true;
+				}
+				else {
+					cout << "spinning towards home" << endl;
+					//sendDriveCommand(50.0, -50.0);
+					swarmie.left = 40.0;
+					swarmie.right = -40.0;
+					//return swarmie;
+				}
+			}
 			  
 		  }
 		  else if (backToSpiral) {
