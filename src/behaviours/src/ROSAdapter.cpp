@@ -579,7 +579,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarRightData = sonarRight->range;
 	
 	if ((sonarLeftData <= 0.5 || sonarCenterData <= 0.5 || sonarRightData <= 0.5) 
-	    && (currState == SPIRAL_SEARCH || currState == DROPOFF || currState == PICKUP))
+	    && (currState == SPIRAL_SEARCH || currState == DROPOFF))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
