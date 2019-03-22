@@ -231,6 +231,7 @@ class DropoffController {
 					  swarmie.right = 0.0;
 				  	rotate180 = false;
 				  	backToSpiral = true;
+					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
 				}
 				else {
 					//sendDriveCommand(-50.0, 50.0);
@@ -248,6 +249,7 @@ class DropoffController {
 				 	 swarmie.right = 0.0;
 				  	rotate180 = false;
 					  backToSpiral = true;
+					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
 				}
 				else {
 					cout << "spinning towards home" << endl;
