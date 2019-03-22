@@ -493,7 +493,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			swarmie.dropoffSuccess = false;
 		}
 		else if (currState == AVOID_OBSTACLE && swarmie.avoidObstacleSuccess) {
+			cout << "Switching back to previous state" << endl;
 			currState = prevState;
+			//swarmie.avoidObstacleSuccess = false;
 		}
 		
 		fngr.data = swarmie.finger;
