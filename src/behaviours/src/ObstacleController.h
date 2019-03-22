@@ -82,7 +82,7 @@ class ObstacleController {
 		  cout << "right detection still, sonarRight is: " << SonarRight << endl;
               swarmie.left = -100.0;
               swarmie.right = 100.0;
-		  if (SonarCenter >= 2.0 && SonarRight >= 0.5)
+		  if (SonarCenter >= 2.0 && SonarRight >= 0.3)
 		  {
 			  swarmie.left = 75.0;
 			  swarmie.right = 75.0;
@@ -93,7 +93,7 @@ class ObstacleController {
 		  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
               swarmie.left = -100.0;
               swarmie.right = 100.0;
-		  if (SonarCenter >= 2.0 && SonarRight >= 0.5)
+		  if (SonarCenter >= 2.0 && SonarRight >= 0.3)
 		  {
 			  swarmie.left = 75.0;
 			  swarmie.right = 75.0;
@@ -121,7 +121,7 @@ class ObstacleController {
 			  cout << "right detection still, sonarRight is: " << SonarRight << endl;
 		      swarmie.left = -100.0;
 		      swarmie.right = 100.0;
-			  if (SonarCenter >= 2.0 && SonarRight >= 0.5)
+			  if (SonarCenter >= 2.0 && SonarRight >= 0.3)
 			  {
 				  swarmie.left = 75.0;
 				  swarmie.right = 75.0;
@@ -132,7 +132,7 @@ class ObstacleController {
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
 		      swarmie.left = 100.0;
 		      swarmie.right = -100.0;
-			  if (SonarCenter >= 2.0 && SonarLeft >= 0.5)
+			  if (SonarCenter >= 2.0 && SonarLeft >= 0.3)
 			  {
 				  swarmie.left = 75.0;
 				  swarmie.right = 75.0;
