@@ -36,14 +36,14 @@ class ObstacleController {
       if (leftSonar <= 0.5) {
         cout << "Obstacle on the left or center!" << endl;
         //swerve right
-        swarmie.left = 90.0;
-        swarmie.right = 100.0;
+        swarmie.left = 100.0;
+        swarmie.right = 90.0;
       }
       else if (rightSonar <= 0.5) {
         //swerve left
         cout << "Obstacle on the right!" << endl;
-        swarmie.right = 100.0;
-        swarmie.left = 90.0;
+        swarmie.right = 90.0;
+        swarmie.left = 100.0;
       }
       else if (leftSonar > 0.5 && centerSonar > 0.5 && rightSonar > 0.5) {
         delay++;
@@ -51,7 +51,7 @@ class ObstacleController {
         cout << "Obstacle avoided" << endl;
         swarmie.left = 100.0;
         swarmie.right = 100.0;
-        if (delay >= 5) {
+        if (delay >= 10) {
           //drive straight for 1 sec
           swarmie.avoidObstacleSuccess = true;
           init = true;
