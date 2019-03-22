@@ -265,12 +265,14 @@ class DropoffController {
               		cout << "distanceToSpiral is: " << distToSpiral << endl;
               		cout << "distanceTravelled is: " << distTravelled << endl;
               		distTravelled = calcDistance(currX, currY, initialX, initialY);
-			if (abs(currTheta - desiredTheta) > 0.03) {
+			  
+			/*if (abs(currTheta - desiredTheta) > 0.03) {
 				  cout << "spinning to get back to spiral again" << endl;
 				  distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
 				  swarmie.left = -30.0;
 				  swarmie.right = 30.0;
-			}  
+			}  */
+			  
 			 
               		if (distToSpiral - distTravelled <= 0.01) {
               		    cout << "Successfully drove back to spiral edge" << endl;
