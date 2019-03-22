@@ -597,7 +597,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && logicController->dropoffController.spinHome == false && logicController->dropoffController.rotate180 == false ))
+	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || backToSpiral) ))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
