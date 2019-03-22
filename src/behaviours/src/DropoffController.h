@@ -138,7 +138,7 @@ class DropoffController {
 			  //sendDriveCommand(100.0, 100.0);
 			  //swarmie.left = 100.0;
 			  //swarmie.right = 100.0;
-			  if (abs(currTheta - desired) >= 0.03) {
+			  if (abs(currTheta - homeTheta) >= 0.03) {
 				cout << "spinning towards home again" << endl;
 			  	distanceToHome = calcDistance(currX, currY, 0, 0);
 				distanceToHome -= 0.5;
