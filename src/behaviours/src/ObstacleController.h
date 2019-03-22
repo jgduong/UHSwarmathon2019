@@ -51,7 +51,7 @@ class ObstacleController {
         cout << "Obstacle avoided" << endl;
         swarmie.left = 100.0;
         swarmie.right = 100.0;
-        if (delay >= 10) {
+        if (delay >= 5) {
           //drive straight for 1 sec
           swarmie.avoidObstacleSuccess = true;
           init = true;
