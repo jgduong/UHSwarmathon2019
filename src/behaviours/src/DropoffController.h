@@ -17,8 +17,12 @@ class DropoffController {
 	float initialY;
 	float initialTheta;
 	float desiredTheta;
+	float homeTheta;
 	float distanceToHome = 0.0;
 	float distTravelled = 0.0;
+	float distToSpiral = 0.0;
+	float spiralX;
+	float spiralY;
 	
 	//int pickupDelay = 0;
 		
@@ -52,7 +56,7 @@ class DropoffController {
 		cout << "Currently in the DROPOFF state" << endl;
 		if (initCalc) {
 			distTravelled = 0.0;
-			desiredTheta = atan2((0 - (currY)),(0 - (currX)));
+			homeTheta = atan2((0 - (currY)),(0 - (currX)));
 			initialTheta = currTheta;
 			initCalc = false;
 			spinHome = true;
@@ -70,7 +74,7 @@ class DropoffController {
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
-				if (abs(currTheta - desiredTheta) <= 0.02)
+				if (abs(currTheta - homeTheta) <= 0.02)
 				{
 					
 					//done rotating to home
@@ -98,8 +102,8 @@ class DropoffController {
 			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
 			{
 				cout << "currTheta is " << currTheta << endl;
-				cout << "desiredTheta is " << desiredTheta << endl;
-				if (abs(currTheta - desiredTheta) <= 0.02)
+				cout << "desiredTheta is " << homeTheta << endl;
+				if (abs(currTheta - homeTheta) <= 0.02)
 				{
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
@@ -109,6 +113,8 @@ class DropoffController {
 					driveToHome = true;
 					initialX = currX;
 					initialY = currY;
+					spiralX = currX;
+					spiralY = currY;
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 0.5;
@@ -132,8 +138,14 @@ class DropoffController {
 			  //sendDriveCommand(100.0, 100.0);
 			  //swarmie.left = 100.0;
 			  //swarmie.right = 100.0;
-			 
-			  if (distanceToHome - distTravelled <= 0.01)
+			  if (abs(currTheta - desired) >= 0.03) 
+				cout << "spinning towards home again" << endl;
+			  	distanceToHome = calcDistance(currX, currY, 0, 0);
+				distanceToHome -= 0.5;
+			  	swarmie.left = -30.0;
+			  	swarmie.right = 30.0;
+		 	  }
+			  else if (distanceToHome - distTravelled <= 0.01)
 			  {
 				  cout << "Made it to home base...dropping off cube!" << endl;
 	  			  //fngr.data = M_PI_2;
@@ -205,13 +217,20 @@ class DropoffController {
 			  cout << "distanceToHome is: " << distanceToHome << endl;
 			  cout << "distanceTravelled is: " << distTravelled << endl;
 			  distTravelled = calcDistance(currX, currY, initialX, initialY);
-			  if (distanceToHome - distTravelled <= 0.01) {
+			  if (abs(currTheta - desiredTheta) > 0.03) {
+				  cout << "spinning to get back to spiral again" << endl;
+				  distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
+				  swarmie.left = -30.0;
+				  swarmie.right = 30.0;
+			  }
+			  else if (abs(distTravelled - distToSpiral) <= 0.01) {
 				  cout << "Successfully drove back to spiral edge" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
 				  swarmie.dropoffSuccess = true;
 				  swarmie.pickupSuccess = false;
 				  distanceToHome = 0.0;
+				  distToSpiral = 0.0;
 				  backToSpiral = false;
 				  initCalc = true;
 			  }
