@@ -144,7 +144,7 @@ class LogicController {
 	  }
 	
 	void updateSonar(float left, float center, float right) {
-		obstacleController->updateSonar(left, center, right);
+		obstacleController.updateSonar(left, center, right);
 	}
 	
 	    void populateMap() {
