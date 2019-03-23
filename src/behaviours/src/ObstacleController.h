@@ -74,29 +74,29 @@ class ObstacleController {
       {
 	  swarmie.pickupSuccess = false;
      	  swarmie.dropoffSuccess = false;
-          if (SonarCenter <= 2.8)
+          if (SonarCenter <= 1.5)
           {
  		cout << "center detection still, sonarCenter is: " << SonarCenter << endl;
               swarmie.left = -100.0;
               swarmie.right = 100.0;
           }
-          else if (SonarRight <= 2.9)
+          else if (SonarRight <= 1.5)
           {
 		  cout << "right detection still, sonarRight is: " << SonarRight << endl;
               swarmie.left = -100.0;
               swarmie.right = 100.0;
-		  if (SonarCenter >= 2.0 && SonarRight >= 0.3)
+		  if (SonarCenter >= 1.5 && SonarRight >= 0.3)
 		  {
 			  swarmie.left = 75.0;
 			  swarmie.right = 75.0;
 		  }
           }
-          else if (SonarLeft <= 2.9)
+          else if (SonarLeft <= 1.5)
           {
 		  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
               swarmie.left = -100.0;
               swarmie.right = 100.0;
-		  if (SonarCenter >= 2.0 && SonarRight >= 0.3)
+		  if (SonarCenter >= 1.5 && SonarRight >= 0.3)
 		  {
 			  swarmie.left = 75.0;
 			  swarmie.right = 75.0;
@@ -119,29 +119,29 @@ class ObstacleController {
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
-		if (SonarCenter <= 2.9 && SonarLeft >= 2.9 && SonarRight >= 2.9)
+		if (SonarCenter <= 1.5 && SonarLeft >= 2.9 && SonarRight >= 2.9)
 		  {
 			cout << "center detection still, sonarCenter is: " << SonarCenter << endl;
 		      swarmie.left = -100.0;
 		      swarmie.right = 100.0;
 		  }
-		  else if (SonarRight <= 2.9)
+		  else if (SonarRight <= 1.5)
 		  {
 			  cout << "right detection still, sonarRight is: " << SonarRight << endl;
 		      swarmie.left = -100.0;
 		      swarmie.right = 100.0;
-			  if (SonarCenter >= 2.0 && SonarRight >= 0.3)
+			  if (SonarCenter >= 1.5 && SonarRight >= 0.3)
 			  {
 				  swarmie.left = 75.0;
 				  swarmie.right = 75.0;
 			  }
 		  }
-		  else if (SonarLeft <= 2.9)
+		  else if (SonarLeft <= 1.5)
 		  {
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
 		      swarmie.left = 100.0;
 		      swarmie.right = -100.0;
-			  if (SonarCenter >= 2.0 && SonarLeft >= 0.3)
+			  if (SonarCenter >= 1.5 && SonarLeft >= 0.3)
 			  {
 				  swarmie.left = 75.0;
 				  swarmie.right = 75.0;
