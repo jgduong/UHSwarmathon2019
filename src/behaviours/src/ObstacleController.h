@@ -164,28 +164,28 @@ class ObstacleController {
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
-		if (SonarCenter <= 0.5 && SonarLeft >= 2.9 && SonarRight >= 2.9)
+		if (SonarCenter <= 0.35 && SonarLeft >= 2.9 && SonarRight >= 2.9)
 		{
 			cout << "center detection still, sonarCenter is: " << SonarCenter << endl;
 		      swarmie.left = -100.0;
-		      swarmie.right = 100.0;
+		      swarmie.right = 80.0;
 		}
-		else if (SonarLeft <= 0.5)
+		else if (SonarLeft <= 0.35)
 		{
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
-		      swarmie.left = 100.0;
+		      swarmie.left = 80.0;
 		      swarmie.right = -100.0;
 		}
-		else if (SonarRight <= 0.5)
+		else if (SonarRight <= 0.35)
 		{
 			cout << "right detection still, sonarRight is: " << SonarRight << endl;
 		      swarmie.left = -100.0;
-		      swarmie.right = 100.0;
+		      swarmie.right = 80.0;
 		}
 		else {
 			cout << "obstacle controller has successfully rotated away from obstacle" << endl;
 			 delayCounter++;	  
-			  if (delayCounter >= 10)
+			  if (delayCounter >= 8)
 			  {
 				swarmie.obstacleSuccess = true;
 				  delayCounter = 0;
