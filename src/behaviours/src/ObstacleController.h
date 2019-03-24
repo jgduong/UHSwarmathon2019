@@ -162,6 +162,7 @@ class ObstacleController {
 	}
 	else if (prevState == DROPOFF && noForwards)
 	{
+		cout << "noForward motions is TRUE" << endl;
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
 		if (SonarCenter <= 0.35 && SonarLeft >= 2.9 && SonarRight >= 2.9)
