@@ -330,8 +330,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x - 1.207*cos(3.142/4) - 0.45;
 				centerLocationOdom.y = currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45;
-				centerOffsetX = -1.207*cos(3.142/4) - 0.45;
-				centerOffsetY = -1.207*sin(3.142/4) - 0.45;
+				//centerOffsetX = -1.207*cos(3.142/4) - 0.45;
+				//centerOffsetY = -1.207*sin(3.142/4) - 0.45;
+				centerOffsetX = -1;
+				centerOffsetY = -1;
 				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45<< ", " << currentLocationOdom.y + 1.207*sin(3.142/4) +0.5<< endl;
 			}
 			else if(centerInit && (currentLocationOdom.theta >= 1.35 && currentLocationOdom.theta<= 1.65))
@@ -348,8 +350,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45;
 				centerLocationOdom.y = currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45;
-				centerOffsetX = 1.207*cos(3.142/4) + 0.45;
-				centerOffsetY = -1.207*sin(3.142/4) - 0.45;
+				//centerOffsetX = 1.207*cos(3.142/4) + 0.45;
+				//centerOffsetY = -1.207*sin(3.142/4) - 0.45;
+				centerOffsetX = 1;
+				centerOffsetY = -1;
 				cout << "current location is: " << currentLocationOdom.x - 1.207*cos(3.142/4) - 0.45 << ", " << currentLocationOdom.y + 1.207*sin(3.142/4) + 0.45<< endl;
 			}
 			else if(centerInit && ((currentLocationOdom.theta >= 2.85) || (currentLocationOdom.theta <= -2.85)))
@@ -366,8 +370,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45;
 				centerLocationOdom.y = currentLocationOdom.y + 1.207*sin(3.142/4) + 0.45;
-				centerOffsetX = 1.207*cos(3.142/4) + 0.45;
-				centerOffsetY = 1.207*sin(3.142/4) + 0.45;
+				//centerOffsetX = 1.207*cos(3.142/4) + 0.45;
+				//centerOffsetY = 1.207*sin(3.142/4) + 0.45;
+				centerOffsetX = 1;
+				centerOffsetY = 1;
 				cout << "current location is: " << currentLocationOdom.x - 1.207*cos(3.142/4) - 0.45 << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45 << endl;
 			}
 			else if(centerInit && (currentLocationOdom.theta >= -1.65 && currentLocationOdom.theta <= -1.35))
@@ -384,8 +390,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x - 1.207*cos(3.142/4) - 0.45;
 				centerLocationOdom.y = currentLocationOdom.y + 1.207*sin(3.142/4) + 0.45;
-				centerOffsetX = -1.207*cos(3.142/4) - 0.45;
-				centerOffsetY = 1.207*sin(3.142/4) + 0.45;
+				//centerOffsetX = -1.207*cos(3.142/4) - 0.45;
+				//centerOffsetY = 1.207*sin(3.142/4) + 0.45;
+				centerOffsetX = -1;
+				centerOffsetY = 1;
 				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45 << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45 << endl;
 			}
 			logicController->setCenterOffset(centerOffsetX, centerOffsetY);
