@@ -182,7 +182,8 @@ class DropoffController {
 				  distTravelled = 0.0;
 				  
 				  desiredTheta = atan2((spiralY - currY),(spiralX - currX));
-				  compareTheta = currTheta;
+				  //compareTheta = currTheta;
+				  compareTheta = 0.0;
 				  
 				   float turnSize = desiredTheta - currTheta;
 			  }
@@ -215,9 +216,9 @@ class DropoffController {
 			  
 			  if (compareTheta != currTheta)
 			  {
-				  desiredTheta = atan2((spiralY - currY),(spiralX - currX));
-				  compareTheta = currTheta;
-				  turnSize = desiredTheta - currTheta;
+			 	 desiredTheta = atan2((spiralY - currY),(spiralX - currX));
+		          	compareTheta = currTheta;
+			  	turnSize = desiredTheta - currTheta;
 			  }
 			  
 			cout << "turnSize here is: " << turnSize << endl;
