@@ -116,7 +116,7 @@ class LogicController {
 		      {
 			      dropoffController.spiralX = currX;
 			      dropoffController.spiralY = currY;
-			      cout << "spiralX and spiralY have been set to: " << spiralX << ", " << spiralY << endl;
+			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
 		      }
 		      swarmie = dropoffController.DoWork();
 		    }
