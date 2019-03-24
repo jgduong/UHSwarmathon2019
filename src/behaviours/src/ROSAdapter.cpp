@@ -477,15 +477,18 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		if (currState == PICKUP && swarmie.left == 5.0 && swarmie.right == 5.0) {
 		    //centering on tag has failed (timeout), return to spiral search
 		    currState = SPIRAL_SEARCH;
+			prevState = PICKUP;
 		}
 		if (currState == PICKUP && swarmie.pickupSuccess) {
 		    cout << "PICKUP SUCCESS" << endl;
 		    currState = DROPOFF;
+			prevState = PICKUP;
 		    swarmie.pickupSuccess = false;
 		}
 		else if (currState == DROPOFF && swarmie.dropoffSuccess) {
 		    cout << "Returning to SpiralSearch" << endl;
 		    currState = SPIRAL_SEARCH;
+			prevState = DROPOFF;
 		    swarmie.dropoffSuccess = false;
 		}
 		else if (currState == AVOID_OBSTACLE && swarmie.obstacleSuccess) {
@@ -512,6 +515,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				}
 			}
 			currState = prevState;
+			prevState = AVOID_OBSTACLE;
 			swarmie.obstacleSuccess = false;
 		}
 		
@@ -566,6 +570,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    //logicController.SetAprilTags(tags);
 		if (currState == SPIRAL_SEARCH && initialized) {	
 			currState = PICKUP;
+			prevState = SPIRAL_SEARCH;
 			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 			logicController->updateTags( tags );
 		}
