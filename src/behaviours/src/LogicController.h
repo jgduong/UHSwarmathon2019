@@ -112,6 +112,12 @@ class LogicController {
 		      swarmie = pickupController.DoWork();
 		    }
 		    else if (state == DROPOFF) {
+		      if (prev == PICKUP && dropoffController.initCalc == true)
+		      {
+			      dropoffController.spiralX = currX;
+			      dropoffController.spiralY = currY;
+			      cout << "spiralX and spiralY have been set to: " << spiralX << ", " << spiralY << endl;
+		      }
 		      swarmie = dropoffController.DoWork();
 		    }
 		    else if (state == FIND_SPIRAL_EDGE) {
