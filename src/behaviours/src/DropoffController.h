@@ -43,6 +43,8 @@ class DropoffController {
 	float spiralX = 0.0;
 	float spiralY = 0.0;
 	 float turnSize = 0.0;
+	
+	bool noForwards = false;
   	
 	  void updateData(float x, float y, float theta) {
 	      currX = x;
@@ -60,6 +62,7 @@ class DropoffController {
 		  swarmie.pickupSuccess = false;
 		  swarmie.dropoffSuccess = false;
 		if (initCalc) {
+			noForwards = false;
 			homeTheta = atan2((0 - currY),(0 - currX));
 			desiredTheta = homeTheta + M_PI;
 			if (desiredTheta >= M_PI)
@@ -143,6 +146,11 @@ class DropoffController {
 			  //swarmie.left = 100.0;
 			  //swarmie.right = 100.0;
 			 distTravelled = calcDistance(currX, currY, initialX, initialY);
+			  if (distanceToHome - distTravelled <= 1)
+			  {
+				  noForwards = true;
+			  }
+			  
 			  if (distanceToHome - distTravelled <= 0.01)
 			  {
 				  cout << "Made it to home base...dropping off cube!" << endl;
@@ -168,6 +176,7 @@ class DropoffController {
 
 		  }
 		  else if (backOff) {
+			  noForwards = false;
 			  distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  cout << "Distance travelled is: " << distTravelled << endl;
 			  //swarmie.finger = 0;
