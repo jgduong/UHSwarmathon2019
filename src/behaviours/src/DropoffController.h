@@ -75,8 +75,8 @@ class DropoffController {
 			spinHome = true;
 			swarmie.left = 0.0;
 			swarmie.right = 0.0;
-			spiralX = currX;
-			spiralY = currY;
+			//spiralX = currX;
+			//spiralY = currY;
 			cout << "spiralX, spiralY: " << spiralX << ", " << spiralY << endl;
 			//return swarmie;
 	  	}
