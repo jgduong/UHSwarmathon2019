@@ -184,6 +184,8 @@ class ObstacleController {
 		}
 		else {
 			cout << "obstacle controller has successfully rotated away from obstacle" << endl;
+			swarmie.left = -30.0;
+			swarmie.right = -30.0;
 			 delayCounter++;	  
 			  if (delayCounter >= 8)
 			  {
