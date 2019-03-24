@@ -89,7 +89,7 @@ class DropoffController {
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
-				if (abs(currTheta - homeTheta) <= 0.02)
+				if (abs(currTheta - homeTheta) <= 0.03)
 				{
 					//done rotating to home
 					//sendDriveCommand(0.0, 0.0);
@@ -116,7 +116,7 @@ class DropoffController {
 			{
 				cout << "currTheta is " << currTheta << endl;
 				cout << "desiredTheta is " << homeTheta << endl;
-				if (abs(currTheta - homeTheta) <= 0.02)
+				if (abs(currTheta - homeTheta) <= 0.03)
 				{
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
@@ -236,7 +236,7 @@ class DropoffController {
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
-				if (abs(currTheta - desiredTheta) <= 0.02)
+				if (abs(currTheta - desiredTheta) <= 0.03)
 				{
 					//done rotating to home
 					//sendDriveCommand(0.0, 0.0);
@@ -258,7 +258,7 @@ class DropoffController {
 			}
 			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
 			{
-				if (abs(currTheta - desiredTheta) <= 0.02)
+				if (abs(currTheta - desiredTheta) <= 0.03)
 				{
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
