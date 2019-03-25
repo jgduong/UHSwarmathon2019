@@ -612,7 +612,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
 	
-	if ((sonarLeftData <= 0.25 || sonarCenterData <= 0.25 || sonarRightData <= 0.25) && (currState == INIT) && (!rotate2)) {
+	if ((sonarLeftData <= 0.25 || sonarCenterData <= 0.25 || sonarRightData <= 0.25) && (currState == INIT) && (rotate2)) {
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
