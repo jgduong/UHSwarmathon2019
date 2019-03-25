@@ -7,10 +7,7 @@ using namespace std;
 class PickupController {
 
 private:
-    float detectionTimeout = 0.0;
-    float zDistanceToCube = 0.0;
-    bool approachCube = false;
-	bool reverse = false;
+    
     //float tagX;
     //float tagY;
     //float tagZ;
@@ -24,7 +21,10 @@ private:
     float distTravelled = 0;
 
 public: 
-
+	float detectionTimeout = 0.0;
+    float zDistanceToCube = 0.0;
+    bool approachCube = false;
+	bool reverse = false;
     Swarmie swarmie;
     float minX;
     float indexOfClosestTag;
