@@ -495,6 +495,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			logicController->dropoffController.spiralY = currentLocationOdom.y + centerOffsetY;
 		    swarmie.pickupSuccess = false;
 		}
+		if (currState == PICKUP && logicController->pickupController.detectionTimeout >= 100)
+		{
+			cout << "failed to pickup Cube" << endl;
+			currState = SPIRAL_SEARCH;
+			prevState = PICKUP;
+			logicController->pickupController.detectionTimeout = 0;
+			
+		}
 		else if (currState == DROPOFF && swarmie.dropoffSuccess) {
 		    cout << "Returning to SpiralSearch" << endl;
 		    currState = SPIRAL_SEARCH;
