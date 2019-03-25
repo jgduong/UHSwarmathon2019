@@ -98,6 +98,8 @@ public:
                 swarmie.right = 5.0;
                 //aprilTagAcquireSequence = false;
                 //mapTesting = true;
+		    detectionTimeout = 0.0;
+		    
             }
         
         if (approachCube) {
@@ -137,7 +139,7 @@ public:
 	if (reverse)
 	{
 		reverseDelay++;
-		swarmie.left = -750.0;
+		swarmie.left = -75.0;
                 swarmie.right = -75.0;
 		if (reverseDelay > 8)
 		{
