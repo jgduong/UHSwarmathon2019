@@ -24,6 +24,7 @@ public:
 	float detectionTimeout = 0.0;
     float zDistanceToCube = 0.0;
     bool approachCube = false;
+	bool approachCube2 = false;
 	bool reverse = false;
     Swarmie swarmie;
     float minX;
@@ -54,6 +55,7 @@ public:
     
     Swarmie DoWork() {
           detectionTimeout++;
+	    cout << "detectionTimeout = " << detectionTimeout << endl;
           cout << "Target detected : in PICKUP state, minX is: " << minX << endl;
           cout << "index of centermost tag: " << indexOfClosestTag << ", x,z: " << tags[indexOfClosestTag].getPositionX() << ", " << tags[indexOfClosestTag].getPositionZ() << endl;
 	  swarmie.pickupSuccess = false;
@@ -89,6 +91,7 @@ public:
                 startingX = selfX;
                 startingY = selfY;
                 approachCube = true;
+		detectionTimeout = 0;
             }
             else if (detectionTimeout >= 100)
             {
@@ -107,35 +110,64 @@ public:
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
-            if (distTravelled < (zDistanceToCube)) {
+            if (distTravelled < (zDistanceToCube / 2.0)) {
                 swarmie.left = 50.0;
                 swarmie.right = 50.0;
             }
             else {
-		pickUpDelay++;
-                cout << "Currently next to cube" << endl;
-                swarmie.left = 0.0;
-                swarmie.right = 0.0;
-                swarmie.finger = 0;
-		if (pickUpDelay >= 10)
-		{
-			swarmie.wrist = 0;
-		}
-		if (pickUpDelay >= 20)
-		{
-			//swarmie.wrist = 0;
-			//swarmie.pickupSuccess = true;
-			pickUpDelay = 0;
-			approachCube = false;
-			detectionTimeout = 0.0;
-			reverse = true;
-			reverseDelay = 0;
-		}
-		    
+		 swarmie.wrist = 1.25;
+		 swarmie.finger = M_PI_2 + 0.2;
+		 if ( minX > -0.025 && detectionTimeout < 100 && !approachCube)
+		    {
+			//sendDriveCommand(6.0, -5.0);
+			swarmie.left = 5.0;
+			swarmie.right = -5.0;
+		    }
+		    else if ( minX < -0.035 & detectionTimeout < 100 && !approachCube)
+		    {
+			//sendDriveCommand(-5.0, 7.0);
+			swarmie.left = -5.0;
+			swarmie.right = 5.0;
+		    }   
+		    else if (minX <= -0.025 && minX >= -0.035)
+		    {
+			    approachCube2 = true;
+		    }
             }
 		
             
         }
+	if (approachCube2)
+	{
+		cout << "second step of approaching cube... " << endl;
+		cout < "Z distance to cube is: " << zDistanceToCube << endl;
+		distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
+		if (distTravelled < (zDistanceToCube / 2.0)) {
+                	swarmie.left = 50.0;
+                	swarmie.right = 50.0;
+            	}
+		else {
+			pickUpDelay++;
+			cout << "Currently next to cube" << endl;
+			swarmie.left = 0.0;
+			swarmie.right = 0.0;
+			swarmie.finger = 0;
+			if (pickUpDelay >= 10)
+			{
+				swarmie.wrist = 0;
+			}
+			if (pickUpDelay >= 20)
+			{
+				//swarmie.wrist = 0;
+				//swarmie.pickupSuccess = true;
+				pickUpDelay = 0;
+				approachCube2 = false;
+				detectionTimeout = 0.0;
+				reverse = true;
+				reverseDelay = 0;
+			}
+		}
+	}
 	if (reverse)
 	{
 		swarmie.wrist = 0;
