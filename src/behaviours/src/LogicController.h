@@ -56,7 +56,7 @@ class LogicController {
 	//ObstacleController obstacleController;
   
   public: 
-	SpiralSearchController spiralSearchController;
+	SpiralSearchontroller spiralSearchController;
 	PickupController pickupController;
 	DropoffController dropoffController;
 	ObstacleController obstacleController;
