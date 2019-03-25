@@ -276,14 +276,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime; 
 	
-	if (currState == AVOID_OBSTACLE && prevState == INIT && swarmie.obstacleSuccess) {
-		cout << "Obstacle avoided successfully in the INIT stage" << endl;
-		currState == prevState;
-		prevState = AVOID_OBSTACLE;
-		swarmie.obstacleSuccess = false;
-		swarmie.left = 30.0;
-		swarmie.right = 30.0;
-	}
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
 	
@@ -538,6 +530,15 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				logicController->pickupController.approachCube = false;
 				logicController->pickupController.reverse = false;
+			}
+			
+			if (prevState == INIT) {
+				cout << "Obstacle avoided successfully in the INIT stage" << endl;
+				currState == prevState;
+				prevState = AVOID_OBSTACLE;
+				swarmie.obstacleSuccess = false;
+				swarmie.left = 30.0;
+				swarmie.right = 30.0;
 			}
 			
 			currState = prevState;
