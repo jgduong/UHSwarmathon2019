@@ -98,7 +98,6 @@ public:
                 swarmie.right = 5.0;
                 //aprilTagAcquireSequence = false;
                 //mapTesting = true;
-		    detectionTimeout = 0.0;
 		    
             }
         
