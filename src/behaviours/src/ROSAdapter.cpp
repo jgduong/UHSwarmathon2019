@@ -274,7 +274,14 @@ Swarmie swarmie;
 void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
-	timerTimeElapsed = time(0) - timerStartTime;
+	timerTimeElapsed = time(0) - timerStartTime; 
+	
+	if (currState == INIT && swarmie.obstacleSuccess) {
+		cout << "Obstacle avoided successfully in the INIT stage" << endl;
+		currState == prevState;
+		prevState = AVOID_OBSTACLE;
+		swarmie.obstacleSuccess = false;
+	}
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
 	
@@ -415,6 +422,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			
 			if (rotate2) {
+				
 				float displacement = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, step2X, step2Y);
 				cout << "displacement is: " << displacement << endl;
 				logicController->addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
