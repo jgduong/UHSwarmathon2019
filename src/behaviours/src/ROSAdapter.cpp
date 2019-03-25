@@ -28,6 +28,7 @@
 #include <std_msgs/Float32MultiArray.h>
 #include <std_msgs/MultiArrayDimension.h>
 #include "swarmie_msgs/Waypoint.h"
+#include <swarmie_msgs/Skid.h>
 
 // Include Controllers
 #include "LogicController.h"
@@ -84,8 +85,6 @@ float sonarRightData = 0.0;
 bool initialized = false;
 
 vector<Tag> tags;
-
-geometry_msgs::Twist velocity;
 
 float linearVelocity = 0;	//forward speed, POSITIVE = forward, NEGATIVE = backward
 float angularVelocity = 0;	//turning speed, POSITIVE = left, NEGATIVE = right
@@ -210,12 +209,12 @@ int main(int argc, char **argv) {
   visitedLocationsSubscriber = mNH.subscribe<std_msgs::Float32MultiArray>(("/visitedLocation"), 10, visitedLocationsHandler);
 	
   //publishers
-  status_publisher = mNH.advertise<std_msgs::String>((publishedName + "/status"), 1, true);				//publishes rover status
+  status_publisher = mNH.advertise<std_msgs::String>((publishedName + "/swarmie_status"), 1, true);				//publishes rover status
   stateMachinePublish = mNH.advertise<std_msgs::String>((publishedName + "/state_machine"), 1, true);			//publishes state machine status
   fingerAnglePublish = mNH.advertise<std_msgs::Float32>((publishedName + "/fingerAngle/cmd"), 1, true);			//publishes gripper angle to move gripper finger
   wristAnglePublish = mNH.advertise<std_msgs::Float32>((publishedName + "/wristAngle/cmd"), 1, true);			//publishes wrist angle to move wrist
   infoLogPublisher = mNH.advertise<std_msgs::String>("/infoLog", 1, true);						//publishes a message to the infolog box on GUI
-  driveControlPublish = mNH.advertise<geometry_msgs::Twist>((publishedName + "/driveControl"), 10);			//publishes motor commands to the motors
+  driveControlPublish = mNH.advertise<swarmie_msgs::Skid>((publishedName + "/driveControl"), 10);			//publishes motor commands to the motors
   heartbeatPublisher = mNH.advertise<std_msgs::String>((publishedName + "/behaviour/heartbeat"), 1, true);		//publishes ROSAdapters status via its "heartbeat"
   waypointFeedbackPublisher = mNH.advertise<swarmie_msgs::Waypoint>((publishedName + "/waypoints"), 1, true);		//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
   visitedLocationsPublisher = mNH.advertise<std_msgs::Float32MultiArray>(("/visitedLocation"), 10, true);
@@ -547,12 +546,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 
 void sendDriveCommand(double left, double right)
 {
-	velocity.linear.x = left,
-    	velocity.angular.z = right;
-  
+	swarmie_msgs::Skid skid_command;
+	skid_command.left  = left;
+	skid_command.right = right;
+
 	// publish the drive commands
-	driveControlPublish.publish(velocity);
-}
+	driveControlPublish.publish(skid_command);}
 
 void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& message)
 {
