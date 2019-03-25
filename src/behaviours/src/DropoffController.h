@@ -198,8 +198,8 @@ class DropoffController {
 			  }
 			  else {
 				cout << "Backing out of home base" << endl;
-				  swarmie.left = -100.0;
-				  swarmie.right = -100.0;
+				  swarmie.left = -60.0;
+				  swarmie.right = -60.0;
 			  }
 		  }
 		  else if (rotate180) {
