@@ -10,6 +10,7 @@ private:
     float detectionTimeout = 0.0;
     float zDistanceToCube = 0.0;
     bool approachCube = false;
+	bool reverse = false;
     //float tagX;
     //float tagY;
     //float tagZ;
@@ -28,6 +29,7 @@ public:
     float minX;
     float indexOfClosestTag;
     int pickUpDelay = 0;
+	int reverseDelay = 0;
     
     
     //void updateTags(float x, float y, float z) {
@@ -116,15 +118,30 @@ public:
 		if (pickUpDelay >= 20)
 		{
 			swarmie.wrist = 0;
-			swarmie.pickupSuccess = true;
+			//swarmie.pickupSuccess = true;
 			pickUpDelay = 0;
 			approachCube = false;
 			detectionTimeout = 0.0;
+			reverse = true;
+			reverseDelay = 0;
 		}
 		    
             }
+		
             
         }
+	if (reverse)
+	{
+		reverseDelay++;
+		swarmie.left = -40.0;
+                swarmie.right = -40.0;
+		if (reverseDelay > 7)
+		{
+			reverseDelay = 0;
+			reverse = false;
+			swarmie.pickupSuccess = true;
+		}
+	}
 
           return swarmie;
     }
