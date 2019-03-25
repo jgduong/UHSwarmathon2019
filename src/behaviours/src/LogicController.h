@@ -50,12 +50,14 @@ enum States{
 
 class LogicController {
   private:
-    	SpiralSearchController spiralSearchController;
-	PickupController pickupController;
+    	//SpiralSearchController spiralSearchController;
+	//PickupController pickupController;
 	//DropoffController dropoffController;
 	//ObstacleController obstacleController;
   
   public: 
+	SpiralSearchController spiralSearchController;
+	PickupController pickupController;
 	DropoffController dropoffController;
 	ObstacleController obstacleController;
 	float currX; 
