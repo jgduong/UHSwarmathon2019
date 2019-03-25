@@ -418,6 +418,8 @@ void RoverGUIPlugin::EKFEventHandler(const ros::MessageEvent<const nav_msgs::Odo
     const ros::M_string& header = event.getConnectionHeader();
     ros::Time receipt_time = event.getReceiptTime();
 
+    string topic = header.at("topic");
+
     const boost::shared_ptr<const nav_msgs::Odometry> msg = event.getMessage();
 
     float x = msg->pose.pose.position.x;
@@ -426,8 +428,8 @@ void RoverGUIPlugin::EKFEventHandler(const ros::MessageEvent<const nav_msgs::Odo
     QString x_str; x_str.setNum(x);
     QString y_str; y_str.setNum(y);
     // Extract rover name from the message source. Publisher is in the format /*rover_name*_MAP
-    size_t found = publisher_name.find("_MAP");
-    string rover_name = publisher_name.substr(1,found-1);
+    size_t found = topic.find("/odom/ekf");
+    string rover_name = topic.substr(1,found-1);
 
     // Store map info for the appropriate rover name
     ui.map_frame->addToEKFRoverPath(rover_name, x, y);
@@ -464,6 +466,8 @@ void RoverGUIPlugin::GPSEventHandler(const ros::MessageEvent<const nav_msgs::Odo
     const ros::M_string& header = event.getConnectionHeader();
     ros::Time receipt_time = event.getReceiptTime();
 
+    string topic = header.at("topic");
+
     const boost::shared_ptr<const nav_msgs::Odometry> msg = event.getMessage();
     float x = msg->pose.pose.position.x;
     float y = msg->pose.pose.position.y;
@@ -472,8 +476,8 @@ void RoverGUIPlugin::GPSEventHandler(const ros::MessageEvent<const nav_msgs::Odo
     QString y_str; y_str.setNum(y);
 
     // Extract rover name from the message source. Publisher is in the format /*rover_name*_NAVSAT
-    size_t found = publisher_name.find("_NAVSAT");
-    string rover_name = publisher_name.substr(1,found-1);
+    size_t found = topic.find("/odom/navsat");
+    string rover_name = topic.substr(1,found-1);
 
     // Store map info for the appropriate rover name
     ui.map_frame->addToGPSRoverPath(rover_name, x, y);
@@ -482,9 +486,11 @@ void RoverGUIPlugin::GPSEventHandler(const ros::MessageEvent<const nav_msgs::Odo
 void RoverGUIPlugin::GPSNavSolutionEventHandler(const ros::MessageEvent<const ublox_msgs::NavSOL> &event) {
     const boost::shared_ptr<const ublox_msgs::NavSOL> msg = event.getMessage();
 
+    const ros::M_string& header = event.getConnectionHeader();
+    string topic = header.at("topic");
     // Extract rover name from the message source. Publisher is in the format /*rover_name*_UBLOX
-    size_t found = event.getPublisherName().find("_UBLOX");
-    QString rover_name = event.getPublisherName().substr(1,found-1).c_str();
+    size_t found = topic.find("/navsol");
+    QString rover_name = topic.substr(1,found-1).c_str();
 
     // Update the number of sattellites detected for the specified rover
     rover_numSV_state[rover_name.toStdString()] = msg.get()->numSV;
@@ -550,7 +556,7 @@ set<string> RoverGUIPlugin::findConnectedRovers()
 
         string rover_name;
 
-        std::size_t found = info.name.find("/status");
+        std::size_t found = info.name.find("/swarmie_status");
           if (found!=std::string::npos)
           {
             rover_name = info.name.substr(1,found-1);
@@ -576,7 +582,7 @@ void RoverGUIPlugin::statusEventHandler(const ros::MessageEvent<std_msgs::String
 
     // This method is used rather than reading the publisher name to accomodate teams that changed the node name.
     string topic = header.at("topic");
-    size_t found = topic.find("/status");
+    size_t found = topic.find("/swarmie_status");
     string rover_name = topic.substr(1,found-1);
 
     const std_msgs::StringConstPtr& msg = event.getMessage();
@@ -697,11 +703,11 @@ void RoverGUIPlugin::currentRoverChangedEventHandler(QListWidgetItem *current, Q
 
     //Set up subscribers
     image_transport::ImageTransport it(nh);
-    camera_subscriber = it.subscribe("/"+selected_rover_name+"/targets/image", 1, &RoverGUIPlugin::cameraEventHandler, this, image_transport::TransportHints("theora"));
-    imu_subscriber = nh.subscribe("/"+selected_rover_name+"/imu", 10, &RoverGUIPlugin::IMUEventHandler, this);
-    us_center_subscriber = nh.subscribe("/"+selected_rover_name+"/sonarCenter", 10, &RoverGUIPlugin::centerUSEventHandler, this);
-    us_left_subscriber = nh.subscribe("/"+selected_rover_name+"/sonarLeft", 10, &RoverGUIPlugin::leftUSEventHandler, this);
-    us_right_subscriber = nh.subscribe("/"+selected_rover_name+"/sonarRight", 10, &RoverGUIPlugin::rightUSEventHandler, this);
+    camera_subscriber = it.subscribe("/"+selected_rover_name+"/targets/image_throttle", 1, &RoverGUIPlugin::cameraEventHandler, this, image_transport::TransportHints("compressed"));
+    imu_subscriber = nh.subscribe("/"+selected_rover_name+"/imu_throttle", 10, &RoverGUIPlugin::IMUEventHandler, this);
+    us_center_subscriber = nh.subscribe("/"+selected_rover_name+"/sonarCenter_throttle", 10, &RoverGUIPlugin::centerUSEventHandler, this);
+    us_left_subscriber = nh.subscribe("/"+selected_rover_name+"/sonarLeft_throttle", 10, &RoverGUIPlugin::leftUSEventHandler, this);
+    us_right_subscriber = nh.subscribe("/"+selected_rover_name+"/sonarRight_throttle", 10, &RoverGUIPlugin::rightUSEventHandler, this);
 
     emit sendInfoLogMessage(QString("Displaying map for ")+QString::fromStdString(selected_rover_name));
 
@@ -915,13 +921,13 @@ void RoverGUIPlugin::pollRoversTimerEventHandler()
 
 
         //Set up subscribers
-        status_subscribers[*i] = nh.subscribe("/"+*i+"/status", 10, &RoverGUIPlugin::statusEventHandler, this);
+        status_subscribers[*i] = nh.subscribe("/"+*i+"/swarmie_status", 10, &RoverGUIPlugin::statusEventHandler, this);
         waypoint_subscribers[*i] = nh.subscribe("/"+*i+"/waypoints", 10, &RoverGUIPlugin::waypointEventHandler, this);
         obstacle_subscribers[*i] = nh.subscribe("/"+*i+"/obstacle", 10, &RoverGUIPlugin::obstacleEventHandler, this);
-        encoder_subscribers[*i] = nh.subscribe("/"+*i+"/odom/filtered", 10, &RoverGUIPlugin::encoderEventHandler, this);
-        ekf_subscribers[*i] = nh.subscribe("/"+*i+"/odom/ekf", 10, &RoverGUIPlugin::EKFEventHandler, this);
-        gps_subscribers[*i] = nh.subscribe("/"+*i+"/odom/navsat", 10, &RoverGUIPlugin::GPSEventHandler, this);
-        gps_nav_solution_subscribers[*i] = nh.subscribe("/"+*i+"/navsol", 10, &RoverGUIPlugin::GPSNavSolutionEventHandler, this);
+        encoder_subscribers[*i] = nh.subscribe("/"+*i+"/odom/filtered_throttle", 10, &RoverGUIPlugin::encoderEventHandler, this);
+        ekf_subscribers[*i] = nh.subscribe("/"+*i+"/odom/ekf_throttle", 10, &RoverGUIPlugin::EKFEventHandler, this);
+        gps_subscribers[*i] = nh.subscribe("/"+*i+"/odom/navsat_throttle", 10, &RoverGUIPlugin::GPSEventHandler, this);
+        gps_nav_solution_subscribers[*i] = nh.subscribe("/"+*i+"/navsol_throttle", 10, &RoverGUIPlugin::GPSNavSolutionEventHandler, this);
         rover_diagnostic_subscribers[*i] = nh.subscribe("/"+*i+"/diagnostics", 1, &RoverGUIPlugin::diagnosticEventHandler, this);
 
         RoverStatus rover_status;
@@ -1552,6 +1558,9 @@ void RoverGUIPlugin::allAutonomousButtonEventHandler()
             timer_start_time_in_seconds = current_simulated_time_in_seconds;
             timer_stop_time_in_seconds = timer_start_time_in_seconds + 600.0;
             is_timer_on = true;
+            // reset the obstacle_call_count for this timed run
+            obstacle_call_count = 0;
+            emit updateObstacleCallCount("<font color='white'>"+QString::number(obstacle_call_count)+"</font>");
             emit sendInfoLogMessage("\nSetting experiment timer to start at: " +
                                     QString::number(getHours(timer_start_time_in_seconds)) + " hours, " +
                                     QString::number(getMinutes(timer_start_time_in_seconds)) + " minutes, " +
@@ -1574,6 +1583,9 @@ void RoverGUIPlugin::allAutonomousButtonEventHandler()
             timer_start_time_in_seconds = current_simulated_time_in_seconds;
             timer_stop_time_in_seconds = timer_start_time_in_seconds + 1200.0;
             is_timer_on = true;
+            // reset the obstacle_call_count for this timed run
+            obstacle_call_count = 0;
+            emit updateObstacleCallCount("<font color='white'>"+QString::number(obstacle_call_count)+"</font>");
             emit sendInfoLogMessage("\nSetting experiment timer to start at: " +
                                     QString::number(getHours(timer_start_time_in_seconds)) + " hours, " +
                                     QString::number(getMinutes(timer_start_time_in_seconds)) + " minutes, " +
@@ -1596,6 +1608,9 @@ void RoverGUIPlugin::allAutonomousButtonEventHandler()
             timer_start_time_in_seconds = current_simulated_time_in_seconds;
             timer_stop_time_in_seconds = timer_start_time_in_seconds + 1800.0;
             is_timer_on = true;
+            // reset the obstacle_call_count for this timed run
+            obstacle_call_count = 0;
+            emit updateObstacleCallCount("<font color='white'>"+QString::number(obstacle_call_count)+"</font>");
             emit sendInfoLogMessage("\nSetting experiment timer to start at: " +
                                     QString::number(getHours(timer_start_time_in_seconds)) + " hours, " +
                                     QString::number(getMinutes(timer_start_time_in_seconds)) + " minutes, " +
@@ -1618,6 +1633,9 @@ void RoverGUIPlugin::allAutonomousButtonEventHandler()
             timer_start_time_in_seconds = current_simulated_time_in_seconds;
             timer_stop_time_in_seconds = timer_start_time_in_seconds + 3600.0;
             is_timer_on = true;
+            // reset the obstacle_call_count for this timed run
+            obstacle_call_count = 0;
+            emit updateObstacleCallCount("<font color='white'>"+QString::number(obstacle_call_count)+"</font>");
             emit sendInfoLogMessage("\nSetting experiment timer to start at: " +
                                     QString::number(getHours(timer_start_time_in_seconds)) + " hours, " +
                                     QString::number(getMinutes(timer_start_time_in_seconds)) + " minutes, " +
@@ -1811,11 +1829,17 @@ void RoverGUIPlugin::unboundedRadioButtonEventHandler(bool toggled)
 
     if(toggled)
     {
+        ui.round_type_wall_group->setStyleSheet("color: grey;");
+        ui.round_type_wall_group->setEnabled(!toggled);
+
         ui.unbounded_arena_size_label->setStyleSheet("color: white;");
         ui.unbounded_arena_size_combobox->setStyleSheet("color: white; border:2px solid white; padding: 1px 0px 1px 3px");
     }
     else
     {
+        ui.round_type_wall_group->setStyleSheet("color: white;");
+        ui.round_type_wall_group->setEnabled(!toggled);
+
         ui.unbounded_arena_size_label->setStyleSheet("color: grey;");
         ui.unbounded_arena_size_combobox->setStyleSheet("color: grey; border:2px solid grey; padding: 1px 0px 1px 3px");
     }
@@ -1848,15 +1872,31 @@ void RoverGUIPlugin::buildSimulationButtonEventHandler()
     if (ui.final_radio_button->isChecked() && !ui.create_savable_world_checkbox->isChecked())
     {
          arena_dim = 23.1;
-         //addFinalsWalls();
-         addFinalsTagBoundary();
+
+         if (ui.wall_radio_button->isChecked())
+         {
+             addFinalsWalls();
+         }
+         else
+         {
+             addFinalsTagBoundary();
+         }
+
          emit sendInfoLogMessage(QString("Set arena size to ")+QString::number(arena_dim)+"x"+QString::number(arena_dim));
     }
     else if (ui.prelim_radio_button->isChecked() && !ui.create_savable_world_checkbox->isChecked())
     {
         arena_dim = 15;
-        //addPrelimsWalls();
-        addPrelimsTagBoundary();
+
+        if (ui.wall_radio_button->isChecked())
+        {
+            addPrelimsWalls();
+        }
+        else
+        {
+            addPrelimsTagBoundary();
+        }
+
         emit sendInfoLogMessage(QString("Set arena size to ")+QString::number(arena_dim)+"x"+QString::number(arena_dim));
     }
     else

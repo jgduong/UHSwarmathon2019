@@ -299,6 +299,16 @@ bool LogicController::HasWork()
   return false;
 }
 
+int LogicController::getCollisionCalls()
+{
+	if(obstacleController.HasWork())
+	{
+		//cout<<"ObstacleState: get one obstacle avoidance call..."<<endl;
+		return 1;
+		}
+		
+	return 0;
+}
 
 // This function will deal with inter-controller communication. Communication
 // that needs to occur between specific low level controllers is done here.
@@ -410,6 +420,11 @@ void LogicController::RemoveManualWaypoint(int waypoint_id)
 std::vector<int> LogicController::GetClearedWaypoints()
 {
   return manualWaypointController.ReachedWaypoints();
+}
+
+void LogicController::gotRecruitmentMessage(Point p)
+{
+   searchController.setRecruitmentLocation(p);
 }
 
 void LogicController::setVirtualFenceOn( RangeShape* range )
