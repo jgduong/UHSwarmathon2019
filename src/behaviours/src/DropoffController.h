@@ -176,7 +176,7 @@ class DropoffController {
 
 		  }
 		  else if (backOff) {
-			  noForwards = false;
+			  //noForwards = false;
 			  distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  cout << "Distance travelled is: " << distTravelled << endl;
 			  //swarmie.finger = 0;
