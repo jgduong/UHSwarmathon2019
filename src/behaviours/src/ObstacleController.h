@@ -115,6 +115,39 @@ class ObstacleController {
           }
         
       }
+	if (prevState == PICKUP)
+	{
+		swarmie.pickupSuccess = false;
+     		swarmie.dropoffSuccess = false;
+		
+		if (SonarCenter <= 0.5)
+		{
+			swarmie.left = -50.0;
+			swarmie.right = -50.0;
+		}
+		else if (SonarLeft <= 0.3 && SonarCenter >= 0.5)
+		{
+			swarmie.left = 100.0;
+			swarmie.right = -100.0;
+			
+		}
+		else if (SonarRight <= 0.3 && SonarCenter >= 0.5)
+		{
+			swarmie.left = -100.0;
+			swarmie.right = 100.0;
+		}
+		else {
+			swarmie.left = -50.0;
+			swarmie.right = -50.0;
+			delayCounter++;	  
+			 if (delayCounter >= 4)
+			 {
+				swarmie.obstacleSuccess = true;
+				  delayCounter = 0;
+			 }
+		}
+	}
+	      
 	if (prevState == DROPOFF && !noForwards)
 	{
 		swarmie.pickupSuccess = false;
