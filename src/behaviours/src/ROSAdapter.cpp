@@ -617,13 +617,13 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || logicController->dropoffController.backToSpiral) ))
+	if ((sonarLeftData <= 0.4 || sonarCenterData <= 0.4 || sonarRightData <= 0.4) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || logicController->dropoffController.backToSpiral) ))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.35 || sonarCenterData <= 0.35 || sonarRightData <= 0.35) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
+	if ((sonarLeftData <= 0.3 || sonarCenterData <= 0.3 || sonarRightData <= 0.3) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
