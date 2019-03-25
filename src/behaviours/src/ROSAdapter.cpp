@@ -278,6 +278,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
+	cout << "PREV STATE IS: " << prevState << endl;
 	
 	if (currState == INIT)
   	{	
