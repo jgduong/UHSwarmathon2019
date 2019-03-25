@@ -60,13 +60,13 @@ public:
 	    swarmie.dropoffSuccess = false;
         
             //center on cube
-            if ( minX > -0.02 && detectionTimeout < 200 && !approachCube)
+            if ( minX > -0.02 && detectionTimeout < 100 && !approachCube)
             {
                 //sendDriveCommand(6.0, -5.0);
                 swarmie.left = 6.0;
                 swarmie.right = -5.0;
             }
-            else if ( minX < -0.04 & detectionTimeout < 200 && !approachCube)
+            else if ( minX < -0.04 & detectionTimeout < 100 && !approachCube)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 swarmie.left = -5.0;
