@@ -107,6 +107,13 @@ class LogicController {
 		    }
 		    else if (state == AVOID_OBSTACLE) {
 		      swarmie = obstacleController.DoWork(prev, dropoffController.noForwards);
+			    // VERY EXPERIMENTAL
+		      if (prev == PICKUP && dropoffController.initCalc == true)
+		      {
+			      dropoffController.spiralX = currX;
+			      dropoffController.spiralY = currY;
+			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
+		      }
 		    }
 		    else if (state == PICKUP) {
 		      swarmie = pickupController.DoWork();
