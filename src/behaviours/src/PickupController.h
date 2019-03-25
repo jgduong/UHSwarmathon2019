@@ -39,7 +39,7 @@ public:
 	{
 		tags.push_back(tagsReceived[i]);
 		if (tagsReceived[i].getPositionX() < minX)
-		if ( abs( -0.005 - tagsReceived[i].getPositionX() ) < minX )
+		if ( abs( -0.03 - tagsReceived[i].getPositionX() ) < minX )
 		{
 			minX = tagsReceived[i].getPositionX();
 			indexOfClosestTag = i;
@@ -60,19 +60,19 @@ public:
 	    swarmie.dropoffSuccess = false;
         
             //center on cube
-            if ( minX > 0 && detectionTimeout < 200 && !approachCube)
+            if ( minX > -0.02 && detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(6.0, -5.0);
                 swarmie.left = 6.0;
                 swarmie.right = -5.0;
             }
-            else if ( minX < -0.01 & detectionTimeout < 200 && !approachCube)
+            else if ( minX < -0.04 & detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 swarmie.left = -5.0;
                 swarmie.right = 6.0;
             }
-            else if (minX <= 0 && minX >= -0.01 && !approachCube)
+            else if (minX <= -0.02 && minX >= -0.04 && !approachCube)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
