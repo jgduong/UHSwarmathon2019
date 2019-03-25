@@ -84,7 +84,7 @@ class ObstacleController {
 		      swarmie.left = 100.0;
 		      swarmie.right = -100.0;
 	      }
-	      else {
+	      else if (SonarLeft > 0.25 && SonarRight > 0.25) {
 		swarmie.obstacleSuccess = true;      
 	      }
       }
