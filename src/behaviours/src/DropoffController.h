@@ -282,6 +282,7 @@ class DropoffController {
 		  else if (backToSpiral) {
               		cout << "distanceToSpiral is: " << distToSpiral << endl;
               		cout << "distanceTravelled is: " << distTravelled << endl;
+			  noForwards = true;
               		distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  
 			/*if (abs(currTheta - desiredTheta) > 0.03) {
