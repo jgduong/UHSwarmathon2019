@@ -115,9 +115,13 @@ public:
                 swarmie.left = 0.0;
                 swarmie.right = 0.0;
                 swarmie.finger = 0;
-		if (pickUpDelay >= 20)
+		if (pickUpDelay >= 10)
 		{
 			swarmie.wrist = 0;
+		}
+		if (pickUpDelay >= 20)
+		{
+			//swarmie.wrist = 0;
 			//swarmie.pickupSuccess = true;
 			pickUpDelay = 0;
 			approachCube = false;
@@ -133,9 +137,9 @@ public:
 	if (reverse)
 	{
 		reverseDelay++;
-		swarmie.left = -100.0;
-                swarmie.right = -100.0;
-		if (reverseDelay > 7)
+		swarmie.left = -750.0;
+                swarmie.right = -75.0;
+		if (reverseDelay > 8)
 		{
 			reverseDelay = 0;
 			reverse = false;
