@@ -90,7 +90,7 @@ public:
                 startingY = selfY;
                 approachCube = true;
             }
-            else
+            else if (detectionTimeout >= 100)
             {
                 //timeout
                 //sendDriveCommand(5.0, 5.0);
@@ -98,7 +98,8 @@ public:
                 swarmie.right = 5.0;
                 //aprilTagAcquireSequence = false;
                 //mapTesting = true;
-		    
+		detectionTimeout = 0;
+		    cout << "pickUpController timeout reached" << endl;
             }
         
         if (approachCube) {
@@ -137,6 +138,8 @@ public:
         }
 	if (reverse)
 	{
+		swarmie.wrist = 0;
+		swarmie.finger = 0;
 		reverseDelay++;
 		swarmie.left = -75.0;
                 swarmie.right = -75.0;
