@@ -278,7 +278,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
 	
-	if (!initialized)
+	if (currState == INIT)
   	{	
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 		
@@ -413,6 +413,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				step2Y = currentLocationOdom.y + centerOffsetY;
 				rotate2 = true;
 			}
+			
 			if (rotate2) {
 				float displacement = calcDistance(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, step2X, step2Y);
 				cout << "displacement is: " << displacement << endl;
@@ -432,7 +433,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					
 					swarmie = logicController->turnRight90();
 					if (swarmie.left == 0.0 && swarmie.right == 0.0) {
-						initialized= true;
+						rotate2 = false;
+						//initialized= true;
 						currState = SPIRAL_SEARCH;
 					}
 				}	
@@ -610,20 +612,24 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
 	
-	
-	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == SPIRAL_SEARCH))
+	if ((sonarLeftData <= 1.0 || sonarCenterData <= 1.0 || sonarRightData <= 1.0) && (currState == INIT) && (!rotate2)) {
+		prevState = currState;
+		currState = AVOID_OBSTACLE;
+		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+	}
+	else if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == SPIRAL_SEARCH))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || logicController->dropoffController.backToSpiral) ))
+	else if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || logicController->dropoffController.backToSpiral) ))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.35 || sonarCenterData <= 0.35 || sonarRightData <= 0.35) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
+	else if ((sonarLeftData <= 0.35 || sonarCenterData <= 0.35 || sonarRightData <= 0.35) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
