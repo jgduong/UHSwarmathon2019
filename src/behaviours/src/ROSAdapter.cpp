@@ -281,6 +281,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		currState == prevState;
 		prevState = AVOID_OBSTACLE;
 		swarmie.obstacleSuccess = false;
+		swarmie.left = 30.0;
+		swarmie.right = 30.0;
 	}
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
