@@ -84,6 +84,9 @@ class ObstacleController {
 		      swarmie.left = 100.0;
 		      swarmie.right = -100.0;
 	      }
+	      else {
+		swarmie.obstacleSuccess = true;      
+	      }
       }
       else if (prevState == SPIRAL_SEARCH)
       {
