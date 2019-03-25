@@ -106,8 +106,8 @@ public:
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
             if (distTravelled < (zDistanceToCube)) {
-                swarmie.left = 30.0;
-                swarmie.right = 30.0;
+                swarmie.left = 50.0;
+                swarmie.right = 50.0;
             }
             else {
 		pickUpDelay++;
