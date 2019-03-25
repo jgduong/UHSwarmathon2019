@@ -534,7 +534,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			
 			if (prevState == INIT) {
 				cout << "Obstacle avoided successfully in the INIT stage" << endl;
-				currState == prevState;
+				currState = prevState;
 				prevState = AVOID_OBSTACLE;
 				swarmie.obstacleSuccess = false;
 				swarmie.left = 30.0;
