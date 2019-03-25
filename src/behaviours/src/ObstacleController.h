@@ -20,9 +20,9 @@ class ObstacleController {
 	float distanceToHome = 0.0;
 	float distTravelled = 0.0;
   
-  float SonarLeft = 0.0;
-  float SonarCenter = 0.0;
-  float SonarRight = 0.0;
+	  float SonarLeft = 0.0;
+	  float SonarCenter = 0.0;
+	  float SonarRight = 0.0;
 		
 	
   int prevState;
@@ -39,25 +39,26 @@ class ObstacleController {
   
 	int delayCounter = 0;
 	
-  enum States{
-    INIT = 0,
-    SPIRAL_SEARCH,
-    AVOID_OBSTACLE,
-    PICKUP,
-    DROPOFF,
-    FIND_SPIRAL_EDGE
-  };
+	  enum States{
+	    INIT = 0,
+	    SPIRAL_SEARCH,
+	    AVOID_OBSTACLE,
+	    PICKUP,
+	    DROPOFF,
+	    FIND_SPIRAL_EDGE
+	  };
   
 	  void updateData(float x, float y, float theta) {
 	      currX = x;
 	      currY = y;
 	      currTheta = theta;
 	  }
-    void updateSonar(float left, float center, float right) {
-        SonarLeft = left;
-        SonarCenter = center;
-        SonarRight = right;
-    }
+	
+	    void updateSonar(float left, float center, float right) {
+		SonarLeft = left;
+		SonarCenter = center;
+		SonarRight = right;
+	    }
 
 	  void setCenterOffset(float x, float y) {
 	      centerOffsetX = x;
@@ -70,7 +71,21 @@ class ObstacleController {
       swarmie.obstacleSuccess = false;
       
       prevState = prev;
-      if (prevState == SPIRAL_SEARCH)
+      if (prevState == INIT) {
+	      swarmie.pickupSuccess = false;
+     	      swarmie.dropoffSuccess = false;
+	      if (SonarRight <= 0.25) {
+		      cout << "Obstacle detected on the right in the INIT stage" << endl;
+		      swarmie.left = -100.0;
+		      swarmie.right = 100.0;
+	      }
+	      else if (SonarLeft <= 0.25) {
+		      cout << "Obstacle detected on the left in the init stage" << endl;
+		      swarmie.left = 100.0;
+		      swarmie.right = -100.0;
+	      }
+      }
+      else if (prevState == SPIRAL_SEARCH)
       {
 	  swarmie.pickupSuccess = false;
      	  swarmie.dropoffSuccess = false;
@@ -115,7 +130,7 @@ class ObstacleController {
           }
         
       }
-	if (prevState == PICKUP)
+	else if (prevState == PICKUP)
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
@@ -148,7 +163,7 @@ class ObstacleController {
 		}
 	}
 	      
-	if (prevState == DROPOFF && !noForwards)
+	else if (prevState == DROPOFF && !noForwards)
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
