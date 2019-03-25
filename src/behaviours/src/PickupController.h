@@ -133,8 +133,8 @@ public:
 	if (reverse)
 	{
 		reverseDelay++;
-		swarmie.left = -40.0;
-                swarmie.right = -40.0;
+		swarmie.left = -100.0;
+                swarmie.right = -100.0;
 		if (reverseDelay > 7)
 		{
 			reverseDelay = 0;
