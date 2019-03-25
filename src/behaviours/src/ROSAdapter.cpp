@@ -1,6 +1,5 @@
 #include <ros/ros.h>
 #include <math.h>
-
 //#include <unordered_map>
 //#include <set>
 
@@ -29,10 +28,9 @@
 #include <std_msgs/Float32MultiArray.h>
 #include <std_msgs/MultiArrayDimension.h>
 #include "swarmie_msgs/Waypoint.h"
-#include <visualization_msgs/Marker.h>
 
 // Include Controllers
-//#include "LogicController.h"
+#include "LogicController.h"
 #include <vector>
 
 #include "Swarmie.h"
@@ -78,16 +76,15 @@ geometry_msgs::Pose2D centerLocationMap;	//A GPS point of the center location, u
 geometry_msgs::Pose2D centerLocationOdom;	//The centers location based on ODOM
 geometry_msgs::Pose2D centerLocationMapRef;	//Variable used in TransformMapCenterToOdom, can be moved to make it local instead of global
 
+
 float sonarLeftData = 0.0;
 float sonarCenterData = 0.0;
 float sonarRightData = 0.0;
-
 
 bool initialized = false;
 
 vector<Tag> tags;
 
-vector <string> names;
 geometry_msgs::Twist velocity;
 
 float linearVelocity = 0;	//forward speed, POSITIVE = forward, NEGATIVE = backward
@@ -104,7 +101,6 @@ ros::Publisher heartbeatPublisher;		//publishes ROSAdapters status via its "hear
 // Publishes swarmie_msgs::Waypoint messages on "/<robot>/waypooints"
 // to indicate when waypoints have been reached.
 ros::Publisher waypointFeedbackPublisher;	//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
-
 ros::Publisher robotLocationGPS;			//publishes name of robot to /swarmies
 ros::Publisher robotnamePublisher;			//publishes name of robot to /swarmies
 ros::Publisher visitedLocationsPublisher;
@@ -130,7 +126,6 @@ ros::Timer publish_heartbeat_timer;
 void sendDriveCommand(double left, double right);
 void humanTime();
 void transformMapCentertoOdom();
-
 // records time for delays in sequenced actions, 1 second resolution.
 time_t timerStartTime;
 
@@ -280,7 +275,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
-  
+	
 	cout << "CURRENT STATE IS : " << currState << endl;
 	
 	if (!initialized)
@@ -292,7 +287,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 
 		      cout << "initialization has run..." << endl;
-      //initialized = true;
+		      //initialized = true;
 			
 			if (initialMapPopulate) {
 				logicController->populateMap();
@@ -330,7 +325,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerOffsetY = 0.0;
 				cout << "current location is: " << currentLocationOdom.x + 1.45 << ", " << currentLocationOdom.y << endl;
 			}
-
 			else if(centerInit && (currentLocationOdom.theta >= 0.6 && currentLocationOdom.theta<= 0.9))
 			{
 				centerInit = false;
@@ -385,7 +379,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			else if(centerInit && (currentLocationOdom.theta >= -1.65 && currentLocationOdom.theta <= -1.35))
 			{
 				centerInit = false;
-
 				centerLocationOdom.x = currentLocationOdom.x;
 				centerLocationOdom.y = currentLocationOdom.y + 1.0 + 0.45;
 				centerOffsetX = 0.0;
@@ -617,25 +610,25 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
 	
+	
 	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == SPIRAL_SEARCH))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || logicController->dropoffController.backToSpiral) ))
+	if ((sonarLeftData <= 0.4 || sonarCenterData <= 0.4 || sonarRightData <= 0.4) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || logicController->dropoffController.backToSpiral) ))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.35 || sonarCenterData <= 0.35 || sonarRightData <= 0.35) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
+	if ((sonarLeftData <= 0.3 || sonarCenterData <= 0.3 || sonarRightData <= 0.3) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-
 }
 
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
@@ -885,3 +878,6 @@ void humanTime()
   
   //cout << "System has been Running for :: " << hoursTime << " : hours " << minutesTime << " : minutes " << timeDiff << "." << frac << " : seconds" << endl; //you can remove or comment this out it just gives indication something is happening to the log file
 }
+
+
+
