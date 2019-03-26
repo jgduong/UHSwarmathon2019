@@ -134,12 +134,14 @@ public:
 			//sendDriveCommand(6.0, -5.0);
 			swarmie.left = 5.0;
 			swarmie.right = -6.0;
+			 cout << "calibrating by rotating right... " << endl;
 		    }
 		    else if ( minX < -0.035 )
 		    {
 			//sendDriveCommand(-5.0, 7.0);
 			swarmie.left = -6.0;
 			swarmie.right = 5.0;
+			    cout << "calibrating by rotating left... " << endl;
 		    }   
 		    else if (minX <= -0.025 && minX >= -0.035)
 		    {
@@ -151,6 +153,7 @@ public:
 			    distTravelled = 0.0;
 			    
 			    zDistanceToCube = minZ;
+			    cout << "centered a second time, new zDistanceToCube is: " << zDistanceToCube << endl;
 		    }
             }
 		
