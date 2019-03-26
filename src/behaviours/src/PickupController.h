@@ -67,13 +67,13 @@ public:
                 swarmie.left = 6.0;
                 swarmie.right = -6.0;
             }
-            else if ( minX < -0.01 & detectionTimeout < 200 && !approachCube)
+            else if ( minX < -0.03 & detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 swarmie.left = -6.0;
                 swarmie.right = 6.0;
             }
-            else if (minX <= 0 && minX >= -0.01 && !approachCube)
+            else if (minX <= 0 && minX >= -0.03 && !approachCube)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
@@ -116,8 +116,10 @@ public:
             if ((distTravelled < zDistanceToCube || distTravelled < (zDistanceToCube / 2)) && !recenter) {
                 swarmie.left = 30.0;
                 swarmie.right = 30.0;
-		    if ((zDistanceToCube/3) - distTravelled <= 0.02) {
+		    if (abs((zDistanceToCube/3) - distTravelled) <= 0.02) {
 			    cout << "Halfway to cube, recentering" << endl;
+			    swarmie.left = 0.0;
+			    swarmie.right = 0.0;
 			    approachCube = false;
 			    recenter = true;
 		    }
