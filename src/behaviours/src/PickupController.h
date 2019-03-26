@@ -144,6 +144,9 @@ public:
 			    approachCube = false;
 			    approachCube2 = true;
 			    detectionTimeout = 0;
+			    startingX = selfX;
+			    startingY = selfY;
+			    distTravelled = 0.0;
 		    }
             }
 		
