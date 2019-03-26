@@ -106,7 +106,7 @@ public:
             }
         
         if (approachCube) {
-	    detectionTimeout++'
+	    detectionTimeout++;
             cout << "Approaching cube..." << endl;
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
@@ -146,6 +146,7 @@ public:
         }
 	if (approachCube2)
 	{
+		detectionTimeout++;
 		cout << "second step of approaching cube... " << endl;
 		cout << "Z distance to cube is: " << zDistanceToCube << endl;
 		distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
@@ -172,7 +173,7 @@ public:
 				detectionTimeout = 0.0;
 				reverse = true;
 				reverseDelay = 0;
-				distanceTravelled = 0.0;
+				distTravelled = 0.0;
 			}
 		}
 		if (detectionTimeout >= 100)
