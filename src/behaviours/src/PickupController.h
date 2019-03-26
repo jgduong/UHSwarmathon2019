@@ -106,6 +106,7 @@ public:
             }
         
         if (approachCube) {
+	    detectionTimeout++'
             cout << "Approaching cube..." << endl;
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
@@ -121,20 +122,26 @@ public:
 		    {
 			//sendDriveCommand(6.0, -5.0);
 			swarmie.left = 5.0;
-			swarmie.right = -5.0;
+			swarmie.right = -6.0;
 		    }
 		    else if ( minX < -0.035 )
 		    {
 			//sendDriveCommand(-5.0, 7.0);
-			swarmie.left = -5.0;
+			swarmie.left = -6.0;
 			swarmie.right = 5.0;
 		    }   
 		    else if (minX <= -0.025 && minX >= -0.035)
 		    {
 			    approachCube2 = true;
+			    detectionTimeout = 0;
 		    }
             }
 		
+	    if (detectionTimeout >= 100)
+	    {
+		    detectionTimeout = 0;
+		    cout << "pickUpController timeout reached" << endl;
+	    }
             
         }
 	if (approachCube2)
@@ -165,8 +172,14 @@ public:
 				detectionTimeout = 0.0;
 				reverse = true;
 				reverseDelay = 0;
+				distanceTravelled = 0.0;
 			}
 		}
+		if (detectionTimeout >= 100)
+		    {
+			    detectionTimeout = 0;
+			    cout << "pickUpController timeout reached" << endl;
+		    }
 	}
 	if (reverse)
 	{
