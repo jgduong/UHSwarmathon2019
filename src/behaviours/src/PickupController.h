@@ -29,6 +29,7 @@ public:
 	bool halfStep = false;
     Swarmie swarmie;
     float minX;
+	float minZ;
     float indexOfClosestTag;
     int pickUpDelay = 0;
 	int reverseDelay = 0;
@@ -44,6 +45,7 @@ public:
 		if ( abs( -0.03 - tagsReceived[i].getPositionX() ) < minX )
 		{
 			minX = tagsReceived[i].getPositionX();
+			minZ = tagsReceived[i].getPositionZ();
 			indexOfClosestTag = i;
 		}
 	}
@@ -148,7 +150,7 @@ public:
 			    startingY = selfY;
 			    distTravelled = 0.0;
 			    
-			    zDistanceToCube = tags[indexOfClosestTag].getPositionZ();
+			    zDistanceToCube = minZ;
 		    }
             }
 		
@@ -164,9 +166,10 @@ public:
 	if (approachCube2)
 	{
 		detectionTimeout++;
-		cout << "second step of approaching cube... " << endl;
+		cout << "SECOND step of approaching cube... " << endl;
 		cout << "Z distance to cube is: " << zDistanceToCube << endl;
 		distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
+		cout << "distance travelled is: " << distTravelled << endl;
 		if (distTravelled < (zDistanceToCube)) {
                 	swarmie.left = 50.0;
                 	swarmie.right = 50.0;
