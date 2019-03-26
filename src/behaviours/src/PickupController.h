@@ -147,6 +147,8 @@ public:
 			    startingX = selfX;
 			    startingY = selfY;
 			    distTravelled = 0.0;
+			    
+			    zDistanceToCube = tags[indexOfClosestTag].getPositionZ();
 		    }
             }
 		
