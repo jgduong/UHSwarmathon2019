@@ -224,6 +224,7 @@ public:
 			reverse = false;
 			swarmie.pickupSuccess = true;
 			firstStep = true;
+			halfStep = false;
 		}
 	}
 
