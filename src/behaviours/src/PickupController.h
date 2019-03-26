@@ -65,12 +65,12 @@ public:
             {
                 //sendDriveCommand(6.0, -5.0);
                 swarmie.left = 6.0;
-                swarmie.right = -5.0;
+                swarmie.right = -6.0;
             }
             else if ( minX < -0.01 & detectionTimeout < 200 && !approachCube)
             {
                 //sendDriveCommand(-5.0, 7.0);
-                swarmie.left = -5.0;
+                swarmie.left = -6.0;
                 swarmie.right = 6.0;
             }
             else if (minX <= 0 && minX >= -0.01 && !approachCube)
@@ -87,8 +87,14 @@ public:
                 //aprilTagDetected = false;
                 //tagPickupTimer = 0.0;
                 //middleStep = false;
-                startingX = selfX;
-                startingY = selfY;
+		if (!recenter) {
+		    //reset startingX and startingY only if recenter is done
+			startingX = selfX;
+			startingY = selfY;
+		}
+		else {
+		    recenter = false;
+		}
                 approachCube = true;
             }
             else
@@ -106,10 +112,11 @@ public:
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
-            if ((distTravelled < zDistanceToCube) && (distTravelled < (zDistanceToCube / 2)) && !recenter) {
+            if ((distTravelled < zDistanceToCube || distTravelled < (zDistanceToCube / 2)) && !recenter) {
                 swarmie.left = 30.0;
                 swarmie.right = 30.0;
 		    if (zDistanceToCube - distTravelled <= 0.02) {
+			    approachCube = false;
 			    recenter = true;
 		    }
             }
