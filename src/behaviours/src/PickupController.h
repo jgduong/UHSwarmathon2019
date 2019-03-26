@@ -93,6 +93,9 @@ public:
                 startingY = selfY;
                 approachCube = true;
 		detectionTimeout = 0;
+		    
+		    swarmie.wrist = 1.25;
+		 swarmie.finger = M_PI_2 + 0.2;
             }
             else if (detectionTimeout >= 100)
             {
@@ -136,6 +139,7 @@ public:
 		    }   
 		    else if (minX <= -0.025 && minX >= -0.035)
 		    {
+			    approachCube = false;
 			    approachCube2 = true;
 			    detectionTimeout = 0;
 		    }
