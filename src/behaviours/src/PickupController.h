@@ -26,6 +26,7 @@ public:
     bool approachCube = false;
 	bool approachCube2 = false;
 	bool reverse = false;
+	bool halfStep = false;
     Swarmie swarmie;
     float minX;
     float indexOfClosestTag;
@@ -103,6 +104,8 @@ public:
                 //mapTesting = true;
 		detectionTimeout = 0;
 		    cout << "pickUpController timeout reached" << endl;
+		    swarmie.finger = 0;
+		swarmie.wrist = 0;
             }
         
         if (approachCube) {
@@ -111,11 +114,12 @@ public:
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
-            if (distTravelled < (zDistanceToCube / 2.0)) {
+            if (distTravelled < (zDistanceToCube / 2.0 && !halfStep)) {
                 swarmie.left = 50.0;
                 swarmie.right = 50.0;
             }
             else {
+		    halfStep = true;
 		 swarmie.wrist = 1.25;
 		 swarmie.finger = M_PI_2 + 0.2;
 		 if ( minX > -0.025 )
@@ -141,6 +145,8 @@ public:
 	    {
 		    detectionTimeout = 0;
 		    cout << "pickUpController timeout reached" << endl;
+		    swarmie.finger = 0;
+		   swarmie.wrist = 0;
 	    }
             
         }
@@ -180,6 +186,8 @@ public:
 		    {
 			    detectionTimeout = 0;
 			    cout << "pickUpController timeout reached" << endl;
+				swarmie.finger = 0;
+				swarmie.wrist = 0;
 		    }
 	}
 	if (reverse)
