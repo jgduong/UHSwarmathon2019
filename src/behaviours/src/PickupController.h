@@ -117,13 +117,13 @@ public:
             else {
 		 swarmie.wrist = 1.25;
 		 swarmie.finger = M_PI_2 + 0.2;
-		 if ( minX > -0.025 && detectionTimeout < 100 && !approachCube)
+		 if ( minX > -0.025 )
 		    {
 			//sendDriveCommand(6.0, -5.0);
 			swarmie.left = 5.0;
 			swarmie.right = -5.0;
 		    }
-		    else if ( minX < -0.035 & detectionTimeout < 100 && !approachCube)
+		    else if ( minX < -0.035 )
 		    {
 			//sendDriveCommand(-5.0, 7.0);
 			swarmie.left = -5.0;
