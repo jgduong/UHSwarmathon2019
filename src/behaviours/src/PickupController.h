@@ -27,6 +27,7 @@ public:
 	bool approachCube2 = false;
 	bool reverse = false;
 	bool halfStep = false;
+	bool firstStep = true;
     Swarmie swarmie;
     float minX;
 	float minZ;
@@ -66,19 +67,19 @@ public:
 	    swarmie.dropoffSuccess = false;
         
             //center on cube
-            if ( minX > -0.02 && detectionTimeout < 100 && !approachCube)
+            if ( minX > -0.02 && detectionTimeout < 100 && !approachCube && firstStep)
             {
                 //sendDriveCommand(6.0, -5.0);
                 swarmie.left = 6.0;
                 swarmie.right = -5.0;
             }
-            else if ( minX < -0.04 & detectionTimeout < 100 && !approachCube)
+            else if ( minX < -0.04 & detectionTimeout < 100 && !approachCube && firstStep)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 swarmie.left = -5.0;
                 swarmie.right = 6.0;
             }
-            else if (minX <= -0.02 && minX >= -0.04 && !approachCube)
+            else if (minX <= -0.02 && minX >= -0.04 && !approachCube && firstStep)
             {
                 cout << "centered on cube" << endl;
                 //sendDriveCommand(0.0, 0.0);
@@ -95,6 +96,7 @@ public:
                 startingX = selfX;
                 startingY = selfY;
                 approachCube = true;
+		    firstStep = false;
 		detectionTimeout = 0;
 		    
 		    swarmie.wrist = 1.25;
@@ -221,6 +223,7 @@ public:
 			reverseDelay = 0;
 			reverse = false;
 			swarmie.pickupSuccess = true;
+			firstStep = true;
 		}
 	}
 
