@@ -437,7 +437,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					swarmie = logicController->turnRight90();
 					if (swarmie.left == 0.0 && swarmie.right == 0.0) {
 						rotate2 = false;
-						//initialized= true;
+						initialized= true;
 						currState = SPIRAL_SEARCH;
 					}
 				}	
