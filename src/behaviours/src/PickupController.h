@@ -38,6 +38,7 @@ public:
     //void updateTags(float x, float y, float z) {
     void updateTags(vector<Tag> tagsReceived) {
 	minX = tagsReceived[0].getPositionX();
+	minZ = tagsReceived[0].getPositionZ();
 	for (int i = 0; i < tagsReceived.size(); i++)
 	{
 		tags.push_back(tagsReceived[i]);
@@ -125,6 +126,7 @@ public:
             }
             else {
 		    halfStep = true;
+		    cout << "SECOND STEP of recalibration on cube... " << endl;
 		    swarmie.left = 0.0;
 		    swarmie.right = 0.0;
 		 swarmie.wrist = 1.25;
@@ -153,7 +155,7 @@ public:
 			    distTravelled = 0.0;
 			    
 			    zDistanceToCube = minZ;
-			    cout << "centered a second time, new zDistanceToCube is: " << zDistanceToCube << endl;
+			    cout << "centered/calibrated a second time, new zDistanceToCube is: " << zDistanceToCube << endl;
 		    }
             }
 		
