@@ -93,6 +93,7 @@ public:
 			startingY = selfY;
 		}
 		else {
+		    cout << "recenter complete" << endl;
 		    recenter = false;
 		}
                 approachCube = true;
@@ -115,7 +116,7 @@ public:
             if ((distTravelled < zDistanceToCube || distTravelled < (zDistanceToCube / 2)) && !recenter) {
                 swarmie.left = 30.0;
                 swarmie.right = 30.0;
-		    if ((zDistanceToCube/2) - distTravelled <= 0.02) {
+		    if ((zDistanceToCube/3) - distTravelled <= 0.02) {
 			    cout << "Halfway to cube, recentering" << endl;
 			    approachCube = false;
 			    recenter = true;
