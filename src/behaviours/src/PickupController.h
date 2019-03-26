@@ -30,6 +30,7 @@ public:
     float indexOfClosestTag;
     int pickUpDelay = 0;
 	int reverseDelay = 0;
+	bool recenter = false;
     
     
     //void updateTags(float x, float y, float z) {
@@ -105,9 +106,12 @@ public:
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
-            if (distTravelled < (zDistanceToCube)) {
+            if ((distTravelled < zDistanceToCube) && (distTravelled < (zDistanceToCube / 2)) && !recenter) {
                 swarmie.left = 30.0;
                 swarmie.right = 30.0;
+		    if (zDistanceToCube - distTravelled <= 0.02) {
+			    recenter = true;
+		    }
             }
             else {
 		pickUpDelay++;
