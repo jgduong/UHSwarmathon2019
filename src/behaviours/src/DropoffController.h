@@ -66,6 +66,9 @@ class DropoffController {
 		cout << "Currently in the DROPOFF state" << endl;
 		  swarmie.pickupSuccess = false;
 		  swarmie.dropoffSuccess = false;
+		  
+		  swarmie.centerX = centerOffsetX;
+		  swarmie.centerY = centerOffsetY;
 		if (initCalc) {
 			noForwards = false;
 			homeTheta = atan2((0 - currY),(0 - currX));
