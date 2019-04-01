@@ -68,6 +68,7 @@ public:
 	    swarmie.dropoffSuccess = false;
 	    
 	    if (checkInitialDist ) {
+		    cout << "minZ = " << minZ << endl;
 		    if (minZ <= 0.3) {
 			    cout << "target is too close for pickup, backing up" << endl;
 			    swarmie.left = -30.0;
