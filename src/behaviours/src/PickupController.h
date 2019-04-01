@@ -59,6 +59,9 @@ public:
 	  }
     
     Swarmie DoWork() {
+	    swarmie.centerX = centerOffsetX;
+		swarmie.centerY = centerOffsetY;
+	    
           detectionTimeout++;
 	    cout << "detectionTimeout = " << detectionTimeout << endl;
           cout << "Target detected : in PICKUP state, minX is: " << minX << endl;
