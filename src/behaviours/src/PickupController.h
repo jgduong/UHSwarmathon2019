@@ -163,10 +163,12 @@ public:
 		
 	    if (detectionTimeout >= 100)
 	    {
+		    swarmie.left = 5.0;
+                    swarmie.right = 5.0;
 		    detectionTimeout = 0;
 		    cout << "pickUpController timeout reached" << endl;
 		    swarmie.finger = 0;
-		   swarmie.wrist = 0;
+		    swarmie.wrist = 0;
 	    }
             
         }
