@@ -169,8 +169,9 @@ class DropoffController {
 				  float tempCenterX = 0.38 * cos(tempTheta);
 				  float tempCenterY = 0.38 * sin(tempTheta);
 				  cout << endl << endl << "calculated NEW centeroffset x, y: " << tempCenterX << ", " << tempCenterY << endl;
-				  cout << "previous centerOffset x, y: " << centerOffsetX << ", " << centerOffsetY << endl << endl;
-	       		  }
+				  //cout << "previous centerOffset x, y: " << centerOffsetX << ", " << centerOffsetY << endl << endl;
+				  cout << "measured odom location x, y: " << currX, << ", " << currY << endl << endl;
+			  }
 			  else {
 				  cout << "desired distance is: " << distanceToHome << endl;
 				  //distTravelled = calcDistance(currX, currY, initialX, initialY);
