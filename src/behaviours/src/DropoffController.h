@@ -176,6 +176,9 @@ class DropoffController {
 				  cout << endl << endl << "calculated NEW centeroffset x, y: " << tempCenterX << ", " << tempCenterY << endl;
 				  //cout << "previous centerOffset x, y: " << centerOffsetX << ", " << centerOffsetY << endl << endl;
 				  cout << "measured odom location x, y: " << currX << ", " << currY << endl << endl;
+				  
+				  swarmie.centerX += ((currX) - (tempCenterX));
+				  swarmie.centerY += ((currY) - (tempCenterY));
 			  }
 			  else {
 				  cout << "desired distance is: " << distanceToHome << endl;
