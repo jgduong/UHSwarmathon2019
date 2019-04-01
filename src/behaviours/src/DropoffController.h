@@ -306,7 +306,7 @@ class DropoffController {
 				distTravelled = 0.0;
 				distToSpiral = 0.0;
 				
-				desiredTheta = currTheta + M_PI/2;
+				desiredTheta = currTheta - M_PI/2;
 				if (desiredTheta > M_PI) {
 					desiredTheta = desiredTheta - 2*M_PI;	
 				}
@@ -319,6 +319,8 @@ class DropoffController {
          	 }
 		  else if (rotate90) {
 			  cout << "Rotating right to resume spiral searching" << endl;
+			  cout << "desiredTheta is: " << desiredTheta << endl;
+			  cout << "currTheta is: " << currTheta << endl;
 			  if (abs(currTheta - desiredTheta) <= 0.03) {
 				cout << "done rotating back to spiral" << endl;
 				  swarmie.left = 0.0;
