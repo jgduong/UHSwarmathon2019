@@ -243,7 +243,8 @@ public:
 			reverseDelay = 0;
 			reverse = false;
 			swarmie.pickupSuccess = true;
-			firstStep = true;
+			checkInitialDist = true;
+			firstStep = false;
 			halfStep = false;
 		}
 	}
