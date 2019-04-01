@@ -252,6 +252,24 @@ class ObstacleController {
 			  }
 		}
 	}
+	else if (prevState == INIT)
+	{
+		swarmie.pickupSuccess = false;
+               swarmie.dropoffSuccess = false;
+		  if (SonarRight <= 0.25) {
+		      cout << "Obstacle detected on the right in the INIT stage" << endl;
+		      swarmie.left = -100.0;
+		      swarmie.right = 100.0;
+		  }
+		  else if (SonarLeft <= 0.25) {
+		      cout << "Obstacle detected on the left in the init stage" << endl;
+		      swarmie.left = 100.0;
+		      swarmie.right = -100.0;
+		  }
+		  else if (SonarLeft > 0.25 && SonarRight > 0.25) {
+		swarmie.obstacleSuccess = true;      
+		  }
+	}
 
 
       return swarmie;
