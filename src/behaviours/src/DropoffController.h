@@ -174,8 +174,9 @@ class DropoffController {
 				  driveToHome = false;
 				  
 				  tempTheta = currTheta - M_PI;
-				  tempCenterX = 0.4 * cos(tempTheta);
-				  tempCenterY = 0.4 * sin(tempTheta);
+				  float magnitude = (distanceToHome + 0.4) - distTravelled;
+				  tempCenterX = magnitude * cos(tempTheta);
+				  tempCenterY = magnitude * sin(tempTheta);
 				  cout << endl << endl << "calculated NEW centeroffset x, y: " << tempCenterX << ", " << tempCenterY << endl;
 				  //cout << "previous centerOffset x, y: " << centerOffsetX << ", " << centerOffsetY << endl << endl;
 				  cout << "measured odom location x, y: " << currX << ", " << currY << endl << endl;
