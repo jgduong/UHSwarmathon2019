@@ -165,11 +165,11 @@ class DropoffController {
 				  backOff = true;
 				  driveToHome = false;
 				  
-				  tempTheta = currTheta - M_PI;
-				  tempCenterX = 0.38 * cos(tempTheta);
-				  tempCenterY = 0.38 * sin(tempTheta);
+				  float tempTheta = currTheta - M_PI;
+				  float tempCenterX = 0.38 * cos(tempTheta);
+				  float tempCenterY = 0.38 * sin(tempTheta);
 				  cout << endl << endl << "calculated NEW centeroffset x, y: " << tempCenterX << ", " << tempCenterY << endl;
-				  cout << "previous centerOffset x, y: " << centerOffsetX << ", " centerOffsetY << endl << endl;
+				  cout << "previous centerOffset x, y: " << centerOffsetX << ", " << centerOffsetY << endl << endl;
 	       		  }
 			  else {
 				  cout << "desired distance is: " << distanceToHome << endl;
