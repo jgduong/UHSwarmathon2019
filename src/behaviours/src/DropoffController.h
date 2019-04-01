@@ -239,7 +239,7 @@ class DropoffController {
 			{
 				if (abs(currTheta - desiredTheta) <= 0.03)
 				{
-					//done rotating to home
+					//done rotating to spiral
 					//sendDriveCommand(0.0, 0.0);
 					swarmie.left = 0.0;
 					  swarmie.right = 0.0;
@@ -248,6 +248,11 @@ class DropoffController {
 					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
 					initialX = currX;
 					initialY = currY;
+					
+					desiredTheta = currTheta - M_PI/2;
+					if (desiredTheta > M_PI) {
+						desiredTheta = desiredTheta - 2*M_PI;	
+					}
 				}
 				else {
 					cout << "spinning towards SPIRAL at: " << spiralX << ", " << spiralY << endl;
@@ -269,6 +274,11 @@ class DropoffController {
 					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
 					initialX = currX;
 					initialY = currY;
+					
+					desiredTheta = currTheta - M_PI/2;
+					if (desiredTheta > M_PI) {
+						desiredTheta = desiredTheta - 2*M_PI;	
+					}
 				}
 				else {
 					cout << "spinning towards SPIRAL at: " << spiralX << ", " << spiralY << endl;
@@ -306,10 +316,6 @@ class DropoffController {
 				distTravelled = 0.0;
 				distToSpiral = 0.0;
 				
-				desiredTheta = currTheta - M_PI/2;
-				if (desiredTheta > M_PI) {
-					desiredTheta = desiredTheta - 2*M_PI;	
-				}
              		 }
              		 else {
                		   	cout << "Driving back to spiral" << endl;
