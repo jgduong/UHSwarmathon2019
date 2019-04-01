@@ -38,6 +38,7 @@ class DropoffController {
 	bool backOff = false;
 	bool rotate180 = false;
 	bool backToSpiral = false;
+	bool rotate90 = false;
 	float homeTheta = 0.0;
 	
 	float spiralX = 0.0;
@@ -293,23 +294,45 @@ class DropoffController {
 			  
 			 
               		if (distToSpiral - distTravelled <= 0.01) {
-              		    cout << "Successfully drove back to spiral edge" << endl;
-              		    swarmie.left = 0.0;
-              		    swarmie.right = 0.0;
-               		   backToSpiral = false;
-				swarmie.dropoffSuccess = true;
-				initCalc = true;
+              		    	cout << "Successfully drove back to spiral edge" << endl;
+              		    	swarmie.left = 0.0;
+              		    	swarmie.right = 0.0;
+               		   	backToSpiral = false;
+				rotate90 = true;
+				//swarmie.dropoffSuccess = true;
+				//initCalc = true;
 			
 				distanceToHome = 0.0;
 				distTravelled = 0.0;
 				distToSpiral = 0.0;
+				
+				desiredTheta = currTheta + M_PI/2;
+				if (desiredTheta > M_PI) {
+					desiredTheta = desiredTheta - 2*M_PI;	
+				}
              		 }
              		 else {
-               		   cout << "Driving back to spiral" << endl;
-                	 swarmie.left = 100.0;
-                	  swarmie.right = 100.0;
+               		   	cout << "Driving back to spiral" << endl;
+                	 	swarmie.left = 100.0;
+                	  	swarmie.right = 100.0;
               		}
          	 }
+		  else if (rotate90) {
+			  cout << "Rotating right to resume spiral searching" << endl;
+			  if (abs(currTheta - desiredTheta) <= 0.03) {
+				cout << "done rotating back to spiral" << endl;
+				  swarmie.left = 0.0;
+				  swarmie.right = 0.0;
+				  swarmie.dropoffSuccess = true;
+				  initCalc = true;
+				  rotate90 = false;
+			  }
+			  else {
+				  swarmie.left = 30.0;
+				  swarmie.right = -30.0;
+			  }
+			  
+		  }
 		return swarmie;
 	  }
 
