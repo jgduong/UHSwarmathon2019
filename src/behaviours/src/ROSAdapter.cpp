@@ -464,6 +464,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		logicController->addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
 		
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		
+		logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 		//temporarily setting the state to spiral search
 		
 		//currState = SPIRAL_SEARCH;
