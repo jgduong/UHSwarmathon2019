@@ -162,6 +162,8 @@ class LogicController {
 	    	centerOffsetY = y;
 		spiralSearchController.setCenterOffset(x, y);
 		dropoffController.setCenterOffset(x, y);
+		  pickupController.setCenterOffset(x, y);
+		  obstacleController.setCenterOffset(x, y);
 	  }
 	
 	    void populateMap() {
