@@ -15,6 +15,9 @@ private:
     
     float selfX;
     float selfY;
+	
+	float centerOffsetX;
+	float centerOffsetY;
     
     float startingX;
     float startingY;
@@ -57,6 +60,11 @@ public:
 	    	selfX = x;
 	    	selfY = y;
 	  }
+	void setCenterOffset(float x, float y)
+	{
+		centerOffsetX = x;
+		centerOffsetY = y;
+	}
     
     Swarmie DoWork() {
 	    swarmie.centerX = centerOffsetX;
