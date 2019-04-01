@@ -558,10 +558,13 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(swarmie.left, swarmie.right);
 		
-		cout << endl << endl << "old centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl;
-		centerOffsetX = swarmie.centerX;
-		centerOffsetY = swarmie.centerY;
-		cout << "new centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl << endl;
+		if (centerOffsetX != swarmie.centerX || centerOffsetY != swarmie.centerY)
+		{
+			cout << endl << endl << "old centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl;
+			centerOffsetX = swarmie.centerX;
+			centerOffsetY = swarmie.centerY;
+			cout << "new centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl << endl;
+		}
 	}
 	  
 	humanTime();
