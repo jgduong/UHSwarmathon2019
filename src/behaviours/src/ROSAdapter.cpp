@@ -508,6 +508,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		    currState = SPIRAL_SEARCH;
 			prevState = DROPOFF;
 		    swarmie.dropoffSuccess = false;
+			cout << endl << endl << "old centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl;
+			centerOffsetX += ((currentLocationOdom.x + centerOffsetX) - (logicController->dropoffController.tempCenterX));
+			centerOffsetY += ((currentLocationOdom.y + centerOffsetY) - (logicController->dropoffController.tempCenterY));
+			cout << "new centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl; << endl;
 		}
 		else if (currState == AVOID_OBSTACLE && swarmie.obstacleSuccess) {
 			
