@@ -278,7 +278,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
 	
-	if (!initialized)
+	if (currState == INIT)
   	{	
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 		
@@ -537,6 +537,11 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				logicController->pickupController.approachCube = false;
 				logicController->pickupController.reverse = false;
 			}
+			if (prevState == INIT)
+			{
+				swarmie.left = 30.0;
+				swarmie.right = 30.0;
+			}
 			
 			currState = prevState;
 			prevState = AVOID_OBSTACLE;
@@ -634,6 +639,12 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
 	if ((sonarLeftData <= 0.3 || sonarCenterData <= 0.3 || sonarRightData <= 0.3) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
+	{
+		prevState = currState;
+		currState = AVOID_OBSTACLE;
+		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+	}
+	if ( (sonarLeftData <= 0.25 || sonarCenterData <= 0.25 || sonarRightData <= 0.25) && currState == INIT && rotate2 )
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
