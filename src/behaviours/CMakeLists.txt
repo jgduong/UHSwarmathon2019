@@ -25,12 +25,7 @@ include_directories(
 add_executable(
   behaviours
   src/Tag.cpp
-  src/SearchController.cpp
   src/ROSAdapter.cpp
-  src/PID.cpp
-  src/DriveController.cpp
-  src/RangeController.cpp
-  src/ManualWaypointController.cpp
 )
 
 add_dependencies(behaviours ${catkin_EXPORTED_TARGETS})
