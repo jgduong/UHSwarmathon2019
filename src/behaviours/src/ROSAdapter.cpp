@@ -621,11 +621,14 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 		}
 		if (currState == DROPOFF)
 		{
-			logicController->updateTags( tags );
+			logicController->tagsExist = true;
 		}
 		tags.clear();
 	}
-	
+	else if (currState == DROPOFF)
+	{
+		logicController->tagsExist = false;
+	}
 	
 }
 
