@@ -69,7 +69,7 @@ public:
 	    
 	    if (checkInitialDist ) {
 		    cout << "minZ = " << minZ << endl;
-		    if (minZ <= 0.3) {
+		    if (minZ < 0.5) {
 			    cout << "target is too close for pickup, backing up" << endl;
 			    swarmie.left = -30.0;
 			    swarmie.right = -30.0;
