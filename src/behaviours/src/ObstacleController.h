@@ -213,7 +213,7 @@ class ObstacleController {
 		cout << "noForward motions is TRUE" << endl;
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
-		if (SonarCenter <= 1.5 && SonarLeft >= 2.9 && SonarRight >= 2.9)
+		/*if (SonarCenter <= 1.5 && SonarLeft >= 2.9 && SonarRight >= 2.9)
 		{
 			if (SonarRight > SonarLeft)
 			{
@@ -229,8 +229,8 @@ class ObstacleController {
 				swarmie.left = -100.0;
 				swarmie.right = 80.0;
 			}
-		}
-		else if (SonarLeft <= 0.35)
+		}*/
+		if (SonarLeft <= 0.35)
 		{
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
 		      swarmie.left = 80.0;
