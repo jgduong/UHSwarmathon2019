@@ -160,7 +160,7 @@ class DropoffController {
 			  //sendDriveCommand(100.0, 100.0);
 			  //swarmie.left = 100.0;
 			  //swarmie.right = 100.0;
-			 distTravelled = calcDistance(currX, currY, initialX, initialY) - 0.1;
+			 distTravelled = calcDistance(currX, currY, initialX, initialY);
 			  if (distanceToHome - distTravelled <= 1)
 			  {
 				  noForwards = true;
@@ -259,7 +259,7 @@ class DropoffController {
 					  swarmie.right = 0.0;
 				  	rotate180 = false;
 				  	backToSpiral = true;
-					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
+					distToSpiral = calcDistance(currX, currY, spiralX, spiralY) - 0.1;
 					initialX = currX;
 					initialY = currY;
 
@@ -281,7 +281,7 @@ class DropoffController {
 				 	 swarmie.right = 0.0;
 				  	rotate180 = false;
 					  backToSpiral = true;
-					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
+					distToSpiral = calcDistance(currX, currY, spiralX, spiralY) - 0.1;
 					initialX = currX;
 					initialY = currY;
 					
@@ -333,7 +333,7 @@ class DropoffController {
 			  cout << "Rotating right to resume spiral searching" << endl;
 			  cout << "spiralTheta is: " << spiralTheta << endl;
 			  cout << "currTheta is: " << currTheta << endl;
-			  if (abs(currTheta - spiralTheta) <= 0.03) {
+			  if (abs(currTheta - spiralTheta) < 0.03) {
 				cout << "done rotating back to spiral" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
