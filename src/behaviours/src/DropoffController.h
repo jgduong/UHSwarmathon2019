@@ -67,6 +67,24 @@ class DropoffController {
 	      centerOffsetX = x;
 	      centerOffsetY = y;
 	  }
+	    bool isVisited(float x, float y, unordered_map<float, set<float>> &visitedLocations) {
+	      float normX = normalizedValue(x);
+	      float normY = normalizedValue(y);
+
+	      if (visitedLocations.find(normX) != visitedLocations.end()) {
+		//x location exists in hashmap, check y coordinate
+		if (visitedLocations[normX].find(normY) != visitedLocations[normX].end()) {
+		  //y location also exists, so this coordinate has been visited
+		  return true;
+		}
+		else {
+		    return false;	
+		  }
+		}
+		else {
+		  return false;
+		}
+	}
   
 	  Swarmie DoWork(unordered_map<float, set<float>> &visitedLocations) 
 	  {
