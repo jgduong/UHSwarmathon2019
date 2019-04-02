@@ -30,7 +30,8 @@ public:
 	bool approachCube2 = false;
 	bool reverse = false;
 	bool halfStep = false;
-	bool firstStep = true;
+	bool firstStep = false;
+	bool checkInitialDist = true;
     Swarmie swarmie;
     float minX;
 	float minZ;
@@ -76,6 +77,21 @@ public:
           cout << "index of centermost tag: " << indexOfClosestTag << ", x,z: " << tags[indexOfClosestTag].getPositionX() << ", " << tags[indexOfClosestTag].getPositionZ() << endl;
 	  swarmie.pickupSuccess = false;
 	    swarmie.dropoffSuccess = false;
+	    
+	    if (checkInitialDist)
+	    {
+		    if (minZ < 0.4)
+		    {
+			    swarmie.left = -30.0;
+			    swarmie.right = -30.0;
+		    }
+		    else {
+			    swarmie.left = 0.0;
+			    swarmie.right = 0.0;
+			    checkinitialDist = false;
+			    firstStep = true;
+		    }
+	    }
         
             //center on cube
             if ( minX > -0.02 && detectionTimeout < 100 && !approachCube && firstStep)
@@ -236,7 +252,7 @@ public:
 			reverseDelay = 0;
 			reverse = false;
 			swarmie.pickupSuccess = true;
-			firstStep = true;
+			checkInitialDist = true;
 			halfStep = false;
 		}
 	}
