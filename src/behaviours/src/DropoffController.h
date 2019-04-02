@@ -330,7 +330,7 @@ class DropoffController {
          	 }
 		  else if (rotate90) {
 			  cout << "Rotating right to resume spiral searching" << endl;
-			  cout << "desiredTheta is: " << desiredTheta << endl;
+			  cout << "spiralTheta is: " << spiralTheta << endl;
 			  cout << "currTheta is: " << currTheta << endl;
 			  if (abs(currTheta - spiralTheta) <= 0.03) {
 				cout << "done rotating back to spiral" << endl;
