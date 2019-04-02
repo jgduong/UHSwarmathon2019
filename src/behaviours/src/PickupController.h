@@ -88,7 +88,7 @@ public:
 		    else {
 			    swarmie.left = 0.0;
 			    swarmie.right = 0.0;
-			    checkinitialDist = false;
+			    checkInitialDist = false;
 			    firstStep = true;
 		    }
 	    }
