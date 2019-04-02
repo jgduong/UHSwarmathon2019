@@ -619,6 +619,10 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 			logicController->updateTags( tags );			
 			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 		}
+		if (currState == DROPOFF)
+		{
+			logicController->updateTags( tags );
+		}
 		tags.clear();
 	}
 	
