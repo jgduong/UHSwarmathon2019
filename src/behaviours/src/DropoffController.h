@@ -397,6 +397,8 @@ class DropoffController {
 		  else
 		  {
 			cout << "no tags, find a spiral edge.. " << endl;
+			  swarmie.left = 100.0;
+			  swarmie.right = 100.0;
 			  	bool maxFrontError = false;
 			 	float FrontError;
 			      int m = 0;
@@ -420,6 +422,8 @@ class DropoffController {
 			  
 			  if (maxFrontError)
 			  {
+				  swarmie.left = 0.0;
+				  swarmie.right = 0.0;
 				  swarmie.dropoffSuccess = true;
 				  saveSpiralTheta = true;
 				  initCalc = true;
