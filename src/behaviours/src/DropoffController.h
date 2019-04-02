@@ -23,6 +23,9 @@ class DropoffController {
 	float distanceToHome = 0.0;
 	//float distTravelled = 0.0;
 	float distToSpiral = 0.0;
+	
+	float checkX= 0.0;
+	float checkY = 0.0;
 		
 	/*bool initCalc = true;
 	bool spinHome = false;
@@ -363,15 +366,33 @@ class DropoffController {
 		  else if (nextAction) {
 			//check size of tags vector	
 			  if (tagSize != 0) {
-				cout << "cluster still present, exitting dropoff stage" << endl;
+				cout << "cluster still present, exiting dropoff stage" << endl;
 				nextAction = false;
 				swarmie.dropoffSuccess = true;
 				saveSpiralTheta = true;
 				initCalc = true;
 			  }
 			  else {
-				cout << "no cubes detected here, going straight" << endl;	  
-				
+				cout << "no cubes detected here, checking if this location is visited" << endl;	  
+				if (isVisited(normalizedValue(currX), normalizedValue(currY), visitedLocations)) {
+					cout << "this location has been visited, finding next unvisited location" << endl;
+					checkX = normalizedValue(currX + 1 * cos(currTheta));
+					checkY = normalizedValue(currY + 1 * sin(currTheta));
+					
+					cout << "checkX = " << checkX << endl;
+					cout << "checkY = " << checkY << endl;
+					
+					swarmie.left = 0.0;
+					swarmie.right = 0.0;
+					
+				}
+				else {
+					cout << "location has not been visited, exiting dropoff state" << endl; 
+					nextAction = false;
+					swarmie.dropoffSuccess = true;
+					saveSpiralTheta = true;
+					initCalc = true;
+				}
 			  }
 		  }
 		return swarmie;
