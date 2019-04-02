@@ -105,7 +105,7 @@ public:
                 swarmie.right = 0.01;
                 swarmie.wrist = 1.25;
                 //swarmie.finger = M_PI_2;
-		swarmie.finger = M_PI_2 + 0.2;    
+		//swarmie.finger = M_PI_2 + 0.2;    
                 
                 zDistanceToCube = tags[indexOfClosestTag].getPositionZ();
                 //aprilTagDetected = false;
@@ -117,8 +117,8 @@ public:
 		    firstStep = false;
 		detectionTimeout = 0;
 		    
-		    swarmie.wrist = 1.25;
-		 swarmie.finger = M_PI_2 + 0.2;
+		    //swarmie.wrist = 1.25;
+		 //swarmie.finger = M_PI_2 + 0.2;
             }
             else if (detectionTimeout >= 100)
             {
@@ -140,7 +140,7 @@ public:
             cout << "z DistanceToCube is "  << zDistanceToCube << endl;
             distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
             cout << "Distance travelled is : " << distTravelled << endl;
-            if (distTravelled < (zDistanceToCube / 3.0) && !halfStep) {
+            if (distTravelled < (zDistanceToCube / 4.0) && !halfStep) {
                 swarmie.left = 50.0;
                 swarmie.right = 50.0;
             }
@@ -173,8 +173,10 @@ public:
 			    startingX = selfX;
 			    startingY = selfY;
 			    distTravelled = 0.0;
-			    
+			    swarmie.wrist = 1.25;
+		 	    swarmie.finger = M_PI_2 + 0.2;
 			    zDistanceToCube = minZ;
+			    
 			    cout << "centered/calibrated a second time, new zDistanceToCube is: " << zDistanceToCube << endl;
 		    }
             }
