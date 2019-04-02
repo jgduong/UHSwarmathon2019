@@ -38,12 +38,16 @@ class DropoffController {
 	bool backOff = false;
 	bool rotate180 = false;
 	bool backToSpiral = false;
+	
+	bool saveSpiralTheta = true;
+	bool rotate90 = false;
+		
 	float homeTheta = 0.0;
 	
 	float spiralX = 0.0;
 	float spiralY = 0.0;
 	 float turnSize = 0.0;
-	
+	float spiralTheta = 0.0;
 	
 	float tempCenterX;
 	float tempCenterY;
@@ -69,14 +73,20 @@ class DropoffController {
 		  
 		  swarmie.centerX = centerOffsetX;
 		  swarmie.centerY = centerOffsetY;
+		  
+		  if (saveSpiralTheta)
+		  {
+			  spiralTheta = currTheta;
+			  saveSpiralTheta = false;
+		  }
 		if (initCalc) {
 			noForwards = false;
 			homeTheta = atan2((0 - currY),(0 - currX));
-			desiredTheta = homeTheta + M_PI;
-			if (desiredTheta >= M_PI)
-			{
-				desiredTheta -= 2 * M_PI;
-			}
+			//desiredTheta = homeTheta + M_PI;
+			//if (desiredTheta >= M_PI)
+			//{
+			//	desiredTheta -= 2 * M_PI;
+			//}
 			
 			initialTheta = currTheta;
 			initCalc = false;
@@ -271,6 +281,7 @@ class DropoffController {
 				  	rotate180 = false;
 				  	backToSpiral = true;
 					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
+					distToSpiral -= 0.1;
 					initialX = currX;
 					initialY = currY;
 				}
@@ -292,6 +303,7 @@ class DropoffController {
 				  	rotate180 = false;
 					  backToSpiral = true;
 					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
+					distToSpiral -= 0.1;
 					initialX = currX;
 					initialY = currY;
 				}
@@ -324,12 +336,14 @@ class DropoffController {
               		    swarmie.left = 0.0;
               		    swarmie.right = 0.0;
                		   backToSpiral = false;
-				swarmie.dropoffSuccess = true;
-				initCalc = true;
-			
+				//swarmie.dropoffSuccess = true;
+				//initCalc = true;
+				//testing j0rby
+				//saveSpiralTheta = true;
 				distanceToHome = 0.0;
 				distTravelled = 0.0;
 				distToSpiral = 0.0;
+				rotate90 = true;
              		 }
              		 else {
                		   cout << "Driving back to spiral" << endl;
@@ -337,6 +351,23 @@ class DropoffController {
                 	  swarmie.right = 100.0;
               		}
          	 }
+		  else if (rotate90)
+		  {
+			  if (abs(currTheta - spiralTheta) <= 0.03)
+			  {
+				  swarmie.left = 0.0;
+				  swarmie.right = 0.0;
+				  swarmie.dropoffSuccess = true;
+				  saveSpiralTheta = true;
+				  initCalc = true;
+				  rotate90 = false;
+			  }
+			  else
+			  {
+				  swarmie.left = 40.0;
+				  swarmie.right = -40.0;
+			  }
+		  }
 		return swarmie;
 	  }
 
