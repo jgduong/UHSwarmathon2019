@@ -379,6 +379,7 @@ class DropoffController {
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
 				  cout << "finished rotating" << endl;
+				  rotate90 = false;
 			  }
 			  else
 			  {
@@ -421,9 +422,16 @@ class DropoffController {
 					}
 				}
 			  
-			  if (maxFrontError)
+			  if (maxFrontError || tagsExist)
 			  {
-				  cout << "max Front Error, safe to resume spiral search" << endl;
+				  if (maxFrontError)
+				  {
+				 	 cout << "max Front Error, safe to resume spiral search" << endl;
+				  }
+				  if (tagsExist)
+				  {
+					  cout << "tag detected, returning... " << endl;
+				  }
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
 				  swarmie.dropoffSuccess = true;
