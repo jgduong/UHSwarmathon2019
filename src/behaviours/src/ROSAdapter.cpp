@@ -494,8 +494,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		    cout << "PICKUP SUCCESS" << endl;
 		    currState = DROPOFF;
 			prevState = PICKUP;
-			logicController->dropoffController.spiralX = currentLocationOdom.x + centerOffsetX;
-			logicController->dropoffController.spiralY = currentLocationOdom.y + centerOffsetY;
+			//logicController->dropoffController.spiralX = currentLocationOdom.x + centerOffsetX;
+			//logicController->dropoffController.spiralY = currentLocationOdom.y + centerOffsetY;
 		    swarmie.pickupSuccess = false;
 		}
 		if (currState == PICKUP && logicController->pickupController.detectionTimeout >= 100)
