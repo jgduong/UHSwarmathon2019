@@ -160,7 +160,7 @@ class DropoffController {
 			  //sendDriveCommand(100.0, 100.0);
 			  //swarmie.left = 100.0;
 			  //swarmie.right = 100.0;
-			 distTravelled = calcDistance(currX, currY, initialX, initialY);
+			 distTravelled = calcDistance(currX, currY, initialX, initialY) - 0.1;
 			  if (distanceToHome - distTravelled <= 1)
 			  {
 				  noForwards = true;
