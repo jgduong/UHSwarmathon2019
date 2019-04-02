@@ -603,7 +603,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 			logicController->updateTags( tags );
 		}
-		if (currState == PICKUP) {
+		if (currState == PICKUP || currState == DROPOFF) {
 			logicController->updateTags( tags );			
 			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 		}
