@@ -247,7 +247,7 @@ public:
 		reverseDelay++;
 		swarmie.left = -75.0;
                 swarmie.right = -75.0;
-		if (reverseDelay > 8)
+		if (reverseDelay > 12)
 		{
 			reverseDelay = 0;
 			reverse = false;
