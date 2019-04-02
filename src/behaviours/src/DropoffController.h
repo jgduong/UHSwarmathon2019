@@ -378,12 +378,13 @@ class DropoffController {
 			  {
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
-				  
+				  cout << "finished rotating" << endl;
 			  }
 			  else
 			  {
 				  swarmie.left = 40.0;
 				  swarmie.right = -40.0;
+				  cout << "rotating left 90 degrees..." << endl;
 			  }
 		  }
 		  else if (tagsExist)
@@ -422,6 +423,7 @@ class DropoffController {
 			  
 			  if (maxFrontError)
 			  {
+				  cout << "max Front Error, safe to resume spiral search" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
 				  swarmie.dropoffSuccess = true;
