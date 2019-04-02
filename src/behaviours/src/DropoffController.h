@@ -397,9 +397,29 @@ class DropoffController {
 		  else
 		  {
 			cout << "no tags, find a spiral edge.. " << endl;
+			  	bool maxFrontError = false;
+			 	float FrontError;
+			      int m = 0;
+			      float newX;
+			      float newY;
+			      //starts at 2 so that it doesnt check on top of itself; checks 2 meters in front of it
+			      for (m = 2; m <= 8; m++)
+			      {
+					newX = normalizedValue(currX + m*0.25*cos(currTheta));
+					newY = normalizedValue(currY + m*0.25*sin(currTheta));
+					cout << "current x, y" << normalizedX << ", " << normalizedY  << endl;
+					if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
+					{
+						  cout << "Front vector ended at m = " << m << "after checking: " << newX << ", " << newY << endl;
+						  maxFrontError = false;
+						  break;
+					}
+					else if (m == 8){
+						  maxFrontError = true;
+					}
+				}
 			  
-			  
-			  if ()
+			  if (maxFrontError)
 			  {
 				  swarmie.dropoffSuccess = true;
 				  saveSpiralTheta = true;
