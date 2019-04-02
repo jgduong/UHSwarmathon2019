@@ -71,7 +71,7 @@ class DropoffController {
 			//if (spiralTheta < -M_PI) {
 				//spiralTheta += 2*M_PI;	
 			//}
-			setSpiralTheta = false;
+			saveSpiralTheta = false;
 		  }
 		  
 		if (initCalc) {
