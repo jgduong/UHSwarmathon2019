@@ -407,7 +407,6 @@ class DropoffController {
 			      {
 					newX = normalizedValue(currX + m*0.25*cos(currTheta));
 					newY = normalizedValue(currY + m*0.25*sin(currTheta));
-					cout << "current x, y" << normalizedX << ", " << normalizedY  << endl;
 					if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
 					{
 						  cout << "Front vector ended at m = " << m << "after checking: " << newX << ", " << newY << endl;
