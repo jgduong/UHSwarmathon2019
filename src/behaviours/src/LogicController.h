@@ -112,8 +112,8 @@ class LogicController {
 			    // VERY EXPERIMENTAL
 		      if (prev == PICKUP && dropoffController.initCalc == true)
 		      {
-			      dropoffController.spiralX = currX;
-			      dropoffController.spiralY = currY;
+			      //dropoffController.spiralX = currX;
+			      //dropoffController.spiralY = currY;
 			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
 		      }
 		    }
@@ -123,8 +123,8 @@ class LogicController {
 		    else if (state == DROPOFF) {
 		      if (prev == PICKUP && dropoffController.initCalc == true)
 		      {
-			      dropoffController.spiralX = currX;
-			      dropoffController.spiralY = currY;
+			      //dropoffController.spiralX = currX;
+			      //dropoffController.spiralY = currY;
 			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
 		      }
 		      swarmie = dropoffController.DoWork();
