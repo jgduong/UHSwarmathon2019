@@ -39,7 +39,7 @@ class DropoffController {
 	bool rotate180 = false;
 	bool backToSpiral = false;
 	bool rotate90 = false;
-	bool calcSpiralTheta = true;
+	bool saveSpiralTheta = true;
 	float homeTheta = 0.0;
 	
 	float spiralTheta;
@@ -65,12 +65,13 @@ class DropoffController {
 		  swarmie.pickupSuccess = false;
 		  swarmie.dropoffSuccess = false;
 		  
-		  if (calcSpiralTheta) {
-			spiralTheta = currTheta - M_PI/2;
-			if (spiralTheta < -M_PI) {
-				spiralTheta += 2*M_PI;	
-			}
-			calcSpiralTheta = false;
+		  if (saveSpiralTheta) {
+			  spiralTheta = currTheta;
+			//spiralTheta = currTheta - M_PI/2;
+			//if (spiralTheta < -M_PI) {
+				//spiralTheta += 2*M_PI;	
+			//}
+			setSpiralTheta = false;
 		  }
 		  
 		if (initCalc) {
