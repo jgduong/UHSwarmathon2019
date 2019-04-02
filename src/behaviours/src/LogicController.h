@@ -127,7 +127,7 @@ class LogicController {
 			      //dropoffController.spiralY = currY;
 			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
 		      }
-		      swarmie = dropoffController.DoWork();
+		      swarmie = dropoffController.DoWork(visitedLocations);
 		    }
 		    else if (state == FIND_SPIRAL_EDGE) {
 		      //FindEdgeController.DoWork();
@@ -155,6 +155,7 @@ class LogicController {
 	//void updateTags(float x, float y, float z) {
 	void updateTags(vector<Tag> tags) {
 		pickupController.updateTags(tags);
+		dropoffController.updateTagSize(tags.size());
 	}
 
 	  void setCenterOffset(float x, float y) {
