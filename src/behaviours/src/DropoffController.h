@@ -336,7 +336,7 @@ class DropoffController {
 			  cout << "Rotating right to resume spiral searching" << endl;
 			  cout << "spiralTheta is: " << spiralTheta << endl;
 			  cout << "currTheta is: " << currTheta << endl;
-			  if (abs(currTheta - spiralTheta) < 0.03) {
+			  if (abs(currTheta - spiralTheta) <= 0.02) {
 				cout << "done rotating back to spiral" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
