@@ -68,7 +68,8 @@ class DropoffController {
 	      centerOffsetY = y;
 	  }
   
-	  Swarmie DoWork() {
+	  Swarmie DoWork(unordered_map<float, set<float>> &visitedLocations) 
+	  {
 		cout << "Currently in the DROPOFF state" << endl;
 		  swarmie.pickupSuccess = false;
 		  swarmie.dropoffSuccess = false;
