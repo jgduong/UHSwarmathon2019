@@ -39,8 +39,10 @@ class DropoffController {
 	bool rotate180 = false;
 	bool backToSpiral = false;
 	bool rotate90 = false;
+	bool calcSpiralTheta = true;
 	float homeTheta = 0.0;
 	
+	float spiralTheta;
 	float spiralX = 0.0;
 	float spiralY = 0.0;
 	 float turnSize = 0.0;
@@ -62,6 +64,15 @@ class DropoffController {
 		cout << "Currently in the DROPOFF state" << endl;
 		  swarmie.pickupSuccess = false;
 		  swarmie.dropoffSuccess = false;
+		  
+		  if (calcSpiralTheta) {
+			spiralTheta = currTheta - M_PI/2;
+			if (spiralTheta < -M_PI) {
+				spiralTheta += 2*M_PI;	
+			}
+			calcSpiralTheta = false;
+		  }
+		  
 		if (initCalc) {
 			noForwards = false;
 			homeTheta = atan2((0 - currY),(0 - currX));
@@ -70,6 +81,8 @@ class DropoffController {
 			{
 				desiredTheta -= 2 * M_PI;
 			}
+			
+
 			
 			initialTheta = currTheta;
 			initCalc = false;
@@ -248,11 +261,7 @@ class DropoffController {
 					distToSpiral = calcDistance(currX, currY, spiralX, spiralY);
 					initialX = currX;
 					initialY = currY;
-					
-					desiredTheta = currTheta - M_PI/2;
-					if (desiredTheta > M_PI) {
-						desiredTheta = desiredTheta - 2*M_PI;	
-					}
+
 				}
 				else {
 					cout << "spinning towards SPIRAL at: " << spiralX << ", " << spiralY << endl;
@@ -275,10 +284,6 @@ class DropoffController {
 					initialX = currX;
 					initialY = currY;
 					
-					desiredTheta = currTheta - M_PI/2;
-					if (desiredTheta > M_PI) {
-						desiredTheta = desiredTheta - 2*M_PI;	
-					}
 				}
 				else {
 					cout << "spinning towards SPIRAL at: " << spiralX << ", " << spiralY << endl;
@@ -327,7 +332,7 @@ class DropoffController {
 			  cout << "Rotating right to resume spiral searching" << endl;
 			  cout << "desiredTheta is: " << desiredTheta << endl;
 			  cout << "currTheta is: " << currTheta << endl;
-			  if (abs(currTheta - desiredTheta) <= 0.03) {
+			  if (abs(currTheta - spiralTheta) <= 0.03) {
 				cout << "done rotating back to spiral" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
