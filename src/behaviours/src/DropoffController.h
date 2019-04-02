@@ -190,11 +190,11 @@ class DropoffController {
 				  cout << endl << endl << "calculated NEW centeroffset x, y: " << tempCenterX << ", " << tempCenterY << endl;
 				  //cout << "previous centerOffset x, y: " << centerOffsetX << ", " << centerOffsetY << endl << endl;
 				  cout << "measured odom location x, y: " << currX << ", " << currY << endl << endl;
-				  if (abs(currX - tempCenterX) >= 0.1)
+				  if (abs(currX - tempCenterX) >= 0.2)
 				  {
 					  swarmie.centerX += ((currX) - (tempCenterX));
 				  }
-				  if (abs(currY - tempCenterY) >= 0.1)
+				  if (abs(currY - tempCenterY) >= 0.2)
 				  {
 					  swarmie.centerY += ((currY) - (tempCenterY));
 				  }
