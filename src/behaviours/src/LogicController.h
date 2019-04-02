@@ -110,23 +110,23 @@ class LogicController {
 		    else if (state == AVOID_OBSTACLE) {
 		      swarmie = obstacleController.DoWork(prev, dropoffController.noForwards);
 			    // VERY EXPERIMENTAL
-		      if (prev == PICKUP && dropoffController.initCalc == true)
+		      /*if (prev == PICKUP && dropoffController.initCalc == true)
 		      {
 			      dropoffController.spiralX = currX;
 			      dropoffController.spiralY = currY;
 			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
-		      }
+		      }*/
 		    }
 		    else if (state == PICKUP) {
 		      swarmie = pickupController.DoWork();
 		    }
 		    else if (state == DROPOFF) {
-		      if (prev == PICKUP && dropoffController.initCalc == true)
+		      /*if (prev == PICKUP && dropoffController.initCalc == true)
 		      {
 			      dropoffController.spiralX = currX;
 			      dropoffController.spiralY = currY;
 			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
-		      }
+		      }*/
 		      swarmie = dropoffController.DoWork();
 		    }
 		    else if (state == FIND_SPIRAL_EDGE) {
