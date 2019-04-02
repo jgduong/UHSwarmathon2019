@@ -77,11 +77,11 @@ class DropoffController {
 		if (initCalc) {
 			noForwards = false;
 			homeTheta = atan2((0 - currY),(0 - currX));
-			desiredTheta = homeTheta + M_PI;
-			if (desiredTheta >= M_PI)
-			{
-				desiredTheta -= 2 * M_PI;
-			}
+			//homeTheta = homeTheta + M_PI;
+			//if (homeTheta >= M_PI)
+			//{
+			//	homeTheta -= 2 * M_PI;
+			//}
 			
 
 			
