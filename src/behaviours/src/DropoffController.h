@@ -1,6 +1,8 @@
 #include "Swarmie.h"
 #include "Calculations.h"
 #include "Tag.h"
+#include <unordered_map>
+#include <set>
 #include <iostream>
 using namespace std;
 
@@ -41,7 +43,9 @@ class DropoffController {
 	bool backToSpiral = false;
 	bool rotate90 = false;
 	bool saveSpiralTheta = true;
+	bool nextAction = false;
 	float homeTheta = 0.0;
+	int tagSize = 0;
 	
 	float spiralTheta;
 	float spiralX = 0.0;
@@ -60,8 +64,12 @@ class DropoffController {
 	      centerOffsetX = x;
 	      centerOffsetY = y;
 	  }
+	
+	    void updateTagSize(int size) {
+		tagSize = size;
+	   }
   
-	  Swarmie DoWork() {
+	  Swarmie DoWork(unordered_map<float, set<float>> &visitedLocations) {
 		cout << "Currently in the DROPOFF state" << endl;
 		  swarmie.pickupSuccess = false;
 		  swarmie.dropoffSuccess = false;
@@ -340,16 +348,31 @@ class DropoffController {
 				cout << "done rotating back to spiral" << endl;
 				  swarmie.left = 0.0;
 				  swarmie.right = 0.0;
-				  swarmie.dropoffSuccess = true;
-				  saveSpiralTheta = true;
-				  initCalc = true;
+				  //swarmie.dropoffSuccess = true;
+				  //saveSpiralTheta = true;
+				  //initCalc = true;
 				  rotate90 = false;
+				  nextAction = true;
 			  }
 			  else {
 				  swarmie.left = 30.0;
 				  swarmie.right = -30.0;
 			  }
 			  
+		  }
+		  else if (nextAction) {
+			//check size of tags vector	
+			  if (tagSize != 0) {
+				cout << "cluster still present, exitting dropoff stage" << endl;
+				nextAction = false;
+				swarmie.dropoffSuccess = true;
+				saveSpiralTheta = true;
+				initCalc = true;
+			  }
+			  else {
+				cout << "no cubes detected here, going straight" << endl;	  
+				
+			  }
 		  }
 		return swarmie;
 	  }
