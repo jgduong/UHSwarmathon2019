@@ -155,6 +155,7 @@ class LogicController {
 	//void updateTags(float x, float y, float z) {
 	void updateTags(vector<Tag> tags) {
 		pickupController.updateTags(tags);
+		dropoffController.updateTags(tags);
 	}
 
 	  void setCenterOffset(float x, float y) {
