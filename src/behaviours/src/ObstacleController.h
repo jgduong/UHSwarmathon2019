@@ -173,27 +173,27 @@ class ObstacleController {
 		      		swarmie.right = 100.0;
 			}
 		  }*/
-		  if (SonarRight <= 0.35 && SonarRight < SonarLeft)
+		  if (SonarRight <= 0.5 && SonarRight < SonarLeft)
 		  {
 			  cout << "right detection still, sonarRight is: " << SonarRight << endl;
 		      swarmie.left = -100.0;
 		      swarmie.right = 100.0;
-			  /*if (SonarRight >= 0.3)
+			  if (SonarRight <= 0.25)
 			  {
-				  swarmie.left = 75.0;
-				  swarmie.right = 75.0;
-			  }*/
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
+			  }
 		  }
-		  else if (SonarLeft <= 0.35)
+		  else if (SonarLeft <= 0.5)
 		  {
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
 		      swarmie.left = 100.0;
 		      swarmie.right = -100.0;
-			  /*if (SonarLeft >= 0.3)
+			  if (SonarLeft <= 0.25)
 			  {
-				  swarmie.left = 75.0;
-				  swarmie.right = 75.0;
-			  }*/
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
+			  }
 		  }
 		  else {
 		      cout << "obstacle controller has successfully rotated away from obstacle" << endl;
@@ -230,17 +230,29 @@ class ObstacleController {
 				swarmie.right = 80.0;
 			}
 		}*/
-		if (SonarLeft <= 0.35 && SonarLeft < SonarRight)
+		if (SonarLeft <= 0.5 && SonarLeft < SonarRight)
 		{
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
 		      swarmie.left = 80.0;
 		      swarmie.right = -100.0;
+			
+			if (SonarLeft <= 0.25)
+			  {
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
+			  }
+			
 		}
-		else if (SonarRight <= 0.35)
+		else if (SonarRight <= 0.5)
 		{
 			cout << "right detection still, sonarRight is: " << SonarRight << endl;
 		      swarmie.left = -100.0;
 		      swarmie.right = 80.0;
+			if (SonarRight <= 0.25)
+			  {
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
+			  }
 		}
 		else {
 			cout << "obstacle controller has successfully rotated away from obstacle" << endl;
