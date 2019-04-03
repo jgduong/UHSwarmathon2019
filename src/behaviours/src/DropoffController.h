@@ -413,7 +413,7 @@ class DropoffController {
 			      float newX;
 			      float newY;
 			      //starts at 2 so that it doesnt check on top of itself; checks 2 meters in front of it
-			      for (m = 2; m <= 8; m++)
+			      for (m = 2; m <= 12; m++)
 			      {
 					newX = normalizedValue(currX + m*0.25*cos(currTheta));
 					newY = normalizedValue(currY + m*0.25*sin(currTheta));
@@ -423,7 +423,7 @@ class DropoffController {
 						  maxFrontError = false;
 						  break;
 					}
-					else if (m == 8){
+					else if (m == 12){
 						  maxFrontError = true;
 					}
 				}
