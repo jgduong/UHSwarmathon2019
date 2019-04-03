@@ -42,6 +42,8 @@ class DropoffController {
 	bool saveSpiralTheta = true;
 	bool rotate90 = false;
 	bool tagsExist = false;
+	
+	bool toSpiralEdge = false;
 		
 	float homeTheta = 0.0;
 	
@@ -398,6 +400,7 @@ class DropoffController {
 		  }
 		  else
 		  {
+			  toSpiralEdge = true;
 			cout << "no tags, find a spiral edge.. " << endl;
 			  swarmie.left = 100.0;
 			  swarmie.right = 100.0;
@@ -438,6 +441,7 @@ class DropoffController {
 				  saveSpiralTheta = true;
 				  initCalc = true;
 				  rotate90 = false;
+				  toSpiralEdge = false;
 			  }
 		  }
 		return swarmie;
