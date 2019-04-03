@@ -254,6 +254,8 @@ class DropoffController {
 				  compareTheta = 0.0;
 				  
 				   float turnSize = desiredTheta - currTheta;
+				  
+				  noForwards = false;
 			  }
 			  else {
 				cout << "Backing out of home base" << endl;
