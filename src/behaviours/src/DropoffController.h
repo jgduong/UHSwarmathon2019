@@ -88,7 +88,7 @@ class DropoffController {
 		}
 	}
   
-	  Swarmie DoWork(unordered_map<float, set<float>> &visitedLocations) 
+	  Swarmie DoWork(unordered_map<float, set<float>> &visitedLocations, int prevState) 
 	  {
 		cout << "Currently in the DROPOFF state" << endl;
 		  swarmie.pickupSuccess = false;
@@ -116,8 +116,11 @@ class DropoffController {
 			spinHome = true;
 			swarmie.left = 0.0;
 			swarmie.right = 0.0;
-			spiralX = currX;
-			spiralY = currY;
+			if (prevState != AVOID_OBSTACLE)
+			{
+				spiralX = currX;
+				spiralY = currY;
+			}
 			cout << "spiralX, spiralY: " << spiralX << ", " << spiralY << endl;
 			//return swarmie;
 	  	}
