@@ -127,7 +127,7 @@ class LogicController {
 			      dropoffController.spiralY = currY;
 			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
 		      }*/
-		      swarmie = dropoffController.DoWork(visitedLocations, prev);
+		      swarmie = dropoffController.DoWork(visitedLocations);
 		    }
 		    else if (state == FIND_SPIRAL_EDGE) {
 		      //FindEdgeController.DoWork();
