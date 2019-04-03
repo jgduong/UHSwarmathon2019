@@ -518,15 +518,17 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			cout << "obstacle avoidance complete " << endl;
 			if (prevState == DROPOFF)
 			{
-				if (logicController->dropoffController.backToSpiral != true) {
+				if (logicController->dropoffController.backToSpiral != true && logicController->dropoffController.toSpiralEdge == false) {
 					logicController->dropoffController.initCalc = true;
 					logicController->dropoffController.spinHome = false;
 					logicController->dropoffController.driveToHome = false;
 					logicController->dropoffController.backOff = false;
 					logicController->dropoffController.rotate180 = false;
 					logicController->dropoffController.backToSpiral = false;
+					logicController->dropoffController.rotate90 = false;
 				}
-				else {
+				else if (logicController->dropoffController.backToSpiral == true && logicController->dropoffController.toSpiralEdge == false)
+				{
 					logicController->dropoffController.initCalc = false;
 					logicController->dropoffController.spinHome = false;
 					logicController->dropoffController.driveToHome = false;
@@ -534,6 +536,18 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.rotate180 = true;
 					logicController->dropoffController.backToSpiral = false;
 					logicController->dropoffController.distTravelled = 0.0;
+					logicController->dropoffController.rotate90 = false;
+				}
+				else if (logicController->dropoffController.backToSpiral != true && logicController->dropoffController.toSpiralEdge == true)
+				{
+					logicController->dropoffController.initCalc = false;
+					logicController->dropoffController.spinHome = false;
+					logicController->dropoffController.driveToHome = false;
+					logicController->dropoffController.backOff = false;
+					logicController->dropoffController.rotate180 = false;
+					logicController->dropoffController.backToSpiral = false;
+					logicController->dropoffController.distTravelled = 0.0;
+					logicController->dropoffController.rotate90 = true;
 				}
 			}
 			if (prevState == PICKUP)
