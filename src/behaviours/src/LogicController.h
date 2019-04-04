@@ -369,7 +369,8 @@ class LogicController {
 	  }
 	
 	void addVisitedLocation(float x, float y) {
-        	if (currState == SPIRAL_SEARCH || (currState == AVOID_OBSTACLE && prevState == SPIRAL_SEARCH)) {
+        	if (currState == SPIRAL_SEARCH || (currState == AVOID_OBSTACLE && prevState == SPIRAL_SEARCH) ) 
+		{
            	 	visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 			//cout << "x,y: " << normalizedValue(x) << ", " << normalizedValue(y) << " has been added" << endl;
         	}
