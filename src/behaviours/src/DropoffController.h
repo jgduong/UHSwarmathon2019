@@ -409,7 +409,11 @@ class DropoffController {
 			  swarmie.right = 100.0;
 			  	bool maxFrontError = false;
 			 	float FrontError;
+			  	float LeftError;
+			  	float RightError;
 			      int m = 0;
+			      int n = 0;
+			      int p = 0;
 			      float newX;
 			      float newY;
 			      //starts at 2 so that it doesnt check on top of itself; checks 2 meters in front of it
@@ -427,6 +431,37 @@ class DropoffController {
 						  maxFrontError = true;
 					}
 				}
+			  
+				  for (n = 2; n <= 12; n++)
+				  {
+					  
+					newX = normalizedValue(currX + n*0.25*cos(currTheta - 0.421442));
+					newY = normalizedValue(currY + n*0.25*sin(currTheta - 0.421442));
+					if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
+					{
+						  cout << "Right vector ended at n = " << n << "after checking: " << newX << ", " << newY << endl;
+						  maxFrontError = false;
+						  break;
+					}
+					else if (n == 12){
+						  maxFrontError = true;
+					}
+				}
+				  for (p = 2; p <= 12; p++)
+			      {
+					newX = normalizedValue(currX + p*0.25*cos(currTheta + 0.421442));
+					newY = normalizedValue(currY + p*0.25*sin(currTheta + 0.421442));
+					if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
+					{
+						  cout << "Left vector ended at p = " << p << "after checking: " << newX << ", " << newY << endl;
+						  maxFrontError = false;
+						  break;
+					}
+					else if (p == 12){
+						  maxFrontError = true;
+					}
+				}
+			  
 			  
 			  if (maxFrontError || tagsExist)
 			  {
