@@ -285,13 +285,13 @@ class DropoffController {
 			  cout << "currTheta is: " << currTheta << endl;
 			 
 			  
-			  if (compareTheta != currTheta)
+			  /*if (compareTheta != currTheta)
 			  {
 			 	 desiredTheta = atan2((spiralY - currY),(spiralX - currX));
 		          	compareTheta = currTheta;
 			  	turnSize = desiredTheta - currTheta;
 			  }
-			  
+			  */
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
 			//ninetyRotate = currTheta;
