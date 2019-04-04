@@ -390,7 +390,7 @@ class DropoffController {
 			  {
 				  swarmie.left = 40.0;
 				  swarmie.right = -40.0;
-				  cout << "rotating left 90 degrees..." << endl;
+				  cout << "rotating right to face spiralTheta degrees..." << endl;
 			  }
 		  }
 		  else if (tagsExist)
