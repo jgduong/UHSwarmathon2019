@@ -683,6 +683,12 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
+	if ( (sonarLeftData <= 0.6 || sonarRightData <= 0.6) && (currState == DROPOFF && (logicController->dropoffController.toSpiralEdge) ) )
+	{
+		prevState = currState;
+		currState = AVOID_OBSTACLE;
+		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+	}
 }
 
 void odometryHandler(const nav_msgs::Odometry::ConstPtr& message)
