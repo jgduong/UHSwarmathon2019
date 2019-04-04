@@ -723,7 +723,8 @@ void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& msg) {
 	//std_msgs::Float32MultiArray receivedCoordinate[2];
 	float x = msg->data[0];
 	float y = msg->data[1];
-	logicController->addVisitedLocation(x, y);
+	//logicController->addVisitedLocation(x, y);
+	logicController->visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 	//visitedLocations[x].insert(y);
 	//visitedLocations[myCoordinate[0]].insert(myCoordinate[1]);
 	//visitedLocationsPublisher.publish(myCoordinate);
