@@ -117,7 +117,7 @@ class ObstacleController {
           }
         
       }
-	if (prevState == PICKUP)
+	else if (prevState == PICKUP)
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
@@ -150,7 +150,7 @@ class ObstacleController {
 		}
 	}
 	      
-	if (prevState == DROPOFF && !noForwards)
+	else if (prevState == DROPOFF && !noForwards)
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
