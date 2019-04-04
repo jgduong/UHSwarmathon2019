@@ -408,6 +408,8 @@ class DropoffController {
 			  swarmie.left = 100.0;
 			  swarmie.right = 100.0;
 			  	bool maxFrontError = false;
+			  bool maxLeftError = false;
+			  bool maxRightError = false;
 			 	float FrontError;
 			  	float LeftError;
 			  	float RightError;
@@ -440,11 +442,11 @@ class DropoffController {
 					if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
 					{
 						  cout << "Right vector ended at n = " << n << "after checking: " << newX << ", " << newY << endl;
-						  maxFrontError = false;
+						  maxRightError = false;
 						  break;
 					}
 					else if (n == 12){
-						  maxFrontError = true;
+						  maxRightError = true;
 					}
 				}
 				  for (p = 2; p <= 12; p++)
@@ -454,18 +456,18 @@ class DropoffController {
 					if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
 					{
 						  cout << "Left vector ended at p = " << p << "after checking: " << newX << ", " << newY << endl;
-						  maxFrontError = false;
+						  maxLeftError = false;
 						  break;
 					}
 					else if (p == 12){
-						  maxFrontError = true;
+						  maxLeftError = true;
 					}
 				}
 			  
 			  
-			  if (maxFrontError || tagsExist)
+			  if ((maxFrontError && maxLeftError && maxRightError) || tagsExist)
 			  {
-				  if (maxFrontError)
+				  if (maxFrontError && maxLeftError && maxRightError)
 				  {
 				 	 cout << "max Front Error, safe to resume spiral search" << endl;
 				  }
