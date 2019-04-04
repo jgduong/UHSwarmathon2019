@@ -405,7 +405,7 @@ class DropoffController {
 		  {
 			  toSpiralEdge = true;
 			cout << "no tags, find a spiral edge.. " << endl;
-			  swarmie.left = 90.0;
+			  swarmie.left = 80.0;
 			  swarmie.right = 100.0;
 			  	bool maxFrontError = false;
 			  bool maxLeftError = false;
