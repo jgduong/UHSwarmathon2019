@@ -155,6 +155,8 @@ class DropoffController {
 					{
 						driveToHome = false;
 						backOff = true;
+						initialX = currX;
+				  		initialY = currY;
 					}
 					else {
 						noForwards = false;
@@ -197,6 +199,8 @@ class DropoffController {
 					{
 						driveToHome = false;
 						backOff = true;
+						initialX = currX;
+				  		initialY = currY;
 					}
 					else {
 						noForwards = false;
