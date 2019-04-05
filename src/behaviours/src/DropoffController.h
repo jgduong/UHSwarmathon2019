@@ -325,6 +325,7 @@ class DropoffController {
 			  	turnSize = desiredTheta - currTheta;
 			  }
 			  */
+			  desiredTheta = atan2((spiralY - currY),(spiralX - currX));
 			  turnSize = desiredTheta - currTheta;
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
