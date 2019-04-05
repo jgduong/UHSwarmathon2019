@@ -145,6 +145,16 @@ class DropoffController {
 					//dropOffTimer = 0.0;
 					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 0.4;
+					
+					//NEW, MIGHT BE USELESS / NOT SOLVE AN ISSUE THAT SHOWED UP
+					if (distanceToHome<= 1)
+					  {
+						  noForwards = true;
+					  }
+					else {
+						noForwards = false;
+					}
+					
 					//return swarmie;
 				}
 				else {
