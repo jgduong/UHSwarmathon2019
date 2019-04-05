@@ -151,6 +151,11 @@ class DropoffController {
 					  {
 						  noForwards = true;
 					  }
+					else if (distanceToHome <= 0.5)
+					{
+						driveToHome = false;
+						backOff = true;
+					}
 					else {
 						noForwards = false;
 					}
@@ -182,6 +187,20 @@ class DropoffController {
 					distanceToHome = calcDistance(currX, currY, 0, 0);
 					distanceToHome -= 0.4;
 					//return swarmie;
+					
+					//NEW, MIGHT BE USELESS / NOT SOLVE AN ISSUE THAT SHOWED UP
+					if (distanceToHome<= 1)
+					  {
+						  noForwards = true;
+					  }
+					else if (distanceToHome <= 0.5)
+					{
+						driveToHome = false;
+						backOff = true;
+					}
+					else {
+						noForwards = false;
+					}
 				}
 				else {
 					cout << "spinning towards home" << endl;
