@@ -421,22 +421,44 @@ class DropoffController {
                 	  swarmie.right = 100.0;
               		}
          	 }
-		  // MAKE THIS BETTER
 		  else if (rotate90)
 		  {
-			  if (abs(currTheta - spiralTheta) <= 0.03)
-			  {
-				  swarmie.left = 0.0;
-				  swarmie.right = 0.0;
-				  cout << "finished rotating" << endl;
-				  rotate90 = false;
-			  }
-			  else
-			  {
-				  swarmie.left = 40.0;
-				  swarmie.right = -40.0;
-				  cout << "rotating right to face spiralTheta degrees..." << endl;
-			  }
+			  turnSize = spiralTheta - currTheta;
+			  
+			  if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
+			{
+				if (abs(currTheta - spiralTheta) <= 0.03)
+				{
+					swarmie.left = 0.0;
+					  swarmie.right = 0.0;
+				  	rotate90 = false;
+					 cout << "finished rotating" << endl;
+				}
+				else {
+					cout << "spinning to spiralTheta at: " << spiralTheta << endl;
+					//sendDriveCommand(-50.0, 50.0);
+					swarmie.left = -40.0;
+					swarmie.right = 40.0;
+					//return swarmie;
+				}
+			}
+			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
+			{
+				if (abs(currTheta - spiralTheta) <= 0.03)
+				{
+					swarmie.left = 0.0;
+					  swarmie.right = 0.0;
+				  	rotate90 = false;
+					 cout << "finished rotating" << endl;
+				}
+				else {
+					cout << "spinning to spiralTheta at: " << spiralTheta << endl;
+					//sendDriveCommand(50.0, -50.0);
+					swarmie.left = 40.0;
+					swarmie.right = -40.0;
+					//return swarmie;
+				}
+			}
 		  }
 		  else if (tagsExist)
 		  {
