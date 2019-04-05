@@ -560,6 +560,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->pickupController.reverse = false;
 				}
 				else {
+					logicController->pickupController.approachCube = false;
+					logicController->pickupController.reverse = false;
+					
 					logicController->dropoffController.initCalc = false;
 					logicController->dropoffController.spinHome = false;
 					logicController->dropoffController.driveToHome = false;
@@ -571,7 +574,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					currState = DROPOFF;
 					prevState = AVOID_OBSTACLE;
 					swarmie.obstacleSuccess = false;
-					break;
 				}
 				
 			}
@@ -580,10 +582,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				swarmie.left = 30.0;
 				swarmie.right = 30.0;
 			}
-			
-			currState = prevState;
-			prevState = AVOID_OBSTACLE;
-			swarmie.obstacleSuccess = false;
+			if (swarmie.obstacleSuccess != false)
+			{
+				currState = prevState;
+				prevState = AVOID_OBSTACLE;
+				swarmie.obstacleSuccess = false;
+			}
 		}
 		
 		fngr.data = swarmie.finger;
