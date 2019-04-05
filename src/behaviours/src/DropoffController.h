@@ -325,6 +325,7 @@ class DropoffController {
 			  	turnSize = desiredTheta - currTheta;
 			  }
 			  */
+			  turnSize = desiredTheta - currTheta;
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
 			//ninetyRotate = currTheta;
