@@ -330,6 +330,15 @@ class DropoffController {
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
 			//ninetyRotate = currTheta;
+			  if (calcDistance(currX, currY, spiralX, spiralY) <= 0.1)
+			  {
+				  cout << "already back @ spiral, no need to rotate.. " << endl;
+				  rotate180 = false;
+				  distanceToHome = 0.0;
+				distTravelled = 0.0;
+				distToSpiral = 0.0;
+				rotate90 = true;
+			  }
 
 			if ( (turnSize >= 0.0 && turnSize < 3.142) || turnSize < -3.142) // left
 			{
@@ -412,6 +421,7 @@ class DropoffController {
                 	  swarmie.right = 100.0;
               		}
          	 }
+		  // MAKE THIS BETTER
 		  else if (rotate90)
 		  {
 			  if (abs(currTheta - spiralTheta) <= 0.03)
