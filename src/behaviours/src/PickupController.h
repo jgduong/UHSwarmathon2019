@@ -160,14 +160,14 @@ public:
 		    swarmie.right = 0.0;
 		 swarmie.wrist = 1.25;
 		 swarmie.finger = M_PI_2 + 0.2;
-		 if ( minX > -0.025 )
+		 if ( minX > -0.020 )
 		    {
 			//sendDriveCommand(6.0, -5.0);
 			swarmie.left = 5.0;
 			swarmie.right = -6.0;
 			 cout << "calibrating by rotating right... " << endl;
 		    }
-		    else if ( minX < -0.035 )
+		    else if ( minX < -0.030 )
 		    {
 			//sendDriveCommand(-5.0, 7.0);
 			swarmie.left = -6.0;
