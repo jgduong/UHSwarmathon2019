@@ -57,6 +57,8 @@ class SpiralSearchController {
 
     
     Swarmie DoWork(unordered_map<float, set<float>> &visitedLocations) {
+      swarmie.centerX = centerOffsetX;
+		  swarmie.centerY = centerOffsetY;
       /*
       cout << "test: current location (" << currX << ", " << currY << ")";
       if (isVisited(currX, currY, visitedLocations))

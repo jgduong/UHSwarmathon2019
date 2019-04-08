@@ -277,7 +277,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
 	
-	if (!initialized)
+	if (currState == INIT)
   	{	
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 		
@@ -397,6 +397,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}
 			logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 			
+			
 			//visitedLocations[normalizedValue(currentLocationOdom.x + centerOffsetX)].insert(normalizedValue(currentLocationOdom.Y + centerOffsetY));
 			if (!rotate2) {
 				logicController->addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
@@ -462,6 +463,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		logicController->addVisitedLocation(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY);
 		
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		
+		logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 		//temporarily setting the state to spiral search
 		
 		//currState = SPIRAL_SEARCH;
@@ -490,28 +493,41 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		    cout << "PICKUP SUCCESS" << endl;
 		    currState = DROPOFF;
 			prevState = PICKUP;
+			//logicController->dropoffController.spiralX = currentLocationOdom.x + centerOffsetX;
+			//logicController->dropoffController.spiralY = currentLocationOdom.y + centerOffsetY;
 		    swarmie.pickupSuccess = false;
+		}
+		if (currState == PICKUP && logicController->pickupController.detectionTimeout >= 100)
+		{
+			cout << "failed to pickup Cube" << endl;
+			currState = SPIRAL_SEARCH;
+			prevState = PICKUP;
+			logicController->pickupController.detectionTimeout = 0;
+			
 		}
 		else if (currState == DROPOFF && swarmie.dropoffSuccess) {
 		    cout << "Returning to SpiralSearch" << endl;
 		    currState = SPIRAL_SEARCH;
 			prevState = DROPOFF;
 		    swarmie.dropoffSuccess = false;
+			
 		}
 		else if (currState == AVOID_OBSTACLE && swarmie.obstacleSuccess) {
 			
 			cout << "obstacle avoidance complete " << endl;
 			if (prevState == DROPOFF)
 			{
-				if (logicController->dropoffController.backToSpiral != true) {
+				if (logicController->dropoffController.backToSpiral != true && logicController->dropoffController.toSpiralEdge == false) {
 					logicController->dropoffController.initCalc = true;
 					logicController->dropoffController.spinHome = false;
 					logicController->dropoffController.driveToHome = false;
 					logicController->dropoffController.backOff = false;
 					logicController->dropoffController.rotate180 = false;
 					logicController->dropoffController.backToSpiral = false;
+					logicController->dropoffController.rotate90 = false;
 				}
-				else {
+				else if (logicController->dropoffController.backToSpiral == true && logicController->dropoffController.toSpiralEdge == false)
+				{
 					logicController->dropoffController.initCalc = false;
 					logicController->dropoffController.spinHome = false;
 					logicController->dropoffController.driveToHome = false;
@@ -519,17 +535,60 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.rotate180 = true;
 					logicController->dropoffController.backToSpiral = false;
 					logicController->dropoffController.distTravelled = 0.0;
+					logicController->dropoffController.rotate90 = false;
+				}
+				else if (logicController->dropoffController.backToSpiral != true && logicController->dropoffController.toSpiralEdge == true)
+				{
+					logicController->dropoffController.initCalc = false;
+					logicController->dropoffController.spinHome = false;
+					logicController->dropoffController.driveToHome = false;
+					logicController->dropoffController.backOff = false;
+					logicController->dropoffController.rotate180 = false;
+					logicController->dropoffController.backToSpiral = false;
+					logicController->dropoffController.distTravelled = 0.0;
+					logicController->dropoffController.rotate90 = true;
 				}
 			}
-			if (prevState == PICKUP)
+			else if (prevState == PICKUP)
 			{
-				logicController->pickupController.approachCube = false;
-				logicController->pickupController.reverse = false;
+				//IF AND ELSE CONDITION INTRODUCED TO PREVENT GETTING STUCK IN SPIRAL AFTER FAILING TO PICKUP (OR INTERRUPTED BY OBSTACLE)
+				//DELETE ENTIRE IF CONDITION, AND REMOVE IF/ELSE STATEMENTS IF BUGGY (leave else)
+				if (logicController->pickupController.reverse == true || swarmie.pickupSuccess == true)
+				{
+					logicController->pickupController.approachCube = false;
+					logicController->pickupController.reverse = false;
+					
+					logicController->dropoffController.initCalc = false;
+					logicController->dropoffController.spinHome = false;
+					logicController->dropoffController.driveToHome = false;
+					logicController->dropoffController.backOff = false;
+					logicController->dropoffController.rotate180 = false;
+					logicController->dropoffController.backToSpiral = false;
+					logicController->dropoffController.distTravelled = 0.0;
+					logicController->dropoffController.rotate90 = true;
+					currState = DROPOFF;
+					prevState = AVOID_OBSTACLE;
+					swarmie.obstacleSuccess = false;
+				}
+				else {
+					logicController->pickupController.approachCube = false;
+					logicController->pickupController.reverse = false;
+				}
+	
+				
 			}
-			
-			currState = prevState;
-			prevState = AVOID_OBSTACLE;
-			swarmie.obstacleSuccess = false;
+			else if (prevState == INIT)
+			{
+				swarmie.left = 30.0;
+				swarmie.right = 30.0;
+			}
+			//NOT an else if
+			if (swarmie.obstacleSuccess != false)
+			{
+				currState = prevState;
+				prevState = AVOID_OBSTACLE;
+				swarmie.obstacleSuccess = false;
+			}
 		}
 		
 		fngr.data = swarmie.finger;
@@ -537,6 +596,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		fingerAnglePublish.publish(fngr);
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(swarmie.left, swarmie.right);
+		
+		if (centerOffsetX != swarmie.centerX || centerOffsetY != swarmie.centerY)
+		{
+			cout << endl << endl << "old centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl;
+			centerOffsetX = swarmie.centerX;
+			centerOffsetY = swarmie.centerY;
+			cout << "new centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl << endl;
+		}
 	}
 	  
 	humanTime();
@@ -591,9 +658,16 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 			logicController->updateTags( tags );			
 			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 		}
+		if (currState == DROPOFF)
+		{
+			logicController->dropoffController.tagsExist = true;
+		}
 		tags.clear();
 	}
-	
+	else if (currState == DROPOFF)
+	{
+		logicController->dropoffController.tagsExist = false;
+	}
 	
 }
 
@@ -616,13 +690,29 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.4 || sonarCenterData <= 0.4 || sonarRightData <= 0.4) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || logicController->dropoffController.backToSpiral) ))
+
+	if ((sonarLeftData <= 0.6 || sonarRightData <= 0.6) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome || logicController->dropoffController.backToSpiral) ))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
 	if ((sonarLeftData <= 0.3 || sonarCenterData <= 0.3 || sonarRightData <= 0.3) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
+	{
+		prevState = currState;
+		currState = AVOID_OBSTACLE;
+		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+	}
+	if ( (sonarLeftData <= 0.25 || sonarCenterData <= 0.25 || sonarRightData <= 0.25) && currState == INIT && rotate2 )
+
+	{
+		prevState = currState;
+		currState = AVOID_OBSTACLE;
+		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+	}
+
+	if ( (sonarLeftData <= 0.6 || sonarRightData <= 0.6) && (currState == DROPOFF && (logicController->dropoffController.toSpiralEdge) ) )
+
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
@@ -668,7 +758,8 @@ void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& msg) {
 	//std_msgs::Float32MultiArray receivedCoordinate[2];
 	float x = msg->data[0];
 	float y = msg->data[1];
-	logicController->addVisitedLocation(x, y);
+	//logicController->addVisitedLocation(x, y);
+	logicController->visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 	//visitedLocations[x].insert(y);
 	//visitedLocations[myCoordinate[0]].insert(myCoordinate[1]);
 	//visitedLocationsPublisher.publish(myCoordinate);

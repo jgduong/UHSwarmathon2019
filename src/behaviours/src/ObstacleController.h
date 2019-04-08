@@ -65,6 +65,8 @@ class ObstacleController {
 	  }
   
       Swarmie DoWork(int prev, bool noForwards) {
+	      swarmie.centerX = centerOffsetX;
+		  swarmie.centerY = centerOffsetY;
       cout << "Currently in the AVOID OBSTACLE state" << endl;
       
       swarmie.obstacleSuccess = false;
@@ -74,13 +76,13 @@ class ObstacleController {
       {
 	  swarmie.pickupSuccess = false;
      	  swarmie.dropoffSuccess = false;
-          if (SonarCenter <= 1.5)
+          if (SonarCenter <= 1.25)
           {
  		cout << "center detection still, sonarCenter is: " << SonarCenter << endl;
               swarmie.left = -100.0;
               swarmie.right = 100.0;
           }
-          else if (SonarRight <= 1.5)
+          else if (SonarRight <= 1.25)
           {
 		  cout << "right detection still, sonarRight is: " << SonarRight << endl;
               swarmie.left = -100.0;
@@ -91,12 +93,12 @@ class ObstacleController {
 			  swarmie.right = 75.0;
 		  }
           }
-          else if (SonarLeft <= 1.5)
+          else if (SonarLeft <= 1.25)
           {
 		  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
               swarmie.left = -100.0;
               swarmie.right = 100.0;
-		  if (SonarCenter >= 1.5 && SonarRight >= 0.3)
+		  if (SonarCenter >= 1.5 && SonarLeft >= 0.3)
 		  {
 			  swarmie.left = 75.0;
 			  swarmie.right = 75.0;
@@ -115,7 +117,7 @@ class ObstacleController {
           }
         
       }
-	if (prevState == PICKUP)
+	else if (prevState == PICKUP)
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
@@ -148,36 +150,49 @@ class ObstacleController {
 		}
 	}
 	      
-	if (prevState == DROPOFF && !noForwards)
+	else if (prevState == DROPOFF && !noForwards)
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
-		if (SonarCenter <= 1.5 && SonarLeft >= 2.9 && SonarRight >= 2.9)
+		/*if (SonarCenter <= 1.35 && SonarLeft >= 2.9 && SonarRight >= 2.9)
 		  {
+			
 			cout << "center detection still, sonarCenter is: " << SonarCenter << endl;
-		      swarmie.left = -100.0;
-		      swarmie.right = 100.0;
-		  }
-		  else if (SonarRight <= 1.5)
+			if (SonarRight > SonarLeft)
+			{
+		      		swarmie.left = -100.0;
+		      		swarmie.right = 100.0;
+			}
+			else if (SonarLeft > SonarRight)
+			{
+				swarmie.left = 100.0;
+				swarmie.right = -100.0;
+			}
+			else {
+				swarmie.left = -100.0;
+		      		swarmie.right = 100.0;
+			}
+		  }*/
+		  if (SonarRight <= 0.5 && SonarRight < SonarLeft)
 		  {
 			  cout << "right detection still, sonarRight is: " << SonarRight << endl;
 		      swarmie.left = -100.0;
 		      swarmie.right = 100.0;
-			  if (SonarCenter >= 1.5 && SonarRight >= 0.3)
+			  if (SonarRight <= 0.35)
 			  {
-				  swarmie.left = 75.0;
-				  swarmie.right = 75.0;
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
 			  }
 		  }
-		  else if (SonarLeft <= 1.5)
+		  else if (SonarLeft <= 0.5)
 		  {
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
 		      swarmie.left = 100.0;
 		      swarmie.right = -100.0;
-			  if (SonarCenter >= 1.5 && SonarLeft >= 0.3)
+			  if (SonarLeft <= 0.35)
 			  {
-				  swarmie.left = 75.0;
-				  swarmie.right = 75.0;
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
 			  }
 		  }
 		  else {
@@ -185,7 +200,7 @@ class ObstacleController {
 		      swarmie.left = 75.0;
 			swarmie.right = 75.0;
 			 delayCounter++;	  
-			  if (delayCounter >= 10)
+			  if (delayCounter >= 15)
 			  {
 				swarmie.obstacleSuccess = true;
 				  delayCounter = 0;
@@ -198,35 +213,76 @@ class ObstacleController {
 		cout << "noForward motions is TRUE" << endl;
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
-		if (SonarCenter <= 0.35 && SonarLeft >= 2.9 && SonarRight >= 2.9)
+		/*if (SonarCenter <= 1.5 && SonarLeft >= 2.9 && SonarRight >= 2.9)
 		{
-			cout << "center detection still, sonarCenter is: " << SonarCenter << endl;
-		      swarmie.left = -100.0;
-		      swarmie.right = 80.0;
-		}
-		else if (SonarLeft <= 0.35)
+			if (SonarRight > SonarLeft)
+			{
+				swarmie.left = -100.0;
+				swarmie.right = 80.0;
+			}
+			else if (SonarLeft > SonarRight)
+			{
+				swarmie.left = 80.0;
+				swarmie.right = -100.0;
+			}
+			else {
+				swarmie.left = -100.0;
+				swarmie.right = 80.0;
+			}
+		}*/
+		if (SonarLeft <= 0.5 && SonarLeft < SonarRight)
 		{
 			  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
 		      swarmie.left = 80.0;
 		      swarmie.right = -100.0;
+			
+			if (SonarLeft <= 0.35)
+			  {
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
+			  }
+			
 		}
-		else if (SonarRight <= 0.35)
+		else if (SonarRight <= 0.5)
 		{
 			cout << "right detection still, sonarRight is: " << SonarRight << endl;
 		      swarmie.left = -100.0;
 		      swarmie.right = 80.0;
+			if (SonarRight <= 0.35)
+			  {
+				  swarmie.left = -50.0;
+				  swarmie.right = -50.0;
+			  }
 		}
 		else {
 			cout << "obstacle controller has successfully rotated away from obstacle" << endl;
-			swarmie.left = -30.0;
-			swarmie.right = -30.0;
+			swarmie.left = -40.0;
+			swarmie.right = -40.0;
 			 delayCounter++;	  
-			  if (delayCounter >= 8)
+			  if (delayCounter >= 12)
 			  {
 				swarmie.obstacleSuccess = true;
 				  delayCounter = 0;
 			  }
 		}
+	}
+	else if (prevState == INIT)
+	{
+		swarmie.pickupSuccess = false;
+               swarmie.dropoffSuccess = false;
+		  if (SonarRight <= 0.25) {
+		      cout << "Obstacle detected on the right in the INIT stage" << endl;
+		      swarmie.left = -100.0;
+		      swarmie.right = 100.0;
+		  }
+		  else if (SonarLeft <= 0.25) {
+		      cout << "Obstacle detected on the left in the init stage" << endl;
+		      swarmie.left = 100.0;
+		      swarmie.right = -100.0;
+		  }
+		  else if (SonarLeft > 0.25 && SonarRight > 0.25) {
+		swarmie.obstacleSuccess = true;      
+		  }
 	}
 
 

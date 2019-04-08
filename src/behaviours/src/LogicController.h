@@ -110,24 +110,24 @@ class LogicController {
 		    else if (state == AVOID_OBSTACLE) {
 		      swarmie = obstacleController.DoWork(prev, dropoffController.noForwards);
 			    // VERY EXPERIMENTAL
-		      if (prev == PICKUP && dropoffController.initCalc == true)
+		      /*if (prev == PICKUP && dropoffController.initCalc == true)
 		      {
 			      dropoffController.spiralX = currX;
 			      dropoffController.spiralY = currY;
 			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
-		      }
+		      }*/
 		    }
 		    else if (state == PICKUP) {
 		      swarmie = pickupController.DoWork();
 		    }
 		    else if (state == DROPOFF) {
-		      if (prev == PICKUP && dropoffController.initCalc == true)
+		      /*if (prev == PICKUP && dropoffController.initCalc == true)
 		      {
 			      dropoffController.spiralX = currX;
 			      dropoffController.spiralY = currY;
 			      cout << "spiralX and spiralY have been set to: " << dropoffController.spiralX << ", " << dropoffController.spiralY << endl;
-		      }
-		      swarmie = dropoffController.DoWork();
+		      }*/
+		      swarmie = dropoffController.DoWork(visitedLocations);
 		    }
 		    else if (state == FIND_SPIRAL_EDGE) {
 		      //FindEdgeController.DoWork();
@@ -162,6 +162,8 @@ class LogicController {
 	    	centerOffsetY = y;
 		spiralSearchController.setCenterOffset(x, y);
 		dropoffController.setCenterOffset(x, y);
+		  pickupController.setCenterOffset(x, y);
+		  obstacleController.setCenterOffset(x, y);
 	  }
 	
 	    void populateMap() {
@@ -367,7 +369,8 @@ class LogicController {
 	  }
 	
 	void addVisitedLocation(float x, float y) {
-        	if (currState == SPIRAL_SEARCH || currState == AVOID_OBSTACLE) {
+        	if (currState == SPIRAL_SEARCH || (currState == AVOID_OBSTACLE && prevState == SPIRAL_SEARCH) ) 
+		{
            	 	visitedLocations[normalizedValue(x)].insert(normalizedValue(y));
 			//cout << "x,y: " << normalizedValue(x) << ", " << normalizedValue(y) << " has been added" << endl;
         	}
