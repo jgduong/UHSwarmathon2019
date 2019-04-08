@@ -697,7 +697,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 		currState = AVOID_OBSTACLE;
 		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
 	}
-	if ((sonarLeftData <= 0.3 || sonarCenterData <= 0.3 || sonarRightData <= 0.3) && (currState == PICKUP && logicController->pickupController.approachCube == false && logicController->pickupController.reverse == false ))
+	if ((sonarLeftData <= 0.3 || sonarCenterData <= 0.3 || sonarRightData <= 0.3) && (currState == PICKUP && logicController->pickupController.approachCube == false && (logicController->pickupController.reverse == false || logicController->pickupController.pickUpDelay < 10)))
 	{
 		prevState = currState;
 		currState = AVOID_OBSTACLE;
