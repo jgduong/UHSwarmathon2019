@@ -399,6 +399,17 @@ class DropoffController {
 				  swarmie.left = -30.0;
 				  swarmie.right = 30.0;
 			}  */
+			  if (calcDistance(currX, currY, spiralX, spiralY) <= 0.15)
+			  {
+				  cout << "close enough to spiralx, spiraly lol" << endl;
+				  swarmie.left = 0.0;
+              		  	  swarmie.right = 0.0;
+               		  	 backToSpiral = false;
+				distanceToHome = 0.0;
+				distTravelled = 0.0;
+				distToSpiral = 0.0;
+				rotate90 = true;
+			  }
 			  
 			 
               		if (distToSpiral - distTravelled <= 0.01) {
