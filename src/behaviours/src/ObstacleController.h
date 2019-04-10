@@ -310,8 +310,6 @@ class ObstacleController {
 			 delayCounter = 0;
 		  }
           }
-        
-      }
 	}
 	else if (prevState == INIT)
 	{
