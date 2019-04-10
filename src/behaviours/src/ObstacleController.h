@@ -150,7 +150,7 @@ class ObstacleController {
 		}
 	}
 	      
-	else if (prevState == DROPOFF && !noForwards)
+	else if (prevState == DROPOFF && !noForwards && !backToSpiral)
 	{
 		swarmie.pickupSuccess = false;
      		swarmie.dropoffSuccess = false;
@@ -208,7 +208,7 @@ class ObstacleController {
 
 		  }
 	}
-	else if (prevState == DROPOFF && noForwards)
+	else if (prevState == DROPOFF && noForwards && !backToSpiral)
 	{
 		cout << "noForward motions is TRUE" << endl;
 		swarmie.pickupSuccess = false;
@@ -265,6 +265,53 @@ class ObstacleController {
 				  delayCounter = 0;
 			  }
 		}
+	}
+	else if (prevState == DROPOFF && backToSpiral)
+	{
+		cout << "DETECTED while driving back to spiral.. " << endl;
+		swarmie.pickupSuccess = false;
+     	  swarmie.dropoffSuccess = false;
+          if (SonarCenter <= 1.25)
+          {
+ 		cout << "center detection still, sonarCenter is: " << SonarCenter << endl;
+              swarmie.left = -100.0;
+              swarmie.right = 100.0;
+          }
+          else if (SonarRight <= 1.25)
+          {
+		  cout << "right detection still, sonarRight is: " << SonarRight << endl;
+              swarmie.left = -100.0;
+              swarmie.right = 100.0;
+		  if (SonarCenter >= 1.5 && SonarRight >= 0.3)
+		  {
+			  swarmie.left = 75.0;
+			  swarmie.right = 75.0;
+		  }
+          }
+          else if (SonarLeft <= 1.25)
+          {
+		  cout << "left detection still, sonarLeft is: " << SonarLeft << endl;
+              swarmie.left = -100.0;
+              swarmie.right = 100.0;
+		  if (SonarCenter >= 1.5 && SonarLeft >= 0.3)
+		  {
+			  swarmie.left = 75.0;
+			  swarmie.right = 75.0;
+		  }
+          }
+          else {
+              cout << "obstacle controller has successfully rotated away from obstacle" << endl;
+		swarmie.left = 75.0;
+		swarmie.right = 75.0;
+		 delayCounter++;	  
+		  if (delayCounter >= 10)
+		  {
+             	 	swarmie.obstacleSuccess = true;
+			 delayCounter = 0;
+		  }
+          }
+        
+      }
 	}
 	else if (prevState == INIT)
 	{
