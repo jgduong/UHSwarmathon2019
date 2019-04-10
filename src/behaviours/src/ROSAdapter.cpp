@@ -525,6 +525,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.rotate180 = false;
 					logicController->dropoffController.backToSpiral = false;
 					logicController->dropoffController.rotate90 = false;
+					
+					logicController->obstacleController.backToSpiral = false;
 				}
 				else if (logicController->dropoffController.backToSpiral == true && logicController->dropoffController.toSpiralEdge == false)
 				{
@@ -536,6 +538,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.backToSpiral = false;
 					logicController->dropoffController.distTravelled = 0.0;
 					logicController->dropoffController.rotate90 = false;
+					
+					logicController->obstacleController.backToSpiral = true;
 				}
 				else if (logicController->dropoffController.backToSpiral != true && logicController->dropoffController.toSpiralEdge == true)
 				{
@@ -547,6 +551,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.backToSpiral = false;
 					logicController->dropoffController.distTravelled = 0.0;
 					logicController->dropoffController.rotate90 = true;
+					
+					logicController->obstacleController.backToSpiral = false;
 				}
 			}
 			else if (prevState == PICKUP)
