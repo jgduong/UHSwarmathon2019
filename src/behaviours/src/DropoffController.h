@@ -330,7 +330,7 @@ class DropoffController {
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
 			//ninetyRotate = currTheta;
-			  if (calcDistance(currX, currY, spiralX, spiralY) <= 0.1)
+			  if (calcDistance(currX, currY, spiralX, spiralY) <= 0.15)
 			  {
 				  cout << "already back @ spiral, no need to rotate.. " << endl;
 				  rotate180 = false;
