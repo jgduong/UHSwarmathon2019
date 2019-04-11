@@ -48,7 +48,7 @@ public:
 	{
 		tags.push_back(tagsReceived[i]);
 		if (tagsReceived[i].getPositionX() < minX)
-		if ( abs( -0.03 - tagsReceived[i].getPositionX() ) < minX )
+		if ( abs( -0.023 - tagsReceived[i].getPositionX() ) < minX )
 		{
 			minX = tagsReceived[i].getPositionX();
 			minZ = tagsReceived[i].getPositionZ();
