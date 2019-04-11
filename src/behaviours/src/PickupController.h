@@ -160,21 +160,21 @@ public:
 		    swarmie.right = 0.0;
 		 swarmie.wrist = 1.25;
 		 swarmie.finger = M_PI_2 + 0.2;
-		 if ( minX > -0.020 )
+		 if ( minX > -0.018 )
 		    {
 			//sendDriveCommand(6.0, -5.0);
 			swarmie.left = 5.0;
 			swarmie.right = -6.0;
 			 cout << "calibrating by rotating right... " << endl;
 		    }
-		    else if ( minX < -0.030 )
+		    else if ( minX < -0.028 )
 		    {
 			//sendDriveCommand(-5.0, 7.0);
 			swarmie.left = -6.0;
 			swarmie.right = 5.0;
 			    cout << "calibrating by rotating left... " << endl;
 		    }   
-		    else if (minX <= -0.025 && minX >= -0.035)
+		    else if (minX <= -0.018 && minX >= -0.028)
 		    {
 			    approachCube = false;
 			    approachCube2 = true;
