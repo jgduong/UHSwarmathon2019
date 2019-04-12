@@ -486,10 +486,25 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		
 		if (currState == PICKUP && swarmie.left == 5.0 && swarmie.right == 5.0) {
 		    //centering on tag has failed (timeout), return to spiral search
-		    currState = SPIRAL_SEARCH;
+		    /*currState = SPIRAL_SEARCH;
+			prevState = PICKUP;*/
+			
+			logicController->pickupController.approachCube = false;
+			logicController->pickupController.reverse = false;
+					
+			logicController->dropoffController.initCalc = false;
+			logicController->dropoffController.spinHome = false;
+			logicController->dropoffController.driveToHome = false;
+			logicController->dropoffController.backOff = false;
+			logicController->dropoffController.rotate180 = false;
+			logicController->dropoffController.backToSpiral = false;
+			logicController->dropoffController.distTravelled = 0.0;
+			logicController->dropoffController.rotate90 = true;
+			currState = DROPOFF;
 			prevState = PICKUP;
+			swarmie.obstacleSuccess = false;
 		}
-		if (currState == PICKUP && swarmie.pickupSuccess) {
+		else if (currState == PICKUP && swarmie.pickupSuccess) {
 		    cout << "PICKUP SUCCESS" << endl;
 		    currState = DROPOFF;
 			prevState = PICKUP;
@@ -497,14 +512,29 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			//logicController->dropoffController.spiralY = currentLocationOdom.y + centerOffsetY;
 		    swarmie.pickupSuccess = false;
 		}
-		if (currState == PICKUP && logicController->pickupController.detectionTimeout >= 100)
+		/*if (currState == PICKUP && logicController->pickupController.detectionTimeout >= 100)
 		{
 			cout << "failed to pickup Cube" << endl;
 			currState = SPIRAL_SEARCH;
 			prevState = PICKUP;
 			logicController->pickupController.detectionTimeout = 0;
 			
-		}
+			logicController->pickupController.approachCube = false;
+			logicController->pickupController.reverse = false;
+					
+			logicController->dropoffController.initCalc = false;
+			logicController->dropoffController.spinHome = false;
+			logicController->dropoffController.driveToHome = false;
+			logicController->dropoffController.backOff = false;
+			logicController->dropoffController.rotate180 = false;
+			logicController->dropoffController.backToSpiral = false;
+			logicController->dropoffController.distTravelled = 0.0;
+			logicController->dropoffController.rotate90 = true;
+			currState = DROPOFF;
+			prevState = AVOID_OBSTACLE;
+			swarmie.obstacleSuccess = false;
+			
+		}*/
 		else if (currState == DROPOFF && swarmie.dropoffSuccess) {
 		    cout << "Returning to SpiralSearch" << endl;
 		    currState = SPIRAL_SEARCH;
@@ -572,6 +602,24 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.backToSpiral = false;
 					logicController->dropoffController.distTravelled = 0.0;
 					logicController->dropoffController.rotate90 = false;
+					currState = DROPOFF;
+					prevState = AVOID_OBSTACLE;
+					swarmie.obstacleSuccess = false;
+				}
+				//EXPERIMENTAL no tags detected after avoiding obstacle, find spiral edge
+				else if (logicController->pickupController.tags.size == 0)
+				{
+					logicController->pickupController.approachCube = false;
+					logicController->pickupController.reverse = false;
+					
+					logicController->dropoffController.initCalc = false;
+					logicController->dropoffController.spinHome = false;
+					logicController->dropoffController.driveToHome = false;
+					logicController->dropoffController.backOff = false;
+					logicController->dropoffController.rotate180 = false;
+					logicController->dropoffController.backToSpiral = false;
+					logicController->dropoffController.distTravelled = 0.0;
+					logicController->dropoffController.rotate90 = true;
 					currState = DROPOFF;
 					prevState = AVOID_OBSTACLE;
 					swarmie.obstacleSuccess = false;
