@@ -478,6 +478,9 @@ class DropoffController {
 			 saveSpiralTheta = true;
 			initCalc = true;
 			rotate90 = false;
+			  toSpiralEdge = false;
+			  swarmie.left = 0.0;
+			swarmie.right = 0.0;
 		  }
 		  else
 		  {
