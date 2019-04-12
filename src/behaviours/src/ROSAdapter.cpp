@@ -607,8 +607,9 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					swarmie.obstacleSuccess = false;
 				}
 				//EXPERIMENTAL no tags detected after avoiding obstacle, find spiral edge
-				else if (logicController->pickupController.tags.size == 0)
+				else if (logicController->pickupController.tags.size() == 0)
 				{
+					cout << "after obstacle, ATTEMPTED to return to pickup, but tags.size() = 0 " << endl;
 					logicController->pickupController.approachCube = false;
 					logicController->pickupController.reverse = false;
 					
