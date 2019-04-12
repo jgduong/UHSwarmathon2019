@@ -11,7 +11,7 @@ private:
     //float tagX;
     //float tagY;
     //float tagZ;
-    vector<Tag> tags;
+    
     
     float selfX;
     float selfY;
@@ -24,6 +24,7 @@ private:
     float distTravelled = 0;
 
 public: 
+	vector<Tag> tags;
 	float detectionTimeout = 0.0;
     float zDistanceToCube = 0.0;
     bool approachCube = false;
