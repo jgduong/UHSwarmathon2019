@@ -559,25 +559,28 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				//IF AND ELSE CONDITION INTRODUCED TO PREVENT GETTING STUCK IN SPIRAL AFTER FAILING TO PICKUP (OR INTERRUPTED BY OBSTACLE)
 				//DELETE ENTIRE IF CONDITION, AND REMOVE IF/ELSE STATEMENTS IF BUGGY (leave else)
-				if (logicController->pickupController.reverse == true || swarmie.pickupSuccess == true)
+				if (swarmie.pickupSuccess == true)
 				{
 					logicController->pickupController.approachCube = false;
 					logicController->pickupController.reverse = false;
 					
-					logicController->dropoffController.initCalc = false;
+					logicController->dropoffController.initCalc = true;
 					logicController->dropoffController.spinHome = false;
 					logicController->dropoffController.driveToHome = false;
 					logicController->dropoffController.backOff = false;
 					logicController->dropoffController.rotate180 = false;
 					logicController->dropoffController.backToSpiral = false;
 					logicController->dropoffController.distTravelled = 0.0;
-					logicController->dropoffController.rotate90 = true;
+					logicController->dropoffController.rotate90 = false;
 					currState = DROPOFF;
 					prevState = AVOID_OBSTACLE;
 					swarmie.obstacleSuccess = false;
 				}
 				else {
+					logicController->pickupController.checkInitialDist = true;
+					logicController->pickupController.firstStep = false;
 					logicController->pickupController.approachCube = false;
+					logicController->pickupController.approachCube2 = false;
 					logicController->pickupController.reverse = false;
 				}
 	
