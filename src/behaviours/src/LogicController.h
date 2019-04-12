@@ -169,8 +169,8 @@ class LogicController {
 		{
 		  //initialPop.data.push_back(x);
 		  //initialPop.data.push_back(y);
-
-		  visitedLocations[x].insert(y);
+			cout << "initial hashmap x,y = " << x << ", " << y << endl;
+		  	visitedLocations[x].insert(y);
 		  //visitedLocationsPublisher.publish(initialPop);
 		  //initialPop.data.clear();
 		}
