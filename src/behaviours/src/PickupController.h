@@ -238,6 +238,8 @@ public:
 			    cout << "pickUpController timeout reached" << endl;
 				swarmie.finger = 0;
 				swarmie.wrist = 0;
+				swarmie.left = 5.0;
+				swarmie.right = 5.0;
 		    }
 	}
 	if (reverse)
