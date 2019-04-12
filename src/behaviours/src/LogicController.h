@@ -16,18 +16,11 @@ using namespace std;
 #include "Swarmie.h"
 #include "Tag.h"
 #include "Calculations.h"
-#include "Controller.h"
 #include "SpiralSearchController.h"
 #include "PickupController.h"
 #include "DropoffController.h"
 #include "ObstacleController.h"
-/*
-#include "SearchController.h"
-#include "ObstacleController.h"
-#include "DriveController.h"
-#include "RangeController.h"
-#include "ManualWaypointController.h"
-*/
+
 #include <vector>
 #include <queue>
 
