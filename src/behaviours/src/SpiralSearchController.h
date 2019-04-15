@@ -136,8 +136,9 @@ class SpiralSearchController {
       int n = 0;
       for (n = 1; n <= 4; n++)
       {
-        newX = normalizedValue(currX+ n*0.25*cos(currTheta - 1.571));
-        newY = normalizedValue(currY + n*0.25*sin(currTheta - 1.571));
+	
+        newX = normalizedValue(currX+ n*0.25*cos(currTheta - 1.571) + 0.25*cos(currTheta));
+        newY = normalizedValue(currY + n*0.25*sin(currTheta - 1.571) + 0.25*sin(currTheta));
 
         if (isVisited(normalizedValue(newX), normalizedValue(newY), visitedLocations))
         {
