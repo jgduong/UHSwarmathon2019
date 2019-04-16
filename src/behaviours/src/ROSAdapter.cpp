@@ -660,7 +660,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			{
 				numberOfSpins++;
 			]	
-			prevTheta = currentLocationOdom.theta;
+			//prevTheta = currentLocationOdom.theta;
 				
 			if (numberOfSpins >= 3)
 			{
@@ -688,13 +688,14 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		wristAnglePublish.publish(wrist);
 		sendDriveCommand(swarmie.left, swarmie.right);
 		
-		if (centerOffsetX != swarmie.centerX || centerOffsetY != swarmie.centerY)
+		/*if (centerOffsetX != swarmie.centerX || centerOffsetY != swarmie.centerY)
 		{
 			cout << endl << endl << "old centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl;
 			centerOffsetX = swarmie.centerX;
 			centerOffsetY = swarmie.centerY;
 			cout << "new centerOffsetX, Y = " << centerOffsetX << ", " << centerOffsetY << endl << endl;
-		}
+		}*/
+		prevTheta = currentLocationOdom.theta;
 	}
 	  
 	humanTime();
