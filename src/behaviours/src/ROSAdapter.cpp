@@ -82,6 +82,9 @@ float sonarLeftData = 0.0;
 float sonarCenterData = 0.0;
 float sonarRightData = 0.0;
 
+float prevTheta = 0.0;
+int numberOfSpins = 0;
+
 bool initialized = false;
 
 vector<Tag> tags;
@@ -303,7 +306,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		      centerLocationOdom.y = currentLocationOdom.y;
 		      //centerLocationOdom.theta = currentLocation.theta;
 		      //SET the centerOdom location by passing that variable here
-
+			prevTheta = currentLocationOdom.theta;
 		      centerLocationMap.x = currentLocationMap.x;
 		      centerLocationMap.y = currentLocationMap.y;
 			geometry_msgs::Point temp;
@@ -481,6 +484,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
       		//else 
 		//{
 			swarmie = logicController->DoWork(currState, prevState);
+		
 		//}
 
 		
@@ -647,6 +651,35 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				prevState = AVOID_OBSTACLE;
 				swarmie.obstacleSuccess = false;
 			}
+		}
+		//VERY NEW, attempt to correct for end behavior
+		//NEEDS to move to an appropriate theta first
+		if (currState == SPIRAL_SEARCH)
+		{
+			if (abs(currentLocationOdom.theta - prevTheta) >= 6)
+			{
+				numberOfSpins++;
+			]	
+			prevTheta = currentLocationOdom.theta;
+				
+			if (numberOfSpins >= 3)
+			{
+				logicController->dropoffController.initCalc = false;
+				logicController->dropoffController.spinHome = false;
+				logicController->dropoffController.driveToHome = false;
+				logicController->dropoffController.backOff = false;
+				logicController->dropoffController.rotate180 = false;
+				logicController->dropoffController.backToSpiral = false;
+				logicController->dropoffController.distTravelled = 0.0;
+				logicController->dropoffController.rotate90 = true;
+				
+				logicController->obstacleController.backToSpiral = false;
+				numberofSpins = 0;
+			}
+		}
+		else if (currState != OBSTACLE_AVOIDANCE) 
+		{
+			numberOfSpins = 0;
 		}
 		
 		fngr.data = swarmie.finger;
