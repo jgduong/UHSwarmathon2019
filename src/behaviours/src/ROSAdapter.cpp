@@ -671,6 +671,23 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				logicController->dropoffController.rotate180 = false;
 				logicController->dropoffController.backToSpiral = false;
 				logicController->dropoffController.distTravelled = 0.0;
+				
+				if ( (currentLocationOdom.x + centerOffsetX) > 0 && ( currentLocationOdom.y + centerOffsetY) > 0 )
+				{
+					logicController->dropoffController.spiralTheta = -1.571;
+				}
+				else if ( (currentLocationOdom.x + centerOffsetX) <= 0 && ( currentLocationOdom.y + centerOffsetY) > 0 )
+				{
+					logicController->dropoffController.spiralTheta = 0;
+				}
+				else if ( (currentLocationOdom.x + centerOffsetX) <= 0 && ( currentLocationOdom.y + centerOffsetY) <= 0 )
+				{
+					logicController->dropoffController.spiralTheta = 1.571;
+				}
+				else if ( (currentLocationOdom.x + centerOffsetX) > 0 && ( currentLocationOdom.y + centerOffsetY) <= 0 )
+				{
+					logicController->dropoffController.spiralTheta = 3.12;
+				}
 				logicController->dropoffController.rotate90 = true;
 				
 				logicController->obstacleController.backToSpiral = false;
