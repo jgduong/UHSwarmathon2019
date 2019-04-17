@@ -488,7 +488,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//}
 
 		
-		if (currState == PICKUP && swarmie.left == 5.0 && swarmie.right == 5.0) {
+		if (currState == PICKUP && swarmie.left == 5.0 && swarmie.right == 5.0 && tags.size() == 0) {
 		    //centering on tag has failed (timeout), return to spiral search
 		    /*currState = SPIRAL_SEARCH;
 			prevState = PICKUP;*/
