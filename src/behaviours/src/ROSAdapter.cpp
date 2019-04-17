@@ -659,7 +659,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			if (abs(currentLocationOdom.theta - prevTheta) >= 6)
 			{
 				numberOfSpins++;
-			]	
+			}	
 			//prevTheta = currentLocationOdom.theta;
 				
 			if (numberOfSpins >= 3)
