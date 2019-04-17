@@ -691,10 +691,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				logicController->dropoffController.rotate90 = true;
 				
 				logicController->obstacleController.backToSpiral = false;
-				numberofSpins = 0;
+				numberOfSpins = 0;
 			}
 		}
-		else if (currState != OBSTACLE_AVOIDANCE) 
+		else if (currState != AVOID_OBSTACLE) 
 		{
 			numberOfSpins = 0;
 		}
