@@ -257,6 +257,8 @@ public:
 			swarmie.pickupSuccess = true;
 			checkInitialDist = true;
 			halfStep = false;
+			swarmie.left = 0.0;
+			swarmie.right = 0.0;
 		}
 	}
 
