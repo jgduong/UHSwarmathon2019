@@ -492,6 +492,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		    //centering on tag has failed (timeout), return to spiral search
 		    /*currState = SPIRAL_SEARCH;
 			prevState = PICKUP;*/
+			cout << endl << "PICKUP failed, timeout was reached and no tags are seen anymore. rotate to spiralTheta now" << endl << endl;
 			
 			logicController->pickupController.approachCube = false;
 			logicController->pickupController.reverse = false;
