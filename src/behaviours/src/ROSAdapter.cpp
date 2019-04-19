@@ -664,7 +664,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			}	
 			//prevTheta = currentLocationOdom.theta;
 				
-			if (numberOfSpins >= 5)
+			if (numberOfSpins >= 4)
 			{
 				cout << endl << "USELESS BEHAVIOR DETECTED, CURVING TO NEXT QUADRANT" << endl << endl;
 				logicController->dropoffController.saveSpiralTheta = false;
