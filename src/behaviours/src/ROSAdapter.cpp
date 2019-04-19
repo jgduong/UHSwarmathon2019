@@ -659,12 +659,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		{
 			if (abs(currentLocationOdom.theta - prevTheta) >= 6)
 			{
-				cout << endl << "numberOfSpins has been incremented to : " << numberOfSpins << endl << endl;
 				numberOfSpins++;
+				cout << endl << "numberOfSpins has been incremented to : " << numberOfSpins << endl << endl;
 			}	
 			//prevTheta = currentLocationOdom.theta;
 				
-			if (numberOfSpins >= 3)
+			if (numberOfSpins >= 5)
 			{
 				cout << endl << "USELESS BEHAVIOR DETECTED, CURVING TO NEXT QUADRANT" << endl << endl;
 				logicController->dropoffController.initCalc = false;
@@ -696,6 +696,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				logicController->obstacleController.backToSpiral = false;
 				numberOfSpins = 0;
 				cout << "the new spiralTheta is: " << logicController->dropoffController.spiralTheta << endl;
+				currState = DROPOFF;
+				prevState = SPIRAL_SEARCH;
 			}
 		}
 		else if (currState != AVOID_OBSTACLE) 
