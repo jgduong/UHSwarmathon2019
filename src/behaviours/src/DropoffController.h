@@ -495,7 +495,7 @@ class DropoffController {
 			 	 swarmie.right = 100.0;
 			  }
 			  else {
-				  swarmie.left = 95.0
+				  swarmie.left = 95.0;
 			          swarmie.right = 100.0;
 			  }
 			  	bool maxFrontError = false;
