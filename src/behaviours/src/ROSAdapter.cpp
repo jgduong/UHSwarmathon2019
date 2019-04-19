@@ -657,7 +657,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		//NEEDS to move to an appropriate theta first
 		if (currState == SPIRAL_SEARCH)
 		{
-			if (abs(currentLocationOdom.theta - prevTheta) >= 6)
+			if (abs(currentLocationOdom.theta - prevTheta) >= 6 && logicController->spiralSearchController.FrontError < 0.5)
 			{
 				numberOfSpins++;
 				cout << endl << "numberOfSpins has been incremented to : " << numberOfSpins << endl << endl;
@@ -693,6 +693,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 					logicController->dropoffController.spiralTheta = 3.12;
 				}
 				logicController->dropoffController.rotate90 = true;
+				logicController->dropoffController.straightwards = true;
 				
 				logicController->obstacleController.backToSpiral = false;
 				numberOfSpins = 0;
