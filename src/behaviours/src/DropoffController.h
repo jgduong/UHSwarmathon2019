@@ -124,8 +124,9 @@ class DropoffController {
 			//return swarmie;
 	  	}
 		else if (spinHome) {
-			cout << "initialThetaBeforeHome is: " << initialTheta << endl;
-			float turnSize = homeTheta - initialTheta;
+			//cout << "initialThetaBeforeHome is: " << initialTheta << endl;
+			//float turnSize = homeTheta - initialTheta;
+			float turnSize = homeTheta - currTheta;
 			cout << "turnSize here is: " << turnSize << endl;
 			bool exceedMag = false;
 			//ninetyRotate = currTheta;
