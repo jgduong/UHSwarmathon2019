@@ -667,6 +667,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			if (numberOfSpins >= 5)
 			{
 				cout << endl << "USELESS BEHAVIOR DETECTED, CURVING TO NEXT QUADRANT" << endl << endl;
+				logicController->dropoffController.saveSpiralTheta = false;
 				logicController->dropoffController.initCalc = false;
 				logicController->dropoffController.spinHome = false;
 				logicController->dropoffController.driveToHome = false;
