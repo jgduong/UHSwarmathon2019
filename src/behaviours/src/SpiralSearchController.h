@@ -17,6 +17,9 @@ class SpiralSearchController {
   
     float centerOffsetX;
     float centerOffsetY;
+	
+	float RightError;
+	float FrontError;
     Swarmie swarmie;
     //Wheels.left = 0.0;
     //Wheels.right = 0.0;
@@ -82,7 +85,7 @@ class SpiralSearchController {
 
       //NEWEST METHOD CALCULATING ERROR
       bool maxFrontError = false;
-      float FrontError;
+      //float FrontError;
       int m = 0;
       float newX;
       float newY;
@@ -132,7 +135,7 @@ class SpiralSearchController {
 
 
       bool maxRightError = false;
-      float RightError;
+      //float RightError;
       int n = 0;
       for (n = 1; n <= 4; n++)
       {
