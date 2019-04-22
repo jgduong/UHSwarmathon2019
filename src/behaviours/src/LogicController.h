@@ -230,8 +230,8 @@ class LogicController {
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -30.0;
-					swarmie.right = 30.0;
+					swarmie.left = -50.0;
+					swarmie.right = 50.0;
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 				}
 
@@ -261,8 +261,8 @@ class LogicController {
 				 }	//else, turn right
 				 else {
 					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -30.0;
-					swarmie.right = 30.0;
+					swarmie.left = -50.0;
+					swarmie.right = 50.0;
 				 }
 
 			}
@@ -299,8 +299,8 @@ class LogicController {
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -30.0;
-					swarmie.right = 30.0;
+					swarmie.left = -50.0;
+					swarmie.right = 50.0;
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 				}
 			}
@@ -321,8 +321,8 @@ class LogicController {
 			      }
 			      else {
 				    //sendDriveCommand(-30.0, 30.0);
-				      swarmie.left = -30.0;
-				      swarmie.right = 30.0;
+				      swarmie.left = -50.0;
+				      swarmie.right = 50.0;
 			      }
 			}
 			
@@ -334,8 +334,8 @@ class LogicController {
 			spiralSearchController.updateData(currX, currY, currTheta);
 			cout << "Moving into place to begin spiral search..." << endl;
 			//sendDriveCommand(30.0, 30.0);
-			swarmie.left = 30.0;
-			swarmie.right = 30.0;
+			swarmie.left = 50.0;
+			swarmie.right = 50.0;
 
 			
 			startingTheta = currTheta;
@@ -399,8 +399,8 @@ class LogicController {
 			}
 			else {
 				//sendDriveCommand(30.0, -30.0);
-				swarmie.left = 30.0;
-				swarmie.right = -30.0;
+				swarmie.left = 50.0;
+				swarmie.right = -50.0;
 				cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 			}
 			
@@ -421,8 +421,8 @@ class LogicController {
 		      }
 		      else {
 			    //sendDriveCommand(30.0, -30.0);
-			    swarmie.left = 30;
-			    swarmie.right = -30.0;
+			    swarmie.left = 50;
+			    swarmie.right = -50.0;
 		      }
 
 		}
