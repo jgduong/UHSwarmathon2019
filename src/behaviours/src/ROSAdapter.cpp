@@ -410,7 +410,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			
 			
 			
-			if (swarmie.left == 30.0 && swarmie.right == 30.0 && !rotate2) {
+			if (swarmie.left == 50.0 && swarmie.right == 50.0 && !rotate2) {
 				//2nd rotate done 
 				step2X = currentLocationOdom.x + centerOffsetX;
 				step2Y = currentLocationOdom.y + centerOffsetY;
