@@ -77,7 +77,7 @@ geometry_msgs::Pose2D centerLocationMap;	//A GPS point of the center location, u
 geometry_msgs::Pose2D centerLocationOdom;	//The centers location based on ODOM
 geometry_msgs::Pose2D centerLocationMapRef;	//Variable used in TransformMapCenterToOdom, can be moved to make it local instead of global
 
-
+int currentMode = 0;
 float sonarLeftData = 0.0;
 float sonarCenterData = 0.0;
 float sonarRightData = 0.0;
@@ -285,7 +285,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 		
 		cout << "not initialized detected... " << endl;
-    		if (timerTimeElapsed > startDelayInSeconds)
+    		if (timerTimeElapsed > startDelayInSeconds && currentMode == 2)
 		{
 
 		      cout << "initialization has run..." << endl;
@@ -448,7 +448,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
       			return;
 		}
 	}
-	else {
+	else if (currentMode == 2)
+	{
 		
 		cout << "current location is: " << currentLocationOdom.x + centerOffsetX << ", " << currentLocationOdom.y + centerOffsetY << endl;
 		std_msgs::Float32MultiArray currLocation;
@@ -722,6 +723,10 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		}*/
 		prevTheta = currentLocationOdom.theta;
 	}
+	//stop all swarmies
+	else {
+		sendDriveCommand(0.0, 0.0);
+	}
 	  
 	humanTime();
 	
@@ -735,7 +740,8 @@ void sendDriveCommand(double left, double right)
 	skid_command.right = right;
 
 	// publish the drive commands
-	driveControlPublish.publish(skid_command);}
+	driveControlPublish.publish(skid_command);
+}
 
 void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& message)
 {
@@ -791,6 +797,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 void modeHandler(const std_msgs::UInt8::ConstPtr& message)
 {
 	//set mode auto
+	currentMode = message->data;
 }
 
 void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_msgs::Range::ConstPtr& sonarCenter, const sensor_msgs::Range::ConstPtr& sonarRight)
