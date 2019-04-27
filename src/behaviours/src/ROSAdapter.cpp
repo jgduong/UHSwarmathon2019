@@ -77,7 +77,7 @@ geometry_msgs::Pose2D centerLocationMap;	//A GPS point of the center location, u
 geometry_msgs::Pose2D centerLocationOdom;	//The centers location based on ODOM
 geometry_msgs::Pose2D centerLocationMapRef;	//Variable used in TransformMapCenterToOdom, can be moved to make it local instead of global
 
-int currentMode = 0;
+//int currentMode = 0;
 float sonarLeftData = 0.0;
 float sonarCenterData = 0.0;
 float sonarRightData = 0.0;
