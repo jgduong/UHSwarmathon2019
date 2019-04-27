@@ -727,7 +727,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	else {
 		swarmie.left = 0.0;
 		swarmie.right = 0.0;
-		fngr.data = 0.0;
+		fngr.data = M_PI_2 + 0.2;
 		wrist.data = 0.0;
 		
 		fngr.data = swarmie.finger;
