@@ -368,8 +368,10 @@ class DropoffController {
 				else {
 					cout << "spinning towards SPIRAL at: " << spiralX << ", " << spiralY << endl;
 					//sendDriveCommand(-50.0, 50.0);
-					swarmie.left = -40.0;
-					swarmie.right = 40.0;
+					//swarmie.left = -40.0;
+					//swarmie.right = 40.0;
+					swarmie.left = -50.0;
+					swarmie.right = 50.0;
 					//return swarmie;
 				}
 			}
@@ -390,8 +392,8 @@ class DropoffController {
 				else {
 					cout << "spinning towards SPIRAL at: " << spiralX << ", " << spiralY << endl;
 					//sendDriveCommand(50.0, -50.0);
-					swarmie.left = 40.0;
-					swarmie.right = -40.0;
+					swarmie.left = 50.0;
+					swarmie.right = -50.0;
 					//return swarmie;
 				}
 			}
@@ -458,8 +460,10 @@ class DropoffController {
 				else {
 					cout << "spinning to spiralTheta at: " << spiralTheta << endl;
 					//sendDriveCommand(-50.0, 50.0);
-					swarmie.left = -40.0;
-					swarmie.right = 40.0;
+					//swarmie.left = -40.0;
+					//swarmie.right = 40.0;
+					swarmie.left = -50.0;
+					swarmie.right = 50.0;
 					//return swarmie;
 				}
 			}
@@ -475,8 +479,10 @@ class DropoffController {
 				else {
 					cout << "spinning to spiralTheta at: " << spiralTheta << endl;
 					//sendDriveCommand(50.0, -50.0);
-					swarmie.left = 40.0;
-					swarmie.right = -40.0;
+					//swarmie.left = 40.0;
+					//swarmie.right = -40.0;
+					swarmie.left = 50.0;
+					swarmie.right = -50.0;
 					//return swarmie;
 				}
 			}
