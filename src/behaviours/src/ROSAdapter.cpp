@@ -401,8 +401,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			if (centerInit)
 			{
 				centerInit = false;
-				centerOffsetX = 1.2*cos(currentLocationOdom.theta - M_PI);
-				centerOffsetY = 1.2*sin(currentLocationOdom.theta - M_PI);
+				centerOffsetX = 1.1*cos(currentLocationOdom.theta - M_PI);
+				centerOffsetY = 1.1*sin(currentLocationOdom.theta - M_PI);
 			}
 			logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 			
@@ -685,19 +685,19 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				
 				if ( (currentLocationOdom.x + centerOffsetX) > 0 && ( currentLocationOdom.y + centerOffsetY) > 0 )
 				{
-					logicController->dropoffController.spiralTheta = -1.571;
+					logicController->dropoffController.spiralTheta = -1.571 - 0.1;
 				}
 				else if ( (currentLocationOdom.x + centerOffsetX) <= 0 && ( currentLocationOdom.y + centerOffsetY) > 0 )
 				{
-					logicController->dropoffController.spiralTheta = 0;
+					logicController->dropoffController.spiralTheta = 0 - 0.1;
 				}
 				else if ( (currentLocationOdom.x + centerOffsetX) <= 0 && ( currentLocationOdom.y + centerOffsetY) <= 0 )
 				{
-					logicController->dropoffController.spiralTheta = 1.571;
+					logicController->dropoffController.spiralTheta = 1.571 - 0.1;
 				}
 				else if ( (currentLocationOdom.x + centerOffsetX) > 0 && ( currentLocationOdom.y + centerOffsetY) <= 0 )
 				{
-					logicController->dropoffController.spiralTheta = 3.12;
+					logicController->dropoffController.spiralTheta = 3.12 - 0.12;
 				}
 				logicController->dropoffController.rotate90 = true;
 				logicController->dropoffController.straightwards = true;
