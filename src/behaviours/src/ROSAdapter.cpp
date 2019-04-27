@@ -318,7 +318,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			//TEMPORARY TESTING FOR CENTER OFFSET
 			//2/11/19, increased intensity of starting positions, from 0.2 to 0.325 to 0.5 and now 0.45
 			//calculates the center offset based on starting location
-			if (centerInit && ((currentLocationOdom.theta >= -0.15 && currentLocationOdom.theta <= 0) || (currentLocationOdom.theta<= 0.15 && currentLocationOdom.theta >= 0)))
+			/*if (centerInit && ((currentLocationOdom.theta >= -0.15 && currentLocationOdom.theta <= 0) || (currentLocationOdom.theta<= 0.15 && currentLocationOdom.theta >= 0)))
 			{
 				centerInit = false;
 				centerLocationOdom.x = currentLocationOdom.x - 1.0 - 0.45;
@@ -397,6 +397,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
 				centerOffsetX = -1;
 				centerOffsetY = 1;
 				cout << "current location is: " << currentLocationOdom.x + 1.207*cos(3.142/4) + 0.45 << ", " << currentLocationOdom.y - 1.207*sin(3.142/4) - 0.45 << endl;
+			}*/
+			if (centerInit)
+			{
+				centerInit = false;
+				centerOffsetX = 1.2*cos(currentLocationOdom.theta - M_PI);
+				centerOffsetY = 1.2*sin(currentLocationOdom.theta - M_PI);
 			}
 			logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 			
