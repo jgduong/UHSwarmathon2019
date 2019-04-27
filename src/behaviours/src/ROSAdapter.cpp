@@ -725,7 +725,16 @@ void behaviourStateMachine(const ros::TimerEvent&)
 	}
 	//stop all swarmies
 	else {
-		sendDriveCommand(0.0, 0.0);
+		swarmie.left = 0.0;
+		swarmie.right = 0.0;
+		fngr.data = 0.0;
+		wrist.data = 0.0;
+		
+		fngr.data = swarmie.finger;
+		wrist.data = swarmie.wrist;
+		fingerAnglePublish.publish(fngr);
+		wristAnglePublish.publish(wrist);
+		sendDriveCommand(swarmie.left, swarmie.right);
 	}
 	  
 	humanTime();
