@@ -83,10 +83,10 @@ public:
 	    {
 		    if (minZ < 0.4)
 		    {
-			    swarmie.left = -30.0;
-			    swarmie.right = -30.0;
-			    //swarmie.left = -40.0;
-			    //swarmie.right = -40.0;
+			    //swarmie.left = -30.0;
+			    //swarmie.right = -30.0;
+			    swarmie.left = -40.0;
+			    swarmie.right = -40.0;
 		    }
 		    else {
 			    swarmie.left = 0.0;
@@ -102,16 +102,16 @@ public:
                 //sendDriveCommand(6.0, -5.0);
                 //swarmie.left = 6.0;
                 //swarmie.right = -5.0;
-		    swarmie.left = 38.0;
-		   swarmie.right = -35.0;
+		    swarmie.left = 28.0;
+		   swarmie.right = -25.0;
             }
             else if ( minX < -0.04 & detectionTimeout < 100 && !approachCube && firstStep)
             {
                 //sendDriveCommand(-5.0, 7.0);
                 //swarmie.left = -5.0;
                 //swarmie.right = 7.0;
-		    swarmie.left = -35.0;
-		    swarmie.right = 38.0;
+		    swarmie.left = -25.0;
+		    swarmie.right = 28.0;
             }
             else if (minX <= -0.02 && minX >= -0.04 && !approachCube && firstStep)
             {
@@ -172,8 +172,8 @@ public:
 			//sendDriveCommand(6.0, -5.0);
 			//swarmie.left = 6.0;
 			//swarmie.right = -5.0;
-			 swarmie.left = 38.0;
-			 swarmie.right = -35.0;
+			 swarmie.left = 28.0;
+			 swarmie.right = -25.0;
 			 cout << "calibrating by rotating right... " << endl;
 		    }
 		    else if ( minX < -0.028 )
@@ -181,8 +181,8 @@ public:
 			//sendDriveCommand(-5.0, 7.0);
 			//swarmie.left = -5.0;
 			//swarmie.right = 7.0;
-			    swarmie.left = -35.0;
-			    swarmie.right = 38.0;
+			    swarmie.left = -25.0;
+			    swarmie.right = 28.0;
 			    cout << "calibrating by rotating left... " << endl;
 		    }   
 		    else if (minX <= -0.018 && minX >= -0.028)
