@@ -202,6 +202,23 @@ class SpiralSearchController {
       }
       cout << "sending drive commands: " << leftDrive << ", " << rightDrive << endl;
       //sendDriveCommand(leftDrive, rightDrive);
+	
+	    //change drive command if physical
+     if (!simulation) {
+	     bool leftNeg = false;
+	     bool rightNeg = false;
+	     
+	     if (leftDrive < 0) leftNeg = true;
+	     if (rightDrive < 0) rightNeg = true;
+	     
+	     leftDrive = (abs(leftDrive) * 0.7) + 30;
+	     rightDrive = (abs(rightDrive) * 0.7) + 30;
+	     
+	     if (leftNeg) leftDrive *= -1;
+	     if (rightNeg) rightNeg *= -1; 
+     }
+	    
+	    
       swarmie.left = leftDrive;
       swarmie.right = rightDrive;
 
