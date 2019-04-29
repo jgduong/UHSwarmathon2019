@@ -104,6 +104,11 @@ class LogicController {
 		else {
 			cout << "Physical is running" << endl;	
 		}
+		
+		spiralSearchController.setSimulationBool(simulation);
+		obstacleController.setSimulationBool(simulation);
+		pickupController.setSimulationBool(simulation);
+		dropoffController.setSimulationBool(simulation);
 	}
 
 	  Swarmie DoWork(int state, int prev) {
@@ -134,9 +139,7 @@ class LogicController {
 		      }*/
 		      swarmie = dropoffController.DoWork(visitedLocations);
 		    }
-		    else if (state == FIND_SPIRAL_EDGE) {
-		      //FindEdgeController.DoWork();
-		    }
+
 		    return swarmie;
 	  }
 	
