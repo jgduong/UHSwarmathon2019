@@ -35,7 +35,7 @@ class ObstacleController {
 	bool backOff = false;
 	bool rotate180 = false;
 	bool backToSpiral = false;
-  
+  	bool simulation = false;
   
 	int delayCounter = 0;
 	
@@ -53,16 +53,21 @@ class ObstacleController {
 	      currY = y;
 	      currTheta = theta;
 	  }
-    void updateSonar(float left, float center, float right) {
-        SonarLeft = left;
-        SonarCenter = center;
-        SonarRight = right;
-    }
+	
+	    void updateSonar(float left, float center, float right) {
+		SonarLeft = left;
+		SonarCenter = center;
+		SonarRight = right;
+	    }
 
 	  void setCenterOffset(float x, float y) {
 	      centerOffsetX = x;
 	      centerOffsetY = y;
 	  }
+	
+	   void setSimulationBool(bool isSim) {
+	   	simulation = isSim;
+	   }
   
       Swarmie DoWork(int prev, bool noForwards) {
 	      swarmie.centerX = centerOffsetX;
