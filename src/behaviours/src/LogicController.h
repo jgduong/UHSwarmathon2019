@@ -245,8 +245,8 @@ class LogicController {
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -50.0;
-					swarmie.right = 50.0;
+					swarmie.left = -40.0;
+					swarmie.right = 40.0;
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 				}
 
@@ -276,8 +276,8 @@ class LogicController {
 				 }	//else, turn right
 				 else {
 					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -50.0;
-					swarmie.right = 50.0;
+					swarmie.left = -40.0;
+					swarmie.right = 40.0;
 				 }
 
 			}
@@ -314,8 +314,8 @@ class LogicController {
 				}
 				else {
 					//sendDriveCommand(-30.0, 30.0);
-					swarmie.left = -50.0;
-					swarmie.right = 50.0;
+					swarmie.left = -40.0;
+					swarmie.right = 40.0;
 					cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 				}
 			}
@@ -336,8 +336,8 @@ class LogicController {
 			      }
 			      else {
 				    //sendDriveCommand(-30.0, 30.0);
-				      swarmie.left = -50.0;
-				      swarmie.right = 50.0;
+				      swarmie.left = -40.0;
+				      swarmie.right = 40.0;
 			      }
 			}
 			
@@ -414,8 +414,8 @@ class LogicController {
 			}
 			else {
 				//sendDriveCommand(30.0, -30.0);
-				swarmie.left = 50.0;
-				swarmie.right = -50.0;
+				swarmie.left = 40.0;
+				swarmie.right = -40.0;
 				cout << "still rotating to calculated desired theta: " << desiredTheta << endl;
 			}
 			
@@ -436,8 +436,8 @@ class LogicController {
 		      }
 		      else {
 			    //sendDriveCommand(30.0, -30.0);
-			    swarmie.left = 50;
-			    swarmie.right = -50.0;
+			    swarmie.left = 40;
+			    swarmie.right = -40.0;
 		      }
 
 		}
