@@ -206,7 +206,7 @@ int main(int argc, char **argv) {
   mapSubscriber = mNH.subscribe((publishedName + "/odom/ekf"), 10, mapHandler);						//receives GPS data
 
   nameSubscriber = mNH.subscribe(("/swarmies"), 10, nameHandler);							//syncs a list of names
-  sbridgeDetectionSubscriber = mNH.subscribe((published_name + "/sbridge/heartbeat"), 1, sbrdigeDetectionHandler);
+  sbridgeDetectionSubscriber = mNH.subscribe((publishedName + "/sbridge/heartbeat"), 1, sbridgeDetectionHandler);
 	
   //virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler);					//receives data for vitrual boundaries
   manualWaypointSubscriber = mNH.subscribe((publishedName + "/waypoints/cmd"), 10, manualWaypointHandler);		//receives manual waypoints given from GUI
