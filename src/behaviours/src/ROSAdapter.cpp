@@ -277,6 +277,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
+	humanTime();
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
 	
@@ -743,7 +744,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		sendDriveCommand(swarmie.left, swarmie.right);
 	}
 	  
-	humanTime();
+	
 	
 		
 }
