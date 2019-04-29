@@ -294,7 +294,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 		
 		//set boolean to determine which drive commands to use
-		logicController->setSimBool(simulation);
+		logicController->setSimulationBool(simulation);
 		
 		cout << "not initialized detected... " << endl;
     		if (timerTimeElapsed > startDelayInSeconds && currentMode == 2)
