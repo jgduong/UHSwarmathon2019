@@ -33,7 +33,9 @@ public:
 	bool halfStep = false;
 	bool firstStep = false;
 	bool checkInitialDist = true;
-    Swarmie swarmie;
+	bool simulation = false;
+    	Swarmie swarmie;
+	
     float minX;
 	float minZ;
     float indexOfClosestTag;
@@ -57,6 +59,10 @@ public:
 		}
 	}
     }
+	
+   void setSimulationBool(bool isSim) {
+	   simulation = isSim;
+   }
     
     void updateData(float x, float y) {
 	    	selfX = x;
