@@ -86,6 +86,7 @@ float prevTheta = 0.0;
 int numberOfSpins = 0;
 
 bool initialized = false;
+bool simulation = false;
 
 vector<Tag> tags;
 
@@ -106,6 +107,7 @@ ros::Publisher waypointFeedbackPublisher;	//publishes a waypoint to travel to if
 ros::Publisher robotLocationGPS;			//publishes name of robot to /swarmies
 ros::Publisher robotnamePublisher;			//publishes name of robot to /swarmies
 ros::Publisher visitedLocationsPublisher;
+ros::Publisher robotNamePublisher;
 
 // Subscribers
 ros::Subscriber joySubscriber;			//receives joystick information
@@ -119,6 +121,7 @@ ros::Subscriber virtualFenceSubscriber;		//receives data for vitrual boundaries
 ros::Subscriber manualWaypointSubscriber; 	//receives manual waypoints given from GUI
 ros::Subscriber nameSubscriber;			//testing
 ros::Subscriber visitedLocationsSubscriber;
+ros::Subscriber sbridgeDetectionSubscriber;
 
 // Timers
 ros::Timer stateMachineTimer;
@@ -160,6 +163,7 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 
 void nameHandler(const geometry_msgs::Point::ConstPtr& message);				//subscriber to sync names of robots together
 void visitedLocationsHandler(const std_msgs::Float32MultiArray::ConstPtr& message);
+void sbridgeDetectionHandler(const std_msgs::String::ConstPtr& msg);
 
 // Converts the time passed as reported by ROS (which takes Gazebo simulation rate into account) into milliseconds as an integer.
 long int getROSTimeInMilliSecs();
@@ -202,7 +206,7 @@ int main(int argc, char **argv) {
   mapSubscriber = mNH.subscribe((publishedName + "/odom/ekf"), 10, mapHandler);						//receives GPS data
 
   nameSubscriber = mNH.subscribe(("/swarmies"), 10, nameHandler);							//syncs a list of names
-
+  sbridgeDetectionSubscriber = mNH.subscribe((published_name + "/sbridge/heartbeat"), 1, sbrdigeDetectionHandler);
 	
   //virtualFenceSubscriber = mNH.subscribe(("/virtualFence"), 10, virtualFenceHandler);					//receives data for vitrual boundaries
   manualWaypointSubscriber = mNH.subscribe((publishedName + "/waypoints/cmd"), 10, manualWaypointHandler);		//receives manual waypoints given from GUI
@@ -221,6 +225,7 @@ int main(int argc, char **argv) {
   heartbeatPublisher = mNH.advertise<std_msgs::String>((publishedName + "/behaviour/heartbeat"), 1, true);		//publishes ROSAdapters status via its "heartbeat"
   waypointFeedbackPublisher = mNH.advertise<swarmie_msgs::Waypoint>((publishedName + "/waypoints"), 1, true);		//publishes a waypoint to travel to if the rover is given a waypoint in manual mode
   visitedLocationsPublisher = mNH.advertise<std_msgs::Float32MultiArray>(("/visitedLocation"), 10, true);
+  robotNamePublisher = mNH.advertise<std_msgs::String>(("/robotName/status"), 1, true);
 	
   robotLocationGPS = mNH.advertise<geometry_msgs::Point>(("/swarmies"), 10, true);						//publishes robotnames to /swarmies
 
@@ -239,6 +244,10 @@ int main(int argc, char **argv) {
   std_msgs::String msg;
   msg.data = "Log Started";
   infoLogPublisher.publish(msg);
+	
+  std_msgs::String robotName;
+  robotName.data = "UH Main Campus";
+  robotNamePublisher.publish(robotName);
   
   stringstream ss;
   ss << "Rover start delay set to " << startDelayInSeconds << " seconds";
@@ -277,7 +286,6 @@ void behaviourStateMachine(const ros::TimerEvent&)
 {
 	//cout << "an instance of behaviorStateMachine has run... " << endl;
 	timerTimeElapsed = time(0) - timerStartTime;
-	humanTime();
 	
 	cout << "CURRENT STATE IS : " << currState << endl;
 	
@@ -285,10 +293,12 @@ void behaviourStateMachine(const ros::TimerEvent&)
   	{	
 		logicController->updateData(currentLocationOdom.x + centerOffsetX, currentLocationOdom.y + centerOffsetY, currentLocationOdom.theta);
 		
+		//set boolean to determine which drive commands to use
+		logicController->setSimBool(simulation);
+		
 		cout << "not initialized detected... " << endl;
     		if (timerTimeElapsed > startDelayInSeconds && currentMode == 2)
 		{
-
 		      cout << "initialization has run..." << endl;
 		      //initialized = true;
 			
@@ -402,8 +412,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			if (centerInit)
 			{
 				centerInit = false;
-				centerOffsetX = 1.1*cos(currentLocationOdom.theta - M_PI);
-				centerOffsetY = 1.1*sin(currentLocationOdom.theta - M_PI);
+				centerOffsetX = 1.414*cos(currentLocationOdom.theta - M_PI);
+				centerOffsetY = 1.414*sin(currentLocationOdom.theta - M_PI);
 			}
 			logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 			
@@ -744,7 +754,7 @@ void behaviourStateMachine(const ros::TimerEvent&)
 		sendDriveCommand(swarmie.left, swarmie.right);
 	}
 	  
-	
+	humanTime();
 	
 		
 }
@@ -810,6 +820,9 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	
 }
 
+void sbridgeDetectionHandler(const std_msgs::String::ConstPtr& msg) {
+	simulation = true;
+}
 void modeHandler(const std_msgs::UInt8::ConstPtr& message)
 {
 	//set mode auto
@@ -1114,7 +1127,6 @@ void humanTime()
     frac = 0;
   }
   
-  //cout << "ROS time is: " << getROSTimeInMilliSecs() / 1000;
   //cout << "System has been Running for :: " << hoursTime << " : hours " << minutesTime << " : minutes " << timeDiff << "." << frac << " : seconds" << endl; //you can remove or comment this out it just gives indication something is happening to the log file
 }
 
