@@ -42,6 +42,7 @@ class DropoffController {
 	bool saveSpiralTheta = true;
 	bool rotate90 = false;
 	bool tagsExist = false;
+	bool simulation = false;
 	
 	bool toSpiralEdge = false;
 	bool straightwards = false;
@@ -64,12 +65,17 @@ class DropoffController {
 	      currY = y;
 	      currTheta = theta;
 	  }
+	
+	  void setSimulationBool(bool isSim) {
+	   	simulation = isSim;
+   	  }
 
 
 	  void setCenterOffset(float x, float y) {
 	      centerOffsetX = x;
 	      centerOffsetY = y;
 	  }
+	
 	    bool isVisited(float x, float y, unordered_map<float, set<float>> &visitedLocations) {
 	      float normX = normalizedValue(x);
 	      float normY = normalizedValue(y);
