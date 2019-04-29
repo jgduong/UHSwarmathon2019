@@ -65,6 +65,8 @@ class LogicController {
     	float centerOffsetY;
     	int prevState;
     	int currState;
+	
+	bool simulation = false;
     	Swarmie swarmie;
 	unordered_map<float, set<float>> visitedLocations;
 	
@@ -93,6 +95,16 @@ class LogicController {
 		swarmie.finger = 0;
 		
     	}
+	
+	void setSimulationBool(bool isSim) {
+		simulation = isSim;
+		if (simulation) {
+			cout << "Simulation is running" << endl;	
+		}
+		else {
+			cout << "Physical is running" << endl;	
+		}
+	}
 
 	  Swarmie DoWork(int state, int prev) {
 		  currState = state;
