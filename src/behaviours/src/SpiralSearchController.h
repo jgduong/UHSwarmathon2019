@@ -20,6 +20,8 @@ class SpiralSearchController {
 	
 	float RightError;
 	float FrontError;
+	
+	bool simulation = false;
     Swarmie swarmie;
     //Wheels.left = 0.0;
     //Wheels.right = 0.0;
@@ -57,7 +59,9 @@ class SpiralSearchController {
         }
     }
   
-
+   void setSimulationBool(bool isSim) {
+	   simulation = isSim;
+   }
     
     Swarmie DoWork(unordered_map<float, set<float>> &visitedLocations) {
       swarmie.centerX = centerOffsetX;
