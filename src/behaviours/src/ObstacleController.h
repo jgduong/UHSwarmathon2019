@@ -95,7 +95,7 @@ class ObstacleController {
 		  if (SonarCenter >= 1.5 && SonarRight >= 0.3)
 		  {
 			  swarmie.left = 75.0;
-			  swarmie.right = 75.0;
+			  swarmie.right = 85.0;
 		  }
           }
           else if (SonarLeft <= 1.25)
@@ -105,7 +105,7 @@ class ObstacleController {
               swarmie.right = 100.0;
 		  if (SonarCenter >= 1.5 && SonarLeft >= 0.3)
 		  {
-			  swarmie.left = 75.0;
+			  swarmie.left = 85.0;
 			  swarmie.right = 75.0;
 		  }
           }
@@ -295,7 +295,7 @@ class ObstacleController {
 		  if (SonarCenter >= 1.5 && SonarRight >= 0.35)
 		  {
 			  swarmie.left = 75.0;
-			  swarmie.right = 75.0;
+			  swarmie.right = 85.0;
 		  }
 		  else if (SonarRight < 0.35)
 		  {
@@ -310,7 +310,7 @@ class ObstacleController {
               swarmie.right = 100.0;
 		  if (SonarCenter >= 1.5 && SonarLeft >= 0.35)
 		  {
-			  swarmie.left = 75.0;
+			  swarmie.left = 85.0;
 			  swarmie.right = 75.0;
 		  }
 		  else if (SonarLeft < 0.35)
