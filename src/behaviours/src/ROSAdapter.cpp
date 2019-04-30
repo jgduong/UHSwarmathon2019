@@ -412,8 +412,8 @@ void behaviourStateMachine(const ros::TimerEvent&)
 			if (centerInit)
 			{
 				centerInit = false;
-				centerOffsetX = 1.414*cos(currentLocationOdom.theta - M_PI);
-				centerOffsetY = 1.414*sin(currentLocationOdom.theta - M_PI);
+				centerOffsetX = 1.39*cos(currentLocationOdom.theta - M_PI);
+				centerOffsetY = 1.39*sin(currentLocationOdom.theta - M_PI);
 			}
 			logicController->setCenterOffset(centerOffsetX, centerOffsetY);
 			
