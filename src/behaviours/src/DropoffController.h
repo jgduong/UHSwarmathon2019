@@ -182,8 +182,15 @@ class DropoffController {
 					//swarmie.right = 40.0;
 					//return swarmie;
 					float errval = abs(currTheta - homeTheta);
-					swarmie.left = -1*(5*errval+20);
-					swarmie.right = 5*errval+20;
+					if (simulation)
+					{
+						swarmie.left = -1*(5*errval+20);
+						swarmie.right = 5*errval+20;
+					}
+					else {
+						swarmie.left = -1*(4*errval+35);
+						swarmie.right = 4*errval+35;
+					}
 				}
 			}
 			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
@@ -229,8 +236,15 @@ class DropoffController {
 					//swarmie.left = 40.0;
 					//swarmie.right = -40.0;
 					float errval = abs(currTheta - homeTheta);
-					swarmie.left = 5*errval+20;
-					swarmie.right = -1*(5*errval+20);
+					if (simulation)
+					{
+						swarmie.left = 5*errval+20;
+						swarmie.right = -1*(5*errval+20);
+					}
+					else {
+						swarmie.left = 4*errval+35;
+						swarmie.right = -1*(4*errval+35);
+					}
 					//return swarmie;
 				}
 			}
