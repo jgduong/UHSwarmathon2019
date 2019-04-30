@@ -836,48 +836,94 @@ void sonarHandler(const sensor_msgs::Range::ConstPtr& sonarLeft, const sensor_ms
 	sonarCenterData = sonarCenter->range;
 	sonarRightData = sonarRight->range;
 	
-	
-	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == SPIRAL_SEARCH))
+	if (simulation)
 	{
-		prevState = currState;
-		currState = AVOID_OBSTACLE;
-		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
-	}
+		if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == SPIRAL_SEARCH))
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		}
 
-	if ((sonarLeftData <= 0.6 || sonarRightData <= 0.6) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome) ))
-	{
-		prevState = currState;
-		currState = AVOID_OBSTACLE;
-		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
-	}
-	if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.backToSpiral) ))
-	{
-		prevState = currState;
-		currState = AVOID_OBSTACLE;
-		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
-		logicController->obstacleController.backToSpiral = true;
-	}
-	if ((sonarLeftData <= 0.3 || sonarCenterData <= 0.3 || sonarRightData <= 0.3) && (currState == PICKUP && logicController->pickupController.approachCube == false && (logicController->pickupController.reverse == false && logicController->pickupController.pickUpDelay < 10)))
-	{
-		prevState = currState;
-		currState = AVOID_OBSTACLE;
-		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
-	}
-	if ( (sonarLeftData <= 0.25 || sonarCenterData <= 0.25 || sonarRightData <= 0.25) && currState == INIT && rotate2 )
+		if ((sonarLeftData <= 0.6 || sonarRightData <= 0.6) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome) ))
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		}
+		if ((sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.backToSpiral) ))
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+			logicController->obstacleController.backToSpiral = true;
+		}
+		if ((sonarLeftData <= 0.3 || sonarCenterData <= 0.3 || sonarRightData <= 0.3) && (currState == PICKUP && logicController->pickupController.approachCube == false && (logicController->pickupController.reverse == false && logicController->pickupController.pickUpDelay < 10)))
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		}
+		if ( (sonarLeftData <= 0.25 || sonarCenterData <= 0.25 || sonarRightData <= 0.25) && currState == INIT && rotate2 )
 
-	{
-		prevState = currState;
-		currState = AVOID_OBSTACLE;
-		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		}
+
+		if ( (sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.toSpiralEdge) ) )
+
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+			logicController->obstacleController.backToSpiral = true;
+		}
 	}
+	else {
+		if ((sonarLeftData <= 0.5 || sonarCenterData <= 0.5 || sonarRightData <= 0.5) && (currState == SPIRAL_SEARCH))
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		}
 
-	if ( (sonarLeftData <= 0.75 || sonarCenterData <= 0.75 || sonarRightData <= 0.75) && (currState == DROPOFF && (logicController->dropoffController.toSpiralEdge) ) )
+		if ((sonarLeftData <= 0.4 || sonarRightData <= 0.4) && (currState == DROPOFF && (logicController->dropoffController.initCalc || logicController->dropoffController.driveToHome) ))
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		}
+		if ((sonarLeftData <= 0.5 || sonarCenterData <= 0.5 || sonarRightData <= 0.5) && (currState == DROPOFF && (logicController->dropoffController.backToSpiral) ))
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+			logicController->obstacleController.backToSpiral = true;
+		}
+		if ((sonarLeftData <= 0.25 || sonarCenterData <= 0.25 || sonarRightData <= 0.25) && (currState == PICKUP && logicController->pickupController.approachCube == false && (logicController->pickupController.reverse == false && logicController->pickupController.pickUpDelay < 10)))
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		}
+		if ( (sonarLeftData <= 0.25 || sonarCenterData <= 0.25 || sonarRightData <= 0.25) && currState == INIT && rotate2 )
 
-	{
-		prevState = currState;
-		currState = AVOID_OBSTACLE;
-		logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
-		logicController->obstacleController.backToSpiral = true;
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+		}
+
+		if ( (sonarLeftData <= 0.5 || sonarCenterData <= 0.5 || sonarRightData <= 0.5) && (currState == DROPOFF && (logicController->dropoffController.toSpiralEdge) ) )
+
+		{
+			prevState = currState;
+			currState = AVOID_OBSTACLE;
+			logicController->UpdateSonar(sonarLeftData, sonarCenterData, sonarRightData);
+			logicController->obstacleController.backToSpiral = true;
+		}
 	}
 }
 
