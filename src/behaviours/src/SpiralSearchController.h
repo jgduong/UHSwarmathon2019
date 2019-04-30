@@ -215,7 +215,7 @@ class SpiralSearchController {
 	     rightDrive = (abs(rightDrive) * 0.7) + 30;
 	     
 	     if (leftNeg) leftDrive *= -1;
-	     if (rightNeg) rightNeg *= -1; 
+	     if (rightNeg) rightDrive *= -1; 
      }
 	    
 	    
