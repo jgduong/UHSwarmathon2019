@@ -178,9 +178,12 @@ class DropoffController {
 				}
 				else {
 					//sendDriveCommand(-50.0, 50.0);
-					swarmie.left = -40.0;
-					swarmie.right = 40.0;
+					//swarmie.left = -40.0;
+					//swarmie.right = 40.0;
 					//return swarmie;
+					float errval = abs(currTheta - homeTheta);
+					swarmie.left = -10*errval+20;
+					swarmie.right = 10*errval+20;
 				}
 			}
 			else if ( (turnSize < 0.0 && turnSize > -3.142) || turnSize >= 3.142) // right
@@ -223,8 +226,11 @@ class DropoffController {
 				else {
 					cout << "spinning towards home" << endl;
 					//sendDriveCommand(50.0, -50.0);
-					swarmie.left = 40.0;
-					swarmie.right = -40.0;
+					//swarmie.left = 40.0;
+					//swarmie.right = -40.0;
+					float errval = abs(currTheta - homeTheta);
+					swarmie.left = 10*errval+20;
+					swarmie.right = -10*errval+20;
 					//return swarmie;
 				}
 			}
