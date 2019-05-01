@@ -824,8 +824,9 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 			}
 			tags.clear();
 		}
+		//PHYSICAL
 		else {
-			if (currState == SPIRAL_SEARCH && initialized) {	
+			if (currState == SPIRAL_SEARCH && initialized && !NOPICKUP) {	
 				currState = PICKUP;
 				prevState = SPIRAL_SEARCH;
 				//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
