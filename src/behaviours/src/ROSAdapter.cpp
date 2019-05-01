@@ -797,21 +797,42 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    
 	    //logicController.SetAprilTags(tags);
-		if (currState == SPIRAL_SEARCH && initialized) {	
-			currState = PICKUP;
-			prevState = SPIRAL_SEARCH;
-			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
-			logicController->updateTags( tags );
-		}
-		if (currState == PICKUP) {
-			logicController->updateTags( tags );			
-			//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
-		}
-		if (currState == DROPOFF)
+		if (simulation)
 		{
-			logicController->dropoffController.tagsExist = true;
+			if (currState == SPIRAL_SEARCH && initialized) {	
+				currState = PICKUP;
+				prevState = SPIRAL_SEARCH;
+				//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+				logicController->updateTags( tags );
+				cout << "tag detected with ID = " << tags[0].getID() << endl;
+			}
+			if (currState == PICKUP) {
+				logicController->updateTags( tags );			
+				//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+			}
+			if (currState == DROPOFF)
+			{
+				logicController->dropoffController.tagsExist = true;
+			}
+			tags.clear();
 		}
-		tags.clear();
+		else {
+			if (currState == SPIRAL_SEARCH && initialized) {	
+				currState = PICKUP;
+				prevState = SPIRAL_SEARCH;
+				//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+				logicController->updateTags( tags );
+			}
+			if (currState == PICKUP) {
+				logicController->updateTags( tags );			
+				//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
+			}
+			if (currState == DROPOFF)
+			{
+				logicController->dropoffController.tagsExist = true;
+			}
+			tags.clear();
+		}
 	}
 	else if (currState == DROPOFF)
 	{
