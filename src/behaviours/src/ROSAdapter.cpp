@@ -771,6 +771,7 @@ void sendDriveCommand(double left, double right)
 
 void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& message)
 {
+	bool NOPICKUP = false;
 	if (message->detections.size() > 0) 
 	{
 		    
@@ -795,11 +796,18 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 		      tags.push_back(loc);
 		      //logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
 	    }
-	    
+	    for (int i = 0; i < tags.size(); i++)
+	    {
+		    if (tags[i].getID == 256)
+		    {
+			    NOPICKUP = true;
+			    cout << "HOME BASE detected, tag ID of: " << tags[i].getID() << ", index: " << i << endl;
+		    }
+	    }
 	    //logicController.SetAprilTags(tags);
 		if (simulation)
 		{
-			if (currState == SPIRAL_SEARCH && initialized && tags[0].getID() == 0) {	
+			if (currState == SPIRAL_SEARCH && initialized && !NOPICKUP) {	
 				currState = PICKUP;
 				prevState = SPIRAL_SEARCH;
 				//logicController->updateTags(tags.back().getPositionX(), tags.back().getPositionY(), tags.back().getPositionZ());
