@@ -224,6 +224,16 @@ public:
 			    zDistanceToCube = minZ;
 			    cout << "centered/calibrated a second time, new zDistanceToCube is: " << zDistanceToCube << endl;
 		    }
+		    //NEW IF BLOCK
+		    if (detectionTimeout >= 100)
+		    {
+			  swarmie.left = 5.0;
+			    swarmie.right = 5.0;
+			    detectionTimeout = 0;
+			    cout << "pickUpController timeout reached" << endl;
+			    swarmie.finger = 0;
+			    swarmie.wrist = 0;  
+		    }
             }
 		
 	    if (detectionTimeout >= 100)
@@ -244,7 +254,16 @@ public:
 		cout << "Z distance to cube is: " << zDistanceToCube << endl;
 		distTravelled = sqrt( (selfX - startingX)*(selfX - startingX) + (selfY - startingY)*(selfY - startingY) );
 		cout << "distance travelled is: " << distTravelled << endl;
-		if (distTravelled + 0.065 < (zDistanceToCube)) {
+		float minorOffset = 0.0;
+		if (simulation)
+		{
+			minorOffset = 0.065;
+		}
+		else {
+			minorOffset = 0.085;
+		}
+		
+		if (distTravelled + minorOffset < (zDistanceToCube)) {
                 	swarmie.left = 50.0;
                 	swarmie.right = 50.0;
             	}
