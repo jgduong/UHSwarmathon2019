@@ -798,7 +798,7 @@ void targetHandler(const apriltags_ros::AprilTagDetectionArray::ConstPtr& messag
 	    }
 	    for (int i = 0; i < tags.size(); i++)
 	    {
-		    if (tags[i].getID == 256)
+		    if (tags[i].getID() == 256)
 		    {
 			    NOPICKUP = true;
 			    cout << "HOME BASE detected, tag ID of: " << tags[i].getID() << ", index: " << i << endl;
